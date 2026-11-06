@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph AI for Predicting Drug ADME and hERG Cardiac Toxicity - ai</title>
+    <meta name="description" content="Computational toxicologists are increasingly utilizing graph artificial intelligence to accelerate drug discovery and ensure patient safety before clinical trials begin. This article explores how Graph Neural Networks (GNNs) translate the chemical structu">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/graph-ai-for-predicting-drug-adme-and-h-erg-cardiac-toxicity">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Graph AI for Predicting Drug ADME and hERG Cardiac Toxicity - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/graph-ai-for-predicting-drug-adme-and-h-erg-cardiac-toxicity" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Computational toxicologists are increasingly utilizing graph artificial intelligence to accelerate drug discovery and ensure patient safety before clinical trials begin. This article explores how Graph Neural Networks (GNNs) translate the chemical structu" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="graph-ai-for-predicting-drug-adme-and-herg-cardiac-toxicity">Graph
+AI for Predicting Drug ADME and hERG Cardiac Toxicity</h1>
+<p>Computational toxicologists are increasingly utilizing graph
+artificial intelligence to accelerate drug discovery and ensure patient
+safety before clinical trials begin. This article explores how Graph
+Neural Networks (GNNs) translate the chemical structures of drug
+candidates into mathematical graphs to accurately predict Absorption,
+Distribution, Metabolism, and Excretion (ADME) profiles, as well as the
+risk of hERG-related cardiac toxicity. By shifting from traditional
+laboratory testing to AI-driven molecular modeling, researchers can
+rapidly screen out toxic compounds, optimize safe drug candidates, and
+drastically reduce late-stage pharmaceutical failures.</p>
+<h3 id="representing-molecules-as-graphs">Representing Molecules as
+Graphs</h3>
+<p>Before an AI model can predict how a drug will behave in the human
+body, the chemical structure must be translated into a format the
+computer understands. Traditional machine learning relies on simplified
+text strings or fixed chemical fingerprints, which often lose crucial
+spatial information.</p>
+<p>Graph AI solves this by treating a molecule as a natural graph:</p>
+<ul>
+<li><strong>Nodes (Vertices):</strong> Represent the individual atoms
+within the molecule. Each node is assigned features such as atomic
+number, formal charge, and hybridization state.</li>
+<li><strong>Edges (Connections):</strong> Represent the chemical bonds
+between the atoms. Edges are assigned features detailing bond type
+(single, double, aromatic) and whether the bond is part of a ring.</li>
+</ul>
+<h3 id="how-graph-neural-networks-gnns-process-molecules">How Graph
+Neural Networks (GNNs) Process Molecules</h3>
+<p>Once a drug candidate is mapped as a graph, computational
+toxicologists feed it into a Graph Neural Network, most commonly a
+Message Passing Neural Network (MPNN).</p>
+<p>The GNN operates through an iterative process called "message
+passing." In each step, every atom (node) sends information about its
+current state to its neighboring atoms. It then aggregates the messages
+it receives from its neighbors and updates its own state. After several
+rounds of message passing, each atom's numerical representation contains
+information not just about itself, but about its local chemical
+environment. Finally, a "readout" phase combines all the atomic data
+into a single, comprehensive vector that represents the entire drug
+molecule. This vector is then used to predict specific biological
+properties.</p>
+<h3 id="predicting-adme-properties">Predicting ADME Properties</h3>
+<p>ADME properties determine how a drug moves through and is processed
+by the body. Poor ADME profiles are a leading cause of drug failure.
+Computational toxicologists train GNNs on massive datasets of known
+compounds to predict these four metrics simultaneously through
+multi-task learning:</p>
+<ul>
+<li><strong>Absorption:</strong> The GNN identifies substructures that
+affect solubility and membrane permeability, predicting how well a drug
+will pass from the gut into the bloodstream.</li>
+<li><strong>Distribution:</strong> The model assesses molecular features
+that dictate how the drug travels through fluids and tissues, including
+whether it can cross the blood-brain barrier or bind excessively to
+plasma proteins.</li>
+<li><strong>Metabolism:</strong> Toxicologists use GNNs to predict how
+liver enzymes, particularly Cytochrome P450 (CYP) enzymes, will break
+down the drug. The AI flags specific atomic sites on the graph that are
+vulnerable to metabolic transformation, which could otherwise create
+toxic byproducts.</li>
+<li><strong>Excretion:</strong> The model estimates the clearance rate
+of the compound, predicting how efficiently the kidneys or liver will
+eliminate the drug and its metabolites from the body.</li>
+</ul>
+<h3 id="predicting-herg-cardiac-toxicity">Predicting hERG Cardiac
+Toxicity</h3>
+<p>Aside from ADME, one of the most critical safety checks in drug
+discovery is screening for hERG toxicity. The hERG (human
+Ether-à-go-go-Related Gene) potassium channel is essential for
+regulating electrical activity in the heart. If a drug molecule
+inadvertently binds to and blocks this channel, it can cause fatal
+cardiac arrhythmias (Long QT syndrome).</p>
+<p>Computational toxicologists use specialized GNN architectures to
+predict hERG blockade:</p>
+<ul>
+<li><strong>Identifying Toxicophores:</strong> By training on thousands
+of known hERG blockers and non-blockers, the GNN learns to recognize
+specific 2D and 3D arrangements of atoms (toxicophores) that have a high
+affinity for the hERG channel cavity, such as basic nitrogen centers
+flanked by aromatic rings.</li>
+<li><strong>Attention Mechanisms:</strong> Many toxicologists use Graph
+Attention Networks (GATs) for hERG prediction. GATs assign different
+weights of importance to different atoms and bonds. This allows the
+toxicologist to visualize the molecule and see the exact chemical
+substructure the AI is flagging as the cause of the cardiac risk.</li>
+<li><strong>Structural Optimization:</strong> Because the GNN highlights
+the specific problematic atoms, medicinal chemists do not have to
+abandon a promising drug candidate entirely. Instead, they can use the
+AI's feedback to slightly alter that specific part of the molecular
+graph, eliminating the hERG liability while preserving the drug's
+therapeutic efficacy.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/graph-ai-for-predicting-drug-adme-and-h-erg-cardiac-toxicity';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

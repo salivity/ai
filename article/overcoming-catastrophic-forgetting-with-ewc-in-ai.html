@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overcoming Catastrophic Forgetting with EWC in AI - ai</title>
+    <meta name="description" content="Artificial intelligence models struggle to learn sequentially the way humans do, often suffering from a phenomenon known as catastrophic forgetting. This article explores what catastrophic forgetting is within the context of continual AI learning and expl">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/overcoming-catastrophic-forgetting-with-ewc-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Overcoming Catastrophic Forgetting with EWC in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/overcoming-catastrophic-forgetting-with-ewc-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence models struggle to learn sequentially the way humans do, often suffering from a phenomenon known as catastrophic forgetting. This article explores what catastrophic forgetting is within the context of continual AI learning and expl" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="overcoming-catastrophic-forgetting-with-ewc-in-ai">Overcoming
+Catastrophic Forgetting with EWC in AI</h1>
+<p>Artificial intelligence models struggle to learn sequentially the way
+humans do, often suffering from a phenomenon known as catastrophic
+forgetting. This article explores what catastrophic forgetting is within
+the context of continual AI learning and explains how Elastic Weight
+Consolidation (EWC), a prominent algorithmic technique, solves this
+issue by selectively slowing down learning on specific neural network
+weights to preserve previously acquired knowledge.</p>
+<h3 id="what-is-catastrophic-forgetting">What is Catastrophic
+Forgetting?</h3>
+<p>In traditional machine learning, artificial neural networks are
+trained on a single, static dataset. However, in continual learning, an
+AI is expected to learn new tasks sequentially over time without losing
+its ability to perform older ones.</p>
+<p>Catastrophic forgetting—also known as catastrophic
+interference—occurs when a neural network abruptly and completely
+forgets previously learned information upon learning new
+information.</p>
+<p>When a neural network learns a task (Task A), it adjusts its internal
+parameters, known as weights, to minimize errors for that specific task.
+When the same network is later trained on a new task (Task B), the
+training algorithm overwrites those existing weights to optimize
+performance for Task B. Because the weights have been altered to fit the
+new data, the network's performance on Task A drops drastically.</p>
+<h3 id="the-need-for-continual-learning">The Need for Continual
+Learning</h3>
+<p>Humans possess neuroplasticity, allowing the brain to integrate new
+skills without erasing old memories. For example, learning to ride a
+motorcycle does not make you forget how to ride a bicycle.</p>
+<p>For AI to operate effectively in dynamic, real-world environments, it
+must achieve this same level of continual learning. Retraining a massive
+AI model from scratch using both old and new data every time it
+encounters a new task is computationally expensive, time-consuming, and
+often impossible if the original training data is no longer
+available.</p>
+<h3 id="how-elastic-weight-consolidation-ewc-works">How Elastic Weight
+Consolidation (EWC) Works</h3>
+<p>Elastic Weight Consolidation (EWC) is an algorithm inspired by
+neuroscience—specifically, synaptic consolidation in the mammalian
+brain. In the brain, certain synapses strengthen and become less plastic
+(less changeable) to protect important memories. EWC applies this exact
+concept to artificial neural networks.</p>
+<p>EWC operates on the premise that a deep neural network has more than
+enough capacity to learn multiple tasks, and that many different
+configurations of weights can result in the same successful outcome for
+a single task. Therefore, the goal of EWC is to find a configuration of
+weights that works well for Task B without significantly changing the
+specific weights that were vital for Task A.</p>
+<p>Here is the step-by-step process of how EWC addresses catastrophic
+forgetting:</p>
+<p><strong>1. Identifying Important Weights</strong> After the AI
+finishes learning Task A, EWC evaluates all the weights in the network
+to determine which ones are the most critical for performing Task A
+successfully. It does this using a mathematical concept called the
+Fisher Information Matrix. If changing a specific weight causes a
+massive drop in Task A’s performance, that weight is flagged as highly
+important.</p>
+<p><strong>2. Applying "Elastic" Anchors</strong> When the network
+begins training on Task B, EWC modifies the learning process by adding a
+penalty (a regularization term) to the loss function. You can visualize
+this penalty as an elastic spring anchoring each weight to its original
+value from Task A.</p>
+<p><strong>3. Selective Plasticity</strong> The stiffness of each
+"spring" is determined by the importance calculated in step one.</p>
+<ul>
+<li><strong>Important weights</strong> get a very stiff spring. If the
+training algorithm tries to change these weights to learn Task B, it
+faces a heavy penalty. Thus, these weights remain largely unchanged,
+preserving the memory of Task A.</li>
+<li><strong>Unimportant weights</strong> get a very loose spring (or
+none at all). The network is free to modify these weights aggressively
+to learn Task B.</li>
+</ul>
+<p>By forcing the network to use its less important weights to learn the
+new task, EWC successfully finds a shared solution space where the AI
+can perform both Task A and Task B accurately. As more tasks are added,
+EWC continues to update the stiffness of these anchors, allowing the AI
+to accumulate knowledge continuously.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/overcoming-catastrophic-forgetting-with-ewc-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

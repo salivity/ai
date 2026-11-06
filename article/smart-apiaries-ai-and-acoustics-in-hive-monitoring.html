@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Apiaries: AI and Acoustics in Hive Monitoring - ai</title>
+    <meta name="description" content="Smart apiaries are revolutionizing modern beekeeping by combining in-hive acoustic monitoring with edge artificial intelligence to safeguard honeybee colonies. By capturing the vibrations and sounds produced by bees, converting this audio into visual spec">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/smart-apiaries-ai-and-acoustics-in-hive-monitoring">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Smart Apiaries: AI and Acoustics in Hive Monitoring - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/smart-apiaries-ai-and-acoustics-in-hive-monitoring" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Smart apiaries are revolutionizing modern beekeeping by combining in-hive acoustic monitoring with edge artificial intelligence to safeguard honeybee colonies. By capturing the vibrations and sounds produced by bees, converting this audio into visual spec" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="smart-apiaries-ai-and-acoustics-in-hive-monitoring">Smart
+Apiaries: AI and Acoustics in Hive Monitoring</h1>
+<p>Smart apiaries are revolutionizing modern beekeeping by combining
+in-hive acoustic monitoring with edge artificial intelligence to
+safeguard honeybee colonies. By capturing the vibrations and sounds
+produced by bees, converting this audio into visual spectrograms, and
+analyzing the data directly at the hive using compact AI models, these
+systems can accurately detect critical events. Beekeepers receive
+real-time alerts regarding queen loss, impending swarming, and Varroa
+mite stress, allowing for timely interventions without the need for
+invasive manual inspections.</p>
+<p>To understand the colony, smart hives utilize tiny, durable
+microphones and piezoelectric accelerometers placed directly inside the
+brood chamber. Bees communicate extensively through sound and vibration,
+generating specific frequencies by vibrating their wing muscles. Because
+raw audio files are difficult for standard algorithms to interpret
+directly, the system converts these acoustic recordings into
+spectrograms. A spectrogram is a visual representation of the spectrum
+of frequencies of a signal as it varies with time. Using Fast Fourier
+Transform (FFT) algorithms, the hive’s audio is mapped into a
+two-dimensional image displaying time on the horizontal axis, frequency
+on the vertical axis, and amplitude as color intensity.</p>
+<p>Once the audio is converted into a spectrogram image, edge artificial
+intelligence takes over. Instead of streaming massive audio files to the
+cloud—which requires high bandwidth and significant battery power—smart
+apiaries use edge AI. Small, low-power microcontrollers placed directly
+on the hive run lightweight Convolutional Neural Networks (CNNs). These
+neural networks are trained on thousands of hours of labeled bee sounds
+to recognize visual patterns within the spectrograms. When the edge AI
+identifies a specific acoustic signature, it transmits a tiny, low-data
+alert to the beekeeper's smartphone via cellular or LoRaWAN
+networks.</p>
+<p>Detecting queen loss is one of the primary functions of this
+technology. A healthy, queen-right colony produces a steady, cohesive
+hum typically centered around 200 to 250 Hz. If the queen dies or goes
+missing, the colony quickly realizes the absence of her pheromones.
+Within hours, the bees become agitated, and their collective sound
+shifts into a louder, more chaotic "roar" that spikes into higher
+frequencies between 300 and 400 Hz. The edge AI recognizes this
+sustained upward shift in the spectrogram and immediately notifies the
+beekeeper that the hive is queenless.</p>
+<p>Swarming, the natural process where a large portion of the colony
+leaves with the old queen to form a new hive, can severely deplete honey
+production. Fortunately, bees exhibit distinct acoustic behaviors days
+before a swarm occurs. The overall amplitude shifts rapidly in the 250
+to 300 Hz band as worker bees prepare for flight. Furthermore, newly
+emerging or rival queens emit a very specific, high-pitched sound known
+as "piping," which comes in the form of "tooting" and "quacking" at
+frequencies between 350 and 550 Hz. The AI’s image recognition easily
+spots these distinct, narrow-band horizontal lines on the spectrogram,
+giving the beekeeper a crucial window to split the hive or add space
+before the bees depart.</p>
+<p>Varroa destructor mites are the leading cause of colony collapse, and
+their presence also alters the acoustic profile of a hive. While mites
+themselves do not make detectable noises, the physiological stress and
+viruses they transmit heavily impact the bees. Infested bees exhibit
+altered wing-beat frequencies due to conditions like Deformed Wing
+Virus, and the colony engages in increased grooming and erratic movement
+to rid themselves of the parasites. Additionally, a mite-stressed colony
+struggles to maintain optimal brood nest temperatures, leading to
+abnormal ventilation fanning sounds. The edge AI detects these subtle,
+erratic deviations in the baseline acoustic spectrogram, alerting the
+beekeeper to a rising Varroa infestation long before the colony reaches
+a point of collapse.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/smart-apiaries-ai-and-acoustics-in-hive-monitoring';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

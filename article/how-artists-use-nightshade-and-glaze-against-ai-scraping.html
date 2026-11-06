@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Artists Use Nightshade and Glaze Against AI Scraping - ai</title>
+    <meta name="description" content="This article explores how digital artists utilize adversarial perturbation tools, specifically Glaze and Nightshade, to shield their creative works from unauthorized artificial intelligence scraping. As generative AI models increasingly rely on harvesting">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-artists-use-nightshade-and-glaze-against-ai-scraping">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Artists Use Nightshade and Glaze Against AI Scraping - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-artists-use-nightshade-and-glaze-against-ai-scraping" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how digital artists utilize adversarial perturbation tools, specifically Glaze and Nightshade, to shield their creative works from unauthorized artificial intelligence scraping. As generative AI models increasingly rely on harvesting" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-artists-use-nightshade-and-glaze-against-ai-scraping">How
+Artists Use Nightshade and Glaze Against AI Scraping</h1>
+<p>This article explores how digital artists utilize adversarial
+perturbation tools, specifically Glaze and Nightshade, to shield their
+creative works from unauthorized artificial intelligence scraping. As
+generative AI models increasingly rely on harvesting vast amounts of
+online art without consent or compensation, creators are turning to
+these software solutions to alter their image files at the pixel level.
+The following sections break down the mechanics of adversarial
+perturbations, explain how Glaze masks artistic styles, detail how
+Nightshade actively poisons AI training data, and guide you through the
+practical workflow artists use to implement these defenses.</p>
+<h2 id="understanding-adversarial-perturbations">Understanding
+Adversarial Perturbations</h2>
+<p>Adversarial perturbation is a technique that introduces microscopic,
+mathematically calculated changes to the pixels of a digital image. To
+the human eye, an image treated with these perturbations looks
+practically identical to the original artwork. However, computer vision
+systems and AI models read images as grids of numerical data rather than
+cohesive visual concepts. By shifting these specific pixel values, the
+tools exploit vulnerabilities in how machine learning models interpret
+visual information, causing the AI to misclassify the contents and style
+of the file completely.</p>
+<h2 id="how-glaze-protects-artistic-style">How Glaze Protects Artistic
+Style</h2>
+<p>Developed by researchers at the University of Chicago, Glaze is a
+defensive tool designed to prevent AI models from learning and mimicking
+a specific artist's unique style. When an artist runs their work through
+Glaze before posting it online, the software applies a "style cloak"
+over the image.</p>
+<p>If an artist who paints in a realistic charcoal style applies Glaze,
+the software might alter the pixels so an AI perceives the artwork as a
+bright, abstract cubist painting. If a scraper collects this glazed art
+to train a model on the artist's specific style, the resulting AI
+generation will produce cubist imagery rather than the expected charcoal
+realism. This renders the scraped data useless for style mimicry.</p>
+<h2 id="how-nightshade-poisons-ai-models">How Nightshade Poisons AI
+Models</h2>
+<p>While Glaze acts as a defensive shield, Nightshade goes on the
+offensive by acting as a data poisoning tool. Also developed by the
+University of Chicago team, Nightshade targets the foundational
+comprehension of generative AI models by corrupting the link between
+text prompts and visual concepts.</p>
+<p>Nightshade alters the pixels of an image so that the AI sees an
+entirely different object than what is actually depicted. For example,
+an artist can use Nightshade on a drawing of a dog, altering the data so
+the AI perceives it as a leather purse. If an AI company scrapes enough
+Nightshade-treated images of dogs, the model's internal understanding of
+a "dog" becomes corrupted. Eventually, when a user prompts that AI to
+generate a dog, the model will output a bizarre hybrid or a leather
+purse instead. This forces AI developers to spend significant time and
+resources finding and removing poisoned data, discouraging unauthorized
+scraping altogether.</p>
+<h2 id="the-artists-workflow-for-protecting-work">The Artist's Workflow
+for Protecting Work</h2>
+<p>Using Glaze and Nightshade requires artists to add a final processing
+step before publishing their work to the internet. The standard workflow
+is straightforward:</p>
+<ol type="1">
+<li><strong>Complete the Artwork:</strong> The artist finishes their
+piece in their preferred digital creation software and exports it as a
+standard image file, such as a PNG or JPEG.</li>
+<li><strong>Import into the Tool:</strong> The artist opens the Glaze or
+Nightshade desktop application (or uses WebGlaze, a cloud-based
+alternative for devices without strong graphics cards) and uploads the
+finished image.</li>
+<li><strong>Select Intensity and Render:</strong> The artist chooses the
+intensity of the perturbation. Higher intensity offers stronger
+protection against AI but may introduce slight visual texture to the
+image.</li>
+<li><strong>Publish the Protected File:</strong> Once the software
+finishes processing, it outputs a new file. The artist posts this
+protected version to social media, portfolios, and client sites, while
+keeping the unedited original safely stored offline.</li>
+</ol>
+<h2 id="maintaining-the-effectiveness-of-perturbations">Maintaining the
+Effectiveness of Perturbations</h2>
+<p>Once an image is treated with Glaze or Nightshade, the protection is
+permanently baked into the pixel data. This means the defense survives
+standard actions like taking a screenshot, compressing the image on
+social media, or resizing the file. However, artists must remain
+vigilant, as the field of AI is constantly evolving. As AI companies
+develop ways to bypass these perturbations, the researchers behind Glaze
+and Nightshade continuously release software updates to counter new
+scraping methods, making the consistent use of the latest versions
+essential for ongoing protection.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-artists-use-nightshade-and-glaze-against-ai-scraping';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

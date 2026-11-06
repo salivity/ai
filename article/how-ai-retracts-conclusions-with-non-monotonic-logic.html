@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Retracts Conclusions with Non-Monotonic Logic - ai</title>
+    <meta name="description" content="This article explores how artificial intelligence systems use non-monotonic logic to adapt their reasoning and retract previous conclusions when presented with new, contradicting evidence. Unlike traditional logic, which assumes knowledge is absolute and">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-retracts-conclusions-with-non-monotonic-logic">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Retracts Conclusions with Non-Monotonic Logic - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-retracts-conclusions-with-non-monotonic-logic" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how artificial intelligence systems use non-monotonic logic to adapt their reasoning and retract previous conclusions when presented with new, contradicting evidence. Unlike traditional logic, which assumes knowledge is absolute and" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-retracts-conclusions-with-non-monotonic-logic">How AI
+Retracts Conclusions with Non-Monotonic Logic</h1>
+<p>This article explores how artificial intelligence systems use
+non-monotonic logic to adapt their reasoning and retract previous
+conclusions when presented with new, contradicting evidence. Unlike
+traditional logic, which assumes knowledge is absolute and unchangeable,
+non-monotonic logic mimics human common sense by treating initial
+conclusions as tentative assumptions. Below, we examine the mechanics of
+this flexible reasoning, the specific frameworks AI uses to invalidate
+outdated beliefs, and why the ability to change its mind is vital for
+modern AI operating in unpredictable environments.</p>
+<h2 id="the-limitation-of-classical-logic">The Limitation of Classical
+Logic</h2>
+<p>To understand how AI retracts conclusions, we must first understand
+traditional, or monotonic, logic. In monotonic logic, once a conclusion
+is proven true, it remains true forever. Adding new information to the
+system never reduces the set of known truths; the knowledge base only
+grows.</p>
+<p>While this works well for mathematics, it fails in the real world.
+Real-world environments are dynamic and often provide incomplete
+information. If an AI waits for absolute certainty before making a
+decision, it will be paralyzed. It needs a way to make educated guesses
+and correct them later.</p>
+<h2 id="how-non-monotonic-logic-works">How Non-Monotonic Logic
+Works</h2>
+<p>Non-monotonic logic solves this problem by allowing the set of
+conclusions to shrink when new evidence arrives. It operates on the
+principle of "defeasible reasoning"—the idea that a conclusion is
+provisionally true in the absence of information to the contrary.</p>
+<p>The classic example used in computer science involves a bird named
+Tweety:</p>
+<ol type="1">
+<li><strong>Premise:</strong> Birds typically fly.</li>
+<li><strong>Fact:</strong> Tweety is a bird.</li>
+<li><strong>Tentative Conclusion:</strong> Therefore, Tweety flies.</li>
+</ol>
+<p>In a non-monotonic system, the AI accepts that Tweety can fly because
+there is no evidence suggesting otherwise. However, if the system
+receives new evidence—"Tweety is a penguin" and "Penguins cannot
+fly"—the AI does not crash due to a contradiction. Instead, the
+non-monotonic framework overrides the general rule with the specific
+exception. The AI retracts the conclusion that Tweety flies and updates
+its knowledge base.</p>
+<h2 id="key-mechanisms-for-retracting-conclusions">Key Mechanisms for
+Retracting Conclusions</h2>
+<p>AI systems implement non-monotonic logic through several specific
+mathematical and computational frameworks:</p>
+<h3 id="default-logic">Default Logic</h3>
+<p>Developed by Raymond Reiter, Default Logic uses "default rules"
+rather than absolute rules. A default rule states: "If X is true, and it
+is consistent to assume Y, then conclude Z." In the Tweety example, if
+Tweety is a bird (X), and it is consistent to assume Tweety can fly (Y),
+the AI concludes Tweety flies (Z). When the "penguin" evidence arrives,
+assuming Y is no longer consistent with the facts. The default rule is
+blocked, and the conclusion Z is automatically retracted.</p>
+<h3 id="circumscription">Circumscription</h3>
+<p>Introduced by John McCarthy, circumscription forces the AI to assume
+that the only exceptions to a rule are the ones it explicitly knows
+about. It minimizes the "abnormality" of a situation. The AI assumes
+Tweety is a "normal" bird until forced by new evidence to classify
+Tweety as an "abnormal" bird (a penguin). Once reclassified, the
+conclusions tied to the "normal" status are withdrawn.</p>
+<h3 id="truth-maintenance-systems-tms">Truth Maintenance Systems
+(TMS)</h3>
+<p>A Truth Maintenance System is the actual mechanism inside an AI
+architecture that tracks how conclusions are reached. A TMS acts as an
+auditor for the AI's beliefs. It maintains a network of dependencies,
+recording which facts support which conclusions.</p>
+<p>When a conclusion is made using non-monotonic logic, the TMS records
+both the supporting facts and the <em>absence</em> of contradicting
+facts (known as "out-lists"). If new evidence enters the system and
+lands on an out-list, the TMS triggers a cascading update. It instantly
+invalidates the initial conclusion and any subsequent decisions that
+were based on that conclusion.</p>
+<h3 id="answer-set-programming-asp">Answer Set Programming (ASP)</h3>
+<p>Modern AI often uses Answer Set Programming for non-monotonic
+reasoning. ASP relies on "negation as failure." Simply put, if the AI
+fails to find evidence that something is true, it assumes it is
+false.</p>
+<p>An AI might have a rule: "Assume a road is clear if there is no
+evidence of a traffic jam." The AI plans a route based on this
+assumption. The moment a sensor feeds the AI evidence of a crash, the
+"failure to find evidence" condition is broken. The ASP solver
+recalculates, retracts the "clear road" conclusion, and generates a new
+route.</p>
+<h2 id="why-belief-revision-matters">Why Belief Revision Matters</h2>
+<p>The ability to retract conclusions—formally known as belief
+revision—is essential for autonomous systems.</p>
+<ul>
+<li><strong>Medical Diagnosis:</strong> An AI diagnosing a patient makes
+initial assumptions based on common symptoms. When lab results arrive,
+the AI must retract its initial hypothesis if the data contradicts it,
+pivoting to a rarer condition.</li>
+<li><strong>Autonomous Vehicles:</strong> A self-driving car assumes a
+pedestrian on a sidewalk will stay on the sidewalk. If the pedestrian
+suddenly steps into the street, the car’s AI must instantly retract its
+assumption of a clear path and apply the brakes.</li>
+<li><strong>Robotics:</strong> A warehouse robot assumes a specific
+hallway is open based on its morning map. Upon encountering a newly
+placed pallet, it retracts the belief that the path is viable and
+recalculates its trajectory.</li>
+</ul>
+<p>By utilizing non-monotonic logic, AI systems are freed from the
+rigidity of absolute truths. They can act decisively with incomplete
+data while remaining flexible enough to correct their own assumptions
+the moment the reality on the ground changes.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-retracts-conclusions-with-non-monotonic-logic';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

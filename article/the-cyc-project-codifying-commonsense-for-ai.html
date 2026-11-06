@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cyc Project: Codifying Commonsense for AI - ai</title>
+    <meta name="description" content="This article explores the Cyc project, the longest-running artificial intelligence initiative dedicated to giving machines human-like commonsense reasoning. Launched in 1984 by Douglas Lenat, the project aims to overcome the brittleness of traditional AI">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/the-cyc-project-codifying-commonsense-for-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Cyc Project: Codifying Commonsense for AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/the-cyc-project-codifying-commonsense-for-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the Cyc project, the longest-running artificial intelligence initiative dedicated to giving machines human-like commonsense reasoning. Launched in 1984 by Douglas Lenat, the project aims to overcome the brittleness of traditional AI" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-cyc-project-codifying-commonsense-for-ai">The Cyc Project:
+Codifying Commonsense for AI</h1>
+<p>This article explores the Cyc project, the longest-running artificial
+intelligence initiative dedicated to giving machines human-like
+commonsense reasoning. Launched in 1984 by Douglas Lenat, the project
+aims to overcome the brittleness of traditional AI by manually encoding
+millions of everyday facts and rules of thumb into a massive knowledge
+base. By examining Cyc's unique representation language, its inference
+engine, and the use of partitioned contexts, this piece breaks down the
+methods used to translate unwritten human assumptions into
+machine-readable logic.</p>
+<h3 id="the-core-problem-unstated-assumptions">The Core Problem:
+Unstated Assumptions</h3>
+<p>Traditional artificial intelligence excels at narrow, well-defined
+tasks like playing chess or calculating data, yet it routinely fails at
+understanding the basic mechanics of the physical and social world.
+Humans rely on a vast reservoir of unstated background knowledge—such as
+the fact that water is wet, trees are usually outdoors, and people
+cannot be in two places at once. Because humans find these facts
+obvious, they rarely write them down. Consequently, AI models trained
+solely on text or raw data often miss the foundational truths required
+for genuine comprehension. The Cyc project was created to bridge this
+gap by explicitly writing down the rules of reality.</p>
+<h3 id="cycl-the-language-of-commonsense">CycL: The Language of
+Commonsense</h3>
+<p>To store this knowledge, the creators of Cyc realized that natural
+languages like English were too ambiguous, and standard programming
+languages were too rigid. They developed CycL, a formal representation
+language based on higher-order predicate calculus.</p>
+<p>In CycL, concepts are represented as "constants" (such as
+<code># $Dog</code> or <code># $Sleeping</code>). Engineers, known as
+"ontologists," use these constants to write logical statements, called
+assertions, that define how the world works. For example, instead of
+just matching keywords, CycL encodes the strict logical rule that if an
+entity is a mammal, it must have a biological mother. Over decades,
+human researchers have manually input over 25 million of these
+assertions into the system.</p>
+<h3 id="microtheories-handling-contradictions">Microtheories: Handling
+Contradictions</h3>
+<p>A major challenge in codifying commonsense is that rules change
+depending on the context. For example, the statement "vampires do not
+exist" is true in the real world, but false in the context of Dracula's
+universe. Similarly, the rules of physics we use in everyday life differ
+from the rules of quantum mechanics.</p>
+<p>Cyc solves this problem using "microtheories." A microtheory is a
+specific context or domain within the knowledge base where a certain set
+of assertions holds true. By partitioning knowledge into thousands of
+different microtheories—ranging from "Human Social Life" to "Naive
+Physics" to "Star Wars Lore"—Cyc can hold contradictory beliefs without
+breaking its logical system. When solving a problem, the AI simply
+activates the relevant microtheories for that specific situation.</p>
+<h3 id="the-inference-engine-connecting-the-dots">The Inference Engine:
+Connecting the Dots</h3>
+<p>Having a massive database of facts is useless if the AI cannot
+connect them to draw new conclusions. Paired with the Cyc knowledge base
+is a powerful inference engine. This engine uses deductive
+reasoning—such as syllogisms, modus ponens, and inheritance—to chain
+together separate pieces of knowledge.</p>
+<p>If you ask Cyc whether a person can drown in a cup of coffee, it does
+not need a pre-written rule specifically about coffee cups and drowning.
+Instead, the inference engine combines multiple facts: drowning requires
+submerging a person's airways in liquid, a human head is larger than a
+standard coffee cup, and a larger object cannot be fully submerged
+inside a smaller object. Through this logical deduction, Cyc concludes
+that it is impossible.</p>
+<h3 id="the-legacy-of-symbolic-ai">The Legacy of Symbolic AI</h3>
+<p>While modern AI is heavily dominated by machine learning and neural
+networks that learn patterns from vast amounts of data, Cyc represents
+the pinnacle of "symbolic AI." By prioritizing explicit rules and
+human-curated logic, the Cyc project guarantees explainability; unlike a
+neural network, Cyc can show the exact chain of logic it used to reach a
+conclusion. Today, Cyc continues to operate commercially, often working
+alongside machine learning models to provide the logical guardrails and
+commonsense reasoning that statistical systems still lack.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/the-cyc-project-codifying-commonsense-for-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stuart Russell&#39;s Assistance Games and AI Alignment - ai</title>
+    <meta name="description" content="This article explores how computer scientist Stuart Russell’s assistance game framework fundamentally redefines artificial intelligence alignment. By shifting away from traditional models where AI agents are given fixed, pre-programmed goals, assistance g">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/stuart-russell-s-assistance-games-and-ai-alignment">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Stuart Russell&#39;s Assistance Games and AI Alignment - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/stuart-russell-s-assistance-games-and-ai-alignment" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how computer scientist Stuart Russell’s assistance game framework fundamentally redefines artificial intelligence alignment. By shifting away from traditional models where AI agents are given fixed, pre-programmed goals, assistance g" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="stuart-russells-assistance-games-and-ai-alignment">Stuart
+Russell's Assistance Games and AI Alignment</h1>
+<p>This article explores how computer scientist Stuart Russell’s
+assistance game framework fundamentally redefines artificial
+intelligence alignment. By shifting away from traditional models where
+AI agents are given fixed, pre-programmed goals, assistance games
+require agents to remain explicitly uncertain about true human
+preferences. We will examine the three core principles of this
+framework, the mechanics of reward uncertainty, and how this
+mathematical structure naturally compels AI systems to defer to human
+correction, ask for permission, and allow themselves to be switched
+off.</p>
+<p>Traditional AI development relies on the "standard model," where
+humans specify a rigid objective and the AI optimizes for it. This
+approach is dangerous because humans rarely specify their full, complex
+values correctly. If an AI is completely certain of a flawed goal, it
+will pursue that goal at all costs, viewing human interference as an
+obstacle to be avoided. Stuart Russell replaces this flawed model with
+the concept of assistance games—originally known as cooperative inverse
+reinforcement learning (CIRL)—which treats alignment as a two-player
+game between a human and a robot.</p>
+<p>Russell’s framework is built upon three foundational principles for
+beneficial machines:</p>
+<ol type="1">
+<li><strong>Altruism:</strong> The machine's only objective is to
+maximize the realization of human preferences.</li>
+<li><strong>Uncertainty:</strong> The machine is initially uncertain
+about what those preferences are.</li>
+<li><strong>Observational Learning:</strong> The ultimate source of
+information about human preferences is human behavior.</li>
+</ol>
+<p>In an assistance game, both the human and the AI operate in the same
+environment and share the exact same goal: maximizing the human's reward
+function. However, there is an asymmetry of information. The human knows
+the true reward function (or at least experiences it), while the AI does
+not. Instead, the AI maintains a probability distribution—a mathematical
+belief state—over what the human’s true preferences might be.</p>
+<p>Because the AI is explicitly uncertain about the goal, it treats
+human actions not as obstacles, but as vital streams of information.
+When a human gives a command, expresses frustration, or intervenes in a
+task, the AI uses this behavior to update its probability distribution
+and refine its understanding of what the human actually wants.</p>
+<p>This uncertainty is the exact mechanism that causes the AI to defer
+to human correction. Under the standard model, if an AI is given a fixed
+goal (like fetching coffee), it has an instrumental incentive to prevent
+a human from turning it off, because being turned off prevents it from
+achieving the goal.</p>
+<p>In an assistance game, the "off-switch problem" is resolved
+mathematically. The AI reasons that a rational human would only press
+the off-switch if the AI is doing something contrary to the human's true
+preferences. Because the AI wants to fulfill human preferences, and
+knows the human has better information about those preferences, the AI
+realizes that being switched off is preferable to continuing a
+potentially harmful action. Therefore, uncertainty gives the AI a direct
+mathematical incentive to defer to the human.</p>
+<p>Furthermore, this framework changes how an AI acts when faced with
+high-stakes decisions. If an agent is uncertain whether a specific
+action will yield a massive positive reward or a catastrophic negative
+reward for the human, it will not guess. Instead, the optimal strategy
+in an assistance game is to pause and query the human for
+clarification.</p>
+<p>By mathematically embedding humility into artificial intelligence,
+Stuart Russell’s assistance games transform the alignment problem.
+Rather than trying to write a flawless list of human values into code,
+developers create agents that actively seek to learn our values, welcome
+our oversight, and inherently defer to our corrections.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/stuart-russell-s-assistance-games-and-ai-alignment';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

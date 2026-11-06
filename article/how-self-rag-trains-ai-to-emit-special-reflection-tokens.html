@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Self-RAG Trains AI to Emit Special Reflection Tokens - ai</title>
+    <meta name="description" content="Self-Reflective Retrieval-Augmented Generation (Self-RAG) is an advanced AI framework that significantly improves the factual accuracy of large language models by teaching them to critique their own outputs. Instead of blindly retrieving external data for">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-self-rag-trains-ai-to-emit-special-reflection-tokens">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Self-RAG Trains AI to Emit Special Reflection Tokens - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-self-rag-trains-ai-to-emit-special-reflection-tokens" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Self-Reflective Retrieval-Augmented Generation (Self-RAG) is an advanced AI framework that significantly improves the factual accuracy of large language models by teaching them to critique their own outputs. Instead of blindly retrieving external data for" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-self-rag-trains-ai-to-emit-special-reflection-tokens">How
+Self-RAG Trains AI to Emit Special Reflection Tokens</h1>
+<p>Self-Reflective Retrieval-Augmented Generation (Self-RAG) is an
+advanced AI framework that significantly improves the factual accuracy
+of large language models by teaching them to critique their own outputs.
+Instead of blindly retrieving external data for every prompt, Self-RAG
+trains an AI to generate special reflection tokens alongside standard
+text. This article provides a straightforward breakdown of how Self-RAG
+trains a language model to emit these specialized tokens, enabling the
+system to dynamically determine its own retrieval needs and evaluate the
+factual support of its generated responses through a specialized Critic
+model and an augmented Generator model.</p>
+<h2 id="understanding-the-four-reflection-tokens">Understanding the Four
+Reflection Tokens</h2>
+<p>To understand the training process, it is necessary to look at the
+four types of special tokens added to the AI’s vocabulary. These tokens
+act as internal checkpoints:</p>
+<ul>
+<li><strong>Retrieve:</strong> Determines if the model needs external
+information to continue generating a response. (Values: <em>Yes, No,
+Continue</em>)</li>
+<li><strong>IsREL (Relevance):</strong> Evaluates whether a retrieved
+document actually pertains to the user's prompt. (Values: <em>Relevant,
+Irrelevant</em>)</li>
+<li><strong>IsSUP (Support):</strong> Checks if the facts in the AI's
+generated sentence are backed up by the retrieved document. (Values:
+<em>Fully supported, Partially supported, No support</em>)</li>
+<li><strong>IsUSE (Utility):</strong> Grades the overall helpfulness of
+the final response on a scale from 1 to 5.</li>
+</ul>
+<h2 id="step-1-training-the-critic-model">Step 1: Training the Critic
+Model</h2>
+<p>The training process begins by building a separate evaluator AI known
+as the Critic model. The sole purpose of the Critic is to read existing
+text and insert the correct reflection tokens into it.</p>
+<p>To train the Critic, developers first use a powerful, pre-existing
+language model (like GPT-4) to analyze thousands of prompt-and-response
+pairs. Through specific instructions, this foundational model labels the
+data with the four reflection tokens, determining where retrieval was
+needed and whether the facts were supported. A smaller, more efficient
+language model is then trained on this labeled dataset using standard
+supervised learning. Once trained, this smaller model becomes the
+Critic, capable of accurately inserting reflection tokens into any raw
+text corpus at scale.</p>
+<h2 id="step-2-augmenting-the-training-data">Step 2: Augmenting the
+Training Data</h2>
+<p>With a functional Critic model, the next phase is to create the
+training dataset for the main AI, known as the Generator.</p>
+<p>The Critic takes a massive dataset of standard prompts and target
+outputs and processes them segment by segment. For every sentence in a
+target response, the Critic evaluates if external knowledge would have
+been necessary to write it. If yes, it inserts a
+<code>[Retrieve=Yes]</code> token, fetches a relevant passage, and
+evaluates the passage with an <code>[IsREL]</code> token. It then reads
+the original generated sentence and appends an <code>[IsSUP]</code>
+token based on how well the retrieved passage supports that sentence.
+Finally, it tacks an <code>[IsUSE]</code> token onto the very end of the
+response.</p>
+<p>The result is an augmented training dataset where standard human text
+is heavily interwoven with special reflection tokens.</p>
+<h2 id="step-3-training-the-generator-model">Step 3: Training the
+Generator Model</h2>
+<p>The final step is training the primary Generator model. The
+Generator’s vocabulary is expanded to include the special reflection
+tokens as if they were standard words or punctuation marks.</p>
+<p>The Generator is then trained on the augmented dataset created by the
+Critic. Crucially, Self-RAG does not require complex reinforcement
+learning for this step. Instead, it uses the standard next-word
+prediction objective (causal language modeling) used to train base
+language models.</p>
+<p>Because the reflection tokens are embedded directly in the training
+text, the Generator learns the statistical patterns of when they should
+appear. It learns to predict <code>[Retrieve=Yes]</code> when a prompt
+asks a complex factual question. It learns to predict
+<code>[IsSUP=Fully supported]</code> only when the text it just
+generated aligns closely with the retrieved context window. If the model
+generates a claim not found in the retrieved text, the training data
+forces it to predict <code>[IsSUP=No support]</code>.</p>
+<h2 id="how-it-works-during-live-generation">How It Works During Live
+Generation</h2>
+<p>Once training is complete, the Critic model is discarded, and the
+Generator operates independently. When a user asks a question, the
+Generator begins predicting words. When it predicts a
+<code>[Retrieve=Yes]</code> token, the system pauses, queries a database
+for documents, and feeds them back into the prompt.</p>
+<p>The Generator then creates a response based on multiple retrieved
+documents in parallel, emitting <code>IsREL</code> and
+<code>IsSUP</code> tokens for each one. The system uses a scoring
+algorithm to read the model's own reflection tokens, automatically
+filtering out the draft responses flagged with
+<code>[IsREL=Irrelevant]</code> or <code>[IsSUP=No support]</code>, and
+only shows the user the most factually accurate text.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-self-rag-trains-ai-to-emit-special-reflection-tokens';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

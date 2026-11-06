@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recalibrating AI Probabilities: Platt and Isotonic Methods - ai</title>
+    <meta name="description" content="Many artificial intelligence models generate output scores that do not accurately reflect true probabilities, meaning a prediction confidence of eighty percent does not always correlate to an eighty percent chance of being correct. This article explores h">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/recalibrating-ai-probabilities-platt-and-isotonic-methods">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Recalibrating AI Probabilities: Platt and Isotonic Methods - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/recalibrating-ai-probabilities-platt-and-isotonic-methods" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Many artificial intelligence models generate output scores that do not accurately reflect true probabilities, meaning a prediction confidence of eighty percent does not always correlate to an eighty percent chance of being correct. This article explores h" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="recalibrating-ai-probabilities-platt-and-isotonic-methods">Recalibrating
+AI Probabilities: Platt and Isotonic Methods</h1>
+<p>Many artificial intelligence models generate output scores that do
+not accurately reflect true probabilities, meaning a prediction
+confidence of eighty percent does not always correlate to an eighty
+percent chance of being correct. This article explores how machine
+learning practitioners resolve this discrepancy through probability
+calibration. Specifically, it examines two foundational post-processing
+techniques—Platt scaling and isotonic regression—detailing the
+mathematical mechanisms they use to align a trained model's raw outputs
+with real-world likelihoods, and comparing when to use each
+approach.</p>
+<h3 id="the-need-for-probability-calibration">The Need for Probability
+Calibration</h3>
+<p>When a classification model is trained, its primary objective is
+usually to separate different classes as accurately as possible, rather
+than to estimate precise probabilities. Algorithms like Support Vector
+Machines (SVMs), boosted decision trees, and deep neural networks often
+produce distorted probability distributions. For instance, boosted trees
+tend to push predicted probabilities away from zero and one, while deep
+neural networks frequently become overconfident, clustering predictions
+near the extremes. Recalibration fixes this by taking the raw output
+scores of a trained model and mapping them to calibrated probabilities
+using a separate validation dataset.</p>
+<h3 id="how-platt-scaling-works">How Platt Scaling Works</h3>
+<p>Platt scaling is a parametric approach to probability calibration,
+originally developed to turn the uncalibrated distance outputs of
+Support Vector Machines into genuine probabilities. It works by fitting
+a logistic regression model directly onto the raw output scores of the
+primary classifier.</p>
+<p>The mechanism follows a specific mathematical transformation:</p>
+<ol type="1">
+<li><strong>Extract Raw Scores:</strong> The trained AI model processes
+a validation dataset and outputs uncalibrated scores (often called
+logits), denoted as <span class="math inline">\(f(x)\)</span>.</li>
+<li><strong>Apply the Sigmoid Function:</strong> Platt scaling passes
+these raw scores through a parameterized sigmoid function: <span
+class="math inline">\(P(y=1|x) = \frac{1}{1 + \exp(A \cdot f(x) +
+B)}\)</span>.</li>
+<li><strong>Optimize Parameters:</strong> The parameters <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are learned by minimizing the negative
+log-likelihood (cross-entropy loss) on the validation set. This
+optimization shifts and scales the S-shaped sigmoid curve until it
+tightly fits the actual distribution of the validation data.</li>
+</ol>
+<p>Because Platt scaling only needs to learn two parameters (<span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>), it is highly efficient and resistant
+to overfitting. It is the ideal choice when the distortion in the
+model's uncalibrated outputs takes a sigmoid shape, and when the
+calibration dataset is relatively small.</p>
+<h3 id="how-isotonic-regression-works">How Isotonic Regression
+Works</h3>
+<p>Isotonic regression is a non-parametric calibration technique. Unlike
+Platt scaling, it does not assume that the relationship between the raw
+model scores and the true probabilities follows a specific S-shaped
+curve. Instead, its only constraint is that the mapping function must be
+isotonic (monotonically increasing). This means that if the AI model
+assigns a higher raw score to instance A than to instance B, the
+calibrated probability for A must be greater than or equal to that of
+B.</p>
+<p>Isotonic regression recalibrates probabilities using the following
+process:</p>
+<ol type="1">
+<li><strong>Rank the Outputs:</strong> The uncalibrated scores from the
+validation set are sorted in ascending order alongside their true binary
+labels (0 or 1).</li>
+<li><strong>Fit a Step Function:</strong> The algorithm attempts to fit
+a piecewise-constant, non-decreasing step function to the sorted data.
+It aims to minimize the mean squared error between the actual labels and
+the calibrated probabilities.</li>
+<li><strong>Pool Adjacent Violators Algorithm (PAVA):</strong> To
+maintain the strict rule that probabilities cannot decrease as raw
+scores increase, the method uses PAVA. The algorithm scans the sorted
+data from left to right. Whenever it encounters a "violation"—where a
+higher raw score corresponds to a lower actual outcome—it pools those
+adjacent data points together and replaces their values with their
+combined average. It repeats this pooling until the entire sequence is
+monotonically increasing.</li>
+</ol>
+<p>Because isotonic regression makes no assumptions about the underlying
+geometry of the calibration curve, it can correct almost any form of
+probability distortion. However, this flexibility comes at a cost. By
+fitting a complex step function, isotonic regression is prone to
+overfitting if the validation dataset is small. It generally requires
+thousands of distinct validation samples to perform reliably.</p>
+<h3 id="choosing-the-right-method">Choosing the Right Method</h3>
+<p>Both Platt scaling and isotonic regression operate strictly as
+post-processing steps; they do not alter the underlying weights or
+decision boundaries of the trained AI model, nor do they change the
+exact ranking of the predictions. The choice between them depends
+entirely on the data and the specific distortions of the base model:</p>
+<ul>
+<li><strong>Use Platt Scaling</strong> when working with limited
+calibration data (fewer than 1,000 samples) or when using models like
+SVMs and neural networks, whose calibration errors naturally mirror a
+sigmoid curve.</li>
+<li><strong>Use Isotonic Regression</strong> when possessing a large
+calibration dataset and when the base model exhibits complex,
+non-sigmoid distortions, which is common in Naive Bayes classifiers and
+random forests.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/recalibrating-ai-probabilities-platt-and-isotonic-methods';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

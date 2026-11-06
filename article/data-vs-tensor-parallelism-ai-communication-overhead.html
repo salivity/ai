@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data vs. Tensor Parallelism: AI Communication Overhead - ai</title>
+    <meta name="description" content="This article examines the communication overhead differences between data parallelism and tensor model parallelism in distributed artificial intelligence training. As AI models scale, distributing the workload across multiple GPUs becomes mandatory, intro">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/data-vs-tensor-parallelism-ai-communication-overhead">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Data vs. Tensor Parallelism: AI Communication Overhead - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/data-vs-tensor-parallelism-ai-communication-overhead" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article examines the communication overhead differences between data parallelism and tensor model parallelism in distributed artificial intelligence training. As AI models scale, distributing the workload across multiple GPUs becomes mandatory, intro" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="data-vs-tensor-parallelism-ai-communication-overhead">Data vs.
+Tensor Parallelism: AI Communication Overhead</h1>
+<p>This article examines the communication overhead differences between
+data parallelism and tensor model parallelism in distributed artificial
+intelligence training. As AI models scale, distributing the workload
+across multiple GPUs becomes mandatory, introducing significant data
+transfer bottlenecks. Data parallelism duplicates the entire model
+across devices and synchronizes gradients only once per training step,
+making it resilient to slower network speeds. Conversely, tensor model
+parallelism splits individual model layers across GPUs, requiring
+constant, high-volume data synchronization during both the forward and
+backward passes. Understanding these communication patterns is essential
+for selecting the right hardware topology and optimizing distributed
+training efficiency.</p>
+<h3 id="communication-in-data-parallelism">Communication in Data
+Parallelism</h3>
+<p>In data parallelism, every GPU holds a complete copy of the model
+weights. The training dataset is divided into shards, and each GPU
+processes a different mini-batch of data independently.</p>
+<p>The communication overhead in this setup occurs strictly during the
+backward pass. Once each GPU calculates its local gradients, they must
+be averaged across all devices to ensure the models remain synchronized
+before the optimizer updates the weights. This synchronization is
+typically achieved using a collective communication operation known as
+All-Reduce.</p>
+<p><strong>Key Characteristics of Data Parallelism
+Overhead:</strong></p>
+<ul>
+<li><strong>Frequency:</strong> Low. Communication happens only once per
+training iteration (at the end of the backward pass).</li>
+<li><strong>Data Volume:</strong> Proportional to the total number of
+model parameters.</li>
+<li><strong>Optimization:</strong> Because gradient calculation happens
+layer by layer backward through the network, the communication of
+gradients for later layers can be overlapped with the computation of
+gradients for earlier layers. This hides a significant portion of the
+communication latency.</li>
+<li><strong>Hardware Requirement:</strong> Can operate efficiently over
+standard multi-node networking (such as Ethernet or InfiniBand) because
+the communication is infrequent and can be masked by computation.</li>
+</ul>
+<h3 id="communication-in-tensor-model-parallelism">Communication in
+Tensor Model Parallelism</h3>
+<p>Tensor model parallelism (often simply called tensor parallelism) is
+used when a model is too large to fit into the memory of a single GPU.
+Instead of copying the model, individual weights matrices (tensors)
+within a single layer are split across multiple GPUs. Each GPU computes
+only a fraction of a layer's output.</p>
+<p>Because the mathematical operations (like matrix multiplications) are
+split, the GPUs cannot proceed to the next layer without combining their
+partial results. This introduces a severe communication bottleneck.</p>
+<p><strong>Key Characteristics of Tensor Parallelism
+Overhead:</strong></p>
+<ul>
+<li><strong>Frequency:</strong> Extremely high. Communication must occur
+multiple times <em>per layer</em> during both the forward pass and the
+backward pass.</li>
+<li><strong>Data Volume:</strong> Proportional to the activation size
+(batch size, sequence length, and hidden dimension).</li>
+<li><strong>Optimization:</strong> It is nearly impossible to overlap
+this communication with computation. A GPU is completely blocked from
+computing the next layer until the All-Reduce or All-Gather operations
+for the current layer are finished.</li>
+<li><strong>Hardware Requirement:</strong> Demands ultra-high bandwidth
+and extremely low latency interconnects, such as NVIDIA NVLink or
+NVSwitch. Tensor parallelism is almost exclusively restricted to GPUs
+within the same physical server (intra-node) because standard inter-node
+network cables are too slow to handle the constant synchronization.</li>
+</ul>
+<h3 id="core-differences-compared">Core Differences Compared</h3>
+<p>To optimize distributed training, engineers evaluate these two
+approaches based on three primary communication metrics:</p>
+<p><strong>1. Synchronization Points</strong> Data parallelism
+synchronizes once per batch. Tensor parallelism synchronizes multiple
+times per layer. If a model has 80 layers, tensor parallelism will
+trigger hundreds of communication events in a single training step,
+whereas data parallelism will trigger one coordinated gradient
+exchange.</p>
+<p><strong>2. Latency vs. Bandwidth Sensitivity</strong> Data
+parallelism is primarily bandwidth-bound. It transfers a massive volume
+of data (all model gradients) at once, so wide pipes are needed, though
+slight delays (latency) in starting the transfer are tolerable due to
+computation overlap. Tensor parallelism is both latency-bound and
+bandwidth-bound. Because the operations are sequential and blocking, any
+microsecond delay in network latency directly stalls the GPUs,
+drastically reducing hardware utilization.</p>
+<p><strong>3. Scaling Efficiency</strong> Data parallelism scales well
+across dozens or hundreds of nodes. You can add more GPUs to increase
+the global batch size with minimal degradation in communication
+efficiency, provided the network bandwidth is sufficient. Tensor
+parallelism scales poorly beyond 8 GPUs (the typical number of GPUs on a
+single motherboard connected via high-speed buses). Attempting to
+stretch tensor parallelism across separate server nodes usually results
+in the GPUs spending more time waiting for data than performing
+calculations.</p>
+<p>In modern large language model (LLM) training, frameworks combine
+both methods (along with pipeline parallelism) into "3D Parallelism."
+Tensor parallelism is confined to the fast interconnects inside a single
+server to handle memory limits, while data parallelism is used across
+the slower connections between separate servers to scale up
+throughput.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/data-vs-tensor-parallelism-ai-communication-overhead';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

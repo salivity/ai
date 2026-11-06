@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Extreme Learning Machines and AI Controversy - ai</title>
+    <meta name="description" content="This article explores Extreme Learning Machines (ELMs), a unique type of artificial neural network, and the heated academic debate surrounding their design. You will learn how ELMs bypass traditional, slow training methods by using a single hidden layer w">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-extreme-learning-machines-and-ai-controversy">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Extreme Learning Machines and AI Controversy - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-extreme-learning-machines-and-ai-controversy" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores Extreme Learning Machines (ELMs), a unique type of artificial neural network, and the heated academic debate surrounding their design. You will learn how ELMs bypass traditional, slow training methods by using a single hidden layer w" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-extreme-learning-machines-and-ai-controversy">Understanding
+Extreme Learning Machines and AI Controversy</h1>
+<p>This article explores Extreme Learning Machines (ELMs), a unique type
+of artificial neural network, and the heated academic debate surrounding
+their design. You will learn how ELMs bypass traditional, slow training
+methods by using a single hidden layer with randomly assigned weights.
+Furthermore, this piece examines the core reasons why this approach is
+deeply controversial in the artificial intelligence community, focusing
+on disputes over historical originality, mathematical robustness, and
+real-world scalability.</p>
+<p>An Extreme Learning Machine is a feedforward neural network designed
+for classification, regression, and clustering. Unlike standard neural
+networks that comprise multiple layers and require iterative training, a
+basic ELM consists of an input layer, a single hidden layer, and an
+output layer.</p>
+<p>The defining feature of an ELM is how it handles the weights—the
+numerical parameters that determine the strength of connections between
+neurons. In a traditional network, weights are painstakingly adjusted
+over thousands of cycles using an algorithm called backpropagation. In
+an ELM, the weights connecting the input layer to the single hidden
+layer are assigned completely at random and are never updated.</p>
+<p>Because the hidden layer weights are frozen from the start, the
+network only needs to learn the weights connecting the hidden layer to
+the output layer. This transforms the training process from a complex,
+iterative optimization problem into a simple system of linear equations.
+The network solves these equations in a single step using a mathematical
+operation known as the Moore-Penrose generalized inverse. As a result,
+ELMs can train thousands of times faster than conventional neural
+networks while often achieving comparable accuracy on simple
+datasets.</p>
+<p>Despite their impressive speed, ELMs and their random weight
+assignments have sparked intense controversy in artificial intelligence
+research. The backlash centers on three main issues:</p>
+<p><strong>1. Accusations of Unoriginality and Rebranding</strong> The
+most significant controversy is historical. When Guang-Bin Huang
+introduced the term "Extreme Learning Machine" in 2004, prominent AI
+researchers—including Deep Learning pioneer Jürgen Schmidhuber—argued
+that the concept was not new. Critics pointed out that networks with
+randomized, untrained hidden layers were already invented in the late
+1980s and early 1990s. These earlier models were known as Random Vector
+Functional Link (RVFL) networks and Schmidt networks. Many researchers
+accuse ELM proponents of simply renaming existing algorithms without
+properly citing the original creators, leading to a fractured academic
+record.</p>
+<p><strong>2. The Limits of Randomness</strong> Traditional deep
+learning relies on learning "representations." By adjusting hidden layer
+weights, a network learns to identify specific features—like edges in an
+image or syntax in text. Because ELMs assign these weights randomly, the
+hidden layer does not actually learn features. Instead, it acts as a
+random projection, throwing data into a higher dimension in hopes that
+it becomes easier to separate. Critics argue this is a "brute force"
+mathematical trick rather than true artificial intelligence. To
+compensate for the lack of learned features, an ELM often requires a
+massive number of hidden neurons, which can lead to overfitting and poor
+performance on unseen data.</p>
+<p><strong>3. Inability to Scale to Complex Tasks</strong> While the
+single-hidden-layer random weight approach works well for small,
+structured datasets, many researchers argue it is a dead end for modern
+AI challenges. Complex tasks like natural language processing,
+autonomous driving, and high-resolution image recognition require deep,
+multi-layered architectures that extract hierarchical features. Because
+standard ELMs rely on a single layer of random projections, they
+generally fail to match the accuracy of deep learning models on
+large-scale, complex problems.</p>
+<p>Ultimately, Extreme Learning Machines remain a polarized topic. While
+proponents praise them as a fast, efficient alternative for simple
+machine learning tasks and edge computing, critics view them as a
+repackaged 1990s algorithm that sacrifices the foundational principles
+of feature learning for sheer speed.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-extreme-learning-machines-and-ai-controversy';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

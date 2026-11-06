@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoding AI: Mechanistic Interpretability and Autoencoders - ai</title>
+    <meta name="description" content="This article provides a clear examination of mechanistic interpretability and how researchers use sparse autoencoders to understand artificial intelligence. We will explore the inner workings of neural networks, the problem of tangled data representations">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/decoding-ai-mechanistic-interpretability-and-autoencoders">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Decoding AI: Mechanistic Interpretability and Autoencoders - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/decoding-ai-mechanistic-interpretability-and-autoencoders" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a clear examination of mechanistic interpretability and how researchers use sparse autoencoders to understand artificial intelligence. We will explore the inner workings of neural networks, the problem of tangled data representations" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="decoding-ai-mechanistic-interpretability-and-autoencoders">Decoding
+AI: Mechanistic Interpretability and Autoencoders</h1>
+<p>This article provides a clear examination of mechanistic
+interpretability and how researchers use sparse autoencoders to
+understand artificial intelligence. We will explore the inner workings
+of neural networks, the problem of tangled data representations, and how
+isolating single-meaning features makes AI systems safer, more
+transparent, and predictable.</p>
+<h2 id="what-is-mechanistic-interpretability">What is Mechanistic
+Interpretability?</h2>
+<p>Modern artificial intelligence models, particularly large language
+models, operate as "black boxes." While we can see the data that goes in
+and the answers that come out, the internal decision-making process
+remains largely hidden.</p>
+<p>Mechanistic interpretability is a subfield of AI research dedicated
+to reverse-engineering these neural networks. Instead of merely guessing
+why an AI made a decision, researchers aim to map the exact internal
+computations and algorithms the model uses. The ultimate goal is to
+translate the complex mathematical weights inside a neural network into
+human-understandable concepts, similar to reading the source code of
+traditional software.</p>
+<h2 id="the-challenge-polysemanticity-and-superposition">The Challenge:
+Polysemanticity and Superposition</h2>
+<p>To understand how an AI thinks, researchers initially looked at
+individual artificial neurons, hoping each neuron would correspond to a
+single concept, such as "dogs" or "the color blue." However, they
+discovered a major roadblock: most neurons are polysemantic.</p>
+<p>A polysemantic neuron activates for multiple, completely unrelated
+concepts. For example, a single neuron might fire when processing images
+of cat faces, the front of cars, and specific lines of computer
+code.</p>
+<p>This happens because of a phenomenon called superposition. Neural
+networks have to learn millions of concepts, far more than the number of
+available neurons. To save space, the network compresses and overlaps
+multiple concepts across the same neurons. While efficient for the AI,
+this entanglement makes it impossible for humans to read the network's
+mind by looking at individual neurons alone.</p>
+<h2 id="the-goal-finding-monosemantic-features">The Goal: Finding
+Monosemantic Features</h2>
+<p>To bypass the confusion of polysemantic neurons, researchers search
+for monosemantic features. A monosemantic feature is a specific pattern
+of neural activation that represents one, and only one, clear
+concept.</p>
+<p>Instead of looking at a single neuron, researchers look at directions
+in the network's activation space—essentially combinations of neurons
+working together. Uncovering these monosemantic features is the key to
+mechanistic interpretability, as it allows scientists to finally see the
+exact building blocks of the AI's knowledge.</p>
+<h2 id="how-sparse-autoencoders-solve-the-problem">How Sparse
+Autoencoders Solve the Problem</h2>
+<p>To untangle the mess of superposition and extract monosemantic
+features, researchers use a specialized tool called a Sparse Autoencoder
+(SAE). An SAE is a secondary, simpler neural network trained to
+interpret the complex activations of the primary AI model.</p>
+<p>Sparse autoencoders identify monosemantic features through a specific
+three-step process:</p>
+<ol type="1">
+<li><strong>Expansion:</strong> The SAE takes the cramped, overlapping
+activations from a layer of the main AI model and projects them into a
+much larger layer. If the original model uses 1,000 neurons, the SAE
+might expand that data across 100,000 artificial neurons. This provides
+enough space for every concept to have its own dedicated neuron without
+overlapping.</li>
+<li><strong>Enforcing Sparsity:</strong> Simply having more space is not
+enough; the SAE must be forced to organize the data cleanly. Researchers
+apply a mathematical penalty called a "sparsity constraint." This rule
+dictates that for any given input, only a tiny fraction of the SAE's
+neurons are allowed to fire at the same time.</li>
+<li><strong>Reconstruction:</strong> Finally, the SAE must take those
+few active neurons and compress the information back down to recreate
+the original AI model's activation state.</li>
+</ol>
+<p>Because the SAE is forced to reconstruct the original data using as
+few active neurons as possible, it cannot afford to be messy. It
+efficiently groups related information together. As a result, the
+individual neurons inside the expanded layer of the Sparse Autoencoder
+naturally align with distinct, monosemantic features.</p>
+<h2 id="why-this-matters-for-ai-safety">Why This Matters for AI
+Safety</h2>
+<p>By using sparse autoencoders to map out monosemantic features,
+researchers can build a dictionary of an AI's internal concepts. They
+have already found features corresponding to specific concepts like the
+Golden Gate Bridge, DNA sequences, deceit, and sycophancy.</p>
+<p>Once these features are identified, scientists can monitor them to
+see if an AI is engaging in harmful reasoning. Furthermore, they can
+manually dial these features up or down to steer the AI's behavior—such
+as suppressing a "deception" feature to ensure the model remains honest.
+Through mechanistic interpretability and sparse autoencoders, we are
+steadily transforming AI from an unpredictable black box into a
+transparent, controllable technology.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/decoding-ai-mechanistic-interpretability-and-autoencoders';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

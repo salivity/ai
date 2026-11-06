@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Activation Checkpointing Saves GPU Memory in AI Training - ai</title>
+    <meta name="description" content="Activation checkpointing—also known as gradient checkpointing—is a crucial memory optimization technique used in training deep neural networks. This article provides a straightforward breakdown of how this method drastically reduces GPU memory usage by di">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-activation-checkpointing-saves-gpu-memory-in-ai-training">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Activation Checkpointing Saves GPU Memory in AI Training - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-activation-checkpointing-saves-gpu-memory-in-ai-training" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Activation checkpointing—also known as gradient checkpointing—is a crucial memory optimization technique used in training deep neural networks. This article provides a straightforward breakdown of how this method drastically reduces GPU memory usage by di" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="how-activation-checkpointing-saves-gpu-memory-in-ai-training">How
+Activation Checkpointing Saves GPU Memory in AI Training</h1>
+<p>Activation checkpointing—also known as gradient checkpointing—is a
+crucial memory optimization technique used in training deep neural
+networks. This article provides a straightforward breakdown of how this
+method drastically reduces GPU memory usage by discarding intermediate
+layer outputs during the forward pass and recalculating them on the fly
+during the backward pass, effectively trading extra computation time for
+massive memory savings.</p>
+<h3 id="the-memory-bottleneck-in-deep-learning">The Memory Bottleneck in
+Deep Learning</h3>
+<p>To understand activation checkpointing, you first need to understand
+why training artificial intelligence models consumes so much memory.
+Training a neural network happens in two main phases: the forward pass
+and the backward pass (backpropagation).</p>
+<p>During the forward pass, data moves through the layers of the network
+to generate a prediction. As the data passes through each layer, the
+network produces intermediate outputs called "activations." In standard
+training, the GPU must store the activations of every single layer in
+its high-bandwidth memory (VRAM). This is because the backward pass
+requires these exact activation values to calculate the gradients
+(errors) needed to update the model's weights.</p>
+<p>For large models, such as modern Transformers, these stored
+activations consume far more memory than the model parameters
+themselves. As you increase the batch size or sequence length, the
+memory required to hold these activations grows linearly, quickly
+leading to "Out of Memory" (OOM) errors.</p>
+<h3 id="how-activation-checkpointing-works">How Activation Checkpointing
+Works</h3>
+<p>Activation checkpointing solves this bottleneck by changing what the
+GPU remembers during the forward pass. Instead of saving the activations
+for every single layer, the system only saves activations at specific,
+predetermined intervals. These saved layers are called
+"checkpoints."</p>
+<p>The process works in three distinct steps:</p>
+<ol type="1">
+<li><strong>The Selective Forward Pass:</strong> As data moves forward
+through the network, the GPU computes the activations as usual. However,
+it immediately deletes the activations of most layers as soon as they
+are used to compute the next layer. It only retains the activations at
+the designated checkpoint layers.</li>
+<li><strong>The Backward Pass Trigger:</strong> During backpropagation,
+the network works backward from the final output to the beginning. When
+it needs the missing activations of a specific segment to calculate
+gradients, it pauses the backward pass.</li>
+<li><strong>On-the-Fly Recomputation:</strong> The GPU takes the nearest
+preceding checkpoint (which was saved in memory) and runs a mini-forward
+pass from that checkpoint up to the current layer. This regenerates the
+missing activations just in time to compute the gradients. Once the
+gradients for that segment are calculated, the regenerated activations
+are immediately discarded again.</li>
+</ol>
+<h3 id="the-math-behind-the-trade-off">The Math Behind the
+Trade-Off</h3>
+<p>Activation checkpointing is a classic computer science trade-off
+between space (memory) and time (computation).</p>
+<p>In a standard neural network with <span
+class="math inline">\(N\)</span> layers, the memory required to store
+activations scales linearly, which is represented as <span
+class="math inline">\(O(N)\)</span>. If you have a 100-layer network,
+you must store 100 sets of activations.</p>
+<p>By placing checkpoints at every <span
+class="math inline">\(\sqrt{N}\)</span> layers, activation checkpointing
+reduces the memory requirement to <span
+class="math inline">\(O(\sqrt{N})\)</span>. In that same 100-layer
+network, you would only store checkpoints every 10 layers (storing just
+10 sets of activations instead of 100). During the backward pass, you
+only need enough extra memory to hold the recomputed activations for the
+10 layers currently being processed. This drops the peak activation
+memory footprint from 100 units down to roughly 20 units—an 80%
+reduction.</p>
+<p>The cost of this memory reduction is the extra compute required for
+the mini-forward passes. Because the network has to run the forward pass
+twice for the un-cached segments (once during the initial forward pass,
+and once during backpropagation), the total number of floating-point
+operations increases. In practice, since the backward pass is naturally
+twice as computationally heavy as the forward pass, adding one extra
+forward pass slows down the overall training time by approximately 20%
+to 33%.</p>
+<h3 id="practical-benefits-for-ai-practitioners">Practical Benefits for
+AI Practitioners</h3>
+<p>Despite the slight decrease in training speed per step, activation
+checkpointing is almost universally used when training Large Language
+Models (LLMs) and deep vision models. The benefits far outweigh the
+compute penalty:</p>
+<ul>
+<li><strong>Preventing Out-of-Memory Errors:</strong> It allows massive
+models to fit onto consumer or enterprise GPUs that would otherwise
+crash during the forward pass.</li>
+<li><strong>Larger Batch Sizes:</strong> The freed-up VRAM can be used
+to drastically increase the training batch size. Larger batch sizes
+utilize the GPU's parallel processing capabilities much more
+efficiently, which often cancels out the 25% time penalty caused by
+recomputation.</li>
+<li><strong>Longer Context Lengths:</strong> In natural language
+processing, memory scales rapidly with text length. Checkpointing allows
+models to train on long documents and complex prompts without exhausting
+hardware limits.</li>
+</ul>
+<p>By strategically forgetting and recalculating data, activation
+checkpointing ensures that hardware memory limits do not stop the
+scaling of modern artificial intelligence.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-activation-checkpointing-saves-gpu-memory-in-ai-training';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

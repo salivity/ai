@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CRFs Overcome the Label Bias Problem in Sequence Prediction - ai</title>
+    <meta name="description" content="In artificial intelligence, structured sequence prediction tasks like part-of-speech tagging and named entity recognition require models to understand the context of an entire data sequence. Earlier discriminative models, specifically Maximum Entropy Mark">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-cr-fs-overcome-the-label-bias-problem-in-sequence-prediction">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CRFs Overcome the Label Bias Problem in Sequence Prediction - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-cr-fs-overcome-the-label-bias-problem-in-sequence-prediction" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In artificial intelligence, structured sequence prediction tasks like part-of-speech tagging and named entity recognition require models to understand the context of an entire data sequence. Earlier discriminative models, specifically Maximum Entropy Mark" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="how-crfs-overcome-the-label-bias-problem-in-sequence-prediction">How
+CRFs Overcome the Label Bias Problem in Sequence Prediction</h1>
+<p>In artificial intelligence, structured sequence prediction tasks like
+part-of-speech tagging and named entity recognition require models to
+understand the context of an entire data sequence. Earlier
+discriminative models, specifically Maximum Entropy Markov Models
+(MEMMs), suffered from a critical flaw known as the label bias problem,
+which skewed predictions toward states with fewer outgoing transitions.
+Conditional Random Fields (CRFs) were introduced to resolve this exact
+issue. This article explains the mechanics of the label bias problem in
+MEMMs and demonstrates how CRFs eliminate it by replacing local
+per-state normalization with a global normalization factor over the
+entire sequence.</p>
+<h2 id="understanding-maximum-entropy-markov-models-memms">Understanding
+Maximum Entropy Markov Models (MEMMs)</h2>
+<p>MEMMs are discriminative sequence models that predict a sequence of
+labels given a sequence of observations. They combine the structure of
+Hidden Markov Models (HMMs) with the flexibility of maximum entropy
+(logistic regression) classifiers.</p>
+<p>In an MEMM, the probability of transitioning from one state (label)
+to the next, given the current observation, is calculated locally. At
+each step in the sequence, the model uses a softmax function to ensure
+that the probabilities of all possible next states sum to 1. This is
+known as local normalization.</p>
+<h2 id="what-is-the-label-bias-problem">What is the Label Bias
+Problem?</h2>
+<p>The label bias problem is a direct consequence of the local
+normalization used in MEMMs. Because the transition probabilities
+leaving any given state must sum to 1, states with a low-entropy
+distribution over the next possible states (meaning they have very few
+outgoing transitions) end up dominating the prediction path.</p>
+<p>Consider a state that only has one possible outgoing transition.
+Because of local normalization, the probability of taking that single
+transition is forced to be 1.0, completely regardless of what the
+current observation actually is. Consequently, the model ignores the
+observation data at that step. During decoding, the model will
+systematically favor paths that go through states with fewer outgoing
+transitions, because their local probabilities are inherently higher and
+suffer less dilution than states with many possible outgoing
+transitions.</p>
+<p>Furthermore, because MEMMs are directed graphical models where
+probabilities are normalized step-by-step from left to right,
+information from future observations cannot influence decisions made at
+earlier states during training.</p>
+<h2 id="how-conditional-random-fields-crfs-solve-the-problem">How
+Conditional Random Fields (CRFs) Solve the Problem</h2>
+<p>Conditional Random Fields eliminate the label bias problem by
+abandoning directed, local normalization in favor of an undirected
+graphical model that uses global normalization.</p>
+<h3 id="1-undirected-graphical-structure">1. Undirected Graphical
+Structure</h3>
+<p>Unlike MEMMs, which use directed edges that force a sequential,
+step-by-step probability conservation, linear-chain CRFs use undirected
+edges between states. The model does not compute the probability of the
+next state given the current state. Instead, it computes a joint score
+for the entire label sequence given the entire observation sequence.</p>
+<h3 id="2-potential-functions-instead-of-local-probabilities">2.
+Potential Functions Instead of Local Probabilities</h3>
+<p>At each step in a CRF, transitions and observations are evaluated
+using feature functions, which are weighted and summed to create
+"potential functions." Crucially, these potentials are not
+probabilities. They are unnormalized scores that do not have to sum to 1
+at each step. If a state has only one outgoing transition, its score is
+still entirely dependent on how well the current observation matches the
+state, rather than being artificially forced to a value of 1.0.</p>
+<h3 id="3-global-normalization-the-partition-function">3. Global
+Normalization (The Partition Function)</h3>
+<p>To turn the unnormalized sequence scores into a valid probability
+distribution, CRFs normalize once across the entire sequence. The model
+adds up the potential scores for a specific path and divides it by a
+global normalization factor, often called the partition function (<span
+class="math inline">\(Z\)</span>).</p>
+<p>The partition function is the sum of the unnormalized scores of all
+possible label sequences for the given input. Because normalization
+happens only at the very end over all possible paths:</p>
+<ul>
+<li>States with few outgoing transitions are no longer given an unfair
+mathematical advantage.</li>
+<li>The observation data is never ignored, as every observation directly
+contributes to the global score of the path.</li>
+<li>Future observations can influence past label predictions, allowing
+the model to revise an earlier path choice if a later observation makes
+a current path globally improbable.</li>
+</ul>
+<p>By trading local normalization for global normalization, CRFs ensure
+that every state transition competes fairly on a sequence-wide level,
+successfully eradicating the label bias problem.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-cr-fs-overcome-the-label-bias-problem-in-sequence-prediction';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

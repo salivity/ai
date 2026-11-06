@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How MENACE Taught AI Principles Without a Digital Computer - ai</title>
+    <meta name="description" content="In 1961, British artificial intelligence pioneer Donald Michie lacked access to a digital computer, so he built a learning machine out of 304 matchboxes and colored beads. Known as MENACE (Matchbox Educable Noughts and Crosses Engine), this mechanical dev">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-menace-taught-ai-principles-without-a-digital-computer">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How MENACE Taught AI Principles Without a Digital Computer - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-menace-taught-ai-principles-without-a-digital-computer" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In 1961, British artificial intelligence pioneer Donald Michie lacked access to a digital computer, so he built a learning machine out of 304 matchboxes and colored beads. Known as MENACE (Matchbox Educable Noughts and Crosses Engine), this mechanical dev" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-menace-taught-ai-principles-without-a-digital-computer">How
+MENACE Taught AI Principles Without a Digital Computer</h1>
+<p>In 1961, British artificial intelligence pioneer Donald Michie lacked
+access to a digital computer, so he built a learning machine out of 304
+matchboxes and colored beads. Known as MENACE (Matchbox Educable Noughts
+and Crosses Engine), this mechanical device learned to master the game
+of tic-tac-toe through trial and error. This article explores how
+Michie’s simple contraption successfully demonstrated the foundational
+principles of reinforcement learning—states, actions, rewards, and
+punishments—decades before modern computing made advanced machine
+learning commonplace.</p>
+<p>To understand MENACE, one must first understand how it mapped the
+game of tic-tac-toe. Michie recognized that accounting for board
+rotations and reflections, there are 304 unique board layouts that the
+first player might face during a game. He used one matchbox to represent
+each of these 304 possible states. On the front of each matchbox, he
+glued a drawing of the specific board layout it represented.</p>
+<p>Inside each matchbox, Michie placed colored glass beads. Each color
+corresponded to a specific empty square on the tic-tac-toe grid.
+Therefore, the beads represented the possible legal actions the machine
+could take from that specific board state. If a board state had four
+empty squares, the matchbox contained beads of four different
+colors.</p>
+<p>Playing a game against MENACE required a human operator to act as the
+mechanical processor. MENACE always made the first move. The operator
+would find the matchbox showing the empty board, shake it, and randomly
+draw one bead. The color of the bead dictated where MENACE placed its
+"X" on the board. The matchbox was then left open on the table with the
+drawn bead sitting beside it. After the human opponent made their move,
+the operator would find the matchbox corresponding to the new board
+state, draw another bead, and repeat the process until the game
+ended.</p>
+<p>The brilliance of MENACE lay in what happened after the game
+concluded. The machine utilized a reward and punishment system that
+mirrors modern reinforcement learning algorithms. Because the used
+matchboxes and the chosen beads were set aside during the game, the
+operator had a complete record of the exact decisions MENACE made along
+the path to victory, defeat, or a draw.</p>
+<p>If MENACE won the game, it received positive reinforcement. The
+operator returned the drawn beads to their respective matchboxes and
+added three extra beads of the same color to each box used in that game.
+This increased the statistical probability that MENACE would choose
+those same winning moves if it encountered those board states in the
+future.</p>
+<p>If MENACE lost the game, it received negative reinforcement. The
+operator simply threw away the beads that were drawn during the match.
+By removing those beads from the matchboxes, MENACE became less likely
+to make those specific mistakes again. If a matchbox ever ran out of
+beads entirely, that specific path was permanently abandoned.</p>
+<p>In the event of a draw—which is the optimal outcome between two
+perfect tic-tac-toe players—MENACE received a smaller reward. The
+operator returned the original bead to each used matchbox and added one
+extra bead of the same color. This encouraged the machine to favor draws
+over losses while still preferring outright wins.</p>
+<p>Over the course of a two-day tournament against human players, MENACE
+initially lost frequently because its moves were entirely random.
+However, as bad beads were removed and good beads multiplied, the
+probabilities inside the matchboxes shifted. Within 20 games, MENACE was
+consistently beating or drawing against its human opponents.</p>
+<p>Through this analog process, Michie physically manifested the core
+components of reinforcement learning. In modern artificial intelligence,
+an "agent" (MENACE) interacts with an "environment" (the game board).
+The agent observes a "state" (the matchbox), takes an "action" (drawing
+a bead) based on a "policy" (the ratio of bead colors), and receives a
+"reward" or "penalty" (adding or removing beads) that updates its policy
+for future iterations. MENACE proved that machine learning is
+fundamentally a mathematical process of adjusting probabilities based on
+past outcomes, requiring no silicon microchips to function.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-menace-taught-ai-principles-without-a-digital-computer';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

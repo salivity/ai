@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How ALiBi Enables Length Extrapolation in AI Models - ai</title>
+    <meta name="description" content="Attention with Linear Biases (ALiBi) is an innovative positional encoding method used in Transformer models to process sequences much longer than those seen during training. Instead of adding positional embeddings to word tokens at the start of the model,">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-a-li-bi-enables-length-extrapolation-in-ai-models">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How ALiBi Enables Length Extrapolation in AI Models - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-a-li-bi-enables-length-extrapolation-in-ai-models" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Attention with Linear Biases (ALiBi) is an innovative positional encoding method used in Transformer models to process sequences much longer than those seen during training. Instead of adding positional embeddings to word tokens at the start of the model," />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-alibi-enables-length-extrapolation-in-ai-models">How ALiBi
+Enables Length Extrapolation in AI Models</h1>
+<p>Attention with Linear Biases (ALiBi) is an innovative positional
+encoding method used in Transformer models to process sequences much
+longer than those seen during training. Instead of adding positional
+embeddings to word tokens at the start of the model, ALiBi applies a
+static, non-learned penalty directly to the attention scores based on
+the distance between tokens. This simple adjustment introduces a strong
+recency bias that degrades distant information predictably, allowing
+artificial intelligence models to extrapolate to vastly longer context
+windows without losing performance or requiring extra memory.</p>
+<p>Traditional Transformer models have no inherent sense of word order.
+To fix this, developers usually add sinusoidal or learned positional
+embeddings to token representations at the bottom of the network.
+However, these methods fail when a model encounters sequences during
+inference that are longer than the sequences it saw during training. The
+model simply does not know how to handle new, unseen position
+values.</p>
+<p>ALiBi completely removes positional embeddings from the input layer.
+Instead, it intervenes inside the attention mechanism itself. When a
+Transformer calculates attention, it multiplies a query vector by a key
+vector to generate a raw attention score, which determines how much
+focus one word should place on another. ALiBi modifies this process by
+adding a negative bias directly to this raw attention score before the
+softmax function is applied.</p>
+<p>The bias is strictly proportional to the distance between the query
+token and the key token. If two tokens are right next to each other, the
+distance is one, and the penalty is small. If they are ten tokens apart,
+the penalty is ten times larger. Mathematically, the distance between
+the two tokens is multiplied by a static scalar value called a slope.
+Because the bias is negative, words that are further apart receive a
+lower final attention score, forcing the model to prioritize recent,
+nearby context.</p>
+<p>To allow the model to capture information across different spans of
+text, ALiBi assigns a different static slope to each attention head in a
+layer. These slopes are not learned during training; they are fixed
+before training begins using a geometric sequence. For example, in an
+eight-head model, the slopes might be fractions like 1/2, 1/4, 1/8, and
+so on. Attention heads with large slopes penalize distance heavily and
+focus strictly on local, immediate words. Heads with very small slopes
+apply a gentle penalty, allowing them to look much further back into the
+sequence to gather broader context.</p>
+<p>This mechanism enables length extrapolation because the penalty
+scales linearly and remains localized. Because the softmax function
+exponentiates the attention scores, adding a linear negative bias
+equates to exponentially decaying the importance of distant tokens.
+Eventually, when tokens are far enough apart, the penalty becomes so
+large that their attention scores drop to near zero after the softmax
+calculation.</p>
+<p>When a model trained on 1,000 tokens is suddenly given 10,000 tokens
+during inference, it does not break. The ALiBi penalties simply silence
+the tokens that are thousands of steps away, keeping the statistical
+distribution of the attention scores identical to what the model
+experienced during training. The model seamlessly processes the massive
+sequence by focusing on the sliding window of relevant context defined
+by the static slopes, achieving reliable extrapolation with zero
+additional trainable parameters.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-a-li-bi-enables-length-extrapolation-in-ai-models';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

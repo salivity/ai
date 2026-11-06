@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Surrogates Speed Up Smog Simulations by 1000x - ai</title>
+    <meta name="description" content="This article provides an overview of how atmospheric chemists use artificial intelligence (AI) surrogate models to drastically accelerate chemical transport simulations. Traditional models used to predict ozone and secondary organic aerosol (SOA) smog req">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-surrogates-speed-up-smog-simulations-by-1000-x">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Surrogates Speed Up Smog Simulations by 1000x - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-surrogates-speed-up-smog-simulations-by-1000-x" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of how atmospheric chemists use artificial intelligence (AI) surrogate models to drastically accelerate chemical transport simulations. Traditional models used to predict ozone and secondary organic aerosol (SOA) smog req" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-surrogates-speed-up-smog-simulations-by-1000x">AI Surrogates
+Speed Up Smog Simulations by 1000x</h1>
+<p>This article provides an overview of how atmospheric chemists use
+artificial intelligence (AI) surrogate models to drastically accelerate
+chemical transport simulations. Traditional models used to predict ozone
+and secondary organic aerosol (SOA) smog require massive computational
+power to solve complex mathematical equations. By replacing these heavy
+physics-based calculations with trained neural networks, scientists can
+now run smog simulations up to a thousand times faster while maintaining
+high accuracy.</p>
+<p>Traditional chemical transport models (CTMs) are the standard tools
+for forecasting air quality. They simulate how pollutants move, react,
+and transform in the atmosphere. However, accurately modeling the
+formation of ground-level ozone and secondary organic aerosols is
+notoriously slow. It requires solving stiff differential equations that
+represent thousands of simultaneous chemical reactions, alongside
+complex physics governing wind patterns, temperature, and sunlight. A
+single high-resolution simulation can take days or weeks on a
+supercomputer, limiting how quickly scientists can respond to air
+quality crises.</p>
+<p>To bypass this bottleneck, atmospheric chemists use AI surrogate
+models, also known as emulators. Instead of calculating every individual
+chemical reaction from scratch, an AI surrogate learns the relationship
+between input conditions and the resulting pollutant concentrations.</p>
+<p>The process begins by generating a massive dataset using traditional,
+physics-based CTMs. This dataset includes inputs such as:</p>
+<ul>
+<li>Precursor emission rates (nitrogen oxides, volatile organic
+compounds, sulfur dioxide).</li>
+<li>Meteorological data (temperature, humidity, wind speed, solar
+radiation).</li>
+<li>Geographic data (topography and land use).</li>
+</ul>
+<p>Researchers feed these inputs, along with the corresponding ozone and
+SOA outputs produced by the traditional model, into deep learning
+architectures like Convolutional Neural Networks (CNNs), Graph Neural
+Networks (GNNs), or Transformers. During this training phase, the AI
+identifies the underlying patterns and non-linear relationships that
+govern smog formation.</p>
+<p>Once the AI model is trained, it acts as a direct substitute—or
+surrogate—for the traditional model's chemical solver. This is where the
+1000x speedup occurs. While a traditional model must iteratively solve
+differential equations step-by-step over simulated time, a neural
+network relies on matrix multiplication. Modern Graphics Processing
+Units (GPUs) are specifically designed to execute matrix multiplications
+in parallel at lightning speeds. The AI takes the initial weather and
+emission data and predicts the final ozone and SOA concentrations in a
+fraction of a second, completely skipping the intermediate mathematical
+steps.</p>
+<p>To ensure the AI does not produce physically impossible results,
+chemists often use Physics-Informed Neural Networks (PINNs). These
+models have physical laws, such as the conservation of mass, coded
+directly into their loss functions. This forces the AI to adhere to
+real-world chemistry constraints while maintaining its speed
+advantage.</p>
+<p>This 1000-fold increase in simulation speed transforms air quality
+management. Scientists can now run thousands of "what-if" scenarios in
+minutes to see how specific emission cuts will affect urban smog.
+Furthermore, it allows for real-time, high-resolution air quality
+forecasting, giving the public and policymakers immediate warnings about
+dangerous ozone and particulate matter events.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-surrogates-speed-up-smog-simulations-by-1000-x';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

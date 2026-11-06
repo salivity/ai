@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding K-FAC Optimization in Deep Learning - ai</title>
+    <meta name="description" content="This article explains how Kronecker-Factored Approximate Curvature (K-FAC) makes second-order optimization practical for deep artificial intelligence models. You will learn why traditional Hessian matrices are too large to compute, how K-FAC substitutes t">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-k-fac-optimization-in-deep-learning">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding K-FAC Optimization in Deep Learning - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-k-fac-optimization-in-deep-learning" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how Kronecker-Factored Approximate Curvature (K-FAC) makes second-order optimization practical for deep artificial intelligence models. You will learn why traditional Hessian matrices are too large to compute, how K-FAC substitutes t" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-k-fac-optimization-in-deep-learning">Understanding
+K-FAC Optimization in Deep Learning</h1>
+<p>This article explains how Kronecker-Factored Approximate Curvature
+(K-FAC) makes second-order optimization practical for deep artificial
+intelligence models. You will learn why traditional Hessian matrices are
+too large to compute, how K-FAC substitutes the Hessian with the Fisher
+Information Matrix, and how it uses Kronecker products to break down
+massive calculations into small, fast operations.</p>
+<h3 id="the-problem-with-second-order-optimization">The Problem with
+Second-Order Optimization</h3>
+<p>In deep learning, training a model requires minimizing a loss
+function. First-order methods, like Stochastic Gradient Descent (SGD),
+only look at the slope (gradient) of the loss. Second-order methods also
+look at the curvature of the loss using the Hessian matrix. By
+understanding the curvature, an optimizer can take much smarter, larger
+steps toward the minimum, drastically reducing the number of training
+iterations needed.</p>
+<p>However, the Hessian matrix requires computing the second derivative
+for every pair of weights in a neural network. If a network has 10
+million parameters, the Hessian matrix will have 100 trillion elements.
+Storing and inverting a matrix of this size is computationally
+impossible on modern hardware.</p>
+<h3 id="step-1-replacing-the-hessian-with-the-fisher-matrix">Step 1:
+Replacing the Hessian with the Fisher Matrix</h3>
+<p>Instead of directly approximating the massive Hessian matrix, K-FAC
+approximates the Fisher Information Matrix (FIM). In probabilistic
+models—which include almost all deep neural networks—the Fisher
+Information Matrix acts as a natural stand-in for the Hessian. It
+captures the exact same local curvature information of the loss
+landscape while guaranteeing that the matrix is positive semi-definite,
+a property that prevents the optimizer from stepping in the wrong
+direction.</p>
+<h3 id="step-2-block-diagonal-approximation">Step 2: Block-Diagonal
+Approximation</h3>
+<p>Even with the Fisher matrix, the size remains a problem. To shrink
+it, K-FAC assumes that the weights in different layers of the neural
+network are statistically independent of one another.</p>
+<p>While this is not entirely true in practice, it is a good enough
+approximation for optimization. By ignoring the correlations between
+different layers, K-FAC zeroes out most of the Fisher matrix, turning it
+into a "block-diagonal" matrix. Now, instead of inverting one massive
+matrix for the whole network, the algorithm only needs to invert one
+smaller matrix per layer.</p>
+<h3 id="step-3-the-kronecker-factorization">Step 3: The Kronecker
+Factorization</h3>
+<p>Even a single layer's Fisher block can be too large to invert. If a
+layer has 1,000 inputs and 1,000 outputs, it has 1 million weights,
+resulting in a Fisher block of 1 trillion elements. This is where the
+core math of K-FAC comes in.</p>
+<p>The gradient of a weight in a specific layer is simply the product of
+two things:</p>
+<ol type="1">
+<li>The activation coming into the layer (forward pass).</li>
+<li>The error gradient coming back into the layer (backward pass).</li>
+</ol>
+<p>K-FAC makes a second major assumption: it assumes that the incoming
+activations and the backward error gradients are statistically
+independent.</p>
+<p>Because of this independence, the massive Fisher block for a single
+layer can be rewritten as the Kronecker product of two much smaller
+matrices:</p>
+<ul>
+<li><strong>Matrix A:</strong> The covariance matrix of the layer's
+inputs (size: 1,000 x 1,000).</li>
+<li><strong>Matrix G:</strong> The covariance matrix of the layer's
+output gradients (size: 1,000 x 1,000).</li>
+</ul>
+<h3 id="why-this-solves-the-computation-bottleneck">Why This Solves the
+Computation Bottleneck</h3>
+<p>The magic of the Kronecker product lies in a specific mathematical
+identity: the inverse of a Kronecker product is equal to the Kronecker
+product of the inverses.</p>
+<p>Instead of inverting the 1,000,000 x 1,000,000 Fisher block, K-FAC
+simply inverts Matrix A (1,000 x 1,000) and Matrix G (1,000 x 1,000)
+separately. Inverting these two small matrices takes a fraction of a
+millisecond on a modern GPU. Once inverted, K-FAC uses them to scale the
+standard gradients, effectively applying second-order curvature
+information to update the network's weights with minimal memory and
+compute overhead.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-k-fac-optimization-in-deep-learning';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

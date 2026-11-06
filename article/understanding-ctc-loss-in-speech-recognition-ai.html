@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding CTC Loss in Speech Recognition AI - ai</title>
+    <meta name="description" content="Connectionist Temporal Classification (CTC) loss is an algorithm used in speech recognition artificial intelligence to align unsegmented audio frames with target character sequences. This article explores the core challenge of mapping continuous audio to">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-ctc-loss-in-speech-recognition-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding CTC Loss in Speech Recognition AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-ctc-loss-in-speech-recognition-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Connectionist Temporal Classification (CTC) loss is an algorithm used in speech recognition artificial intelligence to align unsegmented audio frames with target character sequences. This article explores the core challenge of mapping continuous audio to" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-ctc-loss-in-speech-recognition-ai">Understanding
+CTC Loss in Speech Recognition AI</h1>
+<p>Connectionist Temporal Classification (CTC) loss is an algorithm used
+in speech recognition artificial intelligence to align unsegmented audio
+frames with target character sequences. This article explores the core
+challenge of mapping continuous audio to discrete text, how CTC solves
+this by introducing a blank token and sequence collapsing rules, and how
+the forward-backward algorithm calculates loss to train neural networks
+without needing pre-aligned data.</p>
+<h2 id="the-alignment-problem-in-speech-recognition">The Alignment
+Problem in Speech Recognition</h2>
+<p>In automatic speech recognition (ASR), an AI model takes an audio
+clip as input and outputs a text transcription. The audio is typically
+sliced into small, continuous timeframes—often 10 to 20 milliseconds
+long. This creates a fundamental mismatch: an audio clip might consist
+of hundreds of input frames, while the corresponding text transcription
+only contains a few characters.</p>
+<p>Because people speak at different speeds and pause unpredictably, the
+exact start and end times of each spoken character are unknown. Manually
+labeling which specific audio frame corresponds to which character is
+tedious and impractical for large datasets. Standard loss functions,
+like Cross-Entropy, require a strict one-to-one correspondence between
+inputs and outputs, making them unusable for unsegmented audio. CTC loss
+solves this by calculating a loss value directly from the unaligned
+sequences.</p>
+<h2 id="frame-level-predictions-and-the-blank-token">Frame-Level
+Predictions and the Blank Token</h2>
+<p>To bridge the gap between numerous audio frames and fewer text
+characters, a neural network using CTC outputs a probability
+distribution over all possible characters for every single audio
+frame.</p>
+<p>Because a single spoken sound spans multiple frames, the network
+might predict the same character several times in a row. For example, if
+a speaker says the word "cat", and the audio is split into six frames,
+the network might predict <code>c-c-a-a-a-t</code>.</p>
+<p>To turn these frame-level predictions into a final word, CTC
+collapses consecutive duplicate characters into a single character.
+Thus, <code>c-c-a-a-a-t</code> collapses cleanly into "cat".</p>
+<p>However, this collapsing rule creates two new problems:</p>
+<ol type="1">
+<li>How does the model represent silence or background noise between
+words?</li>
+<li>How does the model spell words with actual double letters, like
+"hello"? If it outputs <code>h-e-l-l-o</code>, the collapsing rule would
+incorrectly merge the double "l" into "helo".</li>
+</ol>
+<p>CTC resolves both issues by introducing a special symbol to the
+character vocabulary called the "blank token" (often denoted as
+<code>-</code> or <code>ϵ</code>). The blank token represents frames
+that contain no valid character or serve as a separator between
+duplicate characters.</p>
+<h2 id="the-collapsing-rules">The Collapsing Rules</h2>
+<p>To generate the final text transcription from the frame-level
+predictions, CTC applies a strict two-step collapsing process:</p>
+<ol type="1">
+<li>Merge all consecutive identical characters into a single
+character.</li>
+<li>Remove all blank tokens.</li>
+</ol>
+<p>Using this logic, to output the word "hello", the model must predict
+at least one blank token between the two "l"s. If the network outputs
+<code>h-e-l-l-ϵ-l-o-o</code> across eight audio frames, the first step
+merges the consecutive duplicates to produce <code>h-e-l-ϵ-l-o</code>.
+The second step removes the blank token, yielding the correct
+transcription: "hello".</p>
+<h2 id="calculating-the-loss">Calculating the Loss</h2>
+<p>Because of the collapsing rules, there are many different frame-level
+alignments that can produce the exact same final word. For a three-frame
+audio clip of the word "hi", valid alignments include
+<code>h-i-i</code>, <code>h-h-i</code>, <code>ϵ-h-i</code>,
+<code>h-ϵ-i</code>, and <code>h-i-ϵ</code>.</p>
+<p>During training, the model does not know which specific alignment is
+the "correct" one. Therefore, the CTC loss function evaluates the
+probability of the target word by summing the probabilities of all
+possible valid alignments that collapse to that word.</p>
+<p>If the audio has hundreds of frames, calculating the probability of
+every possible valid alignment by brute force is computationally
+impossible; the number of combinations grows exponentially.</p>
+<p>To solve this, CTC uses a dynamic programming method called the
+forward-backward algorithm. This algorithm breaks the problem down into
+smaller, manageable steps by building a grid (or trellis) of possible
+states. By merging paths that reach the same character at the same audio
+frame, the algorithm efficiently calculates the total probability of all
+valid alignments in a fraction of a second.</p>
+<p>Once the total probability of the correct transcription is
+calculated, the CTC loss is defined as the negative log-likelihood of
+that probability. Standard backpropagation is then used to minimize this
+loss, adjusting the neural network's weights so that it becomes more
+likely to output valid character alignments for the given audio in the
+future.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-ctc-loss-in-speech-recognition-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

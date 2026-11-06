@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoding AI with Layer-wise Relevance Propagation - ai</title>
+    <meta name="description" content="This article provides a clear breakdown of how Layer-wise Relevance Propagation (LRP) explains artificial intelligence decisions. We will explore the mechanics of how LRP takes a neural network&#39;s final prediction score and redistributes it backward, layer">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/decoding-ai-with-layer-wise-relevance-propagation">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Decoding AI with Layer-wise Relevance Propagation - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/decoding-ai-with-layer-wise-relevance-propagation" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a clear breakdown of how Layer-wise Relevance Propagation (LRP) explains artificial intelligence decisions. We will explore the mechanics of how LRP takes a neural network&#39;s final prediction score and redistributes it backward, layer" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="decoding-ai-with-layer-wise-relevance-propagation">Decoding AI
+with Layer-wise Relevance Propagation</h1>
+<p>This article provides a clear breakdown of how Layer-wise Relevance
+Propagation (LRP) explains artificial intelligence decisions. We will
+explore the mechanics of how LRP takes a neural network's final
+prediction score and redistributes it backward, layer by layer, to
+identify which original input features contributed most to the outcome.
+Finally, we will examine how these redistributed scores are converted
+into visual heatmaps that make complex deep learning models transparent
+and understandable.</p>
+<h3 id="the-forward-pass-and-initial-score">The Forward Pass and Initial
+Score</h3>
+<p>Before LRP can work, the neural network must make a standard
+prediction. Data, such as an image or a block of text, enters the
+network and passes forward through various hidden layers of artificial
+neurons. At the end of the network, the model outputs a prediction
+score. For example, if a network is analyzing an image of a cat, the
+output layer generates a high numerical value representing the
+confidence that a "cat" is present. LRP takes this exact output value as
+the starting point, referring to it as the initial "relevance
+score."</p>
+<h3 id="the-backward-redistribution-process">The Backward Redistribution
+Process</h3>
+<p>Once the prediction score is established, LRP reverses the flow of
+the network. Instead of pushing data forward, it pushes the relevance
+score backward toward the input layer.</p>
+<p>To get from the output layer to the layer just before it, LRP looks
+at the connections (weights) and the activation levels of the neurons
+used during the forward pass. The fundamental rule of LRP is simple:
+neurons that contributed more to the activation of the next layer
+receive a larger share of the relevance score. If a neuron was inactive
+or had a weak connection during the forward pass, it receives little to
+no relevance during the backward pass. This process repeats layer by
+layer until the relevance scores reach the original input.</p>
+<h3 id="the-conservation-property">The Conservation Property</h3>
+<p>The mathematical backbone of LRP is the conservation property, which
+acts like a law of physics for neural networks. As the relevance score
+is pushed backward from one layer to the next, no relevance is created
+or destroyed.</p>
+<p>The sum of all relevance scores assigned to the neurons in any given
+layer must equal the original prediction score at the output. If the
+model outputs a score of 100, the relevance distributed across the
+preceding layer must add up to 100, and the relevance eventually
+assigned to the input pixels must also add up to 100. This strict
+conservation ensures that the final explanation is an exact accounting
+of the model's decision.</p>
+<h3 id="visualizing-the-ai-decision">Visualizing the AI Decision</h3>
+<p>When the backward propagation finally reaches the input layer, the
+original prediction score has been completely divided among the
+individual input features, such as the pixels of an image or the words
+in a sentence.</p>
+<p>Each pixel or word now holds a specific numerical value indicating
+its exact contribution to the AI's final decision. To visualize this,
+these values are mapped onto a color scale to generate a heatmap:</p>
+<ul>
+<li><strong>Positive Relevance:</strong> Input features that actively
+supported the AI's prediction (e.g., the ears and whiskers of a cat) are
+typically highlighted in warm colors like red or orange.</li>
+<li><strong>Zero Relevance:</strong> Neutral features that had no impact
+on the decision (e.g., an empty background) remain uncolored or
+grey.</li>
+<li><strong>Negative Relevance:</strong> Features that contradicted the
+prediction (e.g., a dog's collar in the same image) are highlighted in
+cool colors like blue.</li>
+</ul>
+<p>Through this systematic backward redistribution, LRP turns an opaque
+mathematical prediction into an intuitive visual map, showing humans
+precisely what the artificial intelligence "saw" to make its
+decision.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/decoding-ai-with-layer-wise-relevance-propagation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

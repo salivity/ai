@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why AI Struggles to Count Letters: Subword Tokenization - ai</title>
+    <meta name="description" content="Artificial intelligence language models can write complex essays and code, yet they frequently fail at simple tasks like counting the number of &quot;r&quot;s in the word &quot;strawberry.&quot; This article explores the root cause of this limitation: subword tokenization. B">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/why-ai-struggles-to-count-letters-subword-tokenization">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why AI Struggles to Count Letters: Subword Tokenization - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/why-ai-struggles-to-count-letters-subword-tokenization" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence language models can write complex essays and code, yet they frequently fail at simple tasks like counting the number of &quot;r&quot;s in the word &quot;strawberry.&quot; This article explores the root cause of this limitation: subword tokenization. B" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-ai-struggles-to-count-letters-subword-tokenization">Why AI
+Struggles to Count Letters: Subword Tokenization</h1>
+<p>Artificial intelligence language models can write complex essays and
+code, yet they frequently fail at simple tasks like counting the number
+of "r"s in the word "strawberry." This article explores the root cause
+of this limitation: subword tokenization. By examining how AI processes
+text as chunks of characters rather than individual letters, we will
+uncover why character-level tasks remain a major hurdle for modern large
+language models (LLMs) and how they actually "read" human language.</p>
+<h2 id="what-is-subword-tokenization">What is Subword Tokenization?</h2>
+<p>Humans read text by recognizing individual letters that form words.
+Large language models, however, do not see letters or words. Instead,
+they read "tokens." Before a prompt ever reaches the AI's neural
+network, a system called a tokenizer breaks the text down into smaller
+pieces.</p>
+<p>Most modern LLMs use a method called subword tokenization, often
+relying on algorithms like Byte-Pair Encoding (BPE). This approach
+splits text into frequently occurring chunks of characters. A common
+word like "apple" might remain a single token, while a more complex word
+like "tokenization" might be split into two tokens: "token" and
+"ization".</p>
+<h2 id="the-numerical-blindfold">The Numerical Blindfold</h2>
+<p>Once the text is split into subword tokens, each token is converted
+into a unique number (a token ID). The AI model only sees these
+numbers.</p>
+<p>For example, the word "strawberry" might be broken down into the
+tokens "straw" and "berry". The tokenizer then converts "straw" into the
+number 1456, and "berry" into the number 8921.</p>
+<p>When the AI processes your prompt, it does not see the letters
+s-t-r-a-w-b-e-r-r-y. It only sees <code>[1456, 8921]</code>. Because the
+individual characters are locked inside these numerical IDs, the model
+is essentially blind to the spelling of the word.</p>
+<h2 id="why-character-level-tasks-fail">Why Character-Level Tasks
+Fail</h2>
+<p>Because the AI processes concepts through numerical token IDs, it
+relies on statistical associations to understand what those numbers
+mean, not how they are spelled. It knows that <code>[1456, 8921]</code>
+represents a red, sweet fruit with seeds on the outside, because it has
+seen those numbers used in that context millions of times during
+training.</p>
+<p>However, when you ask the AI to count the letter "r" in "strawberry",
+it cannot simply look at the word and count the letters as a human
+would. Instead, it has to rely on memorized training data regarding how
+the tokens "straw" and "berry" are spelled. If the model hasn't
+explicitly memorized the exact letter counts of those specific tokens
+during its training, it is forced to guess, leading to confident but
+incorrect answers.</p>
+<p>This same limitation explains why AI struggles with other
+character-level tasks, including:</p>
+<ul>
+<li><strong>Reversing words:</strong> The AI cannot easily reverse a
+sequence of letters it cannot see.</li>
+<li><strong>Acrostics and crosswords:</strong> Matching specific letter
+positions requires character awareness that token IDs obscure.</li>
+<li><strong>Rhyming:</strong> While models memorize many rhymes, they
+cannot phonetically sound out individual letters within a token to
+invent new ones reliably.</li>
+</ul>
+<h2 id="why-not-use-character-level-tokenization">Why Not Use
+Character-Level Tokenization?</h2>
+<p>If subword tokenization causes these blind spots, the obvious
+solution is to feed the AI individual characters instead. While
+character-level tokenization does exist, it creates massive efficiency
+problems.</p>
+<p>Processing text letter by letter drastically increases the length of
+the data sequence. A 500-word essay might equal about 650 subword
+tokens, but it contains roughly 3,000 individual characters. If an AI
+had to process 3,000 individual data points instead of 650, it would
+require vastly more computing power, memory, and time to generate a
+response. Furthermore, subword tokens help the AI capture the meaning of
+root words and prefixes much faster than trying to deduce meaning from a
+long string of individual letters.</p>
+<h2 id="overcoming-the-limitation">Overcoming the Limitation</h2>
+<p>Currently, the most effective way for an AI to solve character-level
+problems is by working around its own architecture. Users and developers
+can bypass tokenization blindness by forcing the AI to space out the
+letters (e.g., "s-t-r-a-w-b-e-r-r-y"). By separating the letters with
+spaces or hyphens, the tokenizer is forced to assign a unique token ID
+to each individual letter. Once every letter is its own token, the AI
+can accurately see and count them. Alternatively, modern AI systems
+often write and execute a quick Python script in the background to count
+the letters programmatically, relying on traditional code to do what
+their neural networks cannot.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/why-ai-struggles-to-count-letters-subword-tokenization';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

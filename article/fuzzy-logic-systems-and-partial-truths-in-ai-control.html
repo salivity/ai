@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuzzy Logic Systems and Partial Truths in AI Control - ai</title>
+    <meta name="description" content="This article explores how fuzzy logic systems manage partial truths to operate effectively within artificial intelligence control applications. Unlike traditional computing that relies on strict binary states, fuzzy logic processes shades of gray to mimic">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/fuzzy-logic-systems-and-partial-truths-in-ai-control">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fuzzy Logic Systems and Partial Truths in AI Control - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/fuzzy-logic-systems-and-partial-truths-in-ai-control" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how fuzzy logic systems manage partial truths to operate effectively within artificial intelligence control applications. Unlike traditional computing that relies on strict binary states, fuzzy logic processes shades of gray to mimic" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fuzzy-logic-systems-and-partial-truths-in-ai-control">Fuzzy
+Logic Systems and Partial Truths in AI Control</h1>
+<p>This article explores how fuzzy logic systems manage partial truths
+to operate effectively within artificial intelligence control
+applications. Unlike traditional computing that relies on strict binary
+states, fuzzy logic processes shades of gray to mimic human reasoning.
+Below, you will find a straightforward breakdown of how these systems
+convert precise inputs into flexible concepts, apply rule-based
+inference, and produce accurate physical responses in complex
+machines.</p>
+<h3 id="understanding-partial-truths">Understanding Partial Truths</h3>
+<p>Traditional logic uses Boolean values, meaning a statement is either
+completely true (1) or completely false (0). In the real world, however,
+conditions are rarely absolute. For example, a room is not simply "hot"
+or "cold"; it can be "slightly warm" or "moderately cool."</p>
+<p>Fuzzy logic handles these vague concepts by assigning "degrees of
+truth" using any number between 0 and 1. A temperature of 75 degrees
+Fahrenheit might be categorized as 0.6 "warm" and 0.2 "hot." This
+ability to process partial truths allows AI control systems to make
+smooth, incremental adjustments rather than harsh, binary switches.</p>
+<h3 id="step-1-fuzzification">Step 1: Fuzzification</h3>
+<p>To process partial truths, a control system must first translate
+exact numerical data from sensors into fuzzy values. This process is
+called fuzzification.</p>
+<p>The system uses <strong>membership functions</strong>, which are
+mathematical curves that define how each input value maps to a degree of
+membership between 0 and 1. If a sensor reads the speed of a car, the
+membership function determines to what extent that exact speed belongs
+to linguistic categories like "slow," "medium," or "fast."</p>
+<h3 id="step-2-rule-evaluation-and-inference">Step 2: Rule Evaluation
+and Inference</h3>
+<p>Once the inputs are fuzzified, the system uses an inference engine to
+evaluate them against a set of predefined rules. These rules are written
+in simple IF-THEN formats based on human expertise.</p>
+<p>In an automated braking system, the rules might look like this:</p>
+<ul>
+<li><strong>IF</strong> speed is <em>fast</em> <strong>AND</strong>
+distance to the next car is <em>close</em>, <strong>THEN</strong> brake
+pressure is <em>high</em>.</li>
+<li><strong>IF</strong> speed is <em>medium</em> <strong>AND</strong>
+distance is <em>medium</em>, <strong>THEN</strong> brake pressure is
+<em>moderate</em>.</li>
+</ul>
+<p>Because the inputs are partial truths, multiple rules can trigger at
+the same time to varying degrees. If the car's speed is partially
+<em>fast</em> (0.7) and partially <em>medium</em> (0.3), the inference
+engine calculates the partial truth of each rule's outcome and combines
+them into a single fuzzy conclusion.</p>
+<h3 id="step-3-defuzzification">Step 3: Defuzzification</h3>
+<p>A physical machine cannot act on a fuzzy conclusion; a brake actuator
+needs a specific voltage or pressure command, not a blend of "moderate"
+and "high." The final step, defuzzification, converts the combined fuzzy
+output back into a single, precise number.</p>
+<p>Control systems typically use the <strong>centroid method</strong>
+(or center of gravity) for this step. The system plots the combined
+fuzzy outputs on a graph and calculates the exact center point of the
+shaded area. That center point becomes the crisp numerical output sent
+to the machine's controls.</p>
+<h3 id="real-world-ai-control-applications">Real-World AI Control
+Applications</h3>
+<p>By continuously running through fuzzification, inference, and
+defuzzification, AI control systems handle dynamic environments smoothly
+and efficiently. Common applications include:</p>
+<ul>
+<li><strong>Climate Control:</strong> Air conditioners adjust compressor
+speeds gradually based on how "warm" and "humid" a room is, saving
+energy and preventing sudden temperature drops.</li>
+<li><strong>Automotive Systems:</strong> Autonomous vehicles and
+advanced driver-assistance systems (ADAS) use fuzzy logic to manage
+adaptive cruise control, ensuring acceleration and braking feel natural
+to passengers.</li>
+<li><strong>Smart Appliances:</strong> Washing machines measure load
+weight and water cloudiness—concepts that are never strictly binary—to
+determine the optimal wash cycle time and water levels.</li>
+<li><strong>Industrial Robotics:</strong> Manufacturing robots adjust
+their grip strength based on the partial truths of an object's fragility
+and weight, preventing damage to delicate components.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/fuzzy-logic-systems-and-partial-truths-in-ai-control';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

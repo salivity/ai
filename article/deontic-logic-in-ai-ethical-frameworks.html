@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deontic Logic in AI Ethical Frameworks - ai</title>
+    <meta name="description" content="This article explores how Deontic Logic provides a formal mathematical structure to translate human moral principles into machine-readable code for artificial intelligence. It covers the fundamental operators of obligations, permissions, and prohibitions,">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/deontic-logic-in-ai-ethical-frameworks">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Deontic Logic in AI Ethical Frameworks - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/deontic-logic-in-ai-ethical-frameworks" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Deontic Logic provides a formal mathematical structure to translate human moral principles into machine-readable code for artificial intelligence. It covers the fundamental operators of obligations, permissions, and prohibitions," />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="deontic-logic-in-ai-ethical-frameworks">Deontic Logic in AI
+Ethical Frameworks</h1>
+<p>This article explores how Deontic Logic provides a formal
+mathematical structure to translate human moral principles into
+machine-readable code for artificial intelligence. It covers the
+fundamental operators of obligations, permissions, and prohibitions,
+explains how these operators interact to prevent logical contradictions,
+and examines their practical application and limitations in governing
+autonomous systems.</p>
+<h2 id="the-core-operators-of-deontic-logic">The Core Operators of
+Deontic Logic</h2>
+<p>Deontic logic is a branch of symbolic logic that deals with normative
+concepts. To make ethical rules understandable to an AI, engineers use
+Standard Deontic Logic (SDL) to categorize actions using three primary
+operators. In these formulas, the letter <span
+class="math inline">\(p\)</span> represents a specific action or state
+of affairs.</p>
+<ul>
+<li><strong>Obligation (<span
+class="math inline">\(Op\)</span>):</strong> This indicates that an
+action <span class="math inline">\(p\)</span> is morally or legally
+required. For a medical AI, an obligation might be "protect patient
+privacy."</li>
+<li><strong>Permission (<span
+class="math inline">\(Pp\)</span>):</strong> This means an action <span
+class="math inline">\(p\)</span> is allowed, though not required. An
+autonomous drone might have the permission to adjust its altitude to
+avoid turbulence.</li>
+<li><strong>Prohibition (<span
+class="math inline">\(Fp\)</span>):</strong> This signifies that an
+action <span class="math inline">\(p\)</span> is forbidden. In almost
+all AI frameworks, causing intentional physical harm to a human is
+strictly prohibited.</li>
+</ul>
+<h2 id="interdefinability-of-rules">Interdefinability of Rules</h2>
+<p>To keep an AI's codebase efficient and free of contradictions,
+deontic logic relies on the fact that these three operators are
+interdefinable. Using the obligation operator (<span
+class="math inline">\(O\)</span>) and the symbol for negation (<span
+class="math inline">\(\neg\)</span>, meaning "not"), an AI can deduce
+permissions and prohibitions automatically:</p>
+<ul>
+<li><strong>Defining Prohibition:</strong> An action is forbidden if and
+only if you are obligated <em>not</em> to do it. Mathematically, this is
+written as <span class="math inline">\(Fp \leftrightarrow O\neg
+p\)</span>.</li>
+<li><strong>Defining Permission:</strong> An action is permitted if and
+only if you are <em>not</em> obligated to avoid it. Mathematically, this
+is written as <span class="math inline">\(Pp \leftrightarrow \neg O\neg
+p\)</span>.</li>
+</ul>
+<p>By establishing a foundational list of obligations, the AI's
+reasoning engine can automatically calculate what is permitted and what
+is forbidden without needing every possible scenario explicitly
+programmed.</p>
+<h2 id="application-in-ai-decision-making">Application in AI
+Decision-Making</h2>
+<p>Deontic logic is primarily used in "top-down" ethical frameworks,
+where an AI’s behavior is constrained by strict rules rather than
+learned solely through trial and error. This is often implemented
+through a method called Model Checking.</p>
+<p>Before an autonomous system—such as a self-driving car—executes an
+action, it simulates the immediate future states that will result from
+its choices. The deontic logic framework acts as a filter over these
+simulations:</p>
+<ol type="1">
+<li>The AI generates a list of possible actions to achieve its
+goal.</li>
+<li>The deontic filter eliminates any action labeled <span
+class="math inline">\(Fp\)</span> (Forbidden).</li>
+<li>The filter prioritizes actions labeled <span
+class="math inline">\(Op\)</span> (Obligatory).</li>
+<li>If no obligations are triggered, the AI freely selects the most
+efficient action from those labeled <span
+class="math inline">\(Pp\)</span> (Permitted).</li>
+</ol>
+<h2 id="handling-moral-dilemmas-and-conflicts">Handling Moral Dilemmas
+and Conflicts</h2>
+<p>Real-world ethics are rarely absolute, and strict deontic logic can
+struggle when two obligations conflict. For example, a self-driving car
+might face a scenario where it is obligated to stay in its lane (<span
+class="math inline">\(Op\)</span>) and obligated to avoid hitting an
+obstacle (<span class="math inline">\(\neg Op\)</span>), making it
+impossible to satisfy both rules.</p>
+<p>To solve this, AI researchers use Defeasible Deontic Logic. This
+advanced framework introduces a hierarchy of rules and exceptions. It
+allows the AI to recognize that while a rule generally holds true, it
+can be overridden by a higher-priority obligation in an emergency.
+Through this formalization, deontic logic ensures that artificial
+intelligence remains predictable, auditable, and aligned with human
+values even in complex environments.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/deontic-logic-in-ai-ethical-frameworks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

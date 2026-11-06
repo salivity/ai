@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Energy-Based Models Assign Low Energy to Plausible Data - ai</title>
+    <meta name="description" content="This article explains the core mechanics of how Energy-Based Models (EBMs) evaluate data configurations within unsupervised artificial intelligence. It covers the fundamental concept of the energy function, how models map complex inputs into a single scal">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-energy-based-models-assign-low-energy-to-plausible-data">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Energy-Based Models Assign Low Energy to Plausible Data - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-energy-based-models-assign-low-energy-to-plausible-data" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the core mechanics of how Energy-Based Models (EBMs) evaluate data configurations within unsupervised artificial intelligence. It covers the fundamental concept of the energy function, how models map complex inputs into a single scal" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-energy-based-models-assign-low-energy-to-plausible-data">How
+Energy-Based Models Assign Low Energy to Plausible Data</h1>
+<p>This article explains the core mechanics of how Energy-Based Models
+(EBMs) evaluate data configurations within unsupervised artificial
+intelligence. It covers the fundamental concept of the energy function,
+how models map complex inputs into a single scalar value, and the
+training algorithms—such as Contrastive Divergence and Score
+Matching—used to shape the energy landscape. By understanding these
+mechanisms, you will see how EBMs learn to naturally assign low energy
+values to realistic, plausible data while penalizing improbable
+configurations with high energy values.</p>
+<h3 id="the-core-concept-of-the-energy-function">The Core Concept of the
+Energy Function</h3>
+<p>In unsupervised artificial intelligence, the goal is to understand
+the underlying structure of unlabelled data. Energy-Based Models (EBMs)
+achieve this by borrowing a concept from statistical physics: systems
+naturally prefer states of low energy.</p>
+<p>An EBM uses a parameterized mathematical function, known as the
+energy function, to evaluate any given data configuration (such as an
+arrangement of pixels in an image or a sequence of words). The model
+takes this high-dimensional input and outputs a single scalar number—the
+energy value.</p>
+<ul>
+<li><strong>Low scalar energy</strong> indicates high compatibility,
+meaning the data configuration is plausible and resembles the real-world
+training data.</li>
+<li><strong>High scalar energy</strong> indicates low compatibility,
+meaning the data is likely noise, corrupted, or fake.</li>
+</ul>
+<p>Unlike traditional probabilistic models, EBMs do not need to
+calculate exact probabilities, which requires normalizing outputs so
+they all add up to one. Because calculating this normalization constant
+(known as the partition function) is often mathematically impossible for
+complex data, EBMs bypass it entirely and focus solely on relative
+energy values.</p>
+<h3 id="shaping-the-energy-landscape">Shaping the Energy Landscape</h3>
+<p>Before training, an EBM’s energy landscape is flat or random; it does
+not know the difference between a real photograph and television static.
+The model learns to assign low energy to plausible data by reshaping
+this landscape during the training process.</p>
+<p>This reshaping is a two-part push-and-pull optimization process:</p>
+<ol type="1">
+<li><strong>Pushing Down:</strong> The model is fed real data from the
+training set. The optimization algorithm adjusts the internal weights of
+the neural network to decrease the scalar output for these specific
+configurations, creating "valleys" or basins of attraction in the energy
+landscape.</li>
+<li><strong>Pulling Up:</strong> Simultaneously, the model must increase
+the energy of everything else. If the model simply lowered the energy
+for real data without raising it elsewhere, it could cheat by making the
+energy zero for every possible input. By pulling up the energy of fake
+or non-existent data configurations, the valleys of plausible data
+become distinct and isolated.</li>
+</ol>
+<h3 id="training-mechanisms-how-the-model-learns">Training Mechanisms:
+How the Model Learns</h3>
+<p>Because it is impossible to manually raise the energy of every
+conceivable non-plausible data configuration in the universe, EBMs use
+clever sampling strategies to find the most important fake
+configurations to penalize.</p>
+<p><strong>Contrastive Divergence and MCMC</strong> One of the most
+common training methods involves Markov Chain Monte Carlo (MCMC)
+sampling, specifically a technique called Langevin dynamics. To find out
+where the model is currently making mistakes, the system generates
+"hallucinations" or fake data samples. It does this by starting with
+random noise and following the gradient of the current energy landscape
+downhill until it settles into a low-energy valley.</p>
+<p>If the model settles on a configuration that is not in the real
+dataset, it means the model falsely believes this fake configuration is
+plausible. The training algorithm then specifically raises the energy of
+this hallucinated sample while lowering the energy of a real data
+sample. Over millions of iterations, only the true data configurations
+retain low energy values.</p>
+<p><strong>Score Matching</strong> Another way EBMs assign low energy to
+plausible data is through Score Matching. Instead of generating fake
+samples to compare against real ones, Score Matching focuses on the
+gradients (the "slopes") of the energy landscape. The algorithm forces
+the slope of the energy function to point directly toward the real data
+configurations. If a data point is slightly corrupted, the gradient
+points back toward the clean version, naturally placing the plausible
+data at the very bottom of the energy valley.</p>
+<p><strong>Noise Contrastive Estimation (NCE)</strong> In Noise
+Contrastive Estimation, the unsupervised problem is turned into a
+supervised classification task. The system generates artificial noise
+from a known distribution and mixes it with real data. The EBM is then
+trained to distinguish between the two. To succeed, the internal energy
+function must assign low scalar outputs to the real data and high scalar
+outputs to the generated noise.</p>
+<h3 id="inference-finding-plausible-data">Inference: Finding Plausible
+Data</h3>
+<p>Once the training is complete and the parameters are locked, the EBM
+acts as an evaluator. When presented with a new, unseen data
+configuration, it passes the input through its neural network layers to
+compute the scalar energy. If the resulting number is low, the AI
+recognizes the data as plausible. Furthermore, if the AI is tasked with
+generating new data or repairing corrupted data, it simply alters the
+input variables step-by-step to minimize the scalar output, effectively
+rolling the data downhill until it rests in a low-energy state of high
+plausibility.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-energy-based-models-assign-low-energy-to-plausible-data';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

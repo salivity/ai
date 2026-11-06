@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Google TPUs Use Systolic Arrays to Accelerate AI - ai</title>
+    <meta name="description" content="This article explores how Google&#39;s Tensor Processing Units (TPUs) leverage a specialized hardware architecture known as a systolic array to dramatically accelerate artificial intelligence and machine learning workloads. By addressing the primary bottlenec">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-google-tp-us-use-systolic-arrays-to-accelerate-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Google TPUs Use Systolic Arrays to Accelerate AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-google-tp-us-use-systolic-arrays-to-accelerate-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Google&#39;s Tensor Processing Units (TPUs) leverage a specialized hardware architecture known as a systolic array to dramatically accelerate artificial intelligence and machine learning workloads. By addressing the primary bottlenec" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-google-tpus-use-systolic-arrays-to-accelerate-ai">How Google
+TPUs Use Systolic Arrays to Accelerate AI</h1>
+<p>This article explores how Google's Tensor Processing Units (TPUs)
+leverage a specialized hardware architecture known as a systolic array
+to dramatically accelerate artificial intelligence and machine learning
+workloads. By addressing the primary bottleneck of modern
+computing—memory access—systolic arrays allow TPUs to perform massive
+matrix multiplications with exceptional speed and energy efficiency. The
+following sections break down the mechanics of systolic arrays, why they
+are uniquely suited for deep learning, and how Google implements them to
+power advanced neural networks.</p>
+<h2 id="the-ai-bottleneck-matrix-multiplication-and-memory-access">The
+AI Bottleneck: Matrix Multiplication and Memory Access</h2>
+<p>At the core of modern artificial intelligence, particularly deep
+learning, lies a fundamental mathematical operation: matrix
+multiplication. Neural networks require millions or even billions of
+these calculations to process data, recognize patterns, and generate
+predictions.</p>
+<p>Traditional processors, such as CPUs and GPUs, handle these
+operations using a von Neumann architecture. For every single
+calculation, the processor must fetch data from memory (registers),
+route it to an Arithmetic Logic Unit (ALU) to perform the math, and
+write the result back to memory. When multiplying massive matrices,
+moving data back and forth between memory and the compute units consumes
+far more time and electricity than the actual mathematical calculations.
+This limitation is known as the von Neumann bottleneck.</p>
+<h2 id="what-is-a-systolic-array">What is a Systolic Array?</h2>
+<p>A systolic array is a hardware architecture designed specifically to
+eliminate the memory access bottleneck. Named by analogy to the human
+circulatory system—where the heart (systole) pumps blood rhythmically
+through a network of vessels—a systolic array pumps data rhythmically
+through a 2D grid of interconnected processing elements.</p>
+<p>In a systolic array, individual compute units, called
+Multiply-Accumulate (MAC) cells, are wired directly to their immediate
+neighbors. Instead of reading from and writing to a central register
+after every single operation, a MAC cell receives data from an upstream
+neighbor, performs a calculation, and passes the result directly to a
+downstream neighbor on the next clock cycle. Memory is only accessed at
+the very beginning to load the initial data into the edges of the array,
+and at the very end to collect the final output.</p>
+<h2 id="how-google-tpus-implement-systolic-arrays">How Google TPUs
+Implement Systolic Arrays</h2>
+<p>Google engineered the Tensor Processing Unit around the Matrix
+Multiply Unit (MXU), which is fundamentally a massive systolic array.
+Depending on the TPU generation, a single MXU contains tens of thousands
+of MAC cells arranged in a dense grid (such as 128x128 or 256x256).</p>
+<p>The TPU executes neural network calculations through a specific
+dataflow mechanism within this grid:</p>
+<ol type="1">
+<li><strong>Weight Stationary Setup:</strong> Before data processing
+begins, the parameters of the neural network (known as weights) are
+pre-loaded into the MAC cells of the systolic array. They remain
+stationary inside the cells throughout the operation.</li>
+<li><strong>Pumping the Data:</strong> Input data (such as image pixels
+or text tokens, known as activations) is fed into the array from the
+left edge.</li>
+<li><strong>Rhythmic Execution:</strong> With each tick of the
+processor's clock, the input data moves one step to the right.
+Simultaneously, each MAC cell multiplies the incoming input by its
+stationary weight and adds that result to the partial sum flowing down
+from the cell above it.</li>
+<li><strong>Collecting the Output:</strong> The updated partial sums
+flow downward to the next row of cells. By the time the data reaches the
+bottom edge of the array, the massive matrix multiplication is complete,
+and the final results are written back to memory.</li>
+</ol>
+<p>To manage the continuous, staggered wave of data flowing through the
+array, the input data is fed diagonally. This ensures that the right
+inputs meet the right partial sums at the exact right microsecond inside
+the grid.</p>
+<h2 id="key-advantages-for-ai-workloads">Key Advantages for AI
+Workloads</h2>
+<p>By replacing general-purpose processing pathways with systolic
+arrays, Google TPUs achieve three critical advantages for AI
+acceleration:</p>
+<ul>
+<li><strong>Drastic Reduction in Power Consumption:</strong> Accessing
+memory requires significantly more energy than executing arithmetic in
+silicon. By passing data directly between adjacent MAC cells, TPUs
+eliminate millions of register reads and writes, drastically lowering
+the energy cost per calculation.</li>
+<li><strong>Increased Compute Density:</strong> Because systolic arrays
+do not require complex routing logic, instruction decoders, or large
+register files for every single ALU, Google can pack vastly more MAC
+cells onto a single piece of silicon. More cells equate to higher
+parallel processing power.</li>
+<li><strong>High Throughput:</strong> Once the systolic array pipeline
+is full, it produces a massive wave of completed calculations on every
+single clock cycle. This sustained throughput allows TPUs to train large
+language models and run inference workloads in a fraction of the time
+required by traditional architectures.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-google-tp-us-use-systolic-arrays-to-accelerate-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

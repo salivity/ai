@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuing MBS with AI and Prepayment Hazard Models - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how mortgage servicers and housing economists accurately value mortgage-backed securities (MBS) during volatile interest-rate shocks. By integrating prepayment-speed hazard models with regional home-price">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/valuing-mbs-with-ai-and-prepayment-hazard-models">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Valuing MBS with AI and Prepayment Hazard Models - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/valuing-mbs-with-ai-and-prepayment-hazard-models" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how mortgage servicers and housing economists accurately value mortgage-backed securities (MBS) during volatile interest-rate shocks. By integrating prepayment-speed hazard models with regional home-price" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="valuing-mbs-with-ai-and-prepayment-hazard-models">Valuing MBS
+with AI and Prepayment Hazard Models</h1>
+<p>This article provides a comprehensive overview of how mortgage
+servicers and housing economists accurately value mortgage-backed
+securities (MBS) during volatile interest-rate shocks. By integrating
+prepayment-speed hazard models with regional home-price artificial
+intelligence (AI), financial professionals can predict borrower
+behavior, estimate home equity shifts, and calculate precise cash flows.
+Together, these advanced analytical tools mitigate duration risk and
+protect institutional portfolios from sudden market fluctuations.</p>
+<h2 id="the-challenge-of-interest-rate-shocks">The Challenge of
+Interest-Rate Shocks</h2>
+<p>Mortgage-backed securities are uniquely difficult to value because
+their underlying cash flows are uncertain. Unlike standard bonds,
+homeowners have the option to prepay their mortgages at any time,
+usually through refinancing or selling their homes.</p>
+<p>When interest-rate shocks occur—meaning rates suddenly plummet or
+spike—borrower behavior changes drastically:</p>
+<ul>
+<li><strong>Falling Rates (Contraction Risk):</strong> Homeowners rush
+to refinance into lower rates. MBS investors receive their principal
+back much faster than expected, forcing them to reinvest that capital in
+a lower-yield environment.</li>
+<li><strong>Rising Rates (Extension Risk):</strong> Refinancing grinds
+to a halt. Homeowners hold onto their existing low-rate mortgages longer
+than anticipated, locking MBS investors into below-market yields for an
+extended period.</li>
+</ul>
+<p>To price MBS accurately during these shocks, economists and servicers
+must predict exactly when and where these prepayments will happen.</p>
+<h2 id="prepayment-speed-hazard-models-explained">Prepayment-Speed
+Hazard Models Explained</h2>
+<p>Mortgage servicers use prepayment-speed hazard models—originally
+adapted from biological survival analysis—to calculate the probability
+that a specific loan will terminate (prepay) at any given month,
+assuming it has survived up to that point.</p>
+<p>Instead of treating a pool of mortgages as a single homogenous block,
+hazard models evaluate individual loan characteristics. Key baseline
+variables include:</p>
+<ul>
+<li><strong>Refinancing Incentive:</strong> The spread between the
+borrower's current mortgage rate and the prevailing market rate.</li>
+<li><strong>Loan Age (Seasoning):</strong> New loans rarely prepay
+immediately, while older loans follow predictable turnover curves.</li>
+<li><strong>Burnout:</strong> If rates have dropped previously and a
+borrower did not refinance, they are statistically less likely to do so
+during the next rate drop.</li>
+</ul>
+<p>During an interest-rate shock, the hazard model dynamically adjusts
+the conditional prepayment rate (CPR) by calculating how the sudden
+shift in the rate spread interacts with these baseline loan
+characteristics.</p>
+<h2 id="regional-home-price-ai">Regional Home-Price AI</h2>
+<p>A borrower’s desire to refinance is meaningless if they lack the home
+equity to qualify for a new loan. This is where housing economists
+deploy regional home-price artificial intelligence.</p>
+<p>Traditional valuation models rely on lagging, broad-stroke national
+or state-level home price indices. Modern AI models, however, use
+machine learning to process vast amounts of granular, real-time data at
+the ZIP-code or neighborhood level. These AI systems ingest:</p>
+<ul>
+<li>Local employment trends and migration patterns.</li>
+<li>Real-time property listings and days-on-market metrics.</li>
+<li>Climate risk data and local zoning changes.</li>
+<li>Satellite imagery and tax assessment records.</li>
+</ul>
+<p>By analyzing these localized factors, the AI forecasts precise
+regional home-price appreciation or depreciation. This allows economists
+to dynamically update the Loan-to-Value (LTV) ratios of individual
+mortgages within an MBS pool.</p>
+<h2 id="combining-the-models-to-value-mbs">Combining the Models to Value
+MBS</h2>
+<p>To value an MBS across interest-rate shocks, servicers and economists
+merge the outputs of the AI and the hazard models into a unified
+valuation engine.</p>
+<p>First, the regional home-price AI projects future home values, which
+determines each borrower's updated equity position (LTV). This equity
+metric is then fed directly into the prepayment-speed hazard model. For
+example, if interest rates plummet, the hazard model might initially
+predict a massive wave of refinancing. However, if the AI indicates that
+a specific region is experiencing a localized housing downturn,
+borrowers in that area will be "underwater" (owing more than the home is
+worth) and unable to refinance. The hazard model adjusts the prepayment
+speed downward for those specific loans.</p>
+<p>Finally, financial analysts run Monte Carlo simulations—generating
+thousands of potential future interest-rate paths (shocks). For each
+path, the combined AI-hazard framework projects the exact monthly cash
+flows (principal and interest) the MBS will generate. By discounting
+these projected cash flows back to the present day and calculating the
+Option-Adjusted Spread (OAS), mortgage servicers and economists arrive
+at a highly accurate valuation for the security, allowing them to hedge
+their risks effectively.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/valuing-mbs-with-ai-and-prepayment-hazard-models';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectral Bias in AI: Why Networks Learn Simple Rules First - ai</title>
+    <meta name="description" content="Deep neural networks possess millions of parameters capable of memorizing vast amounts of arbitrary data, yet they consistently manage to generalize well to unseen information. This article explores the core reasons behind this counterintuitive behavior:">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/spectral-bias-in-ai-why-networks-learn-simple-rules-first">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Spectral Bias in AI: Why Networks Learn Simple Rules First - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/spectral-bias-in-ai-why-networks-learn-simple-rules-first" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Deep neural networks possess millions of parameters capable of memorizing vast amounts of arbitrary data, yet they consistently manage to generalize well to unseen information. This article explores the core reasons behind this counterintuitive behavior:" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="spectral-bias-in-ai-why-networks-learn-simple-rules-first">Spectral
+Bias in AI: Why Networks Learn Simple Rules First</h1>
+<p>Deep neural networks possess millions of parameters capable of
+memorizing vast amounts of arbitrary data, yet they consistently manage
+to generalize well to unseen information. This article explores the core
+reasons behind this counterintuitive behavior: simplicity bias and
+spectral bias. We will examine what these biases are, how they cause
+artificial intelligence models to prioritize low-frequency functions
+over high-frequency details during training, the mathematical mechanics
+of the Neural Tangent Kernel, and the practical implications for modern
+machine learning.</p>
+<h2 id="defining-simplicity-bias-and-spectral-bias">Defining Simplicity
+Bias and Spectral Bias</h2>
+<p>Simplicity bias is the tendency of deep learning models, trained via
+gradient-based optimization, to find simple solutions that fit the
+training data before exploring complex ones. Even when a network is
+heavily overparameterized and capable of creating convoluted decision
+boundaries, it naturally gravitates toward the simplest possible
+representation first.</p>
+<p>Spectral bias is the mathematical formalization of simplicity bias
+through the lens of Fourier analysis. If you treat the data and the
+network's output as continuous signals, those signals can be broken down
+into different frequencies.</p>
+<ul>
+<li><strong>Low-frequency functions</strong> represent smooth, gradual
+changes and broad global patterns.</li>
+<li><strong>High-frequency functions</strong> represent sharp
+transitions, intricate details, and localized noise.</li>
+</ul>
+<p>Spectral bias dictates that neural networks learn low-frequency
+components exponentially faster than high-frequency components. During
+the initial phases of training, the network maps out the broad strokes
+of the data. Only after prolonged training does it begin to fit the
+jagged, high-frequency details.</p>
+<h2 id="the-mechanics-behind-the-bias">The Mechanics Behind the
+Bias</h2>
+<p>This phenomenon is not explicitly programmed into the AI; rather, it
+emerges naturally from the architecture of neural networks and the
+mathematics of how they are trained.</p>
+<h3 id="1-stochastic-gradient-descent-sgd-dynamics">1. Stochastic
+Gradient Descent (SGD) Dynamics</h3>
+<p>Neural networks learn by adjusting their internal weights using
+Stochastic Gradient Descent. During backpropagation, the gradients
+corresponding to low-frequency features are significantly larger and
+more consistent across batches of data. High-frequency features yield
+gradients that rapidly oscillate and cancel each other out.
+Consequently, the optimizer takes large, decisive steps toward solving
+low-frequency patterns while moving sluggishly toward high-frequency
+ones.</p>
+<h3 id="2-activation-functions">2. Activation Functions</h3>
+<p>Most modern networks rely on Rectified Linear Unit (ReLU) activations
+or similar smooth approximations. A ReLU network builds complex
+functions by stitching together simple linear pieces. Creating a smooth,
+low-frequency curve requires very few active junctions. Conversely,
+approximating a jagged, high-frequency wave requires precise
+coordination of many weights and biases, which takes significantly more
+training iterations to align.</p>
+<h3 id="3-the-neural-tangent-kernel-ntk">3. The Neural Tangent Kernel
+(NTK)</h3>
+<p>To understand spectral bias mathematically, researchers use the
+Neural Tangent Kernel (NTK), which describes how a neural network
+evolves during training when its width approaches infinity. The NTK
+possesses eigenvalues that dictate the speed of learning along different
+directions in the data space.</p>
+<p>Mathematical analysis of the NTK reveals that its largest eigenvalues
+correspond to smooth, low-frequency eigenfunctions. Because learning
+speed is directly proportional to the size of these eigenvalues, the
+network converges on low-frequency patterns first. The eigenvalues for
+high-frequency functions are minuscule, meaning the network requires
+vastly more training steps to capture them.</p>
+<h2 id="why-spectral-bias-is-mostly-a-good-thing">Why Spectral Bias is
+Mostly a Good Thing</h2>
+<p>In traditional statistics, a model with more parameters than data
+points will inevitably overfit—it will memorize the training data,
+including its noise, and fail on new data. Deep learning defies this
+rule largely because of spectral bias.</p>
+<p>Real-world data usually consists of a true underlying signal (which
+is smooth and low-frequency) corrupted by random noise (which is jagged
+and high-frequency). Because of spectral bias, the neural network learns
+the true signal first. It acts as a natural regularizer. This is also
+why "early stopping"—halting the training process before the training
+loss hits absolute zero—is so effective. By stopping early, engineers
+freeze the network after it has learned the low-frequency signal, but
+before it has had enough time to memorize the high-frequency noise.</p>
+<h2 id="when-spectral-bias-becomes-a-problem">When Spectral Bias Becomes
+a Problem</h2>
+<p>While beneficial for tasks like image classification or sentiment
+analysis, spectral bias is a severe bottleneck in fields where
+high-frequency details are the actual signal, not noise.</p>
+<p>For example, in neural rendering (such as Neural Radiance Fields, or
+NeRFs) and physics-informed neural networks, the AI must map 3D
+coordinates to specific pixel values or physical states. Because of
+spectral bias, standard neural networks produce blurry 3D models and
+fail to capture fine textures like hair, grass, or sharp shadows.</p>
+<p>To overcome this, researchers use <strong>positional
+encoding</strong> or <strong>Fourier features</strong>. By passing the
+raw inputs through sine and cosine functions of various frequencies
+before feeding them into the network, engineers artificially shift the
+high-frequency details into a mathematical space where the network can
+learn them just as quickly as low-frequency ones.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/spectral-bias-in-ai-why-networks-learn-simple-rules-first';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

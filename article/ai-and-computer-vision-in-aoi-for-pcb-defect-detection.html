@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI and Computer Vision in AOI for PCB Defect Detection - ai</title>
+    <meta name="description" content="Automated Optical Inspection (AOI) machines rely on advanced computer vision and artificial intelligence (AI) to revolutionize quality control in electronics manufacturing. This article explores how these systems capture high-resolution data, process imag">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-and-computer-vision-in-aoi-for-pcb-defect-detection">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI and Computer Vision in AOI for PCB Defect Detection - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-and-computer-vision-in-aoi-for-pcb-defect-detection" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Automated Optical Inspection (AOI) machines rely on advanced computer vision and artificial intelligence (AI) to revolutionize quality control in electronics manufacturing. This article explores how these systems capture high-resolution data, process imag" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-and-computer-vision-in-aoi-for-pcb-defect-detection">AI and
+Computer Vision in AOI for PCB Defect Detection</h1>
+<p>Automated Optical Inspection (AOI) machines rely on advanced computer
+vision and artificial intelligence (AI) to revolutionize quality control
+in electronics manufacturing. This article explores how these systems
+capture high-resolution data, process images using deep learning
+algorithms, and accurately detect critical printed circuit board (PCB)
+anomalies, specifically focusing on solder bridge defects and missing
+components. By moving beyond traditional rule-based programming,
+AI-driven AOI enhances production speed, adapts to complex board
+layouts, and significantly minimizes false defect alarms.</p>
+<h2 id="image-acquisition-and-preprocessing">Image Acquisition and
+Preprocessing</h2>
+<p>The inspection process begins with capturing detailed visuals of the
+PCB. AOI machines use high-definition cameras combined with specialized
+multi-angle LED lighting—often using red, green, blue, and white
+light—to illuminate the board. This lighting technique highlights the
+three-dimensional contours of solder joints and flat surfaces of
+components.</p>
+<p>Once the images are captured, computer vision algorithms preprocess
+the data. This step involves normalizing brightness, reducing background
+noise, and aligning the image to match the digital blueprint (CAD data)
+of the PCB. Today, many systems also use 3D structured light projection
+to generate a precise height map of the board, which is critical for
+measuring solder volume and component elevation.</p>
+<h2 id="the-role-of-ai-and-deep-learning">The Role of AI and Deep
+Learning</h2>
+<p>Traditional AOI systems relied on strict, rule-based algorithms that
+compared pixel brightness and contrast against a single "golden board"
+image. While moderately effective, this method resulted in high
+false-call rates due to minor, acceptable variations in solder
+reflectivity or component coloration.</p>
+<p>Modern AOI integrates Convolutional Neural Networks (CNNs), a class
+of deep learning models specifically designed to process visual data.
+These AI models are trained on thousands of images of both flawless PCBs
+and defective ones. Instead of following rigid pixel-matching rules, the
+AI learns the conceptual features of a good component and a proper
+solder joint. This cognitive capability allows the system to distinguish
+between harmless cosmetic variations and actual functional defects.</p>
+<h2 id="detecting-solder-bridge-defects">Detecting Solder Bridge
+Defects</h2>
+<p>A solder bridge occurs when excess solder inadvertently connects two
+or more adjacent conductive pathways, creating a dangerous short
+circuit. Spotting these requires extreme precision, especially on modern
+PCBs with microscopic spacing between pins.</p>
+<p>AI and computer vision identify solder bridges through the following
+mechanisms:</p>
+<ul>
+<li><strong>Reflectivity and Contour Analysis:</strong> Solder is highly
+reflective. Multi-angle lighting bounces off the curved surface of a
+normal solder joint in a predictable pattern. When a bridge forms, it
+creates an abnormal continuous reflective path between two pads. The
+computer vision system detects this anomalous light pattern.</li>
+<li><strong>Semantic Segmentation:</strong> The AI uses semantic
+segmentation to classify every pixel in the region of interest. It
+separates the background board, the metal pads, the component leads, and
+the solder. If the pixels classified as "solder" form a continuous shape
+connecting two distinct "pad" zones, the AI flags a bridge defect.</li>
+<li><strong>3D Profilometry:</strong> In 3D AOI systems, the machine
+projects a striped light pattern onto the board. Deformations in these
+stripes allow the computer vision software to calculate the exact height
+and volume of the solder. A solder bridge registers as an unexpected
+elevation ridge where a flat gap should exist between pins.</li>
+</ul>
+<h2 id="identifying-missing-components">Identifying Missing
+Components</h2>
+<p>Missing components—often caused by pick-and-place machine nozzle
+failures or insufficient solder paste—render a PCB non-functional. AI
+detects these absences in milliseconds using a combination of object
+detection and 3D measurement.</p>
+<ul>
+<li><strong>Region of Interest (ROI) Verification:</strong> Using the
+PCB's CAD data, the AOI system knows the exact coordinates where every
+resistor, capacitor, and integrated circuit should sit. The computer
+vision system isolates these specific bounding boxes for localized
+inspection.</li>
+<li><strong>Feature Extraction and Object Detection:</strong> Deep
+learning algorithms scan the ROI for specific visual features, such as
+the dark matte body of a resistor, the metallic end-caps of a capacitor,
+or the printed text markings (OCR) on a microchip. If the AI sees
+exposed solder paste or bare copper pads instead of these learned
+features, it immediately logs a missing component.</li>
+<li><strong>Height Thresholding:</strong> When utilizing 3D computer
+vision, the system measures the Z-axis (height) within the ROI. Even the
+smallest surface-mount device has a defined thickness. If the measured
+height matches the baseline level of the flat PCB substrate or the wet
+solder paste, the AI confirms the component is absent.</li>
+</ul>
+<h2 id="continuous-learning-in-production">Continuous Learning in
+Production</h2>
+<p>One of the greatest advantages of AI in AOI is its ability to improve
+over time. When an AOI machine flags a solder bridge or a missing
+component, the board is typically routed to a human operator for
+verification. If the operator confirms the defect, or overrides it as a
+false alarm, that data is fed back into the neural network. This
+continuous feedback loop refines the AI model on the fly, constantly
+increasing the accuracy of the inspection process on the factory
+floor.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-and-computer-vision-in-aoi-for-pcb-defect-detection';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

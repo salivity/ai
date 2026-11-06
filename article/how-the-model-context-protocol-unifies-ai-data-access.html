@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Model Context Protocol Unifies AI Data Access - ai</title>
+    <meta name="description" content="The Model Context Protocol (MCP) is an open standard that streamlines how artificial intelligence assistants connect to external data sources and tools. Previously, developers had to build custom integrations for every combination of AI model and software">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-the-model-context-protocol-unifies-ai-data-access">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How the Model Context Protocol Unifies AI Data Access - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-the-model-context-protocol-unifies-ai-data-access" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Model Context Protocol (MCP) is an open standard that streamlines how artificial intelligence assistants connect to external data sources and tools. Previously, developers had to build custom integrations for every combination of AI model and software" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-the-model-context-protocol-unifies-ai-data-access">How the
+Model Context Protocol Unifies AI Data Access</h1>
+<p>The Model Context Protocol (MCP) is an open standard that streamlines
+how artificial intelligence assistants connect to external data sources
+and tools. Previously, developers had to build custom integrations for
+every combination of AI model and software platform, leading to
+fragmented and repetitive work. This article explores how MCP solves
+this challenge by using a universal client-server architecture, defining
+three core primitives—resources, tools, and prompts—and establishing a
+secure, standardized communication framework that allows any AI
+assistant to interact seamlessly with local and remote data.</p>
+<h2 id="the-integration-bottleneck">The Integration Bottleneck</h2>
+<p>Before the introduction of MCP, connecting an AI assistant to
+external systems required bespoke code. If a developer wanted an AI to
+read from a database, check a calendar, and update a code repository,
+they had to write three distinct integrations tailored to that specific
+AI platform. Switching to a different AI model meant rewriting those
+connections from scratch.</p>
+<p>MCP eliminates this bottleneck by introducing a single, universal
+protocol. Instead of building custom bridges between every AI and every
+data source, developers only need to build one MCP connection for their
+data source. Any MCP-compatible AI assistant can then immediately
+understand and interact with that system.</p>
+<h2 id="the-client-server-architecture">The Client-Server
+Architecture</h2>
+<p>MCP standardizes connections using a straightforward client-server
+model. This architecture separates the AI interface from the underlying
+data systems:</p>
+<ul>
+<li><strong>MCP Hosts:</strong> These are the applications where the
+user interacts with the AI, such as desktop assistants, integrated
+development environments (IDEs), or chat interfaces.</li>
+<li><strong>MCP Clients:</strong> Embedded within the host application,
+the client maintains a secure, one-to-one connection with an external
+server and translates the AI's requests into the standardized
+protocol.</li>
+<li><strong>MCP Servers:</strong> Lightweight programs that sit in front
+of a specific data source or tool—like Google Drive, Slack, or a local
+SQL database. The server exposes the system's capabilities to the client
+in a uniform format.</li>
+</ul>
+<p>Communication between the client and server is handled via JSON-RPC
+2.0 messages. For local connections on the same machine, MCP uses
+standard input/output (stdio) for fast, direct communication. For remote
+connections, it uses HTTP with Server-Sent Events (SSE).</p>
+<h2 id="the-three-core-primitives">The Three Core Primitives</h2>
+<p>To make diverse data sources understandable to an AI, MCP categorizes
+all external capabilities into three standardized building blocks, known
+as primitives:</p>
+<h3 id="1-resources-reading-data">1. Resources (Reading Data)</h3>
+<p>Resources represent passive data that the AI can read to gain
+context. They function similarly to GET requests in traditional web
+APIs. Examples include file contents, database records, system logs, or
+screenshots. MCP standardizes how these are presented using Uniform
+Resource Identifiers (URIs), allowing the AI to request and read
+information without needing to know how the underlying storage system
+works.</p>
+<h3 id="2-tools-taking-action">2. Tools (Taking Action)</h3>
+<p>Tools allow the AI to perform actions and modify external
+environments. An MCP server defines a tool by providing its name, a
+plain-text description of what it does, and a strict JSON schema
+outlining the required inputs. When a user asks the AI to perform a
+task—such as sending an email, creating a calendar event, or executing a
+script—the AI formats a request matching the schema and sends it to the
+MCP server, which executes the function and returns the result.</p>
+<h3 id="3-prompts-structuring-workflows">3. Prompts (Structuring
+Workflows)</h3>
+<p>Prompts are pre-defined templates and workflows provided by the
+server to help users and AI models interact with the connected system
+effectively. Instead of forcing the user to figure out how to ask the AI
+to analyze a complex database, the MCP server can expose a standardized
+prompt template that automatically pulls in the right resources and
+guides the AI through the task.</p>
+<h2 id="security-and-user-control">Security and User Control</h2>
+<p>Standardizing access also means standardizing security. MCP is
+designed so that the host application and the human user retain ultimate
+control. An MCP server cannot force an AI to read data or execute a tool
+on its own. Instead, the server merely advertises what it can do.
+Furthermore, host applications can require explicit human approval
+before the AI executes sensitive tools, ensuring that standardized
+access does not compromise system safety or data privacy.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-the-model-context-protocol-unifies-ai-data-access';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

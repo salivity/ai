@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diffusion Maps and Multi-Scale Geometry in AI - ai</title>
+    <meta name="description" content="This article explores how Diffusion Maps, a nonlinear dimensionality reduction technique in artificial intelligence, uncover the underlying geometric structure of complex datasets. By constructing a similarity graph from raw data and simulating Markov ran">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/diffusion-maps-and-multi-scale-geometry-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Diffusion Maps and Multi-Scale Geometry in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/diffusion-maps-and-multi-scale-geometry-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Diffusion Maps, a nonlinear dimensionality reduction technique in artificial intelligence, uncover the underlying geometric structure of complex datasets. By constructing a similarity graph from raw data and simulating Markov ran" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="diffusion-maps-and-multi-scale-geometry-in-ai">Diffusion Maps
+and Multi-Scale Geometry in AI</h1>
+<p>This article explores how Diffusion Maps, a nonlinear dimensionality
+reduction technique in artificial intelligence, uncover the underlying
+geometric structure of complex datasets. By constructing a similarity
+graph from raw data and simulating Markov random walks across it,
+Diffusion Maps translate local connections into global geometric
+representations. We will examine the step-by-step mechanics of this
+process—from kernel construction and transition probability matrices to
+spectral decomposition—and explain how using a time parameter allows AI
+models to capture data geometry at multiple scales simultaneously.</p>
+<h3 id="constructing-the-data-graph">Constructing the Data Graph</h3>
+<p>High-dimensional data in AI often lies on a lower-dimensional surface
+known as a manifold. Traditional linear methods like Principal Component
+Analysis (PCA) fail to capture the curvature of these manifolds because
+they rely on global Euclidean distances. Diffusion Maps solve this by
+focusing on local relationships first.</p>
+<p>The process begins by representing the dataset as a weighted graph.
+Each data point becomes a node, and edges connect nodes based on their
+local similarity. This similarity is typically calculated using a
+Gaussian kernel function:</p>
+<p><span class="math display">\[k(x, y) = \exp\left(-\frac{||x -
+y||^2}{\epsilon}\right)\]</span></p>
+<p>Here, <span class="math inline">\(\epsilon\)</span> is a scale
+parameter that defines the size of the local neighborhood. If two points
+are within this local radius, the kernel assigns a strong connection
+weight. If they are far apart, the connection weight approaches zero.
+This ensures that only reliable, local Euclidean distances are used to
+build the graph's foundation.</p>
+<h3 id="simulating-markov-random-walks">Simulating Markov Random
+Walks</h3>
+<p>Once the similarity graph is established, Diffusion Maps introduce
+the concept of a Markov random walk. This involves converting the
+similarity weights into transition probabilities. By normalizing the
+weights connected to each node, the algorithm creates a Markov
+transition matrix, denoted as <span
+class="math inline">\(P\)</span>.</p>
+<p>Each entry <span class="math inline">\(P(x, y)\)</span> represents
+the probability of a random walker jumping from node <span
+class="math inline">\(x\)</span> to node <span
+class="math inline">\(y\)</span> in a single step. Because the
+probabilities are derived from local similarities, the random walker is
+much more likely to move along dense, high-similarity pathways on the
+data manifold than to jump across empty space.</p>
+<h3 id="multi-scale-geometry-via-time-parameterization">Multi-Scale
+Geometry via Time Parameterization</h3>
+<p>The true power of Diffusion Maps lies in running this Markov chain
+forward in time. If <span class="math inline">\(P\)</span> represents a
+single step, then raising the matrix to the power of <span
+class="math inline">\(t\)</span> (written as <span
+class="math inline">\(P^t\)</span>) represents the transition
+probabilities of a random walk after <span
+class="math inline">\(t\)</span> steps.</p>
+<p>The parameter <span class="math inline">\(t\)</span> acts as a scale
+control:</p>
+<ul>
+<li><strong>Small <span class="math inline">\(t\)</span>
+values:</strong> The random walker only explores immediate
+neighborhoods. The matrix <span class="math inline">\(P^t\)</span>
+captures fine-grained, local geometric structures.</li>
+<li><strong>Large <span class="math inline">\(t\)</span>
+values:</strong> The walker has time to traverse broader sections of the
+graph. The matrix <span class="math inline">\(P^t\)</span> integrates
+local connections to reveal global, macro-level clusters and
+pathways.</li>
+</ul>
+<p>By varying <span class="math inline">\(t\)</span>, AI practitioners
+can observe the geometric structure of the data across multiple scales,
+seamlessly transitioning from local details to global topology.</p>
+<h3 id="diffusion-distance-and-spectral-parameterization">Diffusion
+Distance and Spectral Parameterization</h3>
+<p>To translate these random walk probabilities into a usable coordinate
+system for AI algorithms, Diffusion Maps define a metric called the
+<strong>diffusion distance</strong>. The diffusion distance between two
+points at time <span class="math inline">\(t\)</span> measures how
+similar their probability distributions are after <span
+class="math inline">\(t\)</span> steps of a random walk.</p>
+<p>Two points have a small diffusion distance if there are many
+high-probability paths of length <span class="math inline">\(t\)</span>
+connecting them. This makes the metric exceptionally robust to noise; a
+single noisy shortcut between two clusters will not significantly alter
+the overall probability of paths, unlike shortest-path algorithms (such
+as Isomap) which can be easily corrupted by a single outlier.</p>
+<p>Calculating this distance directly across a massive dataset is
+computationally expensive. Diffusion Maps bypass this by computing the
+eigenvalues (<span class="math inline">\(\lambda\)</span>) and
+eigenvectors (<span class="math inline">\(\psi\)</span>) of the
+transition matrix <span class="math inline">\(P\)</span>. Through
+spectral decomposition, the high-dimensional data is mapped into a new,
+lower-dimensional "diffusion space" using the top <span
+class="math inline">\(k\)</span> eigenvectors scaled by their
+eigenvalues at time <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display">\[\Psi_t(x) = \left( \lambda_1^t
+\psi_1(x), \lambda_2^t \psi_2(x), \dots, \lambda_k^t \psi_k(x)
+\right)\]</span></p>
+<p>In this new coordinate system, the standard Euclidean distance
+between two mapped points is mathematically equivalent to the diffusion
+distance in the original graph. By retaining only the dominant
+eigenvectors (which correspond to the slowest-decaying modes of the
+Markov chain), the parameterization compresses the data into a compact
+representation that preserves its intrinsic multi-scale geometry.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/diffusion-maps-and-multi-scale-geometry-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

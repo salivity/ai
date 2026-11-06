@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI and Stylometry: Solving Historical Authorship Disputes - ai</title>
+    <meta name="description" content="Computational stylometry blends linguistic analysis with artificial intelligence to identify the true authors of disputed historical texts. By examining subtle writing habits—specifically character n-gram distributions—machine learning models can detect a">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-and-stylometry-solving-historical-authorship-disputes">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI and Stylometry: Solving Historical Authorship Disputes - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-and-stylometry-solving-historical-authorship-disputes" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Computational stylometry blends linguistic analysis with artificial intelligence to identify the true authors of disputed historical texts. By examining subtle writing habits—specifically character n-gram distributions—machine learning models can detect a" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-and-stylometry-solving-historical-authorship-disputes">AI and
+Stylometry: Solving Historical Authorship Disputes</h1>
+<p>Computational stylometry blends linguistic analysis with artificial
+intelligence to identify the true authors of disputed historical texts.
+By examining subtle writing habits—specifically character n-gram
+distributions—machine learning models can detect a writer's unique
+stylistic fingerprint. This article explores the mechanics of n-gram
+analysis, the specific AI algorithms used to process these linguistic
+patterns, and how these technologies have successfully resolved
+long-standing mysteries surrounding the <em>Federalist Papers</em> and
+the Shakespeare apocrypha.</p>
+<h2 id="the-mechanics-of-computational-stylometry">The Mechanics of
+Computational Stylometry</h2>
+<p>Every writer possesses a subconscious "stylometric fingerprint."
+While an author can deliberately change their vocabulary or topic, they
+cannot easily alter their foundational syntax, punctuation habits, and
+use of function words (such as "the," "of," and "and"). Computational
+stylometry quantifies these involuntary habits, turning text into
+measurable data points to compare disputed works against known
+baselines.</p>
+<h2 id="character-n-grams-capturing-the-subconscious">Character N-Grams:
+Capturing the Subconscious</h2>
+<p>One of the most reliable features in modern stylometry is the
+character n-gram. An n-gram is a contiguous sequence of <em>n</em>
+characters from a given sample of text, including spaces and
+punctuation.</p>
+<p>For example, in the phrase "to be", a character 3-gram (trigram)
+analysis breaks the text down into:</p>
+<ul>
+<li>"to "</li>
+<li>"o b"</li>
+<li>" be"</li>
+</ul>
+<p>Character n-gram distributions are exceptionally effective for
+authorship attribution because they capture multiple layers of
+linguistic information simultaneously:</p>
+<ul>
+<li><strong>Lexical preferences:</strong> Root words and common
+vocabulary.</li>
+<li><strong>Morphology:</strong> How a writer uses prefixes and suffixes
+(e.g., "-ing" or "-ed").</li>
+<li><strong>Punctuation and spacing:</strong> Habits regarding comma
+usage, hyphenation, and sentence transitions.</li>
+</ul>
+<p>Furthermore, character n-grams are resilient to "noise." In
+historical texts, where spelling was not yet standardized or where
+optical character recognition (OCR) errors are common, word-level
+analysis often fails. Character n-grams bypass this issue by focusing on
+smaller, consistent fragments of text.</p>
+<h2 id="how-artificial-intelligence-processes-stylistic-data">How
+Artificial Intelligence Processes Stylistic Data</h2>
+<p>Once a text is converted into a distribution of character n-grams,
+artificial intelligence steps in to analyze the high-dimensional data. A
+single book can generate thousands of unique n-gram frequencies, far too
+many for human analysis.</p>
+<p>AI systems utilize two primary approaches to resolve authorship:</p>
+<ol type="1">
+<li><strong>Supervised Machine Learning:</strong> When historians have a
+short list of suspect authors, they train algorithms like Support Vector
+Machines (SVMs), Random Forests, or Neural Networks on undisputed texts
+by those candidates. The AI learns the specific n-gram weights that
+separate Author A from Author B. It then evaluates the disputed text and
+calculates the probability of it belonging to each candidate.</li>
+<li><strong>Unsupervised Machine Learning:</strong> Using techniques
+like Principal Component Analysis (PCA) or hierarchical clustering, the
+AI groups texts based on n-gram similarities without prior training.
+Texts with similar n-gram distributions naturally cluster together on a
+graph, visually revealing which known author the disputed text most
+closely resembles.</li>
+</ol>
+<h2 id="case-study-the-federalist-papers">Case Study: The Federalist
+Papers</h2>
+<p>The <em>Federalist Papers</em> consist of 85 essays written between
+1787 and 1788 by Alexander Hamilton, James Madison, and John Jay under
+the pseudonym "Publius." While the authorship of most essays was known,
+12 remained fiercely disputed between Hamilton and Madison, a challenge
+largely because both men wrote on the same topics using remarkably
+similar 18th-century political vocabulary.</p>
+<p>Computational stylometry resolved this by ignoring the political
+themes and focusing on function words and character n-grams. AI models
+trained on Hamilton’s and Madison’s undisputed writings revealed
+distinct micro-habits—such as Madison's consistent preference for the
+word "whilst" and Hamilton's use of "while," alongside distinct 3-gram
+and 4-gram punctuation patterns. The algorithms overwhelmingly
+attributed all 12 disputed essays to James Madison, a conclusion now
+universally accepted by historians.</p>
+<h2 id="case-study-the-shakespeare-apocrypha">Case Study: The
+Shakespeare Apocrypha</h2>
+<p>Attribution in the Elizabethan era is notoriously difficult because
+playwriting was frequently collaborative, and printing houses regularly
+altered spelling. The Shakespeare apocrypha refers to a group of plays
+that have occasionally been attributed to William Shakespeare, alongside
+canonical plays suspected of having co-authors.</p>
+<p>By applying character n-gram analysis and neural networks to the
+texts, researchers successfully isolated Shakespeare's linguistic
+fingerprint from his contemporaries. Because character n-grams capture
+phonetic and morphological patterns, the AI could look past the
+inconsistent spellings of the 16th-century compositors.</p>
+<p>This method confirmed that plays like <em>Edward III</em> and <em>Sir
+Thomas More</em> contain distinct sections written by Shakespeare.
+Furthermore, AI analysis of <em>Henry VI</em> (Parts 1, 2, and 3)
+identified the specific character n-gram distributions of Christopher
+Marlowe, leading to the modern consensus that Marlowe was a direct
+collaborator on the trilogy.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-and-stylometry-solving-historical-authorship-disputes';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

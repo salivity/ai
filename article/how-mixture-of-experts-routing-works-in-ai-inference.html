@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Mixture of Experts Routing Works in AI Inference - ai</title>
+    <meta name="description" content="Mixture of Experts (MoE) is a neural network architecture that drastically improves the efficiency of large artificial intelligence models during inference. This article provides a straightforward breakdown of how MoE routing selectively activates only a">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-mixture-of-experts-routing-works-in-ai-inference">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Mixture of Experts Routing Works in AI Inference - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-mixture-of-experts-routing-works-in-ai-inference" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Mixture of Experts (MoE) is a neural network architecture that drastically improves the efficiency of large artificial intelligence models during inference. This article provides a straightforward breakdown of how MoE routing selectively activates only a" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-mixture-of-experts-routing-works-in-ai-inference">How
+Mixture of Experts Routing Works in AI Inference</h1>
+<p>Mixture of Experts (MoE) is a neural network architecture that
+drastically improves the efficiency of large artificial intelligence
+models during inference. This article provides a straightforward
+breakdown of how MoE routing selectively activates only a fraction of a
+model's total parameters. We will explore the mechanics of the gating
+network, the mathematical process of token routing, how experts process
+information, and why this sparse activation method yields high
+performance with minimal computational cost.</p>
+<h2 id="dense-vs-sparse-architectures">Dense vs. Sparse
+Architectures</h2>
+<p>To understand MoE routing, it is necessary to look at traditional
+"dense" models. In a dense AI model, every single parameter (weight) is
+used to process every single input token. If a model has 100 billion
+parameters, all 100 billion parameters are activated for every word
+generated, requiring massive memory bandwidth and computing power.</p>
+<p>MoE replaces this dense structure with a "sparse" architecture.
+Instead of one massive feed-forward network in each layer of the neural
+network, an MoE layer divides the network into multiple smaller
+sub-networks called "experts." During inference, the model only
+activates a few of these experts for any given token, leaving the vast
+majority of the parameters inactive.</p>
+<h2 id="the-gating-network-the-router">The Gating Network (The
+Router)</h2>
+<p>The mechanism responsible for deciding which parameters to activate
+is called the gating network, or simply the router. The router is a
+lightweight neural network layer that sits right before the experts.</p>
+<p>When an input token (representing a word or part of a word) enters an
+MoE layer, it first passes through the router. The router's sole job is
+to evaluate the token's vector representation and determine which
+experts are best suited to process that specific piece of information.
+For example, one expert might specialize in syntax, another in math, and
+another in coding logic.</p>
+<h2 id="step-by-step-how-the-routing-process-works">Step-by-Step: How
+the Routing Process Works</h2>
+<p>The selective activation of parameters happens in four distinct steps
+for every token during inference:</p>
+<h3 id="1-scoring-the-experts">1. Scoring the Experts</h3>
+<p>The input token's data is multiplied by the router's weight matrix.
+This produces a raw score (logit) for each available expert in that
+layer. If there are 8 experts, the router generates 8 scores.</p>
+<h3 id="2-calculating-probabilities">2. Calculating Probabilities</h3>
+<p>The router applies a Softmax function to these raw scores. This
+converts the scores into a probability distribution, meaning all the
+scores are scaled to values between 0 and 1, and they all add up to 1. A
+higher value indicates that the router is more confident in that
+specific expert's ability to handle the token.</p>
+<h3 id="3-top-k-selection">3. Top-K Selection</h3>
+<p>This is the step where parameter activation is restricted. The system
+applies a "Top-K" function, where <em>K</em> is a predefined number of
+experts to use (usually 1 or 2). The model selects the <em>K</em>
+experts with the highest probability scores and sets the routing weights
+for all other experts to zero.</p>
+<h3 id="4-conditional-execution">4. Conditional Execution</h3>
+<p>Because the unselected experts have a routing weight of zero, the
+inference engine completely skips them. It does not load their
+parameters into the processor's active memory, nor does it perform any
+matrix multiplication on them. The token is sent exclusively to the
+selected Top-K experts.</p>
+<h2 id="combining-the-output">Combining the Output</h2>
+<p>Once the chosen experts process the token, their individual outputs
+must be merged before moving to the next layer of the model.</p>
+<p>Each selected expert generates an output vector. The model multiplies
+each expert's output by the probability score the router assigned to it
+in Step 2. Finally, these weighted outputs are summed together. This
+combined output now moves forward to the next stage of the neural
+network, and the routing process repeats in the next MoE layer.</p>
+<h2 id="the-efficiency-of-sparse-activation">The Efficiency of Sparse
+Activation</h2>
+<p>By using the router to enforce Top-K selection, an AI model decouples
+its total parameter count from its computational cost. For instance, an
+MoE model might contain 8 experts per layer, totaling 47 billion
+parameters. However, if the router is set to Top-2, the model only
+activates two experts per token. As a result, the system only computes
+roughly 13 billion parameters during inference, achieving the speed of a
+small model while retaining the knowledge capacity of a massive one.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-mixture-of-experts-routing-works-in-ai-inference';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

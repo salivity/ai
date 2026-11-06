@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Anti-Cheat in Chess, Go, and Esports - ai</title>
+    <meta name="description" content="This article explores how modern competitive integrity teams in chess, Go, and esports detect human players secretly using artificial intelligence engines to cheat. By combining statistical algorithms like move-entropy and centipawn loss analysis with beh">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-anti-cheat-in-chess-go-and-esports">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Anti-Cheat in Chess, Go, and Esports - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-anti-cheat-in-chess-go-and-esports" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how modern competitive integrity teams in chess, Go, and esports detect human players secretly using artificial intelligence engines to cheat. By combining statistical algorithms like move-entropy and centipawn loss analysis with beh" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-anti-cheat-in-chess-go-and-esports">AI Anti-Cheat in Chess,
+Go, and Esports</h1>
+<p>This article explores how modern competitive integrity teams in
+chess, Go, and esports detect human players secretly using artificial
+intelligence engines to cheat. By combining statistical algorithms like
+move-entropy and centipawn loss analysis with behavioral biometrics such
+as mouse-micro-adjustment tracking, anti-cheat systems can accurately
+distinguish between human intuition and machine calculation. This
+overview covers the exact metrics and machine learning models used to
+protect fair play in digital competitions.</p>
+<h3 id="centipawn-loss-analysis-in-chess">Centipawn Loss Analysis in
+Chess</h3>
+<p>In chess, engines evaluate board positions using a unit called a
+centipawn, which equals one-hundredth of a pawn's value. When a player
+makes a move, anti-cheat systems compare that choice to the top move
+recommended by engines like Stockfish. The difference in value between
+the engine's best move and the player's actual move is the Centipawn
+Loss (CPL).</p>
+<p>Human players, including Grandmasters, naturally make suboptimal
+moves under time pressure or in complex positions, resulting in
+fluctuating Average Centipawn Loss (ACPL). Cheaters consulting an engine
+consistently register abnormally low ACPL scores. However, because low
+ACPL can occasionally happen in simple games, integrity teams combine it
+with move-entropy analysis to confirm cheating.</p>
+<h3 id="move-entropy-in-chess-and-go">Move-Entropy in Chess and Go</h3>
+<p>Move-entropy measures the complexity and chaos of a given board
+state. High-entropy positions in chess and Go have multiple viable
+paths, making it extremely difficult for a human to calculate the
+absolute best move. Low-entropy positions have obvious moves, such as an
+automatic recapture, where a human and an engine will naturally make the
+same choice.</p>
+<p>In Go, engines like KataGo evaluate moves based on win-rate
+percentages and point loss rather than centipawns. Anti-cheat algorithms
+calculate the entropy of the board and evaluate how a player performs
+specifically in high-entropy states. If a player consistently finds the
+top engine move during chaotic, high-entropy moments where human
+intuition typically fails, the system flags the account. It is
+statistically impossible for a human to match an engine's exact choices
+only when the board is at its most complicated.</p>
+<h3 id="mouse-micro-adjustment-ai-in-esports">Mouse-Micro-Adjustment AI
+in Esports</h3>
+<p>While board games rely heavily on decision statistics, real-time
+esports and online strategy platforms also use behavioral biometrics,
+specifically mouse-micro-adjustment artificial intelligence. Human motor
+control is imperfect. When a human moves a mouse cursor toward a
+target—whether clicking a chess piece or aiming at an opponent in a
+shooter—the movement follows a curved path with continuous, microscopic
+corrections in speed and trajectory.</p>
+<p>Anti-cheat AI models are trained on millions of hours of human mouse
+data to establish a baseline of natural biomechanics. This data detects
+two types of cheating:</p>
+<ol type="1">
+<li><strong>Automated Aiming (Esports):</strong> Aimbots move the cursor
+in mathematically perfect straight lines or use artificial smoothing
+algorithms. Mouse-micro-adjustment AI detects the absence of natural
+human jitter, over-correction, and reaction delay.</li>
+<li><strong>Engine Consultation (Chess and Go):</strong> When a player
+consults a second screen, phone, or overlay to read an engine's move,
+their mouse behavior changes. The AI detects robotic cadence, unusual
+pauses before simple moves, lack of "hovering" over alternative pieces,
+and sudden shifts in cursor velocity that indicate the player is simply
+inputting commands rather than thinking through the interface.</li>
+</ol>
+<h3 id="combining-metrics-for-definitive-proof">Combining Metrics for
+Definitive Proof</h3>
+<p>No single metric is used to ban a player in high-stakes environments.
+A lucky human might play a low-ACPL game, and a player with a high-end
+mouse might have smooth cursor movement. Integrity teams feed all these
+variables into an overarching machine learning classifier.</p>
+<p>When a player exhibits near-zero centipawn or point loss during
+high-entropy board states, alongside unnatural mouse-micro-adjustments
+and robotic time-usage patterns, the probability of human play drops to
+near zero. This multi-layered approach allows anti-cheat teams to catch
+sophisticated cheaters who only consult engines on a few critical moves
+per game.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-anti-cheat-in-chess-go-and-esports';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

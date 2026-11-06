@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI and Street View: Measuring Urban Neighborhood Change - ai</title>
+    <meta name="description" content="Urban sociologists are transforming how we study cities by combining Google Street View (GSV) historical time-series imagery with computer vision artificial intelligence. This article provides a comprehensive overview of how researchers use automated visu">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-and-street-view-measuring-urban-neighborhood-change">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI and Street View: Measuring Urban Neighborhood Change - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-and-street-view-measuring-urban-neighborhood-change" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Urban sociologists are transforming how we study cities by combining Google Street View (GSV) historical time-series imagery with computer vision artificial intelligence. This article provides a comprehensive overview of how researchers use automated visu" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-and-street-view-measuring-urban-neighborhood-change">AI and
+Street View: Measuring Urban Neighborhood Change</h1>
+<p>Urban sociologists are transforming how we study cities by combining
+Google Street View (GSV) historical time-series imagery with computer
+vision artificial intelligence. This article provides a comprehensive
+overview of how researchers use automated visual analysis to track
+physical neighborhood changes over time. Specifically, it explains the
+exact methodologies used to quantify gentrification through property
+upgrades, evaluate sidewalk walkability by detecting pedestrian
+infrastructure, and measure urban blight by identifying structural decay
+and vacant lots.</p>
+<h3 id="the-power-of-historical-time-series-imagery">The Power of
+Historical Time-Series Imagery</h3>
+<p>Traditionally, measuring neighborhood change required expensive,
+time-consuming physical audits where researchers walked down streets
+with clipboards. Because these audits were rare, sociologists mostly
+relied on census data, which only captures demographic shifts every
+decade and misses the physical evolution of a street.</p>
+<p>Google Street View solves this problem with its "Time Machine"
+feature, which archives street-level photographs dating back to 2007. By
+extracting images of the exact same geographical coordinates across
+multiple years, researchers create a visual timeline of a neighborhood.
+Computer vision AI—specifically Convolutional Neural Networks (CNNs) and
+object detection algorithms—can then scan millions of these historical
+images in days, turning visual details into quantifiable data.</p>
+<h3 id="measuring-gentrification">Measuring Gentrification</h3>
+<p>Gentrification is not just an economic shift; it has a distinct
+visual footprint. Sociologists train AI models to compare older and
+newer Street View images of the same buildings to detect subtle and
+major signs of reinvestment.</p>
+<p>To measure gentrification, the AI looks for specific visual
+indicators:</p>
+<ul>
+<li><strong>New Construction and Renovations:</strong> Algorithms detect
+when an older building is demolished and replaced by modern, multi-story
+condominiums, or when a facade receives fresh paint, modern siding, or
+updated windows.</li>
+<li><strong>Commercial Shifts:</strong> Computer vision reads changes in
+storefronts, identifying when traditional local businesses (like
+laundromats or hardware stores) are replaced by high-end cafes,
+boutiques, or gourmet restaurants.</li>
+<li><strong>Landscaping and Vehicles:</strong> The AI tracks the
+addition of new street trees, upscale fencing, and even the make, model,
+and age of cars parked on the street to estimate shifting neighborhood
+wealth.</li>
+</ul>
+<p>By aggregating these visual upgrades block by block over a ten-year
+period, sociologists can map the exact speed and boundaries of
+gentrification before census data even registers a change in income
+levels.</p>
+<h3 id="evaluating-sidewalk-walkability">Evaluating Sidewalk
+Walkability</h3>
+<p>A neighborhood's walkability directly impacts public health, safety,
+and community cohesion. Instead of relying on municipal records that are
+often outdated, researchers use semantic segmentation—an AI technique
+that classifies every single pixel in an image into categories like
+"road," "sky," "tree," or "sidewalk."</p>
+<p>To score walkability, the AI analyzes Street View imagery for the
+following features:</p>
+<ul>
+<li><strong>Sidewalk Presence and Quality:</strong> The model measures
+the width of sidewalks and detects obstructions, large cracks, or
+missing pavement that make walking hazardous.</li>
+<li><strong>Accessibility:</strong> Object detection algorithms locate
+curb cuts and tactile paving at intersections, determining if a
+neighborhood is accessible to people using wheelchairs or
+strollers.</li>
+<li><strong>Pedestrian Amenities:</strong> The AI calculates the
+percentage of tree canopy pixels to measure shade cover. It also counts
+streetlights, benches, crosswalks, and buffer zones (like grass strips
+or bike lanes) that separate walkers from street traffic.</li>
+</ul>
+<p>By processing these elements across time-series imagery, sociologists
+can see if cities are investing equally in pedestrian infrastructure
+across different socioeconomic neighborhoods.</p>
+<h3 id="identifying-urban-blight">Identifying Urban Blight</h3>
+<p>Urban blight refers to the physical deterioration and abandonment of
+a neighborhood, which is closely linked to crime rates, property values,
+and resident mental health. Computer vision allows sociologists to
+systematically map decay across an entire city and track whether
+municipal interventions are working.</p>
+<p>To quantify blight, AI models are trained to spot signs of
+neglect:</p>
+<ul>
+<li><strong>Structural Decay:</strong> The algorithms identify
+boarded-up windows, broken glass, crumbling masonry, peeling paint, and
+collapsing roofs.</li>
+<li><strong>Property Abandonment:</strong> By analyzing time-series
+images, the AI can see when a house is demolished and left as an empty,
+unmaintained lot. It also measures the height and density of overgrown
+weeds and grass.</li>
+<li><strong>Environmental Disorder:</strong> Object detection models
+count instances of illegal dumping, litter accumulation, abandoned
+vehicles, and unwanted graffiti.</li>
+</ul>
+<p>Tracking these metrics over time helps sociologists understand the
+lifecycle of neighborhood decline. Researchers can pinpoint the exact
+year a block began to experience widespread abandonment, allowing city
+planners and policymakers to target resources where they are needed
+most.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-and-street-view-measuring-urban-neighborhood-change';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

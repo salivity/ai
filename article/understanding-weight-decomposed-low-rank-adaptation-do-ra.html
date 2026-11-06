@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Weight-Decomposed Low-Rank Adaptation (DoRA) - ai</title>
+    <meta name="description" content="Weight-Decomposed Low-Rank Adaptation (DoRA) is an advanced parameter-efficient fine-tuning method that improves how artificial intelligence models adapt to new tasks. This article provides a comprehensive overview of how DoRA decomposes pretrained neural">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-weight-decomposed-low-rank-adaptation-do-ra">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Weight-Decomposed Low-Rank Adaptation (DoRA) - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-weight-decomposed-low-rank-adaptation-do-ra" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Weight-Decomposed Low-Rank Adaptation (DoRA) is an advanced parameter-efficient fine-tuning method that improves how artificial intelligence models adapt to new tasks. This article provides a comprehensive overview of how DoRA decomposes pretrained neural" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-weight-decomposed-low-rank-adaptation-dora">Understanding
+Weight-Decomposed Low-Rank Adaptation (DoRA)</h1>
+<p>Weight-Decomposed Low-Rank Adaptation (DoRA) is an advanced
+parameter-efficient fine-tuning method that improves how artificial
+intelligence models adapt to new tasks. This article provides a
+comprehensive overview of how DoRA decomposes pretrained neural network
+weights into separate magnitude and direction components. By isolating
+these two elements, DoRA applies low-rank updates exclusively to the
+directional component while tuning the magnitude separately, achieving
+learning capabilities that closely mimic full fine-tuning without the
+associated computational overhead.</p>
+<h3 id="the-core-concept-of-weight-decomposition">The Core Concept of
+Weight Decomposition</h3>
+<p>To understand how DoRA works, it is necessary to look at how weights
+are structured in a neural network. A pretrained weight matrix <span
+class="math inline">\(W_0\)</span> holds the knowledge a model has
+learned during its initial training. DoRA draws inspiration from Weight
+Normalization by splitting this single matrix into two distinct
+mathematical properties: magnitude and direction.</p>
+<p>For a given weight matrix <span class="math inline">\(W_0\)</span>,
+every column vector represents the weights connecting inputs to a
+specific output neuron. DoRA separates each vector into:</p>
+<ul>
+<li><strong>Magnitude (<span class="math inline">\(m\)</span>):</strong>
+A scalar value representing the length or strength of the weight
+vector.</li>
+<li><strong>Direction (<span class="math inline">\(V\)</span>):</strong>
+A matrix that retains the orientation of the weights in the vector
+space.</li>
+</ul>
+<p>Mathematically, this decomposition is formulated as: <span
+class="math display">\[W_0 = m \frac{V}{||V||_c}\]</span></p>
+<p>In this equation, <span class="math inline">\(V\)</span> is
+initialized as the original weight matrix <span
+class="math inline">\(W_0\)</span>, and <span
+class="math inline">\(||V||_c\)</span> represents the vector-wise norm
+(length) of <span class="math inline">\(V\)</span> across each column.
+Dividing <span class="math inline">\(V\)</span> by its norm creates a
+unit vector that defines pure direction. The magnitude <span
+class="math inline">\(m\)</span> is initialized as <span
+class="math inline">\(||W_0||_c\)</span>, ensuring that at the exact
+start of the fine-tuning process, the decomposed components multiply
+back together to equal the original pretrained weight matrix <span
+class="math inline">\(W_0\)</span>.</p>
+<h3 id="fine-tuning-magnitude-and-direction-separately">Fine-Tuning
+Magnitude and Direction Separately</h3>
+<p>In standard Low-Rank Adaptation (LoRA), updates are applied to the
+weight matrix as a whole, which inherently couples changes in magnitude
+and direction. Analysis of full fine-tuning reveals that simultaneous,
+coupled updates limit the model's learning capacity. DoRA resolves this
+by treating the two components differently during the training
+phase.</p>
+<ol type="1">
+<li><strong>Tuning the Magnitude:</strong> The magnitude vector <span
+class="math inline">\(m\)</span> contains very few parameters (only one
+scalar value per output dimension). Because it is lightweight, DoRA
+makes <span class="math inline">\(m\)</span> directly trainable using
+standard gradient descent.</li>
+<li><strong>Updating the Direction:</strong> The directional matrix
+<span class="math inline">\(V\)</span> is massive and contains the vast
+majority of the parameters. Instead of updating <span
+class="math inline">\(V\)</span> directly, DoRA freezes <span
+class="math inline">\(V\)</span> and applies standard LoRA to it. It
+introduces two small, low-rank matrices, <span
+class="math inline">\(B\)</span> and <span
+class="math inline">\(A\)</span>, to learn the directional change (<span
+class="math inline">\(\Delta V = BA\)</span>).</li>
+</ol>
+<p>The updated weight matrix <span class="math inline">\(W&#39;\)</span>
+during DoRA fine-tuning is calculated as: <span
+class="math display">\[W&#39; = m \frac{V + \Delta V}{||V + \Delta
+V||_c} = m \frac{W_0 + BA}{||W_0 + BA||_c}\]</span></p>
+<p>During training, only the magnitude vector <span
+class="math inline">\(m\)</span> and the low-rank matrices <span
+class="math inline">\(B\)</span> and <span
+class="math inline">\(A\)</span> are updated. The original weight matrix
+<span class="math inline">\(W_0\)</span> remains completely frozen. By
+continuously dividing the updated directional component (<span
+class="math inline">\(W_0 + BA\)</span>) by its norm (<span
+class="math inline">\(||W_0 + BA||_c\)</span>), DoRA forces the LoRA
+matrices to focus strictly on learning optimal directional adjustments,
+leaving all scaling adjustments to the trainable vector <span
+class="math inline">\(m\)</span>.</p>
+<h3 id="why-this-decomposition-matters">Why This Decomposition
+Matters</h3>
+<p>Decomposing weights in this manner changes the optimization landscape
+during fine-tuning. In full fine-tuning, weights often undergo
+significant directional changes with minimal magnitude shifts, or vice
+versa—a negative correlation that standard LoRA struggles to
+replicate.</p>
+<p>By decoupling these elements, DoRA stabilizes the optimization
+process. The low-rank matrices are relieved of the burden of adjusting
+the overall scale of the weights and can dedicate their limited capacity
+entirely to rotating the weight vectors in the correct direction.</p>
+<h3 id="zero-inference-overhead">Zero Inference Overhead</h3>
+<p>Despite the additional mathematical operations required during the
+training phase to calculate the vector norms, DoRA introduces no extra
+latency during deployment. Once fine-tuning is complete, the learned
+magnitude <span class="math inline">\(m\)</span> and the directional
+updates <span class="math inline">\(BA\)</span> are merged back into the
+frozen weights using the decomposition formula. The result is a single,
+standard weight matrix <span class="math inline">\(W&#39;\)</span> that
+replaces <span class="math inline">\(W_0\)</span>, allowing the model to
+run at its original speed while retaining the accuracy benefits of
+decomposed training.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-weight-decomposed-low-rank-adaptation-do-ra';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

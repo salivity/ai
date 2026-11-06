@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressing AI Models with GPTQ and AWQ - ai</title>
+    <meta name="description" content="This article provides a quick overview of how post-training quantization (PTQ) algorithms, specifically GPTQ and Activation-aware Weight Quantization (AWQ), compress large artificial intelligence models without requiring costly retraining. By reducing the">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/compressing-ai-models-with-gptq-and-awq">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Compressing AI Models with GPTQ and AWQ - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/compressing-ai-models-with-gptq-and-awq" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a quick overview of how post-training quantization (PTQ) algorithms, specifically GPTQ and Activation-aware Weight Quantization (AWQ), compress large artificial intelligence models without requiring costly retraining. By reducing the" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="compressing-ai-models-with-gptq-and-awq">Compressing AI Models
+with GPTQ and AWQ</h1>
+<p>This article provides a quick overview of how post-training
+quantization (PTQ) algorithms, specifically GPTQ and Activation-aware
+Weight Quantization (AWQ), compress large artificial intelligence models
+without requiring costly retraining. By reducing the numerical precision
+of a model's parameters from 16-bit floats to 4-bit integers, these
+methods dramatically shrink memory footprints and accelerate inference
+speeds. Readers will understand the fundamental mechanics of PTQ and how
+GPTQ uses mathematical error compensation while AWQ leverages activation
+distributions to preserve model accuracy during compression.</p>
+<h2 id="understanding-post-training-quantization">Understanding
+Post-Training Quantization</h2>
+<p>Artificial intelligence models, particularly Large Language Models
+(LLMs), consist of billions of numerical values known as weights.
+Normally, these weights are stored in high-precision formats like 16-bit
+floating-point (FP16). Post-training quantization (PTQ) converts these
+high-precision numbers into lower-precision formats, such as 4-bit
+integers (INT4), after the model has already been fully trained.</p>
+<p>Because PTQ does not require retraining the model on massive
+datasets, it can be executed quickly on limited hardware. Instead of
+retraining, PTQ algorithms use a small, representative "calibration
+dataset" to observe how the model behaves and determine the safest way
+to round the weights without destroying the model's intelligence.</p>
+<h2 id="how-gptq-works">How GPTQ Works</h2>
+<p>GPTQ (Generative Pre-trained Transformer Quantization) is an
+algorithm rooted in a mathematical approach called Optimal Brain
+Quantization. Its primary goal is to quantize weights one layer at a
+time while minimizing the error introduced by rounding.</p>
+<p>When a weight is rounded to a lower precision, it creates a slight
+mathematical error that can degrade the model's output. GPTQ solves this
+through a two-step loop:</p>
+<ol type="1">
+<li><strong>Quantize a single weight:</strong> The algorithm takes a
+specific weight and rounds it to the nearest 4-bit value.</li>
+<li><strong>Compensate for the error:</strong> Using second-order
+information (the Hessian matrix, which measures how sensitive the
+model's output is to changes in specific weights), GPTQ calculates the
+exact error caused by that rounding. It then slightly adjusts the
+remaining, unquantized weights in that same layer to cancel out the
+error.</li>
+</ol>
+<p>By continuously adjusting the remaining weights as it compresses a
+layer, GPTQ ensures that the layer's final output remains nearly
+identical to the original high-precision output.</p>
+<h2 id="how-activation-aware-weight-quantization-awq-works">How
+Activation-Aware Weight Quantization (AWQ) Works</h2>
+<p>Activation-aware Weight Quantization (AWQ) takes a different approach
+based on a simple observation: not all weights in a neural network are
+equally important. In fact, roughly 1% of a model's weights are
+considered "salient," meaning they play a disproportionately large role
+in determining the model's accuracy.</p>
+<p>AWQ identifies these crucial weights not by looking at the weights
+themselves, but by looking at the "activations"—the actual data flowing
+through the network during inference. When the calibration dataset is
+passed through the model, the channels that consistently produce the
+largest activation magnitudes are connected to the most important
+weights.</p>
+<p>Instead of leaving these salient weights in 16-bit format (which
+causes hardware inefficiencies due to mixed precision), AWQ protects
+them through mathematical scaling:</p>
+<ol type="1">
+<li><strong>Scale up important weights:</strong> AWQ multiplies the
+salient weights by a scaling factor, making them larger prior to
+quantization. This reduces their relative rounding error when they are
+converted to 4-bit integers.</li>
+<li><strong>Scale down the inputs:</strong> To keep the math balanced so
+the model's output does not change, AWQ divides the corresponding input
+activations by the exact same scaling factor.</li>
+</ol>
+<p>This scaling trick allows AWQ to compress 100% of the weights to
+4-bit precision while mathematically shielding the most critical
+parameters from quantization damage.</p>
+<h2 id="comparing-the-two-approaches">Comparing the Two Approaches</h2>
+<p>Both algorithms achieve the same result—a drastically smaller AI
+model that runs faster and requires less video memory—without
+retraining. However, they achieve this through different
+philosophies.</p>
+<p>GPTQ treats all weights as adjustable variables, actively mutating
+unquantized weights to absorb the errors of quantized ones. This makes
+it highly accurate, though it can occasionally overfit to the
+calibration dataset. AWQ does not alter the values of weights to absorb
+errors; instead, it observes data flow to identify and protect the most
+critical pathways via scaling. Consequently, AWQ is often faster to
+apply and tends to generalize better across different types of data
+inputs.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/compressing-ai-models-with-gptq-and-awq';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

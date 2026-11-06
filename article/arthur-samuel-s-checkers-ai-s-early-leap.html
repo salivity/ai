@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthur Samuel&#39;s Checkers: AI&#39;s Early Leap - ai</title>
+    <meta name="description" content="This article explores how computer pioneer Arthur Samuel laid the groundwork for modern artificial intelligence in the 1950s through his groundbreaking checkers program. It examines how Samuel overcame massive hardware limitations of the era by implementi">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/arthur-samuel-s-checkers-ai-s-early-leap">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Arthur Samuel&#39;s Checkers: AI&#39;s Early Leap - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/arthur-samuel-s-checkers-ai-s-early-leap" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how computer pioneer Arthur Samuel laid the groundwork for modern artificial intelligence in the 1950s through his groundbreaking checkers program. It examines how Samuel overcame massive hardware limitations of the era by implementi" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="arthur-samuels-checkers-ais-early-leap">Arthur Samuel's
+Checkers: AI's Early Leap</h1>
+<p>This article explores how computer pioneer Arthur Samuel laid the
+groundwork for modern artificial intelligence in the 1950s through his
+groundbreaking checkers program. It examines how Samuel overcame massive
+hardware limitations of the era by implementing two revolutionary
+concepts: self-play, which allowed the machine to learn from its own
+mistakes, and alpha-beta pruning, an optimization technique that enabled
+the computer to efficiently look several moves ahead. Together, these
+innovations produced the world's first self-learning program and
+provided a blueprint for the advanced AI systems we see today.</p>
+<p>In 1952, working on an IBM 701, Arthur Samuel set out to create a
+program that could play checkers. At the time, computers had severely
+limited memory and processing power, making it impossible for a machine
+to calculate every possible move in a game. To overcome this, Samuel
+coined and utilized the concept of "machine learning," designing a
+program that did not just follow static rules, but actively improved its
+strategy the more it played.</p>
+<p>To assess the strength of any given board position, Samuel gave the
+program a scoring function based on parameters like piece advantage,
+control of the center, and king safety. To refine these parameters
+without requiring constant human intervention, Samuel introduced
+self-play. He set up two versions of the program—dubbed Alpha and
+Beta—to play against each other continuously.</p>
+<p>During self-play, Alpha would actively tweak the weights of its
+scoring function to test new strategies, while Beta kept its scoring
+static. If Alpha defeated Beta, Beta would adopt Alpha’s updated scoring
+system. If Alpha lost a string of games, it was penalized and forced to
+adjust its parameters in a different direction. By playing thousands of
+games against itself, the program successfully learned which board
+positions actually led to victory, gradually evolving from an amateur
+player into a formidable opponent.</p>
+<p>Alongside learning how to value the board, the program needed to look
+ahead at future moves. Using a standard minimax algorithm, the computer
+would build a "game tree" of all possible moves and counter-moves,
+assuming the opponent would always make the best decision for
+themselves. However, because the number of potential board states grows
+exponentially with each turn, the IBM computer could only look a few
+moves ahead before running out of memory.</p>
+<p>Samuel solved this computational bottleneck by implementing what
+would later be formally known as alpha-beta pruning. This technique
+drastically reduced the number of branches in the game tree that the
+computer needed to evaluate. The logic behind the pruning is
+straightforward: if the program is analyzing a potential move and
+discovers a single counter-move that makes the situation worse than a
+previously fully-analyzed option, it immediately stops evaluating that
+entire branch. There is no need to see how much worse the move could
+get; knowing it is inferior is enough to discard it.</p>
+<p>By pruning away useless branches of the game tree, Samuel’s program
+saved immense amounts of processing power. Instead of wasting time
+calculating terrible moves, the computer could focus its limited memory
+on deeply analyzing the most promising lines of play. Combined with rote
+learning—where the program saved previously calculated board states to
+memory so it wouldn't have to calculate them again—alpha-beta pruning
+allowed the machine to search much deeper into the future of the game
+than hardware of the 1950s should have allowed.</p>
+<p>The synergy of self-play and alpha-beta pruning culminated in a
+historic milestone in 1962, when Samuel’s program defeated Robert
+Nealey, a blind checkers master and former Connecticut state champion.
+By proving that computers could optimize their decision-making trees and
+learn exclusively through self-experience, Arthur Samuel directly paved
+the way for modern reinforcement learning and the sophisticated
+game-playing AI of the 21st century.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/arthur-samuel-s-checkers-ai-s-early-leap';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

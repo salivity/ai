@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How ELIZA Simulated a Psychotherapist in Early AI - ai</title>
+    <meta name="description" content="Created in the mid-1960s by MIT computer scientist Joseph Weizenbaum, ELIZA was one of the world&#39;s first chatbots and a milestone in early artificial intelligence. This article explores how the program successfully simulated a Rogerian psychotherapist usi">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-eliza-simulated-a-psychotherapist-in-early-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How ELIZA Simulated a Psychotherapist in Early AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-eliza-simulated-a-psychotherapist-in-early-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Created in the mid-1960s by MIT computer scientist Joseph Weizenbaum, ELIZA was one of the world&#39;s first chatbots and a milestone in early artificial intelligence. This article explores how the program successfully simulated a Rogerian psychotherapist usi" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-eliza-simulated-a-psychotherapist-in-early-ai">How ELIZA
+Simulated a Psychotherapist in Early AI</h1>
+<p>Created in the mid-1960s by MIT computer scientist Joseph Weizenbaum,
+ELIZA was one of the world's first chatbots and a milestone in early
+artificial intelligence. This article explores how the program
+successfully simulated a Rogerian psychotherapist using basic pattern
+matching, keyword ranking, and text substitution, ultimately tricking
+human users into believing the computer genuinely understood their
+emotions.</p>
+<p>To simulate a psychotherapist, Weizenbaum equipped ELIZA with a
+specific script called DOCTOR. He chose Rogerian psychotherapy—a
+person-centered approach developed by Carl Rogers—because it relies
+heavily on the therapist reflecting the patient's own words back at
+them. This allowed ELIZA to ask open-ended questions without needing any
+actual knowledge of the real world or human psychology. By simply
+mirroring the user's statements, the program placed the burden of
+holding a meaningful conversation entirely on the human.</p>
+<p>The core mechanic behind ELIZA was simple pattern matching, not true
+comprehension. When a user typed a sentence, ELIZA scanned the text for
+pre-programmed keywords, such as "mother," "depressed," or "always."
+Each keyword was assigned a rank of importance. If a user's sentence
+contained multiple keywords, ELIZA would focus on the one with the
+highest rank to formulate its response, ignoring the rest of the
+text.</p>
+<p>Once a keyword was identified, ELIZA applied a decomposition rule to
+break the user's sentence into parts. It then used a reassembly rule to
+construct a response, which included flipping pronouns to make the reply
+grammatically correct. For example, if the user typed, "You do not
+understand me," ELIZA recognized the pattern "You [X] me." It would swap
+the pronouns and reassemble the sentence into the question, "What makes
+you think I do not understand you?"</p>
+<p>When the user's input contained no recognizable keywords, ELIZA
+relied on clever fallback strategies to keep the illusion alive. It
+would output generic, non-committal phrases such as "Please go on,"
+"That is very interesting," or "Can you elaborate on that?"
+Additionally, ELIZA had a basic memory function. It could store an
+earlier statement made by the user and bring it up later in the
+conversation when no keywords were found, asking something like,
+"Earlier you mentioned your sister. Why do you think that is?"</p>
+<p>Despite knowing how simple the underlying code was, many early users
+became emotionally attached to the program, a phenomenon now known as
+the "ELIZA effect." People attributed human-like empathy and deep
+understanding to the machine simply because it used natural language.
+ELIZA proved that simulating human conversation did not require genuine
+artificial intelligence, just the clever manipulation of words and human
+psychology.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-eliza-simulated-a-psychotherapist-in-early-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structural Differences: Minsky&#39;s Frames vs. Schank&#39;s Scripts - ai</title>
+    <meta name="description" content="In the early development of knowledge-based artificial intelligence, Marvin Minsky&#39;s frames and Roger Schank&#39;s scripts emerged as foundational models for representing human knowledge. This article explores the core structural differences between the two a">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/structural-differences-minsky-s-frames-vs-schank-s-scripts">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Structural Differences: Minsky&#39;s Frames vs. Schank&#39;s Scripts - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/structural-differences-minsky-s-frames-vs-schank-s-scripts" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In the early development of knowledge-based artificial intelligence, Marvin Minsky&#39;s frames and Roger Schank&#39;s scripts emerged as foundational models for representing human knowledge. This article explores the core structural differences between the two a" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="structural-differences-minskys-frames-vs-schanks-scripts">Structural
+Differences: Minsky's Frames vs. Schank's Scripts</h1>
+<p>In the early development of knowledge-based artificial intelligence,
+Marvin Minsky's frames and Roger Schank's scripts emerged as
+foundational models for representing human knowledge. This article
+explores the core structural differences between the two approaches.
+While both rely on organized data structures with default values to help
+machines understand context, frames are inherently static, hierarchical
+structures representing objects and situations, whereas scripts are
+dynamic, temporal sequences designed to model stereotypical events.</p>
+<h3 id="marvin-minskys-frames-static-and-hierarchical">Marvin Minsky's
+Frames: Static and Hierarchical</h3>
+<p>Introduced by Marvin Minsky in 1974, a frame is a data structure used
+to divide knowledge into substructures by representing "stereotyped
+situations," such as being in a living room or looking at a specific
+object. Structurally, frames are organized around nouns, spaces, and
+static states.</p>
+<p>The structural components of a frame include:</p>
+<ul>
+<li><strong>Nodes and Relations:</strong> A frame is built as a network
+of nodes and relations. The top levels of a frame are fixed,
+representing things that are always true about the supposed
+situation.</li>
+<li><strong>Slots and Fillers:</strong> The lower levels have many
+terminals, known as "slots," which must be filled by specific instances
+or data. For example, a "Car" frame has slots for "wheels," "engine,"
+and "color."</li>
+<li><strong>Default Assignments:</strong> Slots contain default values
+(assumptions) that apply unless contradicted by new evidence. If you
+hear about a dog, the "legs" slot defaults to four.</li>
+<li><strong>Inheritance Hierarchies:</strong> Frames are deeply
+hierarchical. A sub-frame (e.g., "Sedan") inherits the structural slots
+and default values of its parent frame (e.g., "Car"), allowing for
+efficient knowledge storage.</li>
+<li><strong>Procedural Attachments:</strong> Frames can contain "demons"
+or procedural code (such as <code>IF-NEEDED</code> or
+<code>IF-ADDED</code>), which trigger specific actions when a slot is
+accessed or modified.</li>
+</ul>
+<h3 id="roger-schanks-scripts-dynamic-and-temporal">Roger Schank's
+Scripts: Dynamic and Temporal</h3>
+<p>Proposed by Roger Schank and Robert Abelson in 1977, a script is a
+specialized structure that describes a stereotypical sequence of events
+in a particular context, such as going to a restaurant or visiting a
+doctor. Structurally, scripts are organized around verbs, actions, and
+time.</p>
+<p>The structural components of a script include:</p>
+<ul>
+<li><strong>Entry Conditions:</strong> Prerequisites that must be true
+for the script to be activated (e.g., the actor is hungry and has
+money).</li>
+<li><strong>Results:</strong> Facts that are true once the script has
+terminated (e.g., the actor is full and has less money).</li>
+<li><strong>Props:</strong> Slots representing the objects involved in
+the event (e.g., tables, menus, food, checks).</li>
+<li><strong>Roles:</strong> Slots representing the agents involved in
+the actions (e.g., diner, waiter, cook).</li>
+<li><strong>Scenes and Tracks:</strong> This is the defining structural
+feature of a script. A script is broken down into a strict temporal
+sequence of "scenes" (e.g., Entering, Ordering, Eating, Exiting).
+"Tracks" allow for structural variations of the same script (e.g., a
+fast-food track versus a fine-dining track).</li>
+<li><strong>Conceptual Dependency (CD):</strong> Inside each scene,
+actions are linked by causal chains using Schank's Conceptual Dependency
+theory. One action structurally enables the next.</li>
+</ul>
+<h3 id="key-structural-comparisons">Key Structural Comparisons</h3>
+<p>While scripts are often considered a specialized subclass of frames,
+their internal architectures serve different cognitive processes.</p>
+<p><strong>1. Organization of Information</strong> Frames are organized
+<strong>taxonomically and spatially</strong>. They map out what
+something <em>is</em> or what a space <em>contains</em>. Scripts are
+organized <strong>chronologically and causally</strong>. They map out
+<em>how</em> an event unfolds over time.</p>
+<p><strong>2. Relationships Between Components</strong> In a frame, the
+primary relationship between components is <strong>inheritance</strong>
+(IS-A and PART-OF relationships). A kitchen is <em>part of</em> a house;
+a robin <em>is a</em> bird. In a script, the primary relationship
+between components is <strong>causality and time</strong> (NEXT and
+CAUSES relationships). Looking at the menu <em>enables</em> ordering the
+food, which <em>causes</em> the waiter to go to the kitchen.</p>
+<p><strong>3. Flexibility vs. Rigidity</strong> Frames are structurally
+modular. A system can swap out one frame for another if the visual
+perspective changes, or update a single slot without disrupting the rest
+of the frame. Scripts are structurally rigid and linear. Because scenes
+are bound by a strict timeline, scripts struggle if an unexpected event
+breaks the causal chain, requiring entirely different structures (like
+"Plans" and "Goals") to handle deviations.</p>
+<p><strong>4. Primary Application</strong> Because of their spatial and
+object-oriented structure, Minsky’s frames were originally optimized for
+computer vision and object recognition. Conversely, because of their
+sequential and action-oriented structure, Schank’s scripts were
+explicitly designed for Natural Language Processing (NLP), allowing AI
+to infer unstated information in stories based on the timeline of the
+script.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/structural-differences-minsky-s-frames-vs-schank-s-scripts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

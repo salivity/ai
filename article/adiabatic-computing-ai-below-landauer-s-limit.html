@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adiabatic Computing: AI Below Landauer&#39;s Limit - ai</title>
+    <meta name="description" content="This article explores how adiabatic reversible computing architectures can bypass Landauer&#39;s thermodynamic limit to dramatically reduce the energy footprint of artificial intelligence. By preserving information rather than erasing it, and utilizing specia">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/adiabatic-computing-ai-below-landauer-s-limit">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Adiabatic Computing: AI Below Landauer&#39;s Limit - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/adiabatic-computing-ai-below-landauer-s-limit" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how adiabatic reversible computing architectures can bypass Landauer&#39;s thermodynamic limit to dramatically reduce the energy footprint of artificial intelligence. By preserving information rather than erasing it, and utilizing specia" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="adiabatic-computing-ai-below-landauers-limit">Adiabatic
+Computing: AI Below Landauer's Limit</h1>
+<p>This article explores how adiabatic reversible computing
+architectures can bypass Landauer's thermodynamic limit to dramatically
+reduce the energy footprint of artificial intelligence. By preserving
+information rather than erasing it, and utilizing specialized
+power-clock resonators to recycle electrical charge, these architectures
+prevent the massive heat dissipation characteristic of standard
+microprocessors. We will examine the physics of Landauer's principle,
+the mechanics of adiabatic energy recycling, and how reversible logic
+gates can execute AI matrix operations at a fraction of current power
+requirements.</p>
+<h3 id="the-bottleneck-of-landauers-principle">The Bottleneck of
+Landauer's Principle</h3>
+<p>Modern artificial intelligence relies on conventional complementary
+metal-oxide-semiconductor (CMOS) hardware, which operates on
+irreversible logic. In a standard logic gate, such as an AND gate, two
+input bits produce a single output bit. Because you cannot deduce the
+original inputs from the single output, information is permanently
+destroyed.</p>
+<p>In 1961, physicist Rolf Landauer proved that the erasure of
+information is a thermodynamic process. Landauer's principle states that
+erasing a single bit of information requires a minimum energy
+dissipation of <span class="math inline">\(k_B T \ln(2)\)</span>—where
+<span class="math inline">\(k_B\)</span> is the Boltzmann constant and
+<span class="math inline">\(T\)</span> is the temperature of the system.
+In standard processors, every time a transistor switches and dumps its
+electrical charge to the ground to reset a bit, that signal energy is
+converted directly into heat. As AI models scale to trillions of
+parameters, this thermodynamic tax creates an unsustainable energy and
+cooling bottleneck.</p>
+<h3 id="how-reversible-logic-preserves-information">How Reversible Logic
+Preserves Information</h3>
+<p>To drop below Landauer's limit, a computer must avoid erasing bits.
+Reversible computing achieves this by using logic gates where the number
+of outputs equals the number of inputs, creating a one-to-one mapping
+between input and output states.</p>
+<p>Using foundational components like the Toffoli gate or the Fredkin
+gate, every computational step can be run backward. Because no
+information is destroyed during the operation, the theoretical minimum
+energy dissipated approaches zero. However, logical reversibility alone
+does not save power; it must be paired with physical reversibility—known
+as adiabatic circuits—to actually capture and reuse the electrical
+energy representing those bits.</p>
+<h3 id="recycling-signal-energy-via-adiabatic-switching">Recycling
+Signal Energy via Adiabatic Switching</h3>
+<p>Standard CMOS circuits use a constant direct current (DC) power
+supply. Charging a capacitor through a resistive transistor from a
+constant voltage source inevitably wastes half of the supplied energy as
+heat, and discharging it to the ground wastes the remaining half.</p>
+<p>Adiabatic architectures replace the flat DC power supply with an
+alternating current (AC) "power-clock" generator, typically implemented
+as an inductive-capacitive (LC) resonant circuit. This enables energy
+recycling through a three-step process:</p>
+<ol type="1">
+<li><strong>Ramp-Up (Compute):</strong> Instead of slamming the
+transistor with a sudden voltage spike, the power-clock slowly ramps the
+voltage up. Because the voltage across the transistor's resistance is
+kept minuscule, the charge flows into the circuit's capacitors with
+almost zero heat dissipation.</li>
+<li><strong>Hold (Evaluate):</strong> The voltage peaks and holds steady
+just long enough for the reversible logic gates to establish the results
+of the computation.</li>
+<li><strong>Ramp-Down (Recycle):</strong> Instead of dumping the
+capacitor's charge to a ground wire to clear the gate, the computation
+is logically uncomputed (reversed) while the power-clock voltage slowly
+ramps back down. The electrical charge flows backward out of the logic
+gates and back into the LC resonator's inductor, storing it as a
+magnetic field to be pushed back into the circuit on the next clock
+cycle.</li>
+</ol>
+<p>By operating slowly relative to the natural RC time constant of the
+transistors, adiabatic circuits can recycle over 90% of the signal
+energy used in a calculation.</p>
+<h3 id="executing-ai-operations-adiabatically">Executing AI Operations
+Adiabatically</h3>
+<p>Artificial intelligence workloads, particularly deep learning
+inference and training, are dominated by Multiply-Accumulate (MAC)
+operations within massive matrix multiplications. These highly
+repetitive, predictable data flows are uniquely suited for adiabatic
+reversible architectures.</p>
+<p>In a conventional AI accelerator, multiplying weights by activations
+generates millions of intermediate values that are immediately
+overwritten and erased, generating immense heat. An adiabatic AI
+accelerator routes these matrix operations through deep pipelines of
+reversible MAC units.</p>
+<p>When a neural network layer processes an input vector, the reversible
+gates calculate the weighted sums while preserving the input states as
+"ancilla" (helper) bits. Once the final activation output of the layer
+is secured, the data flows through a mirror-image circuit that reverses
+the intermediate steps. As the intermediate bits are uncomputed, the
+resonant power-clock draws the electrical energy of those signals back
+into the power supply.</p>
+<p>By never destroying the intermediate states and smoothly guiding the
+electrons back to the resonator, the architecture executes the
+mathematical workload of the neural network while bypassing the <span
+class="math inline">\(k_B T \ln(2)\)</span> bit-erasure penalty. The
+energy required per AI operation is no longer bound by thermodynamics,
+but only by the physical imperfections of the circuit's resonators and
+the speed at which the system is clocked.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/adiabatic-computing-ai-below-landauer-s-limit';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

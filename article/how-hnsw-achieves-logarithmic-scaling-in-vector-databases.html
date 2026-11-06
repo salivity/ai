@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How HNSW Achieves Logarithmic Scaling in Vector Databases - ai</title>
+    <meta name="description" content="This article explores how the Hierarchical Navigable Small World (HNSW) algorithm achieves logarithmic search scaling in vector databases for artificial intelligence retrieval. It covers the fundamental limitations of exact search in high-dimensional spac">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-hnsw-achieves-logarithmic-scaling-in-vector-databases">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How HNSW Achieves Logarithmic Scaling in Vector Databases - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-hnsw-achieves-logarithmic-scaling-in-vector-databases" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the Hierarchical Navigable Small World (HNSW) algorithm achieves logarithmic search scaling in vector databases for artificial intelligence retrieval. It covers the fundamental limitations of exact search in high-dimensional spac" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-hnsw-achieves-logarithmic-scaling-in-vector-databases">How
+HNSW Achieves Logarithmic Scaling in Vector Databases</h1>
+<p>This article explores how the Hierarchical Navigable Small World
+(HNSW) algorithm achieves logarithmic search scaling in vector databases
+for artificial intelligence retrieval. It covers the fundamental
+limitations of exact search in high-dimensional spaces, the mechanics of
+Navigable Small World (NSW) graphs, the integration of probabilistic
+skip lists to create a multi-layered hierarchy, and the specific routing
+process that enables rapid, accurate approximate nearest neighbor
+searches.</p>
+<p>Modern AI applications rely on vector databases to store and retrieve
+high-dimensional embeddings. Finding the exact nearest neighbor in these
+databases requires comparing a query vector against every stored vector,
+resulting in linear time complexity, <span
+class="math inline">\(O(N)\)</span>. For datasets containing millions or
+billions of vectors, linear scaling is too slow for real-time retrieval.
+HNSW solves this by sacrificing a negligible amount of accuracy for
+massive speed gains, reducing the search complexity to logarithmic time,
+<span class="math inline">\(O(\log N)\)</span>.</p>
+<p>HNSW builds upon the foundation of Navigable Small World (NSW)
+graphs. In an NSW graph, each vector is a node connected to other nodes
+via edges. These edges consist of both short-range links (connecting
+nearby vectors) and long-range links (connecting distant vectors).
+Search in an NSW graph uses greedy routing: starting at an entry point,
+the algorithm checks the neighbors of the current node and moves to the
+neighbor closest to the query vector. While long-range links allow the
+algorithm to jump across the graph quickly, standard NSW graphs only
+achieve polylogarithmic scaling because nodes with many connections
+become routing bottlenecks, requiring too many distance calculations
+during the early stages of a search.</p>
+<p>To move from polylogarithmic to true logarithmic scaling, HNSW
+introduces a hierarchical multi-layer structure inspired by
+probabilistic skip lists. Instead of placing all short-range and
+long-range links on a single flat graph, HNSW separates links by their
+length scales across multiple stacked layers.</p>
+<p>When a new vector is inserted into the database, it is always placed
+on the bottom layer (Layer 0), which contains every vector in the
+dataset. The algorithm then uses an exponentially decaying probability
+function to determine how many higher layers this vector will also
+occupy. As a result, Layer 1 contains a subset of the nodes from Layer
+0, Layer 2 contains a small subset of Layer 1, and the top layer
+contains only a few nodes.</p>
+<p>Because the upper layers are extremely sparse, the connections
+between nodes in these layers naturally act as long-range links spanning
+huge distances in the vector space. As you move down the layers, the
+graphs become denser, and the links represent increasingly shorter
+distances. Furthermore, HNSW enforces a strict maximum limit on the
+number of connections any node can have on a single layer. This prevents
+the formation of routing bottlenecks that slow down flat NSW graphs.</p>
+<p>The logarithmic search scaling is achieved through a top-down greedy
+traversal process:</p>
+<ol type="1">
+<li><strong>Entry at the Top Layer:</strong> The search begins at a
+designated entry node on the highest, sparsest layer.</li>
+<li><strong>Coarse Greedy Routing:</strong> The algorithm evaluates the
+connected neighbors of the current node and jumps to the one closest to
+the target query vector. Because the nodes are far apart, each step
+traverses a massive portion of the vector space. This repeats until a
+local minimum is reached—meaning no connected neighbor in the current
+layer is closer to the query than the current node itself.</li>
+<li><strong>Layer Descent:</strong> Once the local minimum on the top
+layer is found, the algorithm drops down to the exact same node in the
+layer immediately below it.</li>
+<li><strong>Iterative Refinement:</strong> The greedy search resumes in
+this denser layer, using the smaller, medium-range links to get closer
+to the target. This process of finding a local minimum and dropping down
+a layer repeats until the algorithm reaches Layer 0.</li>
+<li><strong>Fine-Grained Search:</strong> At Layer 0, the algorithm
+starts in the immediate neighborhood of the target vector. It performs a
+final search using a dynamic candidate list to explore the dense,
+short-range connections, returning the <span
+class="math inline">\(K\)</span> nearest neighbors.</li>
+</ol>
+<p>This structure mirrors a binary search or a skip list. Because the
+number of nodes decreases exponentially with each ascending layer, the
+expected number of layers in the graph is proportional to <span
+class="math inline">\(\log(N)\)</span>. Additionally, because the number
+of connections per node is capped at a small constant, the greedy search
+within any single layer only requires a bounded, constant number of
+steps before finding a local minimum and dropping down. Multiplying a
+constant number of operations per layer by <span
+class="math inline">\(\log(N)\)</span> layers results in an overall
+search time complexity of <span class="math inline">\(O(\log
+N)\)</span>, enabling AI systems to retrieve context from billions of
+vectors in milliseconds.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-hnsw-achieves-logarithmic-scaling-in-vector-databases';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

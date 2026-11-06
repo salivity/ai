@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pose Estimation in Orbital Satellite Servicing - ai</title>
+    <meta name="description" content="Orbital servicing spacecraft rely on advanced artificial intelligence for rendezvous pose estimation to autonomously capture and refuel aging satellites in geostationary orbit. By utilizing computer vision and deep learning algorithms, a servicer can dete">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-pose-estimation-in-orbital-satellite-servicing">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Pose Estimation in Orbital Satellite Servicing - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-pose-estimation-in-orbital-satellite-servicing" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Orbital servicing spacecraft rely on advanced artificial intelligence for rendezvous pose estimation to autonomously capture and refuel aging satellites in geostationary orbit. By utilizing computer vision and deep learning algorithms, a servicer can dete" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-pose-estimation-in-orbital-satellite-servicing">AI Pose
+Estimation in Orbital Satellite Servicing</h1>
+<p>Orbital servicing spacecraft rely on advanced artificial intelligence
+for rendezvous pose estimation to autonomously capture and refuel aging
+satellites in geostationary orbit. By utilizing computer vision and deep
+learning algorithms, a servicer can determine the exact position and
+orientation of a target satellite that is tumbling and lacks active
+communication or navigation aids. This article explores how onboard
+sensors gather visual data, how neural networks process this information
+to predict movement, and how robotic systems execute the final capture
+and refueling maneuvers without human intervention.</p>
+<h3 id="the-challenge-of-uncooperative-targets">The Challenge of
+Uncooperative Targets</h3>
+<p>Satellites in geostationary orbit (GEO) that have run out of fuel or
+suffered system failures often lose their ability to maintain
+orientation. Without stabilizing thrusters, external forces cause these
+satellites to tumble unpredictably. These are classified as
+"uncooperative" targets because they do not have working transponders,
+telemetry data, or specialized optical reflectors to help a servicing
+spacecraft dock with them. Furthermore, the immense distance to GEO
+introduces communication delays that make real-time remote control from
+Earth unsafe for complex docking maneuvers. Therefore, the servicing
+spacecraft must rely entirely on onboard autonomy.</p>
+<h3 id="sensor-data-collection">Sensor Data Collection</h3>
+<p>To approach a tumbling satellite, the servicing spacecraft uses a
+suite of electro-optical sensors, including visible-light cameras,
+infrared sensors, and LiDAR. These sensors capture continuous real-time
+data of the target against the harsh lighting conditions of space, where
+blinding sunlight and pitch-black shadows exist simultaneously. LiDAR
+provides 3D point clouds to measure distance and shape, while optical
+and infrared cameras capture structural details regardless of the
+lighting environment.</p>
+<h3 id="ai-driven-pose-estimation">AI-Driven Pose Estimation</h3>
+<p>Once the sensors collect the visual data, it is fed into onboard AI
+algorithms—typically Convolutional Neural Networks (CNNs)—trained to
+perform 6-Degrees-of-Freedom (6DoF) pose estimation. Pose estimation is
+the process of determining the target's three-dimensional position (X,
+Y, Z coordinates) and its three-dimensional orientation (roll, pitch,
+and yaw) relative to the servicer.</p>
+<p>Because obtaining real images of satellites in space for training AI
+is difficult, these neural networks are trained on millions of synthetic
+images generated from 3D models of the target satellite. When the AI
+views the real satellite, it identifies specific geometric keypoints,
+such as the corners of solar panels, thruster nozzles, or communication
+dishes. By matching these detected keypoints to a known 3D wireframe
+model of the satellite, the AI calculates the target's exact pose in
+milliseconds.</p>
+<h3 id="motion-prediction-and-trajectory-matching">Motion Prediction and
+Trajectory Matching</h3>
+<p>Determining the pose in a single frame is not enough; the servicer
+must understand how the satellite is tumbling over time. The AI feeds
+its continuous pose estimations into navigation filters, such as an
+Extended Kalman Filter. This system analyzes the sequence of poses to
+calculate the target's angular velocity and axis of rotation.</p>
+<p>Once the AI accurately predicts the future motion of the tumbling
+satellite, the servicer's Guidance, Navigation, and Control (GNC) system
+takes over. The servicer fires its thrusters to enter a synchronized
+orbit, matching the exact spin rate and trajectory of the target. To the
+servicer's cameras, the tumbling satellite now appears stationary,
+creating a safe window for physical interaction.</p>
+<h3 id="autonomous-grappling-and-refueling">Autonomous Grappling and
+Refueling</h3>
+<p>With the relative motion neutralized, the AI shifts its focus to
+fine-guidance tracking of a specific grappling fixture, which is usually
+the target satellite's marman ring (the structural ring used to attach
+the satellite to its launch vehicle) or its main liquid apogee engine
+nozzle.</p>
+<p>Guided by real-time pose updates from the AI, a robotic arm extends
+from the servicer and clamps onto the target. Once a rigid connection is
+established, the servicer slowly fires its thrusters to halt the
+tumbling motion, stabilizing both spacecraft. Following stabilization, a
+secondary robotic tool approaches the target’s fuel valves. It uses
+localized computer vision to cut through thermal blankets, unscrew the
+fuel caps, connect a high-pressure hose, and transfer propellant,
+successfully extending the life of the satellite.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-pose-estimation-in-orbital-satellite-servicing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

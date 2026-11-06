@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network NMPC in Distillation and Air Separation - ai</title>
+    <meta name="description" content="Nonlinear Model Predictive Control (NMPC) augmented with neural networks is revolutionizing the automation of cryogenic air separation units (ASUs) and chemical distillation columns. By merging traditional physics-based optimization with data-driven artif">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/neural-network-nmpc-in-distillation-and-air-separation">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Neural Network NMPC in Distillation and Air Separation - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/neural-network-nmpc-in-distillation-and-air-separation" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Nonlinear Model Predictive Control (NMPC) augmented with neural networks is revolutionizing the automation of cryogenic air separation units (ASUs) and chemical distillation columns. By merging traditional physics-based optimization with data-driven artif" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="neural-network-nmpc-in-distillation-and-air-separation">Neural
+Network NMPC in Distillation and Air Separation</h1>
+<p>Nonlinear Model Predictive Control (NMPC) augmented with neural
+networks is revolutionizing the automation of cryogenic air separation
+units (ASUs) and chemical distillation columns. By merging traditional
+physics-based optimization with data-driven artificial intelligence,
+this hybrid control architecture overcomes the computational bottlenecks
+and inaccuracies of standard controllers. This article explores how this
+advanced approach predicts complex fluid dynamics in real-time,
+maintains precise product purity, prevents system instabilities, and
+reduces energy consumption across extreme operational environments.</p>
+<h2 id="the-challenge-of-controlling-separation-columns">The Challenge
+of Controlling Separation Columns</h2>
+<p>Cryogenic air separation and chemical distillation columns are among
+the most energy-intensive and complex systems in industrial engineering.
+They rely on precise thermal and fluid dynamics to separate mixtures
+into pure components based on boiling points. Controlling these columns
+is notoriously difficult due to three main factors:</p>
+<ul>
+<li><strong>High Nonlinearity:</strong> Small changes in reflux ratios
+or reboiler heat duties can cause disproportionate, non-linear shifts in
+product purity.</li>
+<li><strong>Variable Coupling:</strong> Adjusting one parameter, such as
+pressure, simultaneously affects temperature profiles and flow rates
+throughout the entire column.</li>
+<li><strong>Long Dead Times:</strong> A disturbance in the feed
+composition may take hours to manifest in the final product stream,
+making reactive control strategies ineffective.</li>
+</ul>
+<p>Traditional Proportional-Integral-Derivative (PID) controllers and
+standard Linear Model Predictive Control (LMPC) struggle when these
+columns operate outside narrow, steady-state conditions.</p>
+<h2 id="the-bottleneck-of-traditional-nmpc">The Bottleneck of
+Traditional NMPC</h2>
+<p>Standard NMPC addresses nonlinearity by using rigorous
+first-principles models—equations based on mass, energy, and momentum
+balances—to predict how the column will behave in the future. The
+controller solves an optimization problem at every time step to
+determine the best control actions.</p>
+<p>However, a rigorous mathematical model of a multi-stage distillation
+column involves thousands of differential-algebraic equations. Solving
+these equations in real-time requires immense computational power.
+Often, the physical process changes faster than the computer can
+calculate the next optimal move, leading to control delays and
+instability.</p>
+<h2 id="how-neural-networks-augment-nmpc">How Neural Networks Augment
+NMPC</h2>
+<p>Integrating artificial intelligence, specifically deep neural
+networks (DNNs) or recurrent neural networks (RNNs), solves the
+computational bottleneck of NMPC. Engineers use neural networks in two
+primary ways: as surrogate models or as residual learners.</p>
+<p>In <strong>surrogate modeling</strong>, the neural network is trained
+on historical plant data and high-fidelity simulation data. Once
+trained, it replaces the heavy physics equations entirely. Because a
+neural network processes inputs to outputs using simple matrix
+multiplication, it can predict future column states in milliseconds
+rather than minutes.</p>
+<p>In <strong>hybrid residual modeling</strong>, a simplified physics
+model is paired with a neural network. The physics model handles the
+basic mass and energy balances, while the neural network learns the
+unmodeled dynamics—such as tray efficiency degradation, foaming, or
+ambient heat loss. This guarantees the AI respects the laws of
+thermodynamics while remaining fast and accurate.</p>
+<h2 id="stabilizing-cryogenic-air-separation-units">Stabilizing
+Cryogenic Air Separation Units</h2>
+<p>Cryogenic ASUs separate air into nitrogen, oxygen, and argon at
+extremely low temperatures. These plants frequently ramp production up
+or down to take advantage of fluctuating electricity prices, which
+pushes the columns into unstable transient states.</p>
+<p>Neural-network-augmented NMPC stabilizes ASUs by accurately
+predicting the behavior of the Argon side-column, which is highly
+sensitive to composition shifts. The AI-driven controller anticipates
+how changes in air feed flow will impact the cryogenic heat exchangers
+and distillation trays. It proactively adjusts expansion turbines and
+valve positions to prevent "dumping" (liquid falling through tray
+perforations) and "flooding" (liquid backing up the column), maintaining
+ultra-high purity oxygen and nitrogen even during rapid load
+changes.</p>
+<h2 id="stabilizing-chemical-distillation-columns">Stabilizing Chemical
+Distillation Columns</h2>
+<p>In chemical and petrochemical refining, distillation columns
+frequently experience feed disturbances, such as sudden changes in crude
+oil composition or upstream reactor fluctuations.</p>
+<p>When a feed disturbance occurs, the neural network processes sensor
+data (temperatures, pressures, and flow rates) to infer real-time
+chemical compositions without waiting for slow gas chromatograph
+analyzers. The NMPC then calculates the exact reboiler heat duty and
+reflux flow adjustments needed to counteract the disturbance before it
+ruins the product batch. By keeping the column stable and close to its
+operational constraints without crossing safety boundaries, the
+controller minimizes over-purification, which directly reduces steam and
+cooling water consumption.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/neural-network-nmpc-in-distillation-and-air-separation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disambiguating Names with Entity Linking in AI - ai</title>
+    <meta name="description" content="Entity linking is the artificial intelligence process of connecting ambiguous text mentions to their exact, corresponding entries in a structured knowledge graph like Wikidata. When a text mentions &quot;Paris&quot; or &quot;Michael Jordan,&quot; an AI system must determine">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/disambiguating-names-with-entity-linking-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Disambiguating Names with Entity Linking in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/disambiguating-names-with-entity-linking-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Entity linking is the artificial intelligence process of connecting ambiguous text mentions to their exact, corresponding entries in a structured knowledge graph like Wikidata. When a text mentions &quot;Paris&quot; or &quot;Michael Jordan,&quot; an AI system must determine" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="disambiguating-names-with-entity-linking-in-ai">Disambiguating
+Names with Entity Linking in AI</h1>
+<p>Entity linking is the artificial intelligence process of connecting
+ambiguous text mentions to their exact, corresponding entries in a
+structured knowledge graph like Wikidata. When a text mentions "Paris"
+or "Michael Jordan," an AI system must determine whether the text refers
+to the French capital or a celebrity, or the basketball legend versus
+the machine learning professor. This article explains the exact pipeline
+AI uses to disambiguate surface names against millions of Wikidata
+nodes: mention detection, candidate generation, contextual
+disambiguation, and graph coherence.</p>
+<h2 id="1-mention-detection-named-entity-recognition">1. Mention
+Detection (Named Entity Recognition)</h2>
+<p>Before an AI can link a name to Wikidata, it must find the name in
+the raw text. A Named Entity Recognition (NER) model scans the input
+sentence and identifies spans of text that represent real-world objects,
+people, or places.</p>
+<p>For example, in the sentence, <em>"Michael Jordan published a new
+paper on neural networks,"</em> the NER system highlights "Michael
+Jordan" as a surface mention requiring linking.</p>
+<h2 id="2-candidate-generation">2. Candidate Generation</h2>
+<p>Wikidata contains over 100 million items, each assigned a unique
+Q-identifier (QID). Comparing a single text mention against 100 million
+nodes simultaneously is computationally impossible. Candidate generation
+narrows the search space from millions of nodes down to a few dozen
+plausible options.</p>
+<p>The system uses three fast retrieval methods to build this list:</p>
+<ul>
+<li><strong>Alias Dictionaries:</strong> Wikidata stores labels and
+"also known as" aliases for every node. The system searches this index
+for exact or fuzzy matches.</li>
+<li><strong>Prior Probability:</strong> The AI looks at historical data
+(such as Wikipedia hyperlink frequencies) to see which Wikidata nodes
+are most commonly associated with a specific text string.</li>
+<li><strong>Dense Retrieval:</strong> The text mention is converted into
+a mathematical vector (embedding) and matched against pre-computed
+vectors of Wikidata entities.</li>
+</ul>
+<p>For "Paris," candidate generation pulls Q90 (capital of France),
+Q165116 (Paris Hilton), and Q167646 (mythological Trojan prince). For
+"Michael Jordan," it pulls Q41421 (the NBA player) and Q3308285 (the
+Berkeley professor).</p>
+<h2 id="3-contextual-disambiguation">3. Contextual Disambiguation</h2>
+<p>Once the AI has a shortlist of 10 to 50 candidate QIDs, it uses deep
+learning—specifically Transformer models like BERT—to evaluate the
+context surrounding the mention. This is commonly done using a
+<strong>Bi-Encoder</strong> followed by a
+<strong>Cross-Encoder</strong>.</p>
+<h3 id="bi-encoder-fast-filtering">Bi-Encoder (Fast Filtering)</h3>
+<p>Two separate neural networks run in parallel. One encodes the input
+sentence containing the mention into a vector. The other encodes the
+Wikidata description and properties of the candidate nodes into vectors.
+The system calculates the dot product (similarity) between the sentence
+vector and the candidate vectors.</p>
+<h3 id="cross-encoder-deep-ranking">Cross-Encoder (Deep Ranking)</h3>
+<p>To make the final decision, the Cross-Encoder concatenates the input
+sentence and the Wikidata candidate description into a single string and
+processes them together. This allows the AI's self-attention mechanism
+to directly compare words in the text against attributes in the
+knowledge graph.</p>
+<p>Look at how context shifts the mathematical weights:</p>
+<ul>
+<li><strong>Input:</strong> <em>"Michael Jordan published a new paper on
+neural networks."</em></li>
+<li><strong>Candidate A (Q41421):</strong> Description is "American
+basketball player." The words "basketball" and "player" have low
+semantic similarity with "paper" and "neural networks."</li>
+<li><strong>Candidate B (Q3308285):</strong> Description is "American
+scientist, professor in machine learning." The words "scientist" and
+"machine learning" have high semantic attention scores with "paper" and
+"neural networks."</li>
+</ul>
+<p>The Cross-Encoder assigns the highest probability score to
+Q3308285.</p>
+<h2 id="4-global-graph-coherence">4. Global Graph Coherence</h2>
+<p>Text rarely contains just one entity. AI systems use the surrounding
+entities in a paragraph to enforce "global coherence" across the
+knowledge graph. The AI checks how closely connected the candidate nodes
+are within Wikidata's structural web of properties (like
+<code>instance of</code>, <code>located in</code>, or
+<code>part of</code>).</p>
+<p>Consider the sentence: <em>"Paris went to the Louvre."</em></p>
+<ul>
+<li>"Paris" yields Q90 (the city) and Q165116 (Paris Hilton).</li>
+<li>"Louvre" yields Q19675 (the art museum in Paris, France).</li>
+</ul>
+<p>In Wikidata, Q19675 (Louvre) has a direct relational edge to Q90
+(Paris, France) via the <code>location</code> property. However, the
+grammatical structure ("went to") indicates an animate actor. By
+combining the linguistic context from the Transformer with the
+structural edges of the knowledge graph (often using Graph Neural
+Networks), the AI determines whether the entities align geographically
+or socially.</p>
+<p>Conversely, in <em>"I took a train from Lyon to Paris,"</em> the node
+for "Lyon" (Q456) shares country, railway, and geographic properties
+with "Paris" (Q90). The graph distance between Q456 and Q90 is extremely
+short, locking in Q90 as the correct canonical node.</p>
+<h2 id="5-handling-nil-entities">5. Handling "NIL" Entities</h2>
+<p>Sometimes, a surface mention refers to a person or place that does
+not exist in Wikidata yet. During the disambiguation phase, if the
+highest-scoring candidate from the Cross-Encoder falls below a strict
+confidence threshold, the system refuses to link it to an existing node.
+Instead, it flags the mention as a <strong>NIL (Not In Lexicon)</strong>
+entity, preventing false merges and signaling that a new node may need
+to be created in the knowledge graph.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/disambiguating-names-with-entity-linking-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goodhart&#39;s Law and the Dangers of AI Proxy Metrics - ai</title>
+    <meta name="description" content="This article provides a quick overview of how Goodhart’s Law explains the unintended societal harms caused by artificial intelligence systems. Because human values like fairness, health, and truth are too abstract to code directly, AI developers rely on s">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/goodhart-s-law-and-the-dangers-of-ai-proxy-metrics">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Goodhart&#39;s Law and the Dangers of AI Proxy Metrics - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/goodhart-s-law-and-the-dangers-of-ai-proxy-metrics" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a quick overview of how Goodhart’s Law explains the unintended societal harms caused by artificial intelligence systems. Because human values like fairness, health, and truth are too abstract to code directly, AI developers rely on s" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="goodharts-law-and-the-dangers-of-ai-proxy-metrics">Goodhart's
+Law and the Dangers of AI Proxy Metrics</h1>
+<p>This article provides a quick overview of how Goodhart’s Law explains
+the unintended societal harms caused by artificial intelligence systems.
+Because human values like fairness, health, and truth are too abstract
+to code directly, AI developers rely on simplified proxy metrics to
+train algorithms. When socio-technical AI systems aggressively optimize
+these proxies, the connection between the metric and the actual human
+goal breaks down. By examining the regressional, extremal, and causal
+variants of Goodhart's Law, we can clearly understand why maximizing
+engagement, healthcare cost predictions, or crime statistics leads to
+widespread societal damage.</p>
+<p>At its core, Goodhart’s Law states that when a measure becomes a
+target, it ceases to be a good measure. In artificial intelligence,
+developers cannot easily program an AI to maximize "human well-being" or
+"valuable information." Instead, they use measurable stand-ins, known as
+proxy metrics, such as click-through rates, watch time, or historical
+data patterns. Socio-technical AI systems—systems where technology and
+human behavior continuously interact—fail because the AI optimizes the
+proxy to the absolute limit, leaving the true goal behind. Researchers
+have broken this failure down into distinct variants.</p>
+<p><strong>Regressional Goodhart</strong> occurs because a proxy metric
+is never a 100% accurate reflection of the true goal; there is always
+noise and imperfect correlation. When an AI selects only for the highest
+values of a proxy, it inevitably selects for the largest errors as well.
+For example, in healthcare AI, developers have historically used a
+patient's past medical spending as a proxy for how sick they are.
+Because systemic inequalities result in Black patients having less
+access to costly healthcare, the proxy contains a massive error. When
+the AI optimizes care distribution based on this noisy metric, it
+falsely concludes that Black patients are healthier than equally sick
+white patients, denying them necessary medical interventions.</p>
+<p><strong>Extremal Goodhart</strong> happens when the optimization
+pressure is so intense that it pushes the system into an extreme state
+where the normal relationship between the proxy and the goal completely
+collapses. Historically, a user spending an hour reading an article or
+watching a video correlated with them finding the content informative or
+enjoyable. However, when social media AI algorithms push the proxy of
+"watch time" to its extreme limit, they discover that human psychology
+is most easily captured by outrage, conspiracy theories, and addiction.
+At the extreme end of the metric, maximizing watch time no longer
+maximizes user satisfaction; instead, it results in mental health
+crises, radicalization, and political polarization.</p>
+<p><strong>Causal Goodhart</strong> takes place when there is a
+non-causal correlation between the proxy and the goal, and intervening
+to force the proxy up destroys its value. A barometer correlates with
+the weather, but manually pushing the barometer needle up will not bring
+sunshine. In predictive policing, AI systems use historical arrest rates
+as a proxy for actual crime rates. When police departments intervene by
+sending more officers to neighborhoods where the AI predicts high crime,
+those officers naturally make more arrests. The AI registers these new
+arrests as validation of its prediction, creating a runaway feedback
+loop. The proxy (arrests) is artificially inflated through targeted
+intervention, resulting in the over-policing of minority communities
+without actually addressing the root causes of crime.</p>
+<p>Ultimately, socio-technical AI systems do not operate in a vacuum;
+they actively reshape human behavior and societal structures. When AI
+developers treat imperfect proxies as absolute targets, the regressional
+errors, extreme states, and broken causal links guarantee that the
+system will optimize for the wrong outcome. Preventing these societal
+harms requires moving away from rigid single-metric optimization and
+constantly auditing how AI systems impact the real world rather than
+just their digital scoreboards.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/goodhart-s-law-and-the-dangers-of-ai-proxy-metrics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

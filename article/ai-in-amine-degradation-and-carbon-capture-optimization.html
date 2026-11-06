@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Amine Degradation and Carbon Capture Optimization - ai</title>
+    <meta name="description" content="This article explores how chemical process engineers leverage artificial intelligence to model amine solvent degradation and optimize post-combustion carbon capture absorption columns. As industries strive to reduce greenhouse gas emissions, post-combusti">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-in-amine-degradation-and-carbon-capture-optimization">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI in Amine Degradation and Carbon Capture Optimization - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-in-amine-degradation-and-carbon-capture-optimization" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how chemical process engineers leverage artificial intelligence to model amine solvent degradation and optimize post-combustion carbon capture absorption columns. As industries strive to reduce greenhouse gas emissions, post-combusti" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-in-amine-degradation-and-carbon-capture-optimization">AI in
+Amine Degradation and Carbon Capture Optimization</h1>
+<p>This article explores how chemical process engineers leverage
+artificial intelligence to model amine solvent degradation and optimize
+post-combustion carbon capture absorption columns. As industries strive
+to reduce greenhouse gas emissions, post-combustion carbon capture using
+amine solvents remains the leading technology, yet it suffers from high
+operational costs due to solvent degradation and energy-intensive
+regeneration. By integrating machine learning algorithms with real-time
+plant data and thermodynamic principles, engineers can accurately
+predict chemical degradation pathways, dynamically adjust absorption
+column parameters, and maximize carbon capture efficiency while
+minimizing energy consumption.</p>
+<h3
+id="understanding-the-challenges-of-amine-based-carbon-capture">Understanding
+the Challenges of Amine-Based Carbon Capture</h3>
+<p>Post-combustion carbon capture relies heavily on chemical absorption
+using aqueous amine solvents, such as monoethanolamine (MEA). Flue gas
+enters the bottom of an absorption column and contacts the descending
+amine solution, which selectively absorbs carbon dioxide (<span
+class="math inline">\(CO_2\)</span>). While effective, this process
+faces two major hurdles:</p>
+<ol type="1">
+<li><strong>Solvent Degradation:</strong> Amines degrade over time due
+to reactions with oxygen (oxidative degradation) and high temperatures
+in the stripper column (thermal degradation), as well as reactions with
+flue gas impurities like <span class="math inline">\(SO_x\)</span> and
+<span class="math inline">\(NO_x\)</span>. This reduces capture
+capacity, causes equipment corrosion, and generates toxic
+byproducts.</li>
+<li><strong>Column Mass Transfer Inefficiencies:</strong> Fluctuations
+in power plant load alter flue gas flow rates and <span
+class="math inline">\(CO_2\)</span> concentrations. Traditional linear
+control systems struggle to adjust the complex, non-linear hydrodynamics
+inside the absorption column quickly enough to maintain optimal
+efficiency.</li>
+</ol>
+<h3 id="modeling-amine-solvent-degradation-with-ai">Modeling Amine
+Solvent Degradation with AI</h3>
+<p>Traditional first-principles models struggle to predict amine
+degradation because the underlying reaction networks involve dozens of
+poorly understood intermediate compounds and complex kinetics. Chemical
+process engineers use AI to bypass these limitations by finding hidden
+patterns in operational data.</p>
+<ul>
+<li><strong>Data Collection and Feature Selection:</strong> Engineers
+feed historical plant data into AI models. Key inputs include stripper
+reboiler temperatures, dissolved oxygen levels, flue gas contaminant
+concentrations (<span class="math inline">\(SO_2\)</span>, <span
+class="math inline">\(NO_2\)</span>), solvent circulation rates, and
+dissolved metal ion concentrations (which catalyze degradation).</li>
+<li><strong>Machine Learning Algorithms:</strong> Engineers utilize
+Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM)
+networks because solvent degradation is a time-dependent process. Random
+Forest and Support Vector Regression (SVR) models are also used to
+correlate specific operational spikes with sudden increases in
+heat-stable salts and degradation byproducts like ammonia and
+формальдегид.</li>
+<li><strong>Physics-Informed Neural Networks (PINNs):</strong> To
+prevent AI from making chemically impossible predictions, engineers use
+hybrid models. PINNs embed fundamental laws—such as mass conservation
+and known reaction kinetics—directly into the neural network’s loss
+function. This ensures the AI predicts realistic degradation rates even
+when exposed to new operating conditions.</li>
+<li><strong>Predictive Maintenance and Reclaiming:</strong> Once
+trained, the AI acts as a "soft sensor." It predicts the exact
+concentration of degraded solvent in real time without waiting for
+manual lab titration. Engineers use these predictions to schedule
+optimal solvent reclaiming or makeup additions, preventing foaming,
+fouling, and corrosion before they impact the plant.</li>
+</ul>
+<h3 id="optimizing-the-absorption-column">Optimizing the Absorption
+Column</h3>
+<p>The absorption column is a dynamic environment governed by gas-liquid
+mass transfer, reaction kinetics, and thermodynamics. AI optimizes this
+equipment by transitioning the plant from reactive control to proactive,
+predictive control.</p>
+<ul>
+<li><strong>Surrogate Modeling for Fast Simulation:</strong> Rigorous
+rate-based simulations of absorption columns (using software like Aspen
+Plus) are computationally heavy and too slow for real-time control.
+Engineers train deep neural networks on data generated by these
+simulators. The resulting AI "surrogate model" can predict column
+temperature profiles and <span class="math inline">\(CO_2\)</span>
+capture rates in milliseconds rather than hours.</li>
+<li><strong>Model Predictive Control (MPC) and Reinforcement
+Learning:</strong> Engineers integrate these fast AI models into the
+plant’s control architecture. Reinforcement Learning (RL) agents
+continuously interact with the digital twin of the absorption column,
+learning the best control policies through trial and error.</li>
+<li><strong>Dynamic Parameter Adjustment:</strong> As incoming flue gas
+properties fluctuate, the AI-driven control system dynamically adjusts
+critical variables:
+<ul>
+<li><strong>Liquid-to-Gas (L/G) Ratio:</strong> The AI modulates the
+lean amine solvent flow rate to match the exact <span
+class="math inline">\(CO_2\)</span> load in the flue gas, preventing
+over-pumping and saving electricity.</li>
+<li><strong>Intercooling Temperatures:</strong> Absorption is an
+exothermic process. If the column gets too hot, the equilibrium shifts,
+reducing <span class="math inline">\(CO_2\)</span> absorption. AI
+optimizes intercooler duty to maintain the exact temperature profile
+required for maximum mass transfer rates.</li>
+<li><strong>Rich Solvent Loading:</strong> By maximizing the amount of
+<span class="math inline">\(CO_2\)</span> absorbed per unit of solvent
+exiting the bottom of the column, the AI directly reduces the steam
+required to regenerate the solvent in the downstream stripper
+column.</li>
+</ul></li>
+</ul>
+<h3 id="the-operational-impact">The Operational Impact</h3>
+<p>By combining degradation modeling with column optimization, chemical
+process engineers create a unified control strategy. If the optimization
+AI wants to push the system harder by increasing temperatures, the
+degradation AI acts as a constraint, warning the system of the financial
+penalty associated with accelerated solvent loss. This synergy reduces
+the energy penalty of carbon capture, extends the lifespan of expensive
+amine solvents, and makes industrial decarbonization economically
+viable.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-in-amine-degradation-and-carbon-capture-optimization';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

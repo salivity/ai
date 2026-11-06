@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controlling AI Behavior with Activation Steering - ai</title>
+    <meta name="description" content="Activation steering is an advanced technique used to control the behavior of artificial intelligence models at runtime without modifying their underlying weights. By directly intervening in a model&#39;s internal residual streams during the forward pass, deve">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/controlling-ai-behavior-with-activation-steering">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Controlling AI Behavior with Activation Steering - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/controlling-ai-behavior-with-activation-steering" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Activation steering is an advanced technique used to control the behavior of artificial intelligence models at runtime without modifying their underlying weights. By directly intervening in a model&#39;s internal residual streams during the forward pass, deve" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="controlling-ai-behavior-with-activation-steering">Controlling AI
+Behavior with Activation Steering</h1>
+<p>Activation steering is an advanced technique used to control the
+behavior of artificial intelligence models at runtime without modifying
+their underlying weights. By directly intervening in a model's internal
+residual streams during the forward pass, developers can guide the AI
+toward specific traits, topics, or safety constraints. This article
+explores the mechanics of residual streams, how steering vectors are
+found, and how they are injected into the model to dynamically alter its
+outputs in real time.</p>
+<h2 id="understanding-the-residual-stream">Understanding the Residual
+Stream</h2>
+<p>To understand activation steering, it is first necessary to
+understand the residual stream of a transformer model. As an AI
+processes an input prompt, the data flows through a series of layers
+consisting of attention mechanisms and multi-layer perceptrons
+(MLPs).</p>
+<p>The residual stream acts as a central communication highway running
+through the entire network. Each layer reads information from this
+stream, processes it, and writes its output back into the stream by
+adding new vectors to the existing ones. The state of the residual
+stream at any given layer is a high-dimensional vector representing the
+model's current understanding and intentions for the next generated
+token.</p>
+<h2 id="extracting-the-steering-vector">Extracting the Steering
+Vector</h2>
+<p>Before a model can be steered, engineers must identify the specific
+direction in the high-dimensional space that corresponds to a desired
+behavior, such as honesty, sycophancy, or a specific writing style. This
+direction is known as a steering vector.</p>
+<p>The most common method for finding a steering vector is contrastive
+activation addition. This involves feeding the model pairs of prompts
+that represent opposite behaviors. For example, to find an "honesty"
+vector, researchers feed the model prompts that encourage truthful
+answers alongside prompts that encourage deceptive answers. As the model
+processes both sets of prompts, researchers record the internal
+activations within the residual stream at a specific layer. By
+subtracting the average activations of the deceptive prompts from the
+average activations of the truthful prompts, they isolate the vector
+that represents the concept of honesty.</p>
+<h2 id="modifying-the-stream-at-runtime">Modifying the Stream at
+Runtime</h2>
+<p>Once the steering vector is extracted, it can be used to control the
+model during live inference. When a user submits a prompt, the model
+begins its standard forward pass, passing data down the residual stream
+from layer to layer.</p>
+<p>At a predetermined layer—usually in the middle of the network where
+abstract concepts are formed—the system intercepts the residual stream.
+The pre-computed steering vector is multiplied by a chosen scalar value
+(a coefficient that determines the strength of the intervention) and
+added directly to the current activation vector in the residual
+stream.</p>
+<p>After this addition is made, the modified residual stream is passed
+on to the next layer, and the model continues its forward pass normally.
+Because the internal state now contains a stronger mathematical
+representation of the desired behavior, the remaining layers process the
+information through that lens, resulting in a final output that aligns
+with the steered direction.</p>
+<h2 id="advantages-over-traditional-methods">Advantages Over Traditional
+Methods</h2>
+<p>Modifying the residual stream at runtime offers significant benefits
+over traditional AI control methods like fine-tuning and prompt
+engineering.</p>
+<ul>
+<li><strong>Zero Weight Modification:</strong> Fine-tuning requires
+computationally expensive updates to the model's permanent weights and
+risks degrading its general capabilities. Activation steering leaves the
+base model entirely intact.</li>
+<li><strong>Dynamic Adjustability:</strong> By simply changing the
+scalar multiplier of the steering vector, developers can dial a behavior
+up, dial it down, or even invert it (by using a negative multiplier) on
+a per-request basis.</li>
+<li><strong>Prompt Independence:</strong> Unlike system prompts, which
+consume context window tokens and can be bypassed by clever user
+"jailbreaks," activation steering operates directly on the model's
+internal cognition, making it much harder for users to override.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/controlling-ai-behavior-with-activation-steering';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

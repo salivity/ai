@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Tracks Word Meaning Changes Over Centuries - ai</title>
+    <meta name="description" content="This article explores how computational historical linguistics leverages artificial intelligence and diachronic word embeddings to track the evolution of language. By converting historical texts into mathematical representations, researchers can measure p">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-tracks-word-meaning-changes-over-centuries">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Tracks Word Meaning Changes Over Centuries - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-tracks-word-meaning-changes-over-centuries" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how computational historical linguistics leverages artificial intelligence and diachronic word embeddings to track the evolution of language. By converting historical texts into mathematical representations, researchers can measure p" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-tracks-word-meaning-changes-over-centuries">How AI Tracks
+Word Meaning Changes Over Centuries</h1>
+<p>This article explores how computational historical linguistics
+leverages artificial intelligence and diachronic word embeddings to
+track the evolution of language. By converting historical texts into
+mathematical representations, researchers can measure precisely how
+words shift in meaning and connotation over centuries. You will learn
+the core mechanics behind word embeddings, how historical models are
+aligned across different eras, and how these technologies uncover
+large-scale cultural shifts.</p>
+<h2 id="understanding-word-embeddings">Understanding Word
+Embeddings</h2>
+<p>To track how language changes, computers must first understand what
+words mean. Artificial intelligence achieves this through word
+embeddings. In natural language processing, a word embedding is a
+mathematical representation of a word, expressed as a vector—a long list
+of numbers.</p>
+<p>AI models generate these vectors by analyzing massive amounts of text
+and applying the distributional hypothesis, which states that words used
+in similar contexts have similar meanings. The model places words into a
+multi-dimensional geometric space. In this space, words with similar
+meanings are grouped close together. For example, the vector for "king"
+will be mathematically close to "monarch" and "throne," while remaining
+far away from unrelated words like "bicycle."</p>
+<h2 id="what-are-diachronic-word-embeddings">What Are Diachronic Word
+Embeddings?</h2>
+<p>Standard word embeddings are static; they represent a snapshot of
+language at a single point in time. Diachronic word embeddings add the
+dimension of time to this process. Instead of training one AI model on
+all available text, researchers divide historical texts into distinct
+time slices, such as decades or centuries.</p>
+<p>The AI then generates separate vector spaces for each era. By
+comparing the position of a target word in the 1800s vector space to its
+position in the 1900s vector space, linguists can mathematically observe
+how that word has moved. Its movement from one neighborhood of words to
+another directly reflects its change in meaning.</p>
+<h2 id="aligning-historical-models">Aligning Historical Models</h2>
+<p>A major technical challenge in this process is that AI models trained
+on different eras generate incompatible geometric spaces. A word's
+coordinates in an 1850s model cannot be directly compared to its
+coordinates in a 1950s model because the AI initializes each space
+randomly.</p>
+<p>To solve this, computational linguists use a mathematical technique
+called Orthogonal Procrustes alignment. This process rotates and scales
+the vector space of one time period to match another, using stable
+words—words whose meanings rarely change, like "tree," "water," or
+"hand"—as anchor points. Once the spaces are aligned on top of one
+another, any remaining distance between a word's past and present
+coordinates represents genuine semantic change.</p>
+<h2 id="tracking-changes-in-meaning">Tracking Changes in Meaning</h2>
+<p>With aligned diachronic embeddings, tracking a word's definition
+becomes a matter of measuring geometric distance. Researchers calculate
+the cosine similarity between a word's vector in one century and its
+vector in another.</p>
+<p>Consider the word "broadcast." In an early 19th-century vector space,
+"broadcast" sits firmly in the neighborhood of agricultural terms like
+"seed," "sow," and "field," reflecting its original meaning of
+scattering seeds by hand. By the mid-20th century, the vector for
+"broadcast" migrates across the geometric space to cluster with "radio,"
+"television," and "news." AI allows linguists to pinpoint the exact
+decade this transition accelerated.</p>
+<h2 id="measuring-shifts-in-connotation">Measuring Shifts in
+Connotation</h2>
+<p>Words do not just change their literal definitions; they also change
+their emotional weight and social connotation. Diachronic embeddings
+track two primary types of connotative shift: pejoration (a word
+becoming more negative) and amelioration (a word becoming more
+positive).</p>
+<p>To measure this, researchers establish "sentiment poles" within the
+vector space. One pole consists of consistently positive words (e.g.,
+"good," "pure," "honest"), and the other consists of consistently
+negative words (e.g., "bad," "cruel," "evil"). Researchers then track
+how a target word moves in relation to these poles over time.</p>
+<p>For instance, the word "awful" originally meant "worthy of awe" or
+"majestic." In a 17th-century vector space, it sits close to the
+positive pole and words like "divine." Over the centuries, AI models
+show the vector for "awful" drifting steadily away from the positive
+anchors and settling near the negative pole alongside "terrible" and
+"dreadful."</p>
+<h2 id="moving-to-contextual-ai-models">Moving to Contextual AI
+Models</h2>
+<p>Early diachronic research relied on static embedding models like
+Word2Vec, which assign a single vector to a word regardless of how many
+meanings it has. Today, computational historical linguistics
+increasingly uses advanced transformer models, such as BERT.</p>
+<p>These modern AI systems generate contextual embeddings. Instead of
+giving the word "bank" one vector, the AI generates a unique vector for
+every single instance the word appears in a historical text, based on
+the surrounding sentence. This allows linguists to track polysemy—how
+words acquire multiple meanings over time. Researchers can observe a
+word birth a new slang meaning in a specific century while still
+retaining its original definition in formal contexts, offering an
+unprecedented, high-resolution view of human cultural and linguistic
+evolution.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-tracks-word-meaning-changes-over-centuries';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

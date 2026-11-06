@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Semantic Segmentation in Computer Vision - ai</title>
+    <meta name="description" content="This article provides a direct explanation of semantic segmentation, a fundamental computer vision technique where artificial intelligence categorizes digital images at the granular pixel level. You will learn the core definition of semantic segmentation,">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-semantic-segmentation-in-computer-vision">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Semantic Segmentation in Computer Vision - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-semantic-segmentation-in-computer-vision" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a direct explanation of semantic segmentation, a fundamental computer vision technique where artificial intelligence categorizes digital images at the granular pixel level. You will learn the core definition of semantic segmentation," />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-semantic-segmentation-in-computer-vision">Understanding
+Semantic Segmentation in Computer Vision</h1>
+<p>This article provides a direct explanation of semantic segmentation,
+a fundamental computer vision technique where artificial intelligence
+categorizes digital images at the granular pixel level. You will learn
+the core definition of semantic segmentation, how it differs from
+standard object detection, and the exact architectural
+mechanics—specifically encoder-decoder networks—that enable AI models to
+assign a specific class label to every single pixel within an image.</p>
+<h3 id="what-is-semantic-segmentation">What is Semantic
+Segmentation?</h3>
+<p>Semantic segmentation is a deep learning task that partitions an
+image into distinct, meaningful segments. Unlike simple image
+classification, which assigns a single label to an entire image, or
+object detection, which draws crude rectangular bounding boxes around
+objects, semantic segmentation achieves pixel-level precision.</p>
+<p>The goal is to classify every individual pixel into a predefined
+category, such as "car," "tree," "road," or "background." However,
+semantic segmentation does not differentiate between distinct instances
+of the same object. If there are three cars parked next to each other,
+the AI will label all the pixels belonging to all three vehicles simply
+as "car," treating them as a single unified category.</p>
+<h3 id="how-ai-assigns-a-class-label-to-every-pixel">How AI Assigns a
+Class Label to Every Pixel</h3>
+<p>For an artificial intelligence to assign a label to millions of
+individual pixels, it typically uses a specialized Convolutional Neural
+Network (CNN) structured as an Encoder-Decoder architecture. The process
+happens in four direct steps:</p>
+<p><strong>1. Feature Extraction (The Encoder)</strong> The AI first
+takes the input image and passes it through an "encoder." The encoder
+consists of multiple convolutional and pooling layers. As the image
+passes through these layers, the AI shrinks the spatial resolution
+(size) of the image while increasing the depth of the data. This process
+extracts high-level features. It allows the AI to understand
+<em>what</em> is in the image (e.g., recognizing the texture of fur or
+the shape of a wheel), though it temporarily loses track of the exact
+pixel locations.</p>
+<p><strong>2. Spatial Restoration (The Decoder)</strong> Because the
+encoder shrinks the image to understand its contents, the AI must blow
+the image back up to its original size to label the individual pixels.
+This is the job of the "decoder." The decoder uses upsampling techniques
+(often called transposed convolutions) to restore the compressed feature
+map back to the exact height and width of the original input image. This
+step allows the AI to determine <em>where</em> the features are
+located.</p>
+<p><strong>3. Preserving Detail with Skip Connections</strong> When an
+image is compressed and then expanded, fine details—like the sharp edges
+of a building or a thin streetlamp—are lost. To fix this, modern
+architectures (such as U-Net) use "skip connections." These connections
+copy high-resolution spatial data directly from the early stages of the
+encoder and merge it into the decoder. This ensures the AI retains sharp
+boundary details while keeping its high-level understanding of the
+objects.</p>
+<p><strong>4. Pixel-Wise Classification (The Softmax Layer)</strong>
+Once the decoder has restored the image to its original resolution, the
+final layer of the network processes the data. A Softmax function is
+applied to every individual pixel location. For each pixel, the AI
+calculates a probability score for every possible class. For example, a
+specific pixel might be calculated as having an 85% probability of being
+"road," a 10% probability of being "sidewalk," and a 5% probability of
+being "car." The AI assigns the class with the highest probability to
+that pixel.</p>
+<p>By executing these four steps simultaneously across a grid of data,
+the AI outputs a "segmentation mask"—a color-coded map of the original
+image where every single pixel has been assigned a definitive class
+label.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-semantic-segmentation-in-computer-vision';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

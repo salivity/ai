@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Mixture-of-Depths Routing in Transformers - ai</title>
+    <meta name="description" content="Mixture-of-Depths (MoD) routing is an architectural optimization for Transformer artificial intelligence models that dynamically allocates computing power to individual tokens based on their complexity. This article explores what Mixture-of-Depths is, why">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-mixture-of-depths-routing-in-transformers">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Mixture-of-Depths Routing in Transformers - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-mixture-of-depths-routing-in-transformers" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Mixture-of-Depths (MoD) routing is an architectural optimization for Transformer artificial intelligence models that dynamically allocates computing power to individual tokens based on their complexity. This article explores what Mixture-of-Depths is, why" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-mixture-of-depths-routing-in-transformers">Understanding
+Mixture-of-Depths Routing in Transformers</h1>
+<p>Mixture-of-Depths (MoD) routing is an architectural optimization for
+Transformer artificial intelligence models that dynamically allocates
+computing power to individual tokens based on their complexity. This
+article explores what Mixture-of-Depths is, why traditional Transformers
+waste compute, and the exact mechanisms MoD uses to route tokens through
+or around specific model layers to drastically improve training and
+inference efficiency.</p>
+<h2 id="the-flaw-in-standard-transformers">The Flaw in Standard
+Transformers</h2>
+<p>Traditional Transformer models use a uniform computation approach.
+Whether a token represents a simple, predictable word like "the" or a
+complex, context-heavy concept, it passes through every single layer of
+the neural network. This static allocation of compute is inefficient.
+Just as humans do not spend the same amount of mental energy on every
+word in a sentence, AI models do not need to apply maximum processing
+power to every token.</p>
+<h2 id="what-is-mixture-of-depths-mod">What is Mixture-of-Depths
+(MoD)?</h2>
+<p>Mixture-of-Depths is a technique developed to solve the inefficiency
+of uniform computation. While a related concept, Mixture-of-Experts
+(MoE), routes tokens to different specialized sub-networks within a
+layer, MoD decides whether a token needs to be processed by a layer at
+all. By allowing tokens to skip certain layers entirely, the model
+varies the "depth" of the network on a per-token basis. It forces the
+Transformer to focus its computational budget only on the tokens that
+require deep processing.</p>
+<h2 id="how-mod-allocates-compute-dynamically">How MoD Allocates Compute
+Dynamically</h2>
+<p>Mixture-of-Depths relies on a strict, predefined compute budget and a
+lightweight routing mechanism to process tokens dynamically. The process
+occurs at each MoD-enabled layer in the following steps:</p>
+<h3 id="1-setting-the-capacity-cap">1. Setting the Capacity Cap</h3>
+<p>Before processing begins, engineers set a static capacity limit for
+the layer—for example, 50% of the total tokens in a sequence. This
+guarantees that the hardware will only ever process half of the tokens
+at that specific layer, locking in a predictable reduction in
+floating-point operations (FLOPs) and memory usage.</p>
+<h3 id="2-scoring-via-the-router">2. Scoring via the Router</h3>
+<p>As a sequence of tokens approaches a Transformer block, a small
+linear projection layer—called the router—evaluates each token's
+embedding. The router assigns a scalar weight (a single score) to every
+token. This score represents the router’s prediction of how much that
+specific token will benefit from being processed by the upcoming
+self-attention and feed-forward blocks.</p>
+<h3 id="3-top-k-selection">3. Top-k Selection</h3>
+<p>The layer then ranks all the tokens in the sequence based on their
+router scores. Using a "top-k" selection algorithm, the model selects
+the highest-scoring tokens up to the predefined capacity limit (k).</p>
+<h3 id="4-dual-path-processing">4. Dual-Path Processing</h3>
+<p>Once the tokens are divided, they take one of two paths:</p>
+<ul>
+<li><strong>The Compute Path:</strong> Tokens that score in the top-k
+enter the Transformer block. They undergo heavy calculations, including
+multi-head attention and dense matrix multiplications, allowing them to
+gather context and update their representations.</li>
+<li><strong>The Residual Path:</strong> Tokens that fail to make the cut
+bypass the layer entirely. They travel along the residual connection (a
+highway that skips the layer) and require zero computational processing
+for that step.</li>
+</ul>
+<p>After the top-k tokens finish their calculations, they are merged
+back with the skipped tokens, and the entire sequence moves to the next
+layer, where a new router repeats the process.</p>
+<h2 id="solving-the-autoregressive-challenge">Solving the Autoregressive
+Challenge</h2>
+<p>While top-k routing works easily during training—because the model
+can see the entire sequence of tokens at once and compare their
+scores—it creates a problem during live inference (text generation).
+During inference, models generate text one token at a time. The model
+cannot know if the current token is in the "top 50%" if the future
+tokens do not exist yet.</p>
+<p>To solve this, MoD trains a secondary, tiny predictor alongside the
+router. During training, this predictor learns to mimic the top-k
+threshold. During inference, instead of comparing a token against future
+tokens, the model simply asks the predictor: "Would this token likely
+make the top-k cut?" If the answer is yes, the token enters the layer;
+if no, it skips it.</p>
+<h2 id="the-benefits-of-mixture-of-depths">The Benefits of
+Mixture-of-Depths</h2>
+<p>By dynamically allocating compute per token, Mixture-of-Depths
+achieves massive efficiency gains. Models utilizing MoD can match the
+performance and accuracy of standard, dense Transformers while using up
+to 50% fewer FLOPs during training. Furthermore, because fewer tokens
+are processed at each layer, the model's key-value (KV) cache is
+smaller, resulting in significantly faster generation speeds and lower
+memory requirements during deployment.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-mixture-of-depths-routing-in-transformers';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

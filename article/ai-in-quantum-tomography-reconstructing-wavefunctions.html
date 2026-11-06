@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Quantum Tomography: Reconstructing Wavefunctions - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how artificial intelligence, specifically restricted Boltzmann machines (RBMs) and autoregressive neural networks, is revolutionizing quantum state tomography (QST). By leveraging these advanced machine le">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-in-quantum-tomography-reconstructing-wavefunctions">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI in Quantum Tomography: Reconstructing Wavefunctions - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-in-quantum-tomography-reconstructing-wavefunctions" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how artificial intelligence, specifically restricted Boltzmann machines (RBMs) and autoregressive neural networks, is revolutionizing quantum state tomography (QST). By leveraging these advanced machine le" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-in-quantum-tomography-reconstructing-wavefunctions">AI in
+Quantum Tomography: Reconstructing Wavefunctions</h1>
+<p>This article provides a comprehensive overview of how artificial
+intelligence, specifically restricted Boltzmann machines (RBMs) and
+autoregressive neural networks, is revolutionizing quantum state
+tomography (QST). By leveraging these advanced machine learning
+architectures, physicists can efficiently reconstruct complex, entangled
+many-body wavefunctions from experimental measurement data. This
+approach bypasses the exponential computational bottlenecks of
+traditional tomography methods, paving the way for the verification and
+scaling of large quantum systems.</p>
+<h3 id="the-bottleneck-of-traditional-quantum-state-tomography">The
+Bottleneck of Traditional Quantum State Tomography</h3>
+<p>Quantum state tomography is the process of reconstructing the
+complete quantum state—represented mathematically as a wavefunction or
+density matrix—of a system by performing measurements on an ensemble of
+identical quantum states. For a single qubit, this is straightforward.
+However, as the number of particles (qubits) in a system grows, the
+Hilbert space describing the system expands exponentially.</p>
+<p>For a system of <span class="math inline">\(N\)</span> qubits, fully
+characterizing a pure quantum state requires tracking <span
+class="math inline">\(2^N\)</span> complex numbers. At just 50 qubits,
+storing the wavefunction requires petabytes of memory, and the number of
+measurements required for standard tomography becomes physically
+impossible to gather. Neural-network quantum state tomography overcomes
+this "curse of dimensionality" by using AI to compress the
+representation of the wavefunction.</p>
+<h3 id="restricted-boltzmann-machines-rbms-in-qst">Restricted Boltzmann
+Machines (RBMs) in QST</h3>
+<p>Restricted Boltzmann Machines were the first generative neural
+networks applied to the problem of reconstructing many-body
+wavefunctions. An RBM is a two-layer, stochastic neural network
+consisting of a visible layer and a hidden layer, with no connections
+between nodes within the same layer.</p>
+<p>In the context of QST, the RBM operates as follows:</p>
+<ul>
+<li><strong>Mapping the Physical System:</strong> The nodes in the
+visible layer correspond directly to the physical qubits of the quantum
+system. When a measurement is taken, the resulting spin configuration
+(e.g., a string of 0s and 1s) is fed into this visible layer.</li>
+<li><strong>Capturing Entanglement:</strong> The hidden layer consists
+of auxiliary nodes that do not represent physical particles. Instead,
+the weights connecting the visible layer to the hidden layer mediate
+correlations between the physical qubits. This allows the RBM to
+efficiently capture complex, non-local quantum entanglement.</li>
+<li><strong>Reconstructing Phase and Amplitude:</strong> A quantum
+wavefunction has both an amplitude (which determines measurement
+probabilities) and a complex phase (which dictates quantum
+interference). To reconstruct a full wavefunction, researchers either
+use RBMs with complex-valued weights or pair two real-valued RBMs—one to
+learn the amplitude and another to learn the phase.</li>
+<li><strong>Training via Measurement Bases:</strong> By measuring the
+quantum system in various bases (such as the X, Y, and Z Pauli bases),
+the RBM is trained using an algorithm called Contrastive Divergence. The
+network adjusts its internal weights until the probability distribution
+it generates matches the experimental data from the quantum
+hardware.</li>
+</ul>
+<p>While RBMs are powerful, they have a notable limitation: they do not
+normalize probabilities automatically. Generating samples from an RBM
+requires Markov Chain Monte Carlo (MCMC) methods, which can be
+computationally slow and prone to getting stuck when dealing with highly
+complex states.</p>
+<h3
+id="autoregressive-networks-for-wavefunction-reconstruction">Autoregressive
+Networks for Wavefunction Reconstruction</h3>
+<p>To overcome the sampling inefficiencies of RBMs, physicists turned to
+autoregressive neural networks—the same foundational paradigm behind
+modern large language models and audio generation tools. These include
+Recurrent Neural Networks (RNNs) and Transformers.</p>
+<p>Autoregressive networks reconstruct entangled wavefunctions through
+conditional probabilities, utilizing the product rule of
+probability:</p>
+<ul>
+<li><strong>Sequential Conditioning:</strong> Instead of looking at the
+entire quantum state all at once, an autoregressive network orders the
+qubits sequentially from <span class="math inline">\(1\)</span> to <span
+class="math inline">\(N\)</span>. It predicts the state of the first
+qubit, then predicts the state of the second qubit <em>conditioned</em>
+on the state of the first, and then the third <em>conditioned</em> on
+the first two, continuing until the <span
+class="math inline">\(N\)</span>-th qubit.</li>
+<li><strong>Exact and Fast Sampling:</strong> Because each conditional
+probability is normalized at every step, the total wavefunction is
+automatically normalized. This eliminates the need for MCMC sampling.
+Researchers can draw exact, independent samples from the reconstructed
+wavefunction in a single forward pass of the network.</li>
+<li><strong>Handling Long-Range Entanglement:</strong> Architectures
+like RNNs pass a "hidden state" from one qubit to the next, acting as a
+memory bank that retains information about previous qubits. More
+recently, Transformer-based quantum tomography uses "self-attention"
+mechanisms. This allows the network to directly connect any two qubits
+regardless of their physical distance in the sequence, making it
+exceptionally adept at reconstructing states with massive, long-range
+entanglement.</li>
+</ul>
+<h3 id="the-training-process-from-lab-data-to-wavefunction">The Training
+Process: From Lab Data to Wavefunction</h3>
+<p>Regardless of whether an RBM or an autoregressive network is used,
+the practical workflow for reconstructing the wavefunction follows a
+strict protocol:</p>
+<ol type="1">
+<li><strong>Data Acquisition:</strong> The quantum processor prepares
+the many-body state thousands of times. Each time, a set of randomized
+local measurements is applied, collapsing the wavefunction into
+classical bitstrings.</li>
+<li><strong>Initialization:</strong> The neural network is initialized
+with random weights, initially representing a random, unphysical quantum
+state.</li>
+<li><strong>Loss Function Minimization:</strong> The bitstrings from the
+quantum experiment are fed into the AI. The network calculates the
+likelihood of its current internal wavefunction producing those exact
+bitstrings. Using gradient descent, the network minimizes the "negative
+log-likelihood" (or Kullback-Leibler divergence), iteratively shifting
+its weights.</li>
+<li><strong>Convergence:</strong> Once the loss function plateaus, the
+training is complete. The neural network’s weights and biases now act as
+a compact, mathematical blueprint of the experimental quantum
+state.</li>
+</ol>
+<p>By translating the exponential complexity of Hilbert space into the
+polynomial scaling of neural network parameters, RBMs and autoregressive
+models allow scientists to probe, verify, and understand entangled
+quantum systems consisting of hundreds of particles—a feat entirely out
+of reach for classical computational methods.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-in-quantum-tomography-reconstructing-wavefunctions';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

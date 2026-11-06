@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Top-p Sampling Cuts the Tail in Creative AI Writing - ai</title>
+    <meta name="description" content="Nucleus sampling, commonly known as Top-p sampling, is a decoding strategy used in artificial intelligence to generate coherent yet creative text. This article provides an overview of how Top-p sampling works by dynamically truncating the long tail of low">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-top-p-sampling-cuts-the-tail-in-creative-ai-writing">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Top-p Sampling Cuts the Tail in Creative AI Writing - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-top-p-sampling-cuts-the-tail-in-creative-ai-writing" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Nucleus sampling, commonly known as Top-p sampling, is a decoding strategy used in artificial intelligence to generate coherent yet creative text. This article provides an overview of how Top-p sampling works by dynamically truncating the long tail of low" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-top-p-sampling-cuts-the-tail-in-creative-ai-writing">How
+Top-p Sampling Cuts the Tail in Creative AI Writing</h1>
+<p>Nucleus sampling, commonly known as Top-p sampling, is a decoding
+strategy used in artificial intelligence to generate coherent yet
+creative text. This article provides an overview of how Top-p sampling
+works by dynamically truncating the long tail of low-probability tokens
+during text generation. By focusing only on a concentrated "nucleus" of
+likely words and adjusting the pool size based on the model's real-time
+confidence, Top-p sampling prevents AI from derailing into nonsensical
+outputs while preserving linguistic variety.</p>
+<p>When a language model writes, it calculates a probability
+distribution over its entire vocabulary to decide the next token. This
+vocabulary often contains tens of thousands of words. While a few tokens
+will have high probabilities, thousands of irrelevant or bizarre tokens
+will have tiny, non-zero probabilities. Collectively, these thousands of
+unlikely options form the "unreliable tail" of the distribution. Even
+though each individual token in the tail has a minuscule chance of being
+picked, their combined probability mass is large enough that pure random
+sampling will eventually select one, ruining the quality of the creative
+writing.</p>
+<p>Top-p sampling eliminates this unreliable tail through a Cumulative
+Probability Threshold. Instead of selecting from a fixed number of
+tokens (like Top-k sampling), the algorithm sorts all possible next
+tokens from highest to lowest probability. It then adds these
+probabilities together one by one until their cumulative sum reaches a
+predefined threshold, represented as the value <em>p</em> (for example,
+<em>p</em> = 0.90 or 90%).</p>
+<p>Once this threshold is met, every token included in that sum forms
+the "nucleus." The algorithm immediately truncates—or cuts off—every
+single token that falls outside of this nucleus. The remaining tokens in
+the nucleus then have their probabilities re-normalized so that they add
+up to 100%, and the AI randomly samples the next word strictly from this
+refined group.</p>
+<p>The defining feature of Top-p sampling is that this truncation is
+dynamic. The size of the nucleus expands and contracts automatically at
+every step of the writing process, adapting to the shape of the
+probability distribution:</p>
+<p><strong>High Uncertainty (Flat Distribution):</strong> In creative
+writing, when an AI starts a new sentence or describes an open-ended
+scene, many words could logically follow. For instance, after the phrase
+"The detective looked at the...", hundreds of nouns are valid. Because
+the probability mass is spread thinly across many options, the algorithm
+must include a large number of tokens to reach the 90% threshold. The
+nucleus expands, allowing the AI a wide, creative variety of words to
+choose from while still cutting off the bottom 10% of completely
+unrelated words.</p>
+<p><strong>High Confidence (Peaked Distribution):</strong> Conversely,
+when the context strongly dictates the next word, the probability
+distribution becomes very narrow. After the phrase "The heavy rain began
+to...", the word "fall" or "pour" might hold 95% of the probability mass
+on their own. To reach the 90% threshold, the algorithm only needs one
+or two tokens. The nucleus dynamically shrinks, and the algorithm
+truncates nearly the entire vocabulary. This ensures the AI does not
+suddenly inject a bizarre word when only a few specific words make
+grammatical or contextual sense.</p>
+<p>By dynamically adjusting the number of considered tokens at each
+step, Top-p sampling acts as an automated safety net. It guarantees that
+the AI never picks from the unreliable tail of low-probability tokens,
+seamlessly shifting between broad creativity when the narrative allows
+it and strict precision when the grammar demands it.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-top-p-sampling-cuts-the-tail-in-creative-ai-writing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

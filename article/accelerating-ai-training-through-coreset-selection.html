@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerating AI Training Through Coreset Selection - ai</title>
+    <meta name="description" content="Coreset selection is a data-centric optimization technique that accelerates artificial intelligence training by identifying and extracting the most informative subset of a massive dataset. Rather than feeding millions of redundant data points into a neura">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/accelerating-ai-training-through-coreset-selection">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Accelerating AI Training Through Coreset Selection - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/accelerating-ai-training-through-coreset-selection" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Coreset selection is a data-centric optimization technique that accelerates artificial intelligence training by identifying and extracting the most informative subset of a massive dataset. Rather than feeding millions of redundant data points into a neura" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="accelerating-ai-training-through-coreset-selection">Accelerating
+AI Training Through Coreset Selection</h1>
+<p>Coreset selection is a data-centric optimization technique that
+accelerates artificial intelligence training by identifying and
+extracting the most informative subset of a massive dataset. Rather than
+feeding millions of redundant data points into a neural network, coreset
+algorithms analyze the data's underlying geometry, training dynamics,
+and gradient contributions to curate a compact, representative sample.
+This article explores the core mechanisms behind coreset
+selection—specifically geometry-based, uncertainty-based, and
+gradient-matching methods—that enable machine learning models to achieve
+competitive accuracy in a fraction of the time and computational
+cost.</p>
+<h2 id="geometry-based-selection">Geometry-Based Selection</h2>
+<p>Geometry-based methods operate on the assumption that data points
+close to one another in the feature space share similar information. To
+eliminate redundancy, these algorithms map the entire dataset into a
+high-dimensional space and select a subset that best covers the overall
+distribution.</p>
+<p>By utilizing clustering techniques like k-means or k-center, the
+algorithm identifies central data points (centroids) that represent
+their surrounding neighbors. Training the AI model exclusively on these
+representative centroids ensures the model learns the global structure
+of the data without wasting compute power on nearly identical
+samples.</p>
+<h2 id="uncertainty-and-error-based-selection">Uncertainty and
+Error-Based Selection</h2>
+<p>Not all data points are equally difficult for a model to learn.
+Uncertainty-based methods identify the most informative samples by
+measuring how much a model struggles to classify them during early
+training stages.</p>
+<p>This approach tracks specific metrics, such as:</p>
+<ul>
+<li><strong>Predictive Entropy:</strong> Selecting data points where the
+model's prediction confidence is low.</li>
+<li><strong>Decision Boundary Proximity:</strong> Isolating samples that
+lie closest to the model's decision boundaries, as these points are
+critical for defining accurate classifications.</li>
+<li><strong>Forgetting Events:</strong> Tracking how often a data point
+is correctly classified in one training epoch and misclassified in the
+next. Samples that are frequently "forgotten" contain complex patterns
+essential for robust training, while easily learned samples are
+discarded.</li>
+</ul>
+<h2 id="gradient-matching-algorithms">Gradient-Matching Algorithms</h2>
+<p>Artificial intelligence models learn by updating their internal
+weights using gradients, which indicate the direction and magnitude of
+error correction needed during training. Gradient-matching is one of the
+most direct and effective coreset selection techniques.</p>
+<p>Instead of looking at the data points themselves, this method looks
+at how the data affects the model. The algorithm searches for a small,
+weighted subset of data whose combined gradients closely approximate the
+average gradient of the entire massive dataset. If the subset pushes the
+model's weights in the exact same direction as the full dataset would,
+the model will converge to the same level of accuracy while processing
+only a fraction of the data.</p>
+<h2 id="submodular-optimization">Submodular Optimization</h2>
+<p>To balance diversity and representativeness, many coreset frameworks
+use submodular functions. Submodularity is a mathematical property
+analogous to diminishing returns: adding a new data point to a small
+subset provides a large amount of new information, while adding that
+same point to a massive subset provides very little.</p>
+<p>Algorithms use submodular optimization to greedily select data points
+that maximize information gain at each step. Once the information gain
+hits a predetermined threshold of diminishing returns, the selection
+process stops, resulting in an optimal, minimal dataset ready for rapid
+AI training.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/accelerating-ai-training-through-coreset-selection';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

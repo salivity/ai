@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Radiomics: Predicting Lung Cancer Immunotherapy Response - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how radiomics and artificial intelligence (AI) analyze standard Computed Tomography (CT) scans to predict whether a lung tumor will respond to PD-1 checkpoint immunotherapy. By extracting and evaluating su">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-radiomics-predicting-lung-cancer-immunotherapy-response">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Radiomics: Predicting Lung Cancer Immunotherapy Response - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-radiomics-predicting-lung-cancer-immunotherapy-response" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how radiomics and artificial intelligence (AI) analyze standard Computed Tomography (CT) scans to predict whether a lung tumor will respond to PD-1 checkpoint immunotherapy. By extracting and evaluating su" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-radiomics-predicting-lung-cancer-immunotherapy-response">AI
+Radiomics: Predicting Lung Cancer Immunotherapy Response</h1>
+<p>This article provides a comprehensive overview of how radiomics and
+artificial intelligence (AI) analyze standard Computed Tomography (CT)
+scans to predict whether a lung tumor will respond to PD-1 checkpoint
+immunotherapy. By extracting and evaluating sub-visual texture features
+that the human eye cannot perceive, AI models can decode the physical
+structure of the tumor microenvironment. Below, we explore the
+step-by-step process of image segmentation, feature extraction, and
+machine learning classification that enables oncologists to personalize
+lung cancer treatment without relying solely on invasive tissue
+biopsies.</p>
+<h3 id="the-challenge-of-pd-1-immunotherapy">The Challenge of PD-1
+Immunotherapy</h3>
+<p>PD-1 checkpoint inhibitors have revolutionized the treatment of
+non-small cell lung cancer (NSCLC) by helping the body's immune system
+recognize and attack cancer cells. However, only about 20% to 40% of
+patients respond to this therapy. Currently, doctors rely on invasive
+tissue biopsies to measure PD-L1 protein levels to predict treatment
+success. Because lung tumors are heterogeneous—meaning different parts
+of the same tumor have different biological characteristics—a single
+needle biopsy often misses the complete picture. Radiomics solves this
+by analyzing the entire three-dimensional tumor using routine CT
+scans.</p>
+<h3 id="step-1-image-acquisition-and-tumor-segmentation">Step 1: Image
+Acquisition and Tumor Segmentation</h3>
+<p>The process begins with a standard diagnostic CT scan. Before the AI
+can analyze the tumor, the exact boundaries of the lesion must be
+defined in a process called segmentation.</p>
+<ul>
+<li><strong>Region of Interest (ROI):</strong> Automated deep learning
+algorithms or radiologists trace the 3D volume of the tumor, known as
+the ROI.</li>
+<li><strong>Peritumoral Zone:</strong> The segmentation often includes a
+margin of healthy-looking tissue immediately surrounding the tumor. This
+peritumoral zone is critical because it is where immune cells first
+attempt to infiltrate the cancer.</li>
+</ul>
+<h3 id="step-2-extracting-sub-visual-texture-features">Step 2:
+Extracting Sub-Visual Texture Features</h3>
+<p>To the human eye, a CT scan is a collection of greyscale shadows. To
+a computer, a CT scan is a massive 3D grid of numerical values called
+voxels (3D pixels), where each number represents tissue density
+(measured in Hounsfield Units). Radiomics software scans the segmented
+tumor and uses mathematical formulas to extract thousands of
+"sub-visual" features. These are broken down into three main
+categories:</p>
+<ul>
+<li><strong>First-Order Features:</strong> These analyze the basic
+distribution of voxel intensities without looking at their spatial
+location. They measure metrics like average density, skewness, and
+uniformity.</li>
+<li><strong>Second-Order Features (Texture):</strong> These measure the
+spatial relationship between adjacent voxels. Using tools like the
+Grey-Level Co-occurrence Matrix (GLCM), the software calculates how
+often pixels of certain brightness levels appear next to each other.
+This quantifies tumor "roughness," contrast, or smoothness.</li>
+<li><strong>Higher-Order Features:</strong> Algorithms apply
+mathematical filters (like wavelet transforms) to the image to highlight
+repeating patterns, edges, and fractal dimensions at different
+scales.</li>
+</ul>
+<h3 id="step-3-linking-ct-textures-to-tumor-biology">Step 3: Linking CT
+Textures to Tumor Biology</h3>
+<p>The reason these sub-visual textures matter is that they directly
+reflect the underlying biology of the lung tumor. PD-1 immunotherapy
+requires active immune cells (T-cells) to be present inside the tumor to
+work.</p>
+<ul>
+<li><strong>Heterogeneous Textures:</strong> A tumor that shows chaotic,
+irregular voxel patterns on a CT scan often correlates with regions of
+rapid cell death (necrosis), abnormal blood vessel growth, and pockets
+of immune cell infiltration.</li>
+<li><strong>Homogeneous Textures:</strong> A uniform, smooth texture on
+the scan may indicate a dense, solid tumor with very few infiltrating
+immune cells (an "immune-desert" tumor), which is unlikely to respond to
+PD-1 inhibitors.</li>
+</ul>
+<h3 id="step-4-ai-classification-and-prediction">Step 4: AI
+Classification and Prediction</h3>
+<p>Extracting thousands of texture features creates too much data for a
+human to interpret. This is where artificial intelligence and machine
+learning come in.</p>
+<p>First, feature selection algorithms filter out redundant data and
+noisy variables caused by variations in different CT scanners. This
+leaves only the most stable, predictive features. Next, machine learning
+models—such as Random Forests, Support Vector Machines, or Deep Neural
+Networks—are trained on historical patient data. The AI looks at the
+radiomic signature of thousands of past patients and learns which
+specific combinations of sub-visual textures belonged to patients whose
+tumors shrank after PD-1 therapy, and which belonged to patients whose
+cancer progressed.</p>
+<p>Once trained, the AI model can take the CT scan of a newly diagnosed
+lung cancer patient, extract the sub-visual texture features, and output
+a "radiomic score." This score gives the oncologist a clear probability
+of whether the tumor will respond to PD-1 checkpoint immunotherapy,
+allowing doctors to fast-track effective treatments and spare
+non-responders from severe side effects and delays in alternative
+care.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-radiomics-predicting-lung-cancer-immunotherapy-response';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

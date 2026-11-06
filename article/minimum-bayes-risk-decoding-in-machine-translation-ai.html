@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Bayes Risk Decoding in Machine Translation AI - ai</title>
+    <meta name="description" content="This article explores how Minimum Bayes Risk (MBR) decoding improves machine translation artificial intelligence by selecting the most accurate translation from a pool of generated candidates. Unlike traditional methods that simply look for the single mos">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/minimum-bayes-risk-decoding-in-machine-translation-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Minimum Bayes Risk Decoding in Machine Translation AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/minimum-bayes-risk-decoding-in-machine-translation-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Minimum Bayes Risk (MBR) decoding improves machine translation artificial intelligence by selecting the most accurate translation from a pool of generated candidates. Unlike traditional methods that simply look for the single mos" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="minimum-bayes-risk-decoding-in-machine-translation-ai">Minimum
+Bayes Risk Decoding in Machine Translation AI</h1>
+<p>This article explores how Minimum Bayes Risk (MBR) decoding improves
+machine translation artificial intelligence by selecting the most
+accurate translation from a pool of generated candidates. Unlike
+traditional methods that simply look for the single most probable
+output, MBR decoding uses Monte Carlo sampling to generate multiple
+possible translations and compares them against one another. By
+evaluating these candidates using a specific utility metric, the
+algorithm successfully identifies the translation that minimizes
+expected loss and maximizes overall quality.</p>
+<h2 id="the-flaw-in-standard-decoding">The Flaw in Standard
+Decoding</h2>
+<p>To understand Minimum Bayes Risk decoding, it is first necessary to
+look at standard decoding methods like beam search. Beam search attempts
+to find the single translation with the highest probability (Maximum A
+Posteriori, or MAP). However, in neural machine translation, the highest
+probability sequence is not always the best translation. Because
+probability mass is often spread across many similar, high-quality
+translations, the absolute most probable output can sometimes be overly
+generic, short, or even flawed. MBR decoding solves this by looking for
+the translation that is most similar to other likely translations,
+rather than the one with the highest raw probability.</p>
+<h2 id="generating-the-pool-via-monte-carlo-sampling">Generating the
+Pool via Monte Carlo Sampling</h2>
+<p>Because a machine translation model can generate an almost infinite
+number of possible translations, it is computationally impossible to
+compare every single one. MBR decoding overcomes this hurdle by using
+Monte Carlo sampling.</p>
+<p>The AI model generates a finite pool of candidate translations by
+randomly sampling from its output probability distribution. This pool
+usually consists of anywhere from a few dozen to a few hundred
+sentences. Because they are drawn directly from the model's probability
+distribution, this Monte Carlo pool serves as an accurate, manageable
+representation of what the model believes are valid translations. These
+sampled sentences act as both the candidate translations and the
+"pseudo-references" used to evaluate them.</p>
+<h2 id="calculating-expected-loss-and-utility">Calculating Expected Loss
+and Utility</h2>
+<p>Once the pool of Monte Carlo samples is generated, MBR decoding must
+find the candidate that minimizes "expected loss" (or conversely,
+maximizes expected utility). In this context, "loss" refers to
+translation errors, which are measured using automated evaluation
+metrics like BLEU, ChrF, or COMET.</p>
+<p>The algorithm performs a pairwise comparison across the entire
+pool:</p>
+<ol type="1">
+<li>It takes Candidate A and compares it against Candidate B, Candidate
+C, Candidate D, and so on, using the chosen evaluation metric.</li>
+<li>It calculates the average score of Candidate A against all other
+samples in the pool.</li>
+<li>It repeats this process for every single candidate in the Monte
+Carlo pool.</li>
+</ol>
+<p>Because the pool was generated using Monte Carlo sampling, a simple
+average of these metric scores accurately estimates the expected utility
+of each candidate. High-probability themes and structures will naturally
+appear multiple times in the sampled pool. Therefore, a candidate that
+aligns well with the majority of the pool will achieve a high average
+score, which equates to low expected loss.</p>
+<h2 id="selecting-the-final-translation">Selecting the Final
+Translation</h2>
+<p>The final step in MBR decoding is selection. The algorithm ranks all
+the candidates based on their average utility scores. The candidate
+translation that achieved the highest average similarity to all other
+Monte Carlo samples is selected as the final output.</p>
+<p>By choosing the consensus translation, MBR decoding effectively
+filters out bizarre hallucinations and structural errors. Even if the
+model accidentally assigns a high probability to a flawed translation,
+that flawed sentence will look very different from the rest of the
+sampled pool. Consequently, it will receive a low average score and be
+discarded, ensuring the final selected translation is safe, accurate,
+and representative of the model's true understanding.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/minimum-bayes-risk-decoding-in-machine-translation-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

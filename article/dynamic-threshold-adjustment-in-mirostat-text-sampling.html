@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Threshold Adjustment in Mirostat Text Sampling - ai</title>
+    <meta name="description" content="This article provides a direct breakdown of how the Mirostat sampling algorithm dynamically modifies its vocabulary truncation threshold at every token generation step to maintain a target perplexity surprise level. By continuously measuring the differenc">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/dynamic-threshold-adjustment-in-mirostat-text-sampling">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dynamic Threshold Adjustment in Mirostat Text Sampling - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/dynamic-threshold-adjustment-in-mirostat-text-sampling" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a direct breakdown of how the Mirostat sampling algorithm dynamically modifies its vocabulary truncation threshold at every token generation step to maintain a target perplexity surprise level. By continuously measuring the differenc" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="dynamic-threshold-adjustment-in-mirostat-text-sampling">Dynamic
+Threshold Adjustment in Mirostat Text Sampling</h1>
+<p>This article provides a direct breakdown of how the Mirostat sampling
+algorithm dynamically modifies its vocabulary truncation threshold at
+every token generation step to maintain a target perplexity surprise
+level. By continuously measuring the difference between expected
+surprise and actual token surprise, Mirostat utilizes an active feedback
+loop to prevent artificial intelligence text from becoming either overly
+repetitive or entirely incoherent. The following sections detail the
+exact mathematical and algorithmic processes that occur during each step
+of this adaptive generation method.</p>
+<h2 id="defining-target-surprise-and-error-tracking">Defining Target
+Surprise and Error Tracking</h2>
+<p>Unlike static decoding methods such as Top-K or Top-P (nucleus)
+sampling, which apply fixed cutoffs to token probability distributions,
+Mirostat approaches text generation as a control theory problem. It
+establishes a user-defined target surprise value, denoted as <span
+class="math inline">\(\tau\)</span> (tau). Surprise—measured in bits or
+nats—is the negative logarithm of a token's probability. A
+low-probability token yields high surprise, while a high-probability
+token yields low surprise.</p>
+<p>To maintain this target, the algorithm initializes a variable called
+<span class="math inline">\(\mu\)</span> (mu), which represents the
+maximum allowable surprise threshold for the current step. Typically,
+<span class="math inline">\(\mu\)</span> is initialized to <span
+class="math inline">\(2\tau\)</span>. Throughout the generation process,
+Mirostat tracks the error between the actual surprise of the generated
+tokens and the target <span class="math inline">\(\tau\)</span>,
+adjusting <span class="math inline">\(\mu\)</span> up or down to keep
+the average perplexity stable.</p>
+<h2 id="estimating-zipfs-exponent-at-each-step">Estimating Zipf's
+Exponent at Each Step</h2>
+<p>Before selecting a token, the language model outputs a probability
+distribution over the entire vocabulary, sorted in descending order of
+likelihood. Because natural language probabilities approximately follow
+a Zipfian distribution, Mirostat first estimates the shape of the
+current token distribution.</p>
+<p>At each token step, the algorithm calculates the Zipf exponent,
+denoted as <span class="math inline">\(s\)</span>, by analyzing the
+slope of the probabilities of the top most likely tokens. Estimating
+<span class="math inline">\(s\)</span> allows the algorithm to
+mathematically relate the current surprise threshold (<span
+class="math inline">\(\mu\)</span>) to a specific number of tokens
+(<span class="math inline">\(k\)</span>).</p>
+<h2 id="calculating-the-truncation-threshold-k">Calculating the
+Truncation Threshold (<span class="math inline">\(k\)</span>)</h2>
+<p>Once the distribution's slope (<span
+class="math inline">\(s\)</span>) is known, Mirostat calculates the
+exact truncation threshold <span class="math inline">\(k\)</span>—the
+number of top tokens to keep for the current step. Using the current
+value of the adaptive threshold <span class="math inline">\(\mu\)</span>
+and the estimated Zipf exponent <span class="math inline">\(s\)</span>,
+the algorithm computes <span class="math inline">\(k\)</span> so that
+the tokens included in the truncated pool will, on average, produce a
+surprise level close to <span class="math inline">\(\tau\)</span>.</p>
+<p>All tokens ranked below <span class="math inline">\(k\)</span> have
+their probabilities set to zero. The remaining top <span
+class="math inline">\(k\)</span> tokens have their probabilities
+renormalized so they sum to one, and the next token is sampled randomly
+from this restricted pool.</p>
+<h2 id="the-feedback-loop-updating-the-threshold">The Feedback Loop:
+Updating the Threshold</h2>
+<p>The core of Mirostat's active adjustment happens immediately after
+the new token is sampled. The algorithm executes the following feedback
+steps before moving to the next token:</p>
+<ol type="1">
+<li><strong>Measure Observed Surprise:</strong> The algorithm calculates
+the actual surprise of the chosen token using its original
+(pre-truncation) probability <span class="math inline">\(P(x)\)</span>
+via the formula <span class="math inline">\(-\log_2(P(x))\)</span>.</li>
+<li><strong>Calculate the Error:</strong> It determines the error (<span
+class="math inline">\(e\)</span>) by subtracting the target surprise
+from the observed surprise: <span class="math inline">\(e =
+\text{Observed Surprise} - \tau\)</span>.</li>
+<li><strong>Adjust the State Variable:</strong> Using a learning rate
+<span class="math inline">\(\eta\)</span> (eta), Mirostat updates the
+maximum surprise threshold for the next token step using the formula:
+<span class="math inline">\(\mu_{next} = \mu_{current} - \eta \times
+e\)</span>.</li>
+</ol>
+<h2 id="how-the-adjustment-regulates-perplexity">How the Adjustment
+Regulates Perplexity</h2>
+<p>This simple subtraction drives the self-correcting behavior of the
+algorithm at every step:</p>
+<ul>
+<li><strong>When a token is too surprising:</strong> If the sampled
+token had a very low probability, the observed surprise will be higher
+than <span class="math inline">\(\tau\)</span>, resulting in a positive
+error (<span class="math inline">\(e &gt; 0\)</span>). The update
+formula subtracts a positive value from <span
+class="math inline">\(\mu\)</span>, lowering it. On the next token step,
+a lower <span class="math inline">\(\mu\)</span> forces the algorithm to
+calculate a smaller <span class="math inline">\(k\)</span>, tightening
+the truncation pool to only the most predictable words to bring overall
+perplexity back down.</li>
+<li><strong>When a token is too predictable:</strong> If the sampled
+token had a very high probability, the observed surprise will be lower
+than <span class="math inline">\(\tau\)</span>, resulting in a negative
+error (<span class="math inline">\(e &lt; 0\)</span>). Subtracting a
+negative value increases <span class="math inline">\(\mu\)</span>. On
+the next token step, a higher <span class="math inline">\(\mu\)</span>
+translates to a larger <span class="math inline">\(k\)</span>, expanding
+the truncation pool to allow more diverse and surprising words into the
+sampling candidates, thus preventing the model from falling into a
+repetitive loop.</li>
+</ul>
+<h2 id="mirostat-20-simplification">Mirostat 2.0 Simplification</h2>
+<p>A widely used variation of this algorithm, Mirostat 2.0, streamlines
+this process by removing the Zipfian distribution estimation entirely.
+Instead of calculating <span class="math inline">\(k\)</span> via the
+exponent <span class="math inline">\(s\)</span>, Mirostat 2.0 directly
+truncates the vocabulary by discarding all tokens whose individual
+surprise <span class="math inline">\(-\log_2(P(x))\)</span> is greater
+than the current threshold <span class="math inline">\(\mu\)</span>.
+After sampling from the remaining tokens, it executes the exact same
+error calculation and <span class="math inline">\(\mu\)</span> update
+step, achieving the same dynamic perplexity control with less
+computational overhead.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/dynamic-threshold-adjustment-in-mirostat-text-sampling';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

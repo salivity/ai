@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Phase Retrieval in Fourier Ptychographic Microscopy - ai</title>
+    <meta name="description" content="This article explains how Fourier Ptychographic Microscopy (FPM) overcomes traditional optical limitations to generate gigapixel pathology images. By combining a programmable LED array with artificial intelligence-driven phase retrieval algorithms, FPM ca">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-phase-retrieval-in-fourier-ptychographic-microscopy">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Phase Retrieval in Fourier Ptychographic Microscopy - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-phase-retrieval-in-fourier-ptychographic-microscopy" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how Fourier Ptychographic Microscopy (FPM) overcomes traditional optical limitations to generate gigapixel pathology images. By combining a programmable LED array with artificial intelligence-driven phase retrieval algorithms, FPM ca" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-phase-retrieval-in-fourier-ptychographic-microscopy">AI Phase
+Retrieval in Fourier Ptychographic Microscopy</h1>
+<p>This article explains how Fourier Ptychographic Microscopy (FPM)
+overcomes traditional optical limitations to generate gigapixel
+pathology images. By combining a programmable LED array with artificial
+intelligence-driven phase retrieval algorithms, FPM captures multiple
+low-resolution images from varying illumination angles and
+computationally stitches them in the frequency domain. This process
+yields ultra-high-resolution, wide-field-of-view images containing both
+amplitude and phase information, eliminating the need for mechanical
+scanning in digital pathology.</p>
+<h3 id="overcoming-the-space-bandwidth-product-limit">Overcoming the
+Space-Bandwidth Product Limit</h3>
+<p>Traditional optical microscopes face a fundamental physical trade-off
+known as the space-bandwidth product limit. A microscope can either
+capture a wide field of view (FOV) at low resolution using a
+low-magnification objective, or a tiny FOV at high resolution using a
+high-magnification objective. Pathologists historically bypassed this by
+mechanically moving a tissue slide under a high-magnification lens and
+stitching hundreds of spatial images together.</p>
+<p>Fourier Ptychographic Microscopy bypasses mechanical scanning
+entirely. It uses a low-magnification objective lens to immediately
+capture a wide FOV. To recover the high-resolution details lost by the
+low-magnification lens, FPM replaces the standard microscope light
+source with a two-dimensional array of Light Emitting Diodes (LEDs).</p>
+<h3 id="angular-illumination-and-the-fourier-space">Angular Illumination
+and the Fourier Space</h3>
+<p>When light passes through a pathology slide, it diffracts.
+High-resolution, microscopic details diffract light at very wide
+angles—angles too steep for a low-magnification lens to collect.</p>
+<p>FPM solves this by turning on individual LEDs in the array
+sequentially. Each LED illuminates the specimen from a distinct, known
+angle:</p>
+<ul>
+<li><strong>Central LEDs:</strong> Illuminate the sample directly,
+allowing the lens to capture low-spatial-frequency information (basic
+shapes and contrast), resulting in a standard low-resolution brightfield
+image.</li>
+<li><strong>Off-axis LEDs:</strong> Illuminate the sample at steep
+angles. This shifts the high-frequency diffracted light back into the
+acceptance cone of the objective lens. The camera captures these as
+darkfield images, which contain the ultra-fine structural details of the
+tissue.</li>
+</ul>
+<p>According to optics physics, shifting the angle of illumination in
+physical space corresponds to shifting the captured data region in the
+spatial frequency domain, known as Fourier space. Each low-resolution
+image captured under a different LED represents a different circular
+aperture within a much larger Fourier space.</p>
+<h3 id="stitching-in-the-frequency-domain">Stitching in the Frequency
+Domain</h3>
+<p>Instead of stitching images edge-to-edge in physical space, FPM
+stitches them together in the Fourier domain. The LEDs are spaced
+closely enough that the frequency data captured by one LED partially
+overlaps with the data captured by its neighboring LED. Typically, a 60%
+to 70% overlap in the Fourier domain is required.</p>
+<p>By combining the low-frequency data from the central LEDs with the
+high-frequency data from the outer LEDs, the system synthesizes a
+massive synthetic aperture. This synthetic aperture mimics the
+light-gathering power (Numerical Aperture) of a high-magnification lens
+while retaining the wide field of view of the low-magnification
+lens.</p>
+<h3 id="phase-retrieval-artificial-intelligence">Phase-Retrieval
+Artificial Intelligence</h3>
+<p>The core challenge of FPM is that digital camera sensors can only
+measure the intensity (amplitude) of light, completely losing the phase
+information (how much the light wave is delayed as it passes through
+varying tissue thicknesses). Without phase data, the overlapping regions
+in the Fourier domain cannot be accurately combined.</p>
+<p>Traditionally, iterative phase-retrieval algorithms switched back and
+forth between the spatial domain and the Fourier domain to guess the
+missing phase data. Today, this bottleneck is resolved using
+phase-retrieval artificial intelligence and deep learning
+frameworks.</p>
+<p>AI integrates into the FPM reconstruction pipeline in two primary
+ways:</p>
+<ol type="1">
+<li><strong>Physics-Informed Neural Networks:</strong> The FPM imaging
+process is modeled as a neural network. The unknown high-resolution
+complex image (containing both amplitude and phase) acts as the
+network's weights. The AI forward-models the low-resolution states,
+compares them to the actual captured LED images, and uses
+backpropagation and gradient descent to rapidly update the weights until
+the exact phase and amplitude are recovered.</li>
+<li><strong>Deep Learning Reconstruction:</strong> Convolutional Neural
+Networks (CNNs) are trained on vast datasets of pathology slides. Once
+trained, these networks can take a sparse set of raw LED images and
+instantly infer the final high-resolution complex image in a single
+pass. This reduces computation time from hours to milliseconds and
+requires fewer LED illuminations, speeding up image acquisition.</li>
+</ol>
+<h3 id="creating-the-gigapixel-pathology-image">Creating the Gigapixel
+Pathology Image</h3>
+<p>Once the AI completes the phase-retrieval and frequency-stitching
+process, an Inverse Fourier Transform is applied to the massive
+synthetic aperture. This mathematical step converts the consolidated
+frequency data back into a standard visual image.</p>
+<p>The result is a gigapixel-scale pathology image. Because the AI
+successfully recovers both parts of the light wave, the output provides
+two distinct views from a single scan: a ultra-high-resolution color
+intensity image for standard histological analysis, and a quantitative
+phase map. The phase map reveals the optical thickness and refractive
+index of unstained cells, giving pathologists unprecedented structural
+data without the need for chemical staining or mechanical slide
+scanning.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-phase-retrieval-in-fourier-ptychographic-microscopy';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

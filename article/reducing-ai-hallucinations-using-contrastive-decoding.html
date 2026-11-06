@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reducing AI Hallucinations Using Contrastive Decoding - ai</title>
+    <meta name="description" content="This article explores how Contrastive Decoding mitigates artificial intelligence hallucinations by pairing a large &quot;expert&quot; language model with a smaller &quot;amateur&quot; model. By subtracting the log probabilities of the amateur model from those of the expert m">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/reducing-ai-hallucinations-using-contrastive-decoding">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Reducing AI Hallucinations Using Contrastive Decoding - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/reducing-ai-hallucinations-using-contrastive-decoding" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Contrastive Decoding mitigates artificial intelligence hallucinations by pairing a large &quot;expert&quot; language model with a smaller &quot;amateur&quot; model. By subtracting the log probabilities of the amateur model from those of the expert m" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="reducing-ai-hallucinations-using-contrastive-decoding">Reducing
+AI Hallucinations Using Contrastive Decoding</h1>
+<p>This article explores how Contrastive Decoding mitigates artificial
+intelligence hallucinations by pairing a large "expert" language model
+with a smaller "amateur" model. By subtracting the log probabilities of
+the amateur model from those of the expert model during text generation,
+the system isolates and amplifies high-level reasoning while actively
+penalizing generic, repetitive, and factually incorrect outputs. The
+following sections break down the mechanics of this dual-model approach,
+the mathematical subtraction of log probabilities, and the necessity of
+plausibility constraints to maintain grammatical coherence.</p>
+<h2 id="the-flaws-of-standard-decoding">The Flaws of Standard
+Decoding</h2>
+<p>Standard language models generate text by predicting the next token
+(word or sub-word) based on the context provided. Traditional decoding
+methods, such as greedy search, beam search, or nucleus sampling, rely
+on a single model's probability distribution. However, even massive,
+highly trained models assign significant probability to generic phrases,
+repetitive loops, and plausible-sounding falsehoods—commonly referred to
+as hallucinations. This happens because standard training objectives
+reward the model for predicting statistically common surface-level
+patterns just as much as they reward it for factual accuracy.</p>
+<h2 id="the-expert-and-amateur-model-dynamic">The Expert and Amateur
+Model Dynamic</h2>
+<p>Contrastive Decoding resolves this issue by introducing two models of
+different scales from the same model family:</p>
+<ol type="1">
+<li><strong>The Expert Model:</strong> A large-scale language model
+(e.g., a 65-billion parameter model) that possesses deep factual
+knowledge, complex reasoning capabilities, and a strong grasp of
+nuance.</li>
+<li><strong>The Amateur Model:</strong> A much smaller language model
+(e.g., a 1.5-billion parameter model) that lacks deep knowledge and
+reasoning skills, relying instead on basic grammatical structures,
+common word associations, and surface-level patterns.</li>
+</ol>
+<p>While both models are prone to generating generic text and
+hallucinations, the amateur model is significantly more likely to make
+these errors because it lacks the capacity for deep comprehension.
+Contrastive Decoding exploits this weakness. Because the amateur model's
+probability distribution represents the "bad habits" of language
+modeling, it can be used as a filter to clean up the expert model's
+output.</p>
+<h2 id="subtracting-log-probabilities">Subtracting Log
+Probabilities</h2>
+<p>At every step of generating a response, both the expert and amateur
+models evaluate the prompt and output a probability distribution for the
+next possible token. These probabilities are expressed as log
+probabilities (the logarithm of the probability), which converts
+multiplication into addition and subtraction, making mathematical
+comparisons easier.</p>
+<p>Contrastive Decoding calculates a new score for each potential next
+token using a straightforward formula:</p>
+<p><span class="math display">\[\text{Contrastive Score} = \log
+P_{\text{expert}}(x) - \log P_{\text{amateur}}(x)\]</span></p>
+<p>Here is how this subtraction directly reduces hallucinations:</p>
+<ul>
+<li><strong>Penalizing Hallucinations and Repetition:</strong> If a
+token is a common hallucination, a cliché, or a repetitive word, both
+the expert and the amateur model will assign it a high log probability.
+When the amateur's high score is subtracted from the expert's high
+score, they cancel each other out, resulting in a low Contrastive Score.
+The token is effectively suppressed.</li>
+<li><strong>Amplifying Factual Knowledge:</strong> If a token requires
+deep factual recall or complex reasoning, the expert model will assign
+it a high log probability. The amateur model, lacking this knowledge,
+will assign that same token a very low log probability. Subtracting a
+low (or heavily negative) number from a high number results in a massive
+boost to the Contrastive Score.</li>
+</ul>
+<p>By selecting the token that maximizes this difference, the system
+forces the AI to generate text that relies strictly on the advanced
+capabilities of the expert model, stripping away the statistical noise
+that triggers hallucinations.</p>
+<h2 id="the-plausibility-constraint">The Plausibility Constraint</h2>
+<p>A raw subtraction of log probabilities introduces a major
+mathematical risk: division by zero, or in logarithmic terms,
+subtracting negative infinity.</p>
+<p>Sometimes, an amateur model might assign an extremely low probability
+(near zero) to a token that is entirely nonsensical or grammatically
+incorrect. If the expert model also assigns a low probability to this
+nonsense token, but the amateur's probability is slightly lower, the
+subtraction could accidentally yield a very high Contrastive Score. This
+is known as a "false positive," and it would cause the system to output
+gibberish.</p>
+<p>To prevent this, Contrastive Decoding applies a <strong>plausibility
+constraint</strong> (often referred to as an adaptive plausibility
+threshold) before doing any math. The system looks exclusively at the
+expert model's probabilities and filters out any token that does not
+meet a minimum threshold relative to the expert's top choice.</p>
+<p>Once the implausible tokens are discarded, the log probability
+subtraction is performed only on the remaining pool of valid,
+high-quality tokens. Because the amateur model is capable of basic
+grammar, valid functional words (like "the", "is", or "and") easily pass
+the threshold and are selected naturally when no factual divergence is
+required. When factual accuracy is required, the subtraction highlights
+the expert's unique knowledge, resulting in coherent, accurate, and
+hallucination-free text.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/reducing-ai-hallucinations-using-contrastive-decoding';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

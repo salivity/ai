@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Mixture-of-Experts in Vision Transformers - ai</title>
+    <meta name="description" content="Soft Mixture-of-Experts (Soft MoE) is an advanced neural network architecture that resolves the training instabilities of traditional sparse Mixture-of-Experts in Vision Transformers (ViTs). This article provides an overview of how Soft MoE replaces discr">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/soft-mixture-of-experts-in-vision-transformers">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Soft Mixture-of-Experts in Vision Transformers - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/soft-mixture-of-experts-in-vision-transformers" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Soft Mixture-of-Experts (Soft MoE) is an advanced neural network architecture that resolves the training instabilities of traditional sparse Mixture-of-Experts in Vision Transformers (ViTs). This article provides an overview of how Soft MoE replaces discr" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="soft-mixture-of-experts-in-vision-transformers">Soft
+Mixture-of-Experts in Vision Transformers</h1>
+<p>Soft Mixture-of-Experts (Soft MoE) is an advanced neural network
+architecture that resolves the training instabilities of traditional
+sparse Mixture-of-Experts in Vision Transformers (ViTs). This article
+provides an overview of how Soft MoE replaces discrete token routing
+with a soft assignment mechanism. By computing weighted combinations of
+all input tokens to create fused "slots" for each expert, the model
+eliminates non-differentiable operations, prevents token dropping, and
+maintains full end-to-end differentiability during backpropagation.</p>
+<h2 id="the-challenge-with-traditional-sparse-moe">The Challenge with
+Traditional Sparse MoE</h2>
+<p>In standard Mixture-of-Experts models, a routing network assigns
+individual image patch tokens to specific experts using discrete
+operations like <code>top-k</code> selection. Because choosing a
+discrete path is a non-differentiable step, it breaks the continuous
+flow of gradients required for standard backpropagation. Furthermore,
+traditional routing often leads to load-balancing issues where some
+experts are overwhelmed while others remain unutilized, forcing the
+model to drop tokens or rely on complex auxiliary loss functions to
+stabilize training.</p>
+<h2 id="computing-weighted-token-combinations">Computing Weighted Token
+Combinations</h2>
+<p>Soft MoE completely removes discrete routing. Instead of sending
+individual tokens to experts, it provides each expert with a fixed
+number of "slots," where each slot is a weighted average of all input
+tokens in the sequence.</p>
+<p>The computation follows a strict, continuous mathematical
+progression:</p>
+<ol type="1">
+<li><strong>Calculating Dispatch Weights:</strong> Let the input tokens
+from the Vision Transformer be represented as a matrix <span
+class="math inline">\(X\)</span>. The model introduces a set of
+learnable parameters, <span class="math inline">\(\Phi\)</span>,
+corresponding to the slots available across all experts. The model
+computes the dot product between the input tokens <span
+class="math inline">\(X\)</span> and the slot parameters <span
+class="math inline">\(\Phi\)</span> to generate a matrix of unnormalized
+logits.</li>
+<li><strong>Applying Column-Wise Softmax:</strong> A softmax function is
+applied across the token dimension (columns) of the logit matrix. This
+produces the <strong>dispatch weights</strong>. Each column now
+represents a probability distribution over all input tokens for a
+specific slot.</li>
+<li><strong>Generating Expert Slots:</strong> Each slot vector is
+computed by taking a linear combination of all input tokens, weighted by
+the dispatch weights. Mathematically, this is a simple matrix
+multiplication between the dispatch weights and the token matrix <span
+class="math inline">\(X\)</span>. Because every token contributes a
+fractional amount to the slot based on its weight, no tokens are ever
+dropped.</li>
+</ol>
+<h2 id="processing-and-recombining">Processing and Recombining</h2>
+<p>Once the weighted token combinations (slots) are formed, they are
+distributed to their designated experts—typically standard Multi-Layer
+Perceptrons (MLPs). Each expert processes its assigned slots
+independently and in parallel.</p>
+<p>After the experts generate their outputs, the information must be
+mapped back to the original token space so the Vision Transformer can
+continue processing the image representation:</p>
+<ol type="1">
+<li><strong>Calculating Combine Weights:</strong> The model uses the
+same initial logit matrix created from the interaction of <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(\Phi\)</span>, but this time applies a softmax
+function across the slot dimension (rows). This yields the
+<strong>combine weights</strong>, representing a probability
+distribution over all slots for each original token.</li>
+<li><strong>Reconstructing Tokens:</strong> The final output tokens are
+computed by taking a weighted average of all expert-processed slots,
+using the combine weights. This projects the transformed slot data back
+into the original sequence length of the input tokens.</li>
+</ol>
+<h2 id="preserving-full-differentiability">Preserving Full
+Differentiability</h2>
+<p>Full differentiability is preserved in Soft MoE because the entire
+routing and recombination process relies exclusively on continuous,
+smooth mathematical operations: matrix multiplications and softmax
+activations.</p>
+<p>In calculus and deep learning, both matrix multiplication and the
+softmax function have well-defined derivatives. When the Vision
+Transformer calculates its loss at the end of a forward pass, the
+gradients can flow backward through the combine weights, through the
+expert MLPs, and directly through the dispatch weights back to the input
+tokens and the learnable slot parameters <span
+class="math inline">\(\Phi\)</span>.</p>
+<p>Because there are no step functions, <code>argmax</code>, or
+<code>top-k</code> thresholds blocking the gradient path, the routing
+parameters <span class="math inline">\(\Phi\)</span> are updated
+smoothly via standard gradient descent alongside the rest of the
+network. This allows Vision Transformers to scale to massive capacities
+with high computational efficiency and zero routing instability.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/soft-mixture-of-experts-in-vision-transformers';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

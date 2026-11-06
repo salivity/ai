@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Architecture: Temporal Consistency and Physics - ai</title>
+    <meta name="description" content="Generating realistic video from text prompts requires artificial intelligence to solve two difficult problems: maintaining visual continuity over time and accurately simulating the physical world. Early AI video models simply stitched independent images t">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-video-architecture-temporal-consistency-and-physics">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Video Architecture: Temporal Consistency and Physics - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-video-architecture-temporal-consistency-and-physics" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Generating realistic video from text prompts requires artificial intelligence to solve two difficult problems: maintaining visual continuity over time and accurately simulating the physical world. Early AI video models simply stitched independent images t" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-video-architecture-temporal-consistency-and-physics">AI Video
+Architecture: Temporal Consistency and Physics</h1>
+<p>Generating realistic video from text prompts requires artificial
+intelligence to solve two difficult problems: maintaining visual
+continuity over time and accurately simulating the physical world. Early
+AI video models simply stitched independent images together, which
+resulted in severe flickering and morphing objects. Modern text-to-video
+architectures overcome these hurdles by utilizing specialized
+frameworks—primarily Diffusion Transformers, 3D compression networks,
+and spatiotemporal attention mechanisms. This article explores the core
+architectural techniques that enable AI models to generate smooth,
+temporally consistent, and physically plausible videos.</p>
+<h3 id="3d-variational-autoencoders-vaes">3D Variational Autoencoders
+(VAEs)</h3>
+<p>Before an AI model can generate video, it must compress massive
+amounts of visual data into a manageable format known as "latent space."
+Standard image generators use 2D Variational Autoencoders (VAEs) to
+compress single images spatially. However, compressing video
+frame-by-frame ruins temporal consistency before generation even
+begins.</p>
+<p>Text-to-video models instead use 3D VAEs, which compress data across
+both space (height and width) and time (frames). By grouping multiple
+frames into a single representation, the model inherently links the
+timeline together. This prevents the micro-flickering seen in older
+models because adjacent frames share the same foundational data
+points.</p>
+<h3 id="spacetime-latent-patches">Spacetime Latent Patches</h3>
+<p>Modern video architectures, such as OpenAI's Sora, replace
+traditional pixel grids with "spacetime patches." This technique borrows
+heavily from how Large Language Models (LLMs) process text using
+tokens.</p>
+<p>A video is first compressed by the 3D VAE and then sliced into
+three-dimensional cubes—or patches—that contain both spatial visual data
+and a slice of time. By converting a video into a sequence of spacetime
+patches, the AI treats video generation similarly to predicting the next
+word in a sentence. Because each patch spans multiple frames, the
+continuity of objects and backgrounds is baked directly into the
+building blocks of the generation process.</p>
+<h3 id="spatiotemporal-attention-mechanisms">Spatiotemporal Attention
+Mechanisms</h3>
+<p>To maintain object permanence—ensuring a car looks like the same car
+from frame one to frame one hundred—models rely on spatiotemporal
+attention. In standard image generation, "spatial attention" allows the
+AI to understand how different parts of a single image relate to one
+another. Video models add "temporal attention" to this equation.</p>
+<p>Temporal attention layers force the neural network to look backward
+and forward across the timeline while generating a specific frame. There
+are two main ways architectures achieve this:</p>
+<ul>
+<li><strong>Divided Attention:</strong> The model applies spatial
+attention to a single frame first, and then immediately applies temporal
+attention across the timeline for that specific region.</li>
+<li><strong>Full 3D Attention:</strong> The model calculates the
+relationships between all spacetime patches across the entire video
+simultaneously. While computationally heavy, this yields the highest
+level of consistency and allows the model to keep track of objects even
+if they temporarily leave the frame.</li>
+</ul>
+<h3 id="diffusion-transformers-dits">Diffusion Transformers (DiTs)</h3>
+<p>Historically, diffusion models relied on an architecture called a
+U-Net to gradually turn random noise into a clear image. While effective
+for static pictures, U-Nets struggle to retain long-term memory across
+hundreds of video frames.</p>
+<p>State-of-the-art video models have largely replaced U-Nets with
+Diffusion Transformers (DiTs). Transformers are exceptionally good at
+handling long sequences of data. When paired with spacetime patches, a
+DiT can process an entire video clip at once rather than generating it
+strictly frame-by-frame. This global view of the timeline ensures that
+the beginning, middle, and end of the video remain logically and
+visually connected.</p>
+<h3 id="emergent-physics-through-scale">Emergent Physics Through
+Scale</h3>
+<p>Unlike traditional computer graphics engines (such as Unreal Engine),
+text-to-video AI models generally do not have hardcoded physics engines
+dictating gravity, fluid dynamics, or momentum. Instead, realistic
+physics is largely an emergent property of massive scale and DiT
+architectures.</p>
+<p>When a Diffusion Transformer is trained on millions of hours of
+real-world video, the spatiotemporal attention layers must find the most
+efficient way to predict how spacetime patches change over time. The AI
+mathematically deduces that to predict the next patch accurately, it
+must internalize the rules of the physical world. Consequently, the
+model learns how light reflects off water, how fabric drapes, and how
+gravity affects falling objects simply by observing patterns across
+massive datasets.</p>
+<h3 id="optical-flow-and-motion-modules">Optical Flow and Motion
+Modules</h3>
+<p>To further refine physical movement, many architectures integrate
+explicit motion modules or optical flow conditioning. Optical flow is a
+computer vision technique that tracks the direction and speed of moving
+pixels from one frame to the next.</p>
+<p>Some architectures separated the generation process into two distinct
+networks: one that generates the static content, and a specialized
+"motion module" trained exclusively on trajectories and camera
+movements. Other models use optical flow maps as an invisible guide
+during the diffusion process, forcing the generated pixels to follow
+mathematically smooth trajectories. This prevents objects from
+teleporting, morphing unnaturally, or violating basic laws of
+momentum.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-video-architecture-temporal-consistency-and-physics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

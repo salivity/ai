@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Unigram Tokenizers Prune Vocabularies in AI - ai</title>
+    <meta name="description" content="The Unigram language model tokenizer is a unique subword tokenization method used in artificial intelligence preprocessing that operates from the top down. Unlike other popular algorithms that build a vocabulary from scratch by merging characters, the Uni">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-unigram-tokenizers-prune-vocabularies-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Unigram Tokenizers Prune Vocabularies in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-unigram-tokenizers-prune-vocabularies-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The Unigram language model tokenizer is a unique subword tokenization method used in artificial intelligence preprocessing that operates from the top down. Unlike other popular algorithms that build a vocabulary from scratch by merging characters, the Uni" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-unigram-tokenizers-prune-vocabularies-in-ai">How Unigram
+Tokenizers Prune Vocabularies in AI</h1>
+<p>The Unigram language model tokenizer is a unique subword tokenization
+method used in artificial intelligence preprocessing that operates from
+the top down. Unlike other popular algorithms that build a vocabulary
+from scratch by merging characters, the Unigram approach begins with a
+massive initial vocabulary of potential subwords and iteratively removes
+tokens. This pruning process is guided by a probabilistic language model
+that evaluates the importance of each subword, ensuring that the removal
+of specific tokens minimizes the overall loss of information across the
+training corpus until a target vocabulary size is reached.</p>
+<h2 id="starting-with-a-massive-vocabulary">Starting with a Massive
+Vocabulary</h2>
+<p>Most tokenization algorithms, such as Byte-Pair Encoding (BPE) and
+WordPiece, are bottom-up approaches. They start with single characters
+and iteratively merge the most frequent pairs. The Unigram tokenizer
+reverses this logic.</p>
+<p>To begin, the algorithm constructs a massive seed vocabulary from the
+training corpus. This initial list includes all individual characters to
+ensure that the model never encounters an out-of-vocabulary word. On top
+of these base characters, the algorithm adds the most common substrings
+and whole words found in the text, often utilizing the Enhanced Suffix
+Array algorithm to find frequent substrings quickly. This initial
+vocabulary is intentionally much larger than the final desired size,
+often containing hundreds of thousands of candidate tokens.</p>
+<h2 id="calculating-probabilities-and-tokenization">Calculating
+Probabilities and Tokenization</h2>
+<p>The core assumption of the Unigram model is that the occurrence of
+each subword token is independent of the tokens that come before it.
+Because of this, the probability of a specific tokenization sequence for
+a word is simply the product of the probabilities of the individual
+subwords that make up that sequence.</p>
+<p>During preprocessing, a single word can be segmented into subwords in
+multiple ways using the current vocabulary. To find the best
+segmentation for a word, the algorithm uses the Viterbi algorithm. The
+Viterbi algorithm efficiently calculates and identifies the single most
+probable sequence of subwords without having to brute-force every
+possible combination. Meanwhile, the probabilities of the tokens
+themselves are estimated using the Expectation-Maximization (EM)
+algorithm, which maximizes the likelihood of the training corpus given
+the current vocabulary.</p>
+<h2 id="evaluating-corpus-loss">Evaluating Corpus Loss</h2>
+<p>Once the probabilities of all tokens in the massive vocabulary are
+established, the tokenizer must decide which subwords are redundant and
+can be discarded. This is done by calculating the "corpus loss."</p>
+<p>In this context, loss is defined as the negative log-likelihood of
+the entire training corpus. The algorithm iterates through the current
+vocabulary and temporarily removes one token at a time. It then
+recalculates how the overall likelihood of the corpus changes without
+that specific token.</p>
+<p>If a removed token can be easily replaced by smaller subwords without
+significantly dropping the probability of the text, the loss associated
+with removing that token is very low. Conversely, if removing a token
+forces the model to use a sequence of rare, low-probability characters
+to represent a common word, the loss will be very high.</p>
+<h2 id="iterative-pruning-to-the-target-size">Iterative Pruning to the
+Target Size</h2>
+<p>After calculating the potential loss for every token in the
+vocabulary, the Unigram algorithm ranks them. It then prunes the
+vocabulary by permanently deleting the top <span
+class="math inline">\(p\)</span> percent (typically 10% to 20%) of
+tokens that cause the smallest increase in corpus loss. Fundamental
+single characters are protected from this pruning process so that the
+tokenizer can always fall back on character-level segmentation if
+needed.</p>
+<p>Once the least useful tokens are removed, the remaining vocabulary is
+smaller, and the statistical landscape of the corpus changes. Therefore,
+the algorithm loops back: it re-runs the Expectation-Maximization
+algorithm to update the probabilities of the surviving tokens,
+recalculates the loss for each token, and prunes another percentage of
+the vocabulary. This iterative cycle of estimating and pruning continues
+until the vocabulary shrinks to the exact target size predefined by the
+AI engineer.</p>
+<h2 id="advantages-in-ai-preprocessing">Advantages in AI
+Preprocessing</h2>
+<p>By starting large and whittling down based on probability rather than
+simple frequency, the Unigram tokenizer produces a highly efficient and
+linguistically meaningful vocabulary. Furthermore, because it is based
+on a probabilistic model, it enables "subword regularization" during AI
+training. Instead of always feeding the neural network the single best
+tokenization of a word, the Unigram model can sample different valid
+segmentations based on their probabilities, making the resulting AI
+model more robust to noise, typos, and morphological variations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-unigram-tokenizers-prune-vocabularies-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

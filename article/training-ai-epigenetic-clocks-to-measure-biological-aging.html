@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training AI Epigenetic Clocks to Measure Biological Aging - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how biogerontologists build and train epigenetic clocks using artificial intelligence. It covers the fundamental biology of DNA cytosine methylation, the data collection process using high-throughput array">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/training-ai-epigenetic-clocks-to-measure-biological-aging">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Training AI Epigenetic Clocks to Measure Biological Aging - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/training-ai-epigenetic-clocks-to-measure-biological-aging" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how biogerontologists build and train epigenetic clocks using artificial intelligence. It covers the fundamental biology of DNA cytosine methylation, the data collection process using high-throughput array" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="training-ai-epigenetic-clocks-to-measure-biological-aging">Training
+AI Epigenetic Clocks to Measure Biological Aging</h1>
+<p>This article provides a comprehensive overview of how
+biogerontologists build and train epigenetic clocks using artificial
+intelligence. It covers the fundamental biology of DNA cytosine
+methylation, the data collection process using high-throughput arrays,
+and the application of penalized regression machine learning models.
+Finally, it explains how these models evolve from predicting simple
+chronological age to accurately assessing biological aging and mortality
+risk.</p>
+<h3 id="understanding-dna-cytosine-methylation">Understanding DNA
+Cytosine Methylation</h3>
+<p>To measure aging at the cellular level, biogerontologists focus on
+epigenetics—specifically, DNA methylation. This biochemical process
+involves the addition of a methyl group to the DNA molecule, almost
+exclusively at cytosine bases that are followed by a guanine base. These
+specific regions are known as CpG sites.</p>
+<p>As an organism ages, the pattern of methylation across the genome
+changes in a predictable manner. Some CpG sites become hypermethylated
+(gaining methyl groups), while others become hypomethylated (losing
+methyl groups). These shifts alter gene expression without changing the
+underlying DNA sequence, serving as reliable biomarkers for the passage
+of biological time.</p>
+<h3 id="data-collection-and-preprocessing">Data Collection and
+Preprocessing</h3>
+<p>Training an AI model requires massive datasets derived from thousands
+of human tissue or blood samples. Biogerontologists extract DNA from
+these samples and treat it with sodium bisulfite. This chemical converts
+unmethylated cytosines into uracil while leaving methylated cytosines
+unchanged, allowing researchers to distinguish between the two
+states.</p>
+<p>The treated DNA is then analyzed using microarray technologies, such
+as the Illumina Infinium MethylationEPIC BeadChip. These arrays quantify
+methylation levels at up to 850,000 specific CpG sites simultaneously.
+For each site, the machine outputs a "beta value," which is a continuous
+variable ranging from 0 (completely unmethylated) to 1 (completely
+methylated). This generates a massive tabular dataset where each sample
+has hundreds of thousands of features.</p>
+<h3 id="training-penalized-regression-ai-models">Training Penalized
+Regression AI Models</h3>
+<p>Because the number of features (hundreds of thousands of CpG sites)
+vastly exceeds the number of samples (typically a few thousand
+patients), standard statistical models fail due to overfitting. To solve
+this, biogerontologists use penalized regression machine learning
+algorithms, most notably <strong>Elastic Net regression</strong>.</p>
+<p>Elastic Net combines two types of regularization:</p>
+<ul>
+<li><strong>Lasso (L1) regularization:</strong> Forces the coefficients
+of the least important CpG sites to become exactly zero, effectively
+removing them from the model.</li>
+<li><strong>Ridge (L2) regularization:</strong> Shrinks the coefficients
+of correlated CpG sites toward each other, ensuring the model remains
+stable and handles collinearity well.</li>
+</ul>
+<p>During the training phase, the AI is fed the beta values of all
+measured CpG sites alongside a specific target variable (such as the
+patients' chronological ages). Using k-fold cross-validation, the
+Elastic Net algorithm sifts through the 850,000+ markers and selects a
+tiny subset—often between 300 and 1,000 CpG sites—that collectively have
+the highest predictive power. The algorithm assigns a specific
+mathematical weight to each selected site.</p>
+<h3 id="from-chronological-age-to-mortality-risk">From Chronological Age
+to Mortality Risk</h3>
+<p>The exact biological meaning of an epigenetic clock depends entirely
+on the target variable used to train the regression model.
+Biogerontologists have developed two distinct generations of clocks
+based on different training targets.</p>
+<p><strong>First-Generation Clocks (Chronological Age)</strong> Early
+models, such as the Horvath and Hannum clocks, were trained strictly to
+predict chronological age. While accurate, a model that perfectly
+predicts chronological age for everyone is useless for measuring
+biological variation. Instead, researchers look at the <em>error</em> of
+the model. If the AI predicts a 50-year-old has the methylation profile
+of a 60-year-old, this +10-year residual error is termed "epigenetic age
+acceleration," indicating faster biological aging.</p>
+<p><strong>Second-Generation Clocks (Biological Age and
+Mortality)</strong> To directly measure mortality risk and physiological
+decline, biogerontologists developed second-generation models like
+PhenoAge and GrimAge. Instead of training the Elastic Net regression on
+chronological age, researchers use a two-step training process focused
+on clinical outcomes:</p>
+<ol type="1">
+<li><strong>Composite Biomarker Creation:</strong> Researchers first
+analyze historical patient data to combine clinical biomarkers (such as
+albumin, creatinine, glucose, C-reactive protein, and smoking history)
+with time-to-death data using Cox proportional-hazards models. This
+creates a "phenotypic age" score representing actual mortality
+risk.</li>
+<li><strong>Epigenetic Surrogate Training:</strong> The AI regression
+model is then trained to predict this mortality-linked phenotypic score
+using only the DNA methylation beta values.</li>
+</ol>
+<p>By training the algorithm directly on physiological decline and
+survival data, the resulting AI model selects CpG sites that actively
+reflect disease states, cellular senescence, and organ system
+degradation. When applied to a new patient's DNA, the model calculates a
+single biological age score that accurately forecasts their healthspan
+and all-cause mortality risk.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/training-ai-epigenetic-clocks-to-measure-biological-aging';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

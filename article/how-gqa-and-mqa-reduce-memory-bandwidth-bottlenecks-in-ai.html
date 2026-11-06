@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How GQA and MQA Reduce Memory Bandwidth Bottlenecks in AI - ai</title>
+    <meta name="description" content="This article explores how Multi-Query Attention (MQA) and Grouped-Query Attention (GQA) alleviate memory bandwidth bottlenecks during the autoregressive decoding phase of large language models (LLMs). During AI text generation, models are typically slowed">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-gqa-and-mqa-reduce-memory-bandwidth-bottlenecks-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How GQA and MQA Reduce Memory Bandwidth Bottlenecks in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-gqa-and-mqa-reduce-memory-bandwidth-bottlenecks-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Multi-Query Attention (MQA) and Grouped-Query Attention (GQA) alleviate memory bandwidth bottlenecks during the autoregressive decoding phase of large language models (LLMs). During AI text generation, models are typically slowed" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-gqa-and-mqa-reduce-memory-bandwidth-bottlenecks-in-ai">How
+GQA and MQA Reduce Memory Bandwidth Bottlenecks in AI</h1>
+<p>This article explores how Multi-Query Attention (MQA) and
+Grouped-Query Attention (GQA) alleviate memory bandwidth bottlenecks
+during the autoregressive decoding phase of large language models
+(LLMs). During AI text generation, models are typically slowed down by
+the speed at which data can be moved from memory to processors, rather
+than the speed of the processors themselves. By altering how attention
+mechanisms store and share state data, MQA and GQA significantly shrink
+the size of the Key-Value (KV) cache. This reduction minimizes data
+transfer overhead, directly resulting in faster inference speeds and
+higher throughput for modern AI applications.</p>
+<h3 id="the-memory-bandwidth-bottleneck-in-autoregressive-decoding">The
+Memory Bandwidth Bottleneck in Autoregressive Decoding</h3>
+<p>Autoregressive decoding is the process by which an AI model generates
+text one token at a time. Each newly generated token depends on all the
+tokens that came before it. To avoid recalculating the mathematical
+representations of previous tokens at every step, models store this
+historical data in high-bandwidth memory (HBM). This stored data is
+known as the Key-Value (KV) cache.</p>
+<p>During the generation of each new token, the GPU must read the entire
+KV cache from the memory and transfer it to the compute cores. Because
+the model only processes one token at a time during this phase, the
+actual mathematical computation takes microseconds. However,
+transferring gigabytes of KV cache data across the memory bus takes much
+longer. Consequently, the GPU compute cores spend most of their time
+sitting idle, waiting for data to arrive. This state is known as being
+"memory-bandwidth bound."</p>
+<h3 id="the-baseline-problem-multi-head-attention-mha">The Baseline
+Problem: Multi-Head Attention (MHA)</h3>
+<p>Standard Transformer models use Multi-Head Attention (MHA). In MHA,
+the model divides its attention mechanism into multiple "heads" so it
+can focus on different parts of the input sequence simultaneously.</p>
+<p>Each Query head is paired with its own unique Key head and Value
+head. If a model has 64 Query heads, it also maintains 64 Key heads and
+64 Value heads. For every single token generated, the KV cache must
+store and subsequently load the parameters for all 64 Key and Value
+heads. As sequences grow longer and batch sizes increase, the MHA KV
+cache balloons in size, completely saturating the memory bandwidth.</p>
+<h3 id="multi-query-attention-mqa-maximum-compression">Multi-Query
+Attention (MQA): Maximum Compression</h3>
+<p>Multi-Query Attention (MQA) takes a drastic approach to shrinking the
+KV cache. Instead of giving every Query head its own Key and Value head,
+MQA forces all Query heads to share a single Key head and a single Value
+head.</p>
+<p>If a model has 64 Query heads, MQA reduces the number of Key and
+Value heads from 64 down to 1. This architectural change yields
+immediate hardware benefits:</p>
+<ul>
+<li><strong>Drastic KV Cache Reduction:</strong> The size of the KV
+cache is reduced by a factor equal to the number of attention heads
+(e.g., a 64x reduction).</li>
+<li><strong>Unclogged Memory Bandwidth:</strong> For each generated
+token, the GPU only needs to fetch one set of Keys and Values from
+memory, cutting memory transfer time to a fraction of what MHA
+requires.</li>
+<li><strong>Higher Throughput:</strong> With freed-up memory capacity
+and bandwidth, systems can process much larger batch sizes
+simultaneously.</li>
+</ul>
+<p>The primary drawback of MQA is that forcing all Queries to share a
+single Key-Value pair can lead to a slight degradation in the model's
+reasoning quality and output accuracy.</p>
+<h3 id="grouped-query-attention-gqa-the-optimal-balance">Grouped-Query
+Attention (GQA): The Optimal Balance</h3>
+<p>Grouped-Query Attention (GQA) was designed as a middle ground between
+the high quality of MHA and the high speed of MQA. Instead of all Query
+heads sharing just one Key-Value head, GQA divides the Query heads into
+a smaller number of groups. All the Query heads within a specific group
+share a single Key head and a single Value head.</p>
+<p>For example, a model with 64 Query heads might be divided into 8
+groups. Each group of 8 Query heads shares 1 Key-Value head, resulting
+in a total of 8 Key and Value heads.</p>
+<p>GQA reduces the memory bandwidth bottleneck through the following
+mechanisms:</p>
+<ul>
+<li><strong>Proportional Bandwidth Savings:</strong> By reducing 64 KV
+heads to 8, the KV cache size and the required memory bandwidth per
+token are reduced by 8x compared to standard MHA.</li>
+<li><strong>Preserved Model Quality:</strong> By allowing multiple KV
+heads rather than just one, the model retains the capacity to capture
+complex, multi-faceted relationships in the text, achieving accuracy
+nearly identical to MHA.</li>
+<li><strong>Hardware Efficiency:</strong> The reduced memory transfers
+bring the ratio of computation-to-memory-access closer to an optimal
+level, keeping the GPU cores actively computing rather than waiting on
+data transfers.</li>
+</ul>
+<h3 id="summary-of-architectural-impact">Summary of Architectural
+Impact</h3>
+<p>Both MQA and GQA directly target the root cause of slow
+autoregressive decoding: the volume of data moved across the memory bus.
+By decoupling the number of Query heads from the number of Key and Value
+heads, these mechanisms slash the size of the KV cache. Fetching fewer
+Keys and Values per token directly translates to less strain on memory
+bandwidth, transforming a slow, memory-bound operation into a fast,
+efficient generation process.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-gqa-and-mqa-reduce-memory-bandwidth-bottlenecks-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

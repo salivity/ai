@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KV-Cache Optimization and AI Memory Bottlenecks - ai</title>
+    <meta name="description" content="KV-cache optimization is a set of techniques used to compress, manage, and efficiently retrieve stored attention states during large language model (LLM) inference. When AI models generate text, they normally have to recalculate the relationships between">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/kv-cache-optimization-and-ai-memory-bottlenecks">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="KV-Cache Optimization and AI Memory Bottlenecks - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/kv-cache-optimization-and-ai-memory-bottlenecks" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="KV-cache optimization is a set of techniques used to compress, manage, and efficiently retrieve stored attention states during large language model (LLM) inference. When AI models generate text, they normally have to recalculate the relationships between" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="kv-cache-optimization-and-ai-memory-bottlenecks">KV-Cache
+Optimization and AI Memory Bottlenecks</h1>
+<p>KV-cache optimization is a set of techniques used to compress,
+manage, and efficiently retrieve stored attention states during large
+language model (LLM) inference. When AI models generate text, they
+normally have to recalculate the relationships between all previous
+words for every new word they produce. The Key-Value (KV) cache prevents
+this redundant computation by storing previous calculations in memory.
+However, as prompts and responses grow longer, this cache becomes
+massive, shifting the bottleneck from computation power to memory
+bandwidth. Optimizing the KV-cache shrinks the size of this stored data
+and organizes it better, drastically reducing the amount of information
+that needs to be transferred between GPU memory and processing cores,
+which directly accelerates AI inference speeds.</p>
+<h2 id="understanding-the-kv-cache-in-ai-inference">Understanding the
+KV-Cache in AI Inference</h2>
+<p>Large language models generate text token by token in an
+autoregressive manner. To predict the next token, the model's attention
+mechanism calculates Query (Q), Key (K), and Value (V) vectors for the
+sequence.</p>
+<p>Without a cache, generating the 100th token requires the model to
+recalculate the Key and Value vectors for the previous 99 tokens all
+over again. The KV-cache solves this by computing the K and V vectors
+for each token just once and saving them in the GPU's High Bandwidth
+Memory (HBM). For every subsequent token generated, the model only
+calculates the K and V for the new token and appends it to the existing
+cache.</p>
+<h2 id="the-memory-bandwidth-bottleneck">The Memory Bandwidth
+Bottleneck</h2>
+<p>While the KV-cache saves immense computational effort, it introduces
+a severe memory problem. AI inference is divided into two phases: the
+prefill phase (processing the initial prompt) and the decoding phase
+(generating the response one token at a time).</p>
+<p>The decoding phase is strictly memory-bound. For every single token
+the model generates, the GPU must transfer the entire model's weights
+and the entirety of the growing KV-cache from the HBM to the GPU's
+compute cores (SRAM). The actual math required to predict the next token
+takes very little time; the GPU spends the vast majority of its time
+simply waiting for the KV-cache data to travel across the memory bus. As
+context lengths reach tens or hundreds of thousands of tokens, the
+KV-cache grows linearly, saturating the memory bandwidth and slowing
+generation speeds to a crawl.</p>
+<h2 id="how-kv-cache-optimization-solves-the-bottleneck">How KV-Cache
+Optimization Solves the Bottleneck</h2>
+<p>KV-cache optimization directly targets the memory bandwidth
+bottleneck by reducing the total volume of data that must be moved and
+eliminating wasted memory space. Because less data needs to be fetched
+from the HBM for each token generation step, the GPU spends less time
+waiting on data transfers and more time computing.</p>
+<h3 id="1-pagedattention">1. PagedAttention</h3>
+<p>Traditionally, systems pre-allocated a contiguous block of memory for
+the KV-cache based on the maximum possible length of a sequence. Because
+most responses do not reach the maximum length, up to 80% of this
+reserved memory went unused, creating fragmentation and limiting how
+many users could be served simultaneously. PagedAttention, inspired by
+virtual memory in operating systems, breaks the KV-cache into small,
+non-contiguous blocks. Memory is allocated only as needed. This
+eliminates wasted space, allowing larger batch sizes and reducing the
+overhead of memory management.</p>
+<h3 id="2-architectural-changes-mqa-and-gqa">2. Architectural Changes
+(MQA and GQA)</h3>
+<p>Standard Multi-Head Attention (MHA) requires a separate Key and Value
+head for every Query head, resulting in a massive cache.</p>
+<ul>
+<li><strong>Multi-Query Attention (MQA):</strong> Forces all Query heads
+to share a single Key head and a single Value head. This drastically
+shrinks the KV-cache size and the bandwidth required to read it.</li>
+<li><strong>Grouped-Query Attention (GQA):</strong> A middle ground
+where Query heads are divided into groups, and each group shares a
+single Key and Value head. This maintains high model accuracy while
+still cutting KV-cache memory transfers by a factor of 4 to 8.</li>
+</ul>
+<h3 id="3-kv-cache-quantization">3. KV-Cache Quantization</h3>
+<p>By default, KV-cache values are stored in 16-bit floating-point
+formats (FP16 or BF16). Quantization compresses these values into
+lower-precision formats, such as 8-bit (INT8 or FP8) or even 4-bit
+integers. Halving the bit-width from 16-bit to 8-bit immediately cuts
+the memory footprint in half. Consequently, it requires half the memory
+bandwidth to load the cache into the compute cores, effectively doubling
+the speed of the memory-bound portion of inference.</p>
+<h3 id="4-token-eviction-and-pruning">4. Token Eviction and Pruning</h3>
+<p>Not all tokens in a prompt are equally important for generating
+future text. Token eviction strategies, such as StreamingLLM or H2O
+(Heavy-Hitter Oracle), monitor attention scores and dynamically delete
+the K and V vectors of unimportant tokens from the cache. By keeping
+only the initial tokens (which anchor the model's attention) and the
+most recent or most relevant tokens, the KV-cache size remains capped at
+a fixed limit, preventing memory bandwidth degradation regardless of how
+long the conversation lasts.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/kv-cache-optimization-and-ai-memory-bottlenecks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

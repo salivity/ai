@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How ControlNet Adds Spatial Control to AI Art - ai</title>
+    <meta name="description" content="This article explores the neural network architecture of ControlNet, explaining how it locks the weights of pretrained diffusion models while utilizing trainable copy layers and zero convolutions to seamlessly inject spatial conditioning—such as human pos">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-control-net-adds-spatial-control-to-ai-art">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How ControlNet Adds Spatial Control to AI Art - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-control-net-adds-spatial-control-to-ai-art" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the neural network architecture of ControlNet, explaining how it locks the weights of pretrained diffusion models while utilizing trainable copy layers and zero convolutions to seamlessly inject spatial conditioning—such as human pos" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-controlnet-adds-spatial-control-to-ai-art">How ControlNet
+Adds Spatial Control to AI Art</h1>
+<p>This article explores the neural network architecture of ControlNet,
+explaining how it locks the weights of pretrained diffusion models while
+utilizing trainable copy layers and zero convolutions to seamlessly
+inject spatial conditioning—such as human pose and edge detection—into
+AI-generated art without sacrificing the original model's
+capabilities.</p>
+<p>At the core of ControlNet’s architecture is the preservation of the
+base diffusion model, such as Stable Diffusion. These foundational
+models are trained on billions of images, and altering their neural
+network weights directly with small datasets of spatial conditions would
+cause catastrophic forgetting, effectively ruining the model's ability
+to generate high-quality images. To prevent this, ControlNet locks
+(freezes) the original parameters of the pretrained diffusion model.
+Because these weights cannot be changed during training, the original
+knowledge and image generation capabilities remain completely
+intact.</p>
+<p>To introduce new spatial conditions, ControlNet creates an exact
+clone of the pretrained model's encoding layers. Unlike the locked
+original, this cloned branch is fully trainable. Instead of altering the
+main network, this trainable copy is dedicated entirely to learning the
+new spatial constraints, such as Canny edges, Hough lines, user
+scribbles, or OpenPose human keypoint skeletons. The trainable copy
+processes these spatial conditioning inputs and learns how to translate
+them into structural features that the main diffusion model can
+understand.</p>
+<p>The bridge between the locked model and the trainable copy is a
+specialized mechanism called "zero convolution." These are 1x1
+convolution layers where both the weights and biases are initialized to
+strict zeros. ControlNet places these zero convolution layers at the
+inputs and outputs of the trainable copy, connecting it back into the
+locked model's decoding layers.</p>
+<p>During the very first step of training, because the zero convolutions
+output only zeros, the trainable copy has zero influence on the locked
+model. The network functions exactly as the original diffusion model
+would. As training progresses and backpropagation occurs, the weights in
+the zero convolution layers gradually change from zero to optimal
+values. This prevents random noise from the untrained spatial branch
+from corrupting the delicate gradients of the locked model during the
+early stages of training.</p>
+<p>When adding spatial conditions like human pose or edge maps, the
+input condition is first converted into the same latent space size as
+the diffusion model's internal representations. This conditioning data
+is fed directly into the trainable copy alongside the standard noisy
+image latent. As the trainable layers and zero convolutions update their
+weights, they begin injecting precise spatial offsets into the locked
+model's feature maps. The locked model continues to handle the heavy
+lifting of rendering textures, lighting, and artistic style, while the
+trainable copy acts as a steering mechanism, forcing the final output to
+conform to the exact geometry of the input edges or poses.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-control-net-adds-spatial-control-to-ai-art';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

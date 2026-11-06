@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How TracIn Estimates AI Training Data Influence - ai</title>
+    <meta name="description" content="Understanding how individual training examples affect a machine learning model&#39;s predictions is critical for debugging and improving artificial intelligence systems. TracIn (Tracing with Influence) is a technique designed to measure this exact impact. Thi">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-trac-in-estimates-ai-training-data-influence">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How TracIn Estimates AI Training Data Influence - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-trac-in-estimates-ai-training-data-influence" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Understanding how individual training examples affect a machine learning model&#39;s predictions is critical for debugging and improving artificial intelligence systems. TracIn (Tracing with Influence) is a technique designed to measure this exact impact. Thi" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-tracin-estimates-ai-training-data-influence">How TracIn
+Estimates AI Training Data Influence</h1>
+<p>Understanding how individual training examples affect a machine
+learning model's predictions is critical for debugging and improving
+artificial intelligence systems. TracIn (Tracing with Influence) is a
+technique designed to measure this exact impact. This article explains
+how TracIn estimates the influence of specific training data points on
+test predictions by calculating the dot products of loss gradients
+across saved model checkpoints, offering a scalable and practical
+solution for training data attribution.</p>
+<h2 id="the-core-concept-of-tracin">The Core Concept of TracIn</h2>
+<p>During the training of a neural network, the model updates its
+parameters iteratively to minimize a loss function. TracIn defines the
+influence of a training example <span class="math inline">\(z\)</span>
+on a test example <span class="math inline">\(z&#39;\)</span> as the
+total reduction in loss on the test example <span
+class="math inline">\(z&#39;\)</span> that is caused whenever the
+training process utilizes the training example <span
+class="math inline">\(z\)</span>.</p>
+<p>Tracking this exact reduction for every single parameter update
+during a full training run is computationally impossible for large
+models. TracIn solves this by using a first-order approximation of the
+loss change and sampling the training process at specific moments using
+saved model checkpoints.</p>
+<h2 id="the-mathematical-approximation-via-gradient-dot-products">The
+Mathematical Approximation via Gradient Dot Products</h2>
+<p>When a model updates its parameters using Stochastic Gradient Descent
+(SGD), the parameters move in the opposite direction of the gradient of
+the loss for the current training example.</p>
+<p>By applying a first-order Taylor expansion, the change in loss on a
+test example <span class="math inline">\(z&#39;\)</span> caused by a
+single step on a training example <span class="math inline">\(z\)</span>
+is approximately proportional to the dot product of their gradients,
+scaled by the learning rate (<span class="math inline">\(\eta\)</span>).
+The fundamental formula for a single step is:</p>
+<p><span class="math display">\[\text{Influence}(z, z&#39;) \approx \eta
+\nabla \ell(w_t, z&#39;) \cdot \nabla \ell(w_t, z)\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(w_t\)</span> represents the model
+parameters at step <span class="math inline">\(t\)</span>.</li>
+<li><span class="math inline">\(\nabla \ell(w_t, z)\)</span> is the loss
+gradient of the training example.</li>
+<li><span class="math inline">\(\nabla \ell(w_t, z&#39;)\)</span> is the
+loss gradient of the test example.</li>
+<li><span class="math inline">\(\eta\)</span> is the learning rate at
+step <span class="math inline">\(t\)</span>.</li>
+</ul>
+<h2 id="utilizing-saved-checkpoints">Utilizing Saved Checkpoints</h2>
+<p>Instead of calculating this dot product at every training iteration,
+TracIn saves checkpoints of the model's weights at regular intervals
+during the training run (for example, at the end of every few
+epochs).</p>
+<p>Assuming that each training example is visited roughly the same
+number of times between checkpoints, TracIn approximates the total
+influence over the entire training process by summing the gradient dot
+products calculated only at these saved checkpoints. The practical
+TracIn formula across <span class="math inline">\(k\)</span> checkpoints
+is:</p>
+<p><span class="math display">\[\text{TracInCP}(z, z&#39;) =
+\sum_{i=1}^{k} \eta_i \nabla \ell(w_{t_i}, z&#39;) \cdot \nabla
+\ell(w_{t_i}, z)\]</span></p>
+<p>To execute this, the system loads a saved checkpoint <span
+class="math inline">\(w_{t_i}\)</span>, computes the gradient for the
+training example <span class="math inline">\(z\)</span>, computes the
+gradient for the test example <span
+class="math inline">\(z&#39;\)</span>, takes their dot product,
+multiplies it by the learning rate <span
+class="math inline">\(\eta_i\)</span> used at that checkpoint, and
+repeats this across all saved checkpoints.</p>
+<h2 id="interpreting-the-dot-product-results">Interpreting the Dot
+Product Results</h2>
+<p>The value resulting from the gradient dot product has a clear
+geometric and practical meaning regarding how the training data affects
+the AI model:</p>
+<ul>
+<li><strong>Proponents (Positive Influence):</strong> If the dot product
+is positive, the gradients of the training example and the test example
+point in a similar direction. Updating the model using the training
+example reduces the loss on the test example. The training point is
+considered helpful for the test prediction.</li>
+<li><strong>Opponents (Negative Influence):</strong> If the dot product
+is negative, the gradients point in opposite directions. Updating the
+model on the training example increases the loss on the test example.
+The training point hurts the model's performance on the test
+prediction.</li>
+<li><strong>Neutral:</strong> If the dot product is close to zero, the
+gradients are orthogonal, meaning the training example has little to no
+effect on the test example.</li>
+</ul>
+<h2 id="practical-optimizations-for-large-models">Practical
+Optimizations for Large Models</h2>
+<p>Computing the dot product of gradients for millions of parameters can
+still be slow. In practice, TracIn is often applied only to the
+gradients of the final layer (the classification or output layer) of the
+neural network. Because the early layers mostly act as feature
+extractors and the final layer holds the highest concentration of
+task-specific adjustment, restricting the gradient dot product
+calculation to the last layer drastically reduces computation time while
+preserving an accurate estimation of influence.</p>
+<h2 id="applications-in-ai-debugging">Applications in AI Debugging</h2>
+<p>By aggregating these checkpoint gradient dot products, developers can
+easily identify mislabeled data in their training sets. If a training
+example consistently reduces its own loss only at the very late
+checkpoints (high self-influence), or acts as a strong opponent to known
+correct test examples, it is likely mislabeled or an outlier. Removing
+these negatively influential examples directly improves the model's
+accuracy and reliability.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-trac-in-estimates-ai-training-data-influence';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

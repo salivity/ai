@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Mastered Poker Using Regret Minimization - ai</title>
+    <meta name="description" content="Artificial intelligence achieved a historic milestone when Libratus and Pluribus defeated elite human professionals at No-Limit Texas Hold&#39;em. Unlike chess or Go, poker is an imperfect-information game where players cannot see their opponents&#39; cards, requ">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-mastered-poker-using-regret-minimization">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Mastered Poker Using Regret Minimization - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-mastered-poker-using-regret-minimization" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence achieved a historic milestone when Libratus and Pluribus defeated elite human professionals at No-Limit Texas Hold&#39;em. Unlike chess or Go, poker is an imperfect-information game where players cannot see their opponents&#39; cards, requ" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-mastered-poker-using-regret-minimization">How AI Mastered
+Poker Using Regret Minimization</h1>
+<p>Artificial intelligence achieved a historic milestone when Libratus
+and Pluribus defeated elite human professionals at No-Limit Texas
+Hold'em. Unlike chess or Go, poker is an imperfect-information game
+where players cannot see their opponents' cards, requiring the AI to
+navigate hidden information, bluffing, and unpredictable human behavior.
+Both AI systems relied on an advanced algorithm called Counterfactual
+Regret Minimization (CFR) to calculate unexploitable strategies. By
+combining CFR with game abstractions and real-time search techniques,
+Libratus conquered two-player poker, and Pluribus later mastered
+six-player games, cementing AI superiority in complex strategic
+decision-making.</p>
+<h3 id="the-challenge-of-imperfect-information">The Challenge of
+Imperfect Information</h3>
+<p>In perfect-information games like chess, both players see the entire
+board. Poker is an imperfect-information game because cards are hidden,
+and chance plays a role. Furthermore, No-Limit Texas Hold'em allows
+players to bet any amount of chips at any time, creating a massive
+number of possible decision points—exceeding the number of atoms in the
+universe. To win, an AI cannot simply predict the opponent's best move;
+it must balance its own strategy to remain unpredictable, including
+learning how and when to bluff.</p>
+<h3 id="counterfactual-regret-minimization-cfr-explained">Counterfactual
+Regret Minimization (CFR) Explained</h3>
+<p>The core engine behind both Libratus and Pluribus is Counterfactual
+Regret Minimization (CFR). CFR is an iterative self-play algorithm where
+the AI plays billions of hands against itself to learn from its
+mistakes.</p>
+<p>At the end of a simulated hand, the algorithm looks back at every
+decision it made and calculates "regret." Regret is a numerical value
+representing how much better the AI would have performed if it had
+chosen a different action (such as folding instead of calling, or
+raising instead of checking).</p>
+<p>In future games, the AI adjusts its strategy to favor actions that
+yielded higher positive regret in the past. Over trillions of
+iterations, the average of these strategies converges toward a Nash
+Equilibrium—a state in game theory where no player can gain an advantage
+by unilaterally changing their strategy. Even if a human knows the AI's
+exact strategy, they cannot exploit it in the long run.</p>
+<h3 id="game-abstraction-simplifying-the-math">Game Abstraction:
+Simplifying the Math</h3>
+<p>Because the game tree of No-Limit Texas Hold'em is too large to solve
+completely, the researchers used a technique called abstraction to
+shrink the game into a manageable size before running CFR:</p>
+<ul>
+<li><strong>Card Abstraction:</strong> Grouping similar hands together.
+For example, holding a King-High flush is treated practically the same
+as holding a Queen-High flush in many situations.</li>
+<li><strong>Action Abstraction:</strong> Limiting the number of bet
+sizes the AI considers. Instead of evaluating a bet of $101, $102, and
+$103 separately, the AI might only consider betting half the pot, the
+full pot, or going all-in.</li>
+</ul>
+<p>This creates a simplified "blueprint" strategy that guides the AI
+through the early stages of a hand.</p>
+<h3 id="libratus-conquering-heads-up-poker">Libratus: Conquering
+Heads-Up Poker</h3>
+<p>Developed in 2017 by Tuomas Sandholm and Noam Brown at Carnegie
+Mellon University, Libratus was designed for two-player (heads-up)
+No-Limit Texas Hold'em. It defeated four top human specialists over
+120,000 hands using a three-part system coupled with CFR:</p>
+<ol type="1">
+<li><strong>The Blueprint Strategy:</strong> Libratus used a
+supercomputer to run CFR on an abstracted version of the game, creating
+a baseline strategy.</li>
+<li><strong>Nested Safe Subgame Solving:</strong> When a human made a
+bet size not included in the AI's abstraction (e.g., an unusual
+overbet), Libratus did not round the bet to the nearest abstracted
+value. Instead, it paused and calculated a brand-new, detailed strategy
+for that specific situation in real-time using CFR.</li>
+<li><strong>Self-Improvement Module:</strong> Every night during the
+tournament, Libratus analyzed the bet sizes humans used most frequently
+to exploit holes in its blueprint. It then used supercomputing power
+overnight to fill those gaps before the next day's match.</li>
+</ol>
+<h3 id="pluribus-scaling-to-six-players">Pluribus: Scaling to Six
+Players</h3>
+<p>In 2019, Brown and Sandholm collaborated with Facebook AI to create
+Pluribus, tackling the much harder challenge of six-player poker. With
+more players, the computational complexity skyrockets, and converging on
+a true Nash Equilibrium becomes practically impossible.</p>
+<p>To succeed, Pluribus modified the Libratus approach to be vastly more
+efficient, running on just two server nodes rather than a massive
+supercomputer:</p>
+<ul>
+<li><strong>Monte Carlo CFR:</strong> Pluribus used a faster variant of
+CFR that samples only certain branches of the game tree rather than
+traversing every possible outcome, allowing it to build a strong
+blueprint quickly.</li>
+<li><strong>Depth-Limited Search:</strong> In chess, AI looks ahead a
+few moves and estimates the value of the board. In poker, this is
+difficult because the value of a hand depends on what your opponents
+think you have. Pluribus solved this by looking only a few moves ahead
+and assuming that beyond that point, opponents might adopt one of four
+different strategies (such as playing aggressively or passively). It
+then used CFR to find a balanced response to all of those potential
+strategies simultaneously.</li>
+<li><strong>Deliberate Unpredictability:</strong> To prevent humans from
+reading its patterns, Pluribus randomized its actions in real-time,
+frequently mixing bluffs and value bets with the exact same bet
+sizes.</li>
+</ul>
+<p>Through the combination of Counterfactual Regret Minimization,
+abstraction, and real-time depth-limited search, Libratus and Pluribus
+proved that AI can master environments defined by hidden information and
+strategic deception.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-mastered-poker-using-regret-minimization';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

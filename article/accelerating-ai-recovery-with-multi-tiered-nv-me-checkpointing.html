@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerating AI Recovery with Multi-Tiered NVMe Checkpointing - ai</title>
+    <meta name="description" content="Artificial intelligence training runs require massive clusters of GPUs operating continuously for weeks, making hardware failures an inevitability rather than a mere possibility. When a failure occurs, the system must roll back to its last saved state, or">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/accelerating-ai-recovery-with-multi-tiered-nv-me-checkpointing">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Accelerating AI Recovery with Multi-Tiered NVMe Checkpointing - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/accelerating-ai-recovery-with-multi-tiered-nv-me-checkpointing" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence training runs require massive clusters of GPUs operating continuously for weeks, making hardware failures an inevitability rather than a mere possibility. When a failure occurs, the system must roll back to its last saved state, or" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="accelerating-ai-recovery-with-multi-tiered-nvme-checkpointing">Accelerating
+AI Recovery with Multi-Tiered NVMe Checkpointing</h1>
+<p>Artificial intelligence training runs require massive clusters of
+GPUs operating continuously for weeks, making hardware failures an
+inevitability rather than a mere possibility. When a failure occurs, the
+system must roll back to its last saved state, or checkpoint, resulting
+in lost compute time and wasted financial resources. Asynchronous
+multi-tiered checkpointing to local NVMe drives solves this issue by
+moving the initial data dump off slow network storage and onto
+ultra-fast local solid-state drives. By combining local hardware speed
+with background processing, this method allows AI clusters to save their
+progress frequently with near-zero pauses in training, drastically
+reducing the amount of work lost when a crash happens.</p>
+<h3 id="the-bottleneck-of-traditional-checkpointing">The Bottleneck of
+Traditional Checkpointing</h3>
+<p>During large-scale AI training, a model’s state consists of billions
+or trillions of parameters, gradients, and optimizer states, often
+totaling terabytes of data. Historically, saving a checkpoint meant
+pausing the entire training run while every GPU wrote its current state
+across a network to a centralized Parallel File System (PFS).</p>
+<p>Because thousands of GPUs are attempting to write massive amounts of
+data over the network simultaneously, a massive I/O bottleneck occurs.
+During this write phase, the expensive GPUs sit entirely idle. Because
+this process takes so long, engineers are forced to space out
+checkpoints—sometimes saving only once every few hours. If a hardware
+failure happens right before a scheduled save, hours of compute time
+across thousands of GPUs are permanently lost.</p>
+<h3 id="tier-1-writing-to-local-nvme-drives">Tier 1: Writing to Local
+NVMe Drives</h3>
+<p>Multi-tiered checkpointing eliminates the network bottleneck by
+introducing a localized storage hierarchy. Instead of sending data
+straight to the distant centralized storage, the system utilizes the
+local NVMe (Non-Volatile Memory Express) drives physically installed
+inside the compute nodes.</p>
+<p>NVMe drives offer exceptionally high write speeds and low latency
+because they communicate directly with the system's CPU and GPUs via the
+PCIe bus. When it is time to save a checkpoint, the system transfers the
+model's state from the GPU memory (VRAM) to the system memory (RAM), and
+then immediately writes it to the local NVMe drive. Because each node
+writes only its portion of the data to its own dedicated local drive,
+the process takes seconds rather than minutes.</p>
+<h3 id="asynchronous-processing-eliminating-gpu-idle-time">Asynchronous
+Processing: Eliminating GPU Idle Time</h3>
+<p>While writing to local NVMe drives is fast, asynchronous processing
+makes it virtually invisible to the training timeline. In a synchronous
+system, the GPUs must stop calculating until the checkpoint is fully
+written to storage. In an asynchronous system, the saving process
+happens in the background.</p>
+<p>Here is how the asynchronous workflow minimizes lost compute
+time:</p>
+<ol type="1">
+<li><strong>Snapshot to RAM:</strong> The GPUs briefly pause to copy the
+current state into the host system’s CPU memory. This memory-to-memory
+transfer takes milliseconds.</li>
+<li><strong>Resume Training:</strong> As soon as the data is in the
+system RAM, the GPUs immediately go back to training the AI model.</li>
+<li><strong>Background Local Write:</strong> While the GPUs calculate
+the next training steps, the CPU manages the process of writing the
+snapshot from the RAM to the local NVMe drive.</li>
+<li><strong>Background Network Flush:</strong> Once the data is safely
+on the local NVMe drive, a background process slowly trickles that data
+over the network to the centralized storage (Tier 2) without competing
+with the bandwidth needed for active AI training.</li>
+</ol>
+<h3 id="minimizing-lost-compute-during-hardware-failures">Minimizing
+Lost Compute During Hardware Failures</h3>
+<p>The combination of local NVMe speed and asynchronous execution
+fundamentally changes the math of AI fault tolerance. Because saving a
+checkpoint no longer interrupts the GPUs for minutes at a time,
+engineers can increase the frequency of checkpoints dramatically—saving
+every few minutes instead of every few hours.</p>
+<p>When a hardware failure inevitably strikes a node, the cluster does
+not need to lose hours of progress. If a single GPU crashes, the system
+can quickly pull the most recent state directly from the fast local NVMe
+drives of the surviving nodes, and pull the failed node's state from the
+most recent centralized backup.</p>
+<p>By shrinking the time it takes to save a state and removing the
+penalty of idle GPU time, asynchronous multi-tiered checkpointing
+ensures that when a failure interrupts an AI run, the system only loses
+a few minutes of compute time, keeping massive AI projects on schedule
+and within budget.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/accelerating-ai-recovery-with-multi-tiered-nv-me-checkpointing';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

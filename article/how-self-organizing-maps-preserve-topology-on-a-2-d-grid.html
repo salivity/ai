@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Self-Organizing Maps Preserve Topology on a 2D Grid - ai</title>
+    <meta name="description" content="Self-Organizing Maps (SOMs), developed by Teuvo Kohonen in the 1980s, are unsupervised artificial intelligence neural networks designed for dimensionality reduction and data visualization. This article explains the mechanics of how SOMs project complex, h">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-self-organizing-maps-preserve-topology-on-a-2-d-grid">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Self-Organizing Maps Preserve Topology on a 2D Grid - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-self-organizing-maps-preserve-topology-on-a-2-d-grid" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Self-Organizing Maps (SOMs), developed by Teuvo Kohonen in the 1980s, are unsupervised artificial intelligence neural networks designed for dimensionality reduction and data visualization. This article explains the mechanics of how SOMs project complex, h" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-self-organizing-maps-preserve-topology-on-a-2d-grid">How
+Self-Organizing Maps Preserve Topology on a 2D Grid</h1>
+<p>Self-Organizing Maps (SOMs), developed by Teuvo Kohonen in the 1980s,
+are unsupervised artificial intelligence neural networks designed for
+dimensionality reduction and data visualization. This article explains
+the mechanics of how SOMs project complex, high-dimensional data onto a
+simple two-dimensional grid while strictly preserving the topological
+neighborhood relations of the original data space. By examining
+competitive learning, the Best Matching Unit, and neighborhood
+functions, you will understand how these networks self-organize without
+human supervision.</p>
+<h3 id="the-architecture-of-a-self-organizing-map">The Architecture of a
+Self-Organizing Map</h3>
+<p>To understand how topology is preserved, it is first necessary to
+understand the structure of the network. A SOM consists of two layers:
+an input layer and an output layer (often called the competitive layer
+or map space).</p>
+<p>The output layer is arranged as a two-dimensional grid of nodes
+(neurons). Unlike traditional neural networks that pass data through
+multiple hidden layers to predict a target, every node in the SOM's 2D
+grid is directly connected to the input data via a weight vector. This
+weight vector has the exact same number of dimensions as the input data.
+Therefore, each node has two positions: a fixed physical location on the
+2D output grid, and a variable position in the high-dimensional input
+space defined by its weights.</p>
+<h3 id="competitive-learning-and-the-best-matching-unit">Competitive
+Learning and the Best Matching Unit</h3>
+<p>SOMs do not use backpropagation or gradient descent because there are
+no target labels in unsupervised learning. Instead, they rely on
+competitive learning.</p>
+<p>When a high-dimensional data point is fed into the network, the nodes
+on the 2D grid compete to see which one most closely resembles the
+input. The network calculates the Euclidean distance between the input
+vector and the weight vector of every single node on the grid. The node
+with the weight vector closest to the input vector is declared the
+winner. This winning node is called the Best Matching Unit (BMU).</p>
+<h3 id="the-neighborhood-function-the-key-to-topology">The Neighborhood
+Function: The Key to Topology</h3>
+<p>If the network only updated the weights of the BMU, the result would
+be simple clustering (similar to k-means), and no topological
+relationships would be preserved. The preservation of topology happens
+because of the <strong>neighborhood function</strong>.</p>
+<p>Inspired by biological brain functions—where neighboring neurons tend
+to process similar sensory information—Kohonen designed the SOM so that
+the BMU excites the nodes physically adjacent to it on the 2D grid. When
+the BMU is pulled closer to the input data in the high-dimensional
+space, it drags its 2D grid neighbors along with it.</p>
+<p>The mathematical mechanism usually employed for this is the Gaussian
+neighborhood function. The degree to which a neighboring node's weights
+are updated depends on its physical distance from the BMU on the 2D
+grid.</p>
+<ul>
+<li><strong>The BMU</strong> receives the maximum weight update, moving
+its weights significantly closer to the input data.</li>
+<li><strong>Immediate neighbors</strong> on the 2D grid receive a strong
+update, moving them toward the same input data.</li>
+<li><strong>Distant nodes</strong> on the 2D grid receive little to no
+update.</li>
+</ul>
+<h3 id="iterative-convergence-and-the-elastic-net-effect">Iterative
+Convergence and the "Elastic Net" Effect</h3>
+<p>The preservation of topology is an iterative process that requires
+two parameters to decay over time: the learning rate and the
+neighborhood radius.</p>
+<ol type="1">
+<li><strong>The Ordering Phase:</strong> Early in the training process,
+the learning rate is high, and the neighborhood radius is very large
+(often encompassing the entire 2D grid). When a BMU is found, a massive
+section of the grid is pulled toward the input data. This creates a
+global ordering of the map, unfolding the grid in the high-dimensional
+space.</li>
+<li><strong>The Convergence Phase:</strong> As training progresses over
+thousands of iterations, both the learning rate and the neighborhood
+radius shrink. Eventually, the radius becomes so small that only the BMU
+and its immediate adjacent neighbors are updated. This fine-tunes the
+map to the local features of the data.</li>
+</ol>
+<p>You can visualize the 2D grid as a flexible, elastic net suspended
+inside the high-dimensional data space. Every time a data point is
+introduced, a node on the net is pulled toward that data point,
+stretching the net and pulling adjacent nodes along with it.</p>
+<p>Because nodes that are physically close on the 2D grid are repeatedly
+forced to adapt to the same or similar inputs, their weight vectors
+become similar. Consequently, data points that are close to each other
+in the complex, high-dimensional space will consistently activate nodes
+that are physically close to each other on the flat, 2D grid. This is
+how Teuvo Kohonen’s Self-Organizing Maps successfully preserve
+topological neighborhood relations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-self-organizing-maps-preserve-topology-on-a-2-d-grid';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

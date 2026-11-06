@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Do AI Large Language Models Hallucinate Facts? - ai</title>
+    <meta name="description" content="Large language models (LLMs) frequently generate plausible-sounding but entirely fabricated information, a phenomenon known in the tech industry as &quot;hallucination.&quot; This article explores the core reasons behind these AI fabrications, examining how probabi">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/why-do-ai-large-language-models-hallucinate-facts">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Do AI Large Language Models Hallucinate Facts? - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/why-do-ai-large-language-models-hallucinate-facts" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Large language models (LLMs) frequently generate plausible-sounding but entirely fabricated information, a phenomenon known in the tech industry as &quot;hallucination.&quot; This article explores the core reasons behind these AI fabrications, examining how probabi" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-do-ai-large-language-models-hallucinate-facts">Why Do AI
+Large Language Models Hallucinate Facts?</h1>
+<p>Large language models (LLMs) frequently generate plausible-sounding
+but entirely fabricated information, a phenomenon known in the tech
+industry as "hallucination." This article explores the core reasons
+behind these AI fabrications, examining how probabilistic word
+prediction, flawed training data, the inability to verify truth, and
+human-guided training processes cause AI systems to confidently state
+falsehoods.</p>
+<h3 id="probabilistic-prediction-not-knowledge-retrieval">Probabilistic
+Prediction, Not Knowledge Retrieval</h3>
+<p>At their core, large language models do not "know" facts or
+understand concepts the way humans do. Instead, they are advanced
+mathematical systems designed to predict the next most likely word—or
+token—in a sequence based on the context provided.</p>
+<p>When you ask an LLM a question, it does not search a database of
+verified truths. Instead, it calculates statistical probabilities to
+string together words that look like a correct answer. Because the model
+prioritizes linguistic fluency and coherence over factual accuracy, it
+can easily assemble a sentence that is grammatically perfect and
+contextually sound, yet factually incorrect.</p>
+<h3 id="flaws-in-the-training-data">Flaws in the Training Data</h3>
+<p>LLMs learn language patterns by analyzing massive datasets scraped
+from the internet, books, and articles. This training method introduces
+two major issues:</p>
+<ul>
+<li><strong>Misinformation:</strong> The internet is full of
+inaccuracies, outdated facts, fiction, and biases. Because the AI cannot
+inherently distinguish between a peer-reviewed scientific study and a
+fictional blog post, it absorbs false information as valid
+patterns.</li>
+<li><strong>Data Gaps:</strong> When asked about a niche topic not
+well-represented in its training data, the model attempts to fill in the
+blanks by extrapolating from loosely related concepts, leading to
+fabricated details.</li>
+</ul>
+<h3 id="loss-of-precision-through-compression">Loss of Precision Through
+Compression</h3>
+<p>To function efficiently, an LLM compresses terabytes of text data
+into a complex network of numerical weights. You can think of an LLM as
+a blurry JPEG image of the internet. While it retains the general shape,
+tone, and structure of human knowledge, the exact, fine-grained details
+are often lost during the compression process. When asked for a specific
+citation, date, or biography, the model reconstructs the missing details
+based on probability, resulting in a plausible-sounding invention.</p>
+<h3 id="the-pressure-to-sound-confident">The Pressure to Sound
+Confident</h3>
+<p>During a training phase called Reinforcement Learning from Human
+Feedback (RLHF), human reviewers grade the AI's responses to make them
+more helpful. Historically, these training processes have inadvertently
+rewarded models for giving complete, confident-sounding answers while
+penalizing them for saying, "I don't know."</p>
+<p>Because the AI is optimized to satisfy the user's prompt at all
+costs, it will adopt an authoritative tone even when it is merely
+guessing. Furthermore, if a user's prompt contains a false premise—such
+as asking for the history of an event that never happened—the AI's drive
+to be helpful will often cause it to play along and invent a history to
+satisfy the request.</p>
+<h3 id="lack-of-grounding-in-reality">Lack of Grounding in Reality</h3>
+<p>Humans verify facts against the physical world, common sense, and
+lived experience. LLMs exist entirely within the realm of text. They
+have no sensory perception, no concept of time, and no built-in
+mechanism to fact-check their own outputs before presenting them.
+Without external tools like real-time web browsing or database
+integration, an LLM cannot cross-reference its claims against objective
+reality, leaving it entirely dependent on statistical guesswork.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/why-do-ai-large-language-models-hallucinate-facts';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

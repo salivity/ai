@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the MITRE ATLAS Framework for AI Security - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of the MITRE ATLAS (Adversarial Threat Landscape for Artificial-Intelligence Systems) knowledge base and how it categorizes cyber threats against machine learning (ML) and artificial intelligence (AI) systems">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-the-mitre-atlas-framework-for-ai-security">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the MITRE ATLAS Framework for AI Security - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-the-mitre-atlas-framework-for-ai-security" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of the MITRE ATLAS (Adversarial Threat Landscape for Artificial-Intelligence Systems) knowledge base and how it categorizes cyber threats against machine learning (ML) and artificial intelligence (AI) systems" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-the-mitre-atlas-framework-for-ai-security">Understanding
+the MITRE ATLAS Framework for AI Security</h1>
+<p>This article provides a comprehensive overview of the MITRE ATLAS
+(Adversarial Threat Landscape for Artificial-Intelligence Systems)
+knowledge base and how it categorizes cyber threats against machine
+learning (ML) and artificial intelligence (AI) systems. modeled after
+the widely adopted MITRE ATT&amp;CK framework, ATLAS organizes
+adversarial behavior into distinct tactics and techniques. Below, we
+examine the structure of this matrix, detailing how security
+professionals use it to identify vulnerabilities, understand attack
+lifecycles, and defend production AI models against real-world
+exploitation.</p>
+<h2 id="the-core-structure-of-mitre-atlas">The Core Structure of MITRE
+ATLAS</h2>
+<p>MITRE ATLAS organizes adversarial methodologies into a matrix
+comprising two primary components: <strong>Tactics</strong> and
+<strong>Techniques</strong>.</p>
+<ul>
+<li><strong>Tactics</strong> represent the "why" of an attack. They are
+the high-level objectives an adversary wants to achieve during an
+operation, arranged chronologically from initial reconnaissance to the
+final impact.</li>
+<li><strong>Techniques</strong> represent the "how" of an attack. They
+are the specific technical methods adversaries use to achieve a tactic.
+ATLAS also includes sub-techniques, which describe more specific methods
+of execution.</li>
+</ul>
+<p>ATLAS integrates standard enterprise cybersecurity concepts with
+attacks unique to machine learning. Consequently, the knowledge base
+categorizes techniques into two groups: those adapted directly from
+MITRE ATT&amp;CK (applying traditional IT attacks to AI infrastructure)
+and those exclusive to AI and ML systems.</p>
+<h2 id="categorization-of-adversarial-tactics">Categorization of
+Adversarial Tactics</h2>
+<p>The ATLAS matrix breaks down the lifecycle of an AI attack into 14
+distinct tactical categories. Here is how the framework categorizes
+these stages directly in relation to production AI systems:</p>
+<h3 id="1-reconnaissance">1. Reconnaissance</h3>
+<p>Adversaries gather information about the target organization’s ML
+capabilities. Techniques in this category include searching for publicly
+available research papers published by the organization, scouring code
+repositories like GitHub for model architectures, and identifying which
+third-party AI APIs the target uses.</p>
+<h3 id="2-resource-development">2. Resource Development</h3>
+<p>Before launching an attack, adversaries acquire the resources needed
+to support their operations. In an AI context, this includes acquiring
+open-source datasets, obtaining pre-trained base models to test attacks
+locally, and securing GPU compute infrastructure.</p>
+<h3 id="3-initial-access">3. Initial Access</h3>
+<p>This category covers how attackers gain their first foothold in the
+AI system or its surrounding environment. Techniques include exploiting
+public-facing ML APIs, compromising the AI supply chain (such as
+poisoning pre-trained models hosted on public hubs), or using valid
+credentials to access ML development platforms.</p>
+<h3 id="4-ml-model-access">4. ML Model Access</h3>
+<p>Unique to ATLAS, this tactic categorizes how an adversary interacts
+with the target model itself. Techniques are divided mainly into:</p>
+<ul>
+<li>** Inference API Access:** Querying a deployed, black-box model via
+legitimate channels.</li>
+<li><strong>Physical Environment Access:</strong> Manipulating the
+physical world where an AI sensor operates (e.g., placing stickers on a
+stop sign to fool a computer vision system).</li>
+<li><strong>Full Model Access:</strong> Gaining direct access to the
+model's internals, weights, and architecture (white-box access).</li>
+</ul>
+<h3 id="5-execution">5. Execution</h3>
+<p>Adversaries run malicious code within the AI environment. A prominent
+AI-specific technique here is exploiting unsafe serialization formats,
+such as Python’s <code>pickle</code> files, which are commonly used to
+save and load machine learning models. Loading a compromised model file
+can automatically execute arbitrary code on the host machine.</p>
+<h3 id="6-persistence">6. Persistence</h3>
+<p>Once inside, attackers establish ways to maintain their access. In ML
+systems, persistence can be achieved by injecting a "backdoor" into a
+model during the training phase. Even if the system is rebooted or
+redeployed, the backdoor remains embedded within the model's weights,
+waiting for a specific trigger input by the attacker.</p>
+<h3 id="7-privilege-escalation-and-8-defense-evasion">7. Privilege
+Escalation and 8. Defense Evasion</h3>
+<p>These categories focus on gaining higher-level permissions and
+avoiding detection. Adversaries use AI-specific evasion techniques, such
+as crafting adversarial examples—inputs subtly modified with
+imperceptible noise—that bypass malware detection models or content
+moderation filters while appearing normal to human reviewers.</p>
+<h3 id="9-credential-access-and-10-discovery">9. Credential Access and
+10. Discovery</h3>
+<p>Attackers attempt to steal credentials (like API keys for cloud ML
+services) and explore the internal environment. Discovery techniques
+involve enumerating internal ML artifacts, locating training data
+storage buckets, and identifying the defensive guardrails placed around
+a production model.</p>
+<h3 id="11-collection">11. Collection</h3>
+<p>This tactic involves gathering the proprietary assets of the AI
+system. Adversaries target training datasets, validation logs, and the
+model configurations for theft.</p>
+<h3 id="12-ml-attack-staging">12. ML Attack Staging</h3>
+<p>Another AI-specific category, ML Attack Staging, covers the
+preparation of the actual exploit against the model. Before attacking a
+production system, an adversary may train a "proxy model" that mimics
+the target model. They then use this proxy to craft and verify
+adversarial inputs offline, ensuring the attack will succeed when
+deployed against the live production system without triggering
+rate-limiting alarms.</p>
+<h3 id="13-exfiltration">13. Exfiltration</h3>
+<p>This category details how attackers steal AI intellectual property.
+Beyond traditional data theft, ATLAS categorizes <strong>Model
+Extraction</strong> (or model stealing) here. By systematically querying
+a production API and analyzing the outputs, an adversary can reconstruct
+a functional copy of a proprietary model without ever accessing the
+underlying server.</p>
+<h3 id="14-impact">14. Impact</h3>
+<p>The final category describes the ultimate harm inflicted on the
+system's confidentiality, integrity, or availability. ATLAS categorizes
+impacts into several techniques:</p>
+<ul>
+<li><strong>Evading ML Model:</strong> Forcing the model to make an
+incorrect prediction (e.g., bypassing facial recognition).</li>
+<li><strong>Denial of ML Service:</strong> Sending specially crafted
+"sponge examples" that maximize energy consumption and latency,
+overwhelming the system's compute resources.</li>
+<li><strong>Data Poisoning:</strong> Corrupting the training data so the
+model learns incorrect behavior, degrading its overall accuracy and
+trustworthiness in production.</li>
+<li><strong>Cost Harvesting:</strong> Abusing paid, outward-facing AI
+APIs to rack up massive cloud compute bills for the victim
+organization.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-the-mitre-atlas-framework-for-ai-security';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

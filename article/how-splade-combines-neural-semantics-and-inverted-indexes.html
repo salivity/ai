@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How SPLADE Combines Neural Semantics and Inverted Indexes - ai</title>
+    <meta name="description" content="SPLADE (Sparse Lexical and Expansion Model) bridges the gap between traditional keyword search and modern deep learning in artificial intelligence retrieval. This article provides a clear look at how SPLADE uses pre-trained transformer language models to">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-splade-combines-neural-semantics-and-inverted-indexes">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How SPLADE Combines Neural Semantics and Inverted Indexes - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-splade-combines-neural-semantics-and-inverted-indexes" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="SPLADE (Sparse Lexical and Expansion Model) bridges the gap between traditional keyword search and modern deep learning in artificial intelligence retrieval. This article provides a clear look at how SPLADE uses pre-trained transformer language models to" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-splade-combines-neural-semantics-and-inverted-indexes">How
+SPLADE Combines Neural Semantics and Inverted Indexes</h1>
+<p>SPLADE (Sparse Lexical and Expansion Model) bridges the gap between
+traditional keyword search and modern deep learning in artificial
+intelligence retrieval. This article provides a clear look at how SPLADE
+uses pre-trained transformer language models to project text into the
+vocabulary space, learns token-level importance weights, and enforces
+sparsity. By understanding these mechanics, you will see how SPLADE
+achieves the high semantic accuracy of neural networks while maintaining
+the speed and efficiency of traditional inverted indexes.</p>
+<h2 id="the-retrieval-dilemma-dense-vs-sparse">The Retrieval Dilemma:
+Dense vs. Sparse</h2>
+<p>Information retrieval systems traditionally rely on sparse lexical
+representations like BM25. These models match exact keywords using an
+inverted index, which makes searching massive databases extremely fast.
+However, they suffer from the vocabulary mismatch problem: they fail to
+retrieve relevant documents that use synonyms rather than the exact
+words in a user's query.</p>
+<p>Dense retrieval models solve this by using neural networks to convert
+text into dense continuous vectors, capturing deep semantic meaning.
+Unfortunately, dense vectors require computationally expensive
+approximate nearest neighbor (ANN) searches and huge amounts of memory,
+losing the simple efficiency of the inverted index. SPLADE solves this
+dilemma by learning sparse representations that possess neural
+semantics.</p>
+<h2 id="using-the-masked-language-modeling-head">Using the Masked
+Language Modeling Head</h2>
+<p>Unlike dense models that compress a sentence into a single
+low-dimensional vector, SPLADE operates directly in the high-dimensional
+vocabulary space of a transformer (such as BERT), which typically
+consists of around 30,000 subword tokens.</p>
+<p>SPLADE achieves this by repurposing the Masked Language Modeling
+(MLM) head used during BERT's pre-training. When a document or query is
+fed into the transformer, the MLM head outputs a probability
+distribution (logits) over the entire 30,000-token vocabulary for
+<em>every</em> single token in the input text. These logits represent
+how strongly each word in the input relates to every possible word in
+the vocabulary.</p>
+<h2 id="calculating-lexical-expansion-weights">Calculating Lexical
+Expansion Weights</h2>
+<p>To turn the MLM logits into a single representation for the entire
+input sequence, SPLADE applies a specific mathematical transformation
+and aggregation across the sequence:</p>
+<ol type="1">
+<li><strong>ReLU Activation:</strong> The model applies a Rectified
+Linear Unit (ReLU) to the raw logits. Since token weights in an inverted
+index cannot be negative, ReLU sets all negative logits to zero.</li>
+<li><strong>Logarithmic Transformation:</strong> SPLADE passes the
+positive logits through a <span class="math inline">\(\log(1 +
+x)\)</span> function. This suppresses dominant tokens, preventing any
+single word from disproportionately controlling the representation, and
+stabilizes the training process.</li>
+<li><strong>Max-Pooling:</strong> Finally, the model performs a
+max-pooling operation across all input tokens for each word in the
+vocabulary. The final weight for any given vocabulary token is the
+maximum importance score it achieved across the entire input text.</li>
+</ol>
+<p>Because the MLM head predicts probable words based on context, it
+naturally assigns high weights to synonyms and related concepts that are
+not actually present in the original text. This is how SPLADE performs
+automatic term expansion. At the same time, it adjusts the weights of
+words that <em>are</em> in the text, effectively learning neural term
+importance.</p>
+<h2 id="enforcing-sparsity-via-regularization">Enforcing Sparsity via
+Regularization</h2>
+<p>If SPLADE assigned a non-zero weight to all 30,000 vocabulary tokens,
+the resulting vector would be dense, rendering an inverted index
+useless. To ensure efficiency, the model must force the vast majority of
+these weights to be strictly zero.</p>
+<p>During training, SPLADE combines its ranking loss (such as
+contrastive margin MSE loss, often guided by knowledge distillation from
+a cross-encoder) with a strict regularization penalty. It uses either L1
+regularization or the FLOPS regularizer, which explicitly estimates the
+average number of floating-point operations required to compute a
+retrieval score.</p>
+<p>This penalty forces the neural network to drop uninformative words,
+filler words, and weak expansions. The model learns to budget its
+non-zero weights, retaining only the most critical original terms and
+the highest-value semantic expansions.</p>
+<h2 id="executing-the-search">Executing the Search</h2>
+<p>Once trained, SPLADE converts documents and queries into sparse
+vectors where only a few hundred out of 30,000 dimensions have non-zero
+weights. These continuous weights are quantized into integers so they
+can be stored in a standard inverted index, just like traditional term
+frequencies. During a search, the system calculates the dot product
+between the query's sparse vector and the documents' sparse vectors
+using fast, established index-traversal algorithms, delivering deep
+semantic search at lexical speeds.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-splade-combines-neural-semantics-and-inverted-indexes';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

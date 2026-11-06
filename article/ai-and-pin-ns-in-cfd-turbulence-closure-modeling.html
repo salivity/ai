@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI and PINNs in CFD Turbulence Closure Modeling - ai</title>
+    <meta name="description" content="Computational fluid dynamics relies heavily on solving the Navier-Stokes equations to predict fluid behavior, yet resolving every turbulent eddy at microscopic scales remains computationally prohibitive for practical engineering. This article explores how">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-and-pin-ns-in-cfd-turbulence-closure-modeling">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI and PINNs in CFD Turbulence Closure Modeling - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-and-pin-ns-in-cfd-turbulence-closure-modeling" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Computational fluid dynamics relies heavily on solving the Navier-Stokes equations to predict fluid behavior, yet resolving every turbulent eddy at microscopic scales remains computationally prohibitive for practical engineering. This article explores how" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-and-pinns-in-cfd-turbulence-closure-modeling">AI and PINNs in
+CFD Turbulence Closure Modeling</h1>
+<p>Computational fluid dynamics relies heavily on solving the
+Navier-Stokes equations to predict fluid behavior, yet resolving every
+turbulent eddy at microscopic scales remains computationally prohibitive
+for practical engineering. This article explores how artificial
+intelligence, specifically physics-informed neural networks, is
+revolutionizing fluid simulations by accurately learning sub-grid scale
+turbulence closure models. By combining high-fidelity simulation data
+with fundamental physical laws, these advanced machine learning
+frameworks bridge the gap between computational efficiency and physical
+accuracy, paving the way for faster and more reliable aerodynamic,
+hydrodynamic, and meteorological predictions.</p>
+<h2 id="the-challenge-of-the-navier-stokes-equations-and-turbulence">The
+Challenge of the Navier-Stokes Equations and Turbulence</h2>
+<p>The Navier-Stokes equations govern the motion of fluids and are
+foundational to computational fluid dynamics (CFD). In turbulent flows,
+energy cascades from large, geometry-dependent eddies down to
+microscopic scales where viscosity dissipates it as heat.</p>
+<p>To capture every scale directly via Direct Numerical Simulation
+(DNS), the computational grid must be finer than the smallest turbulent
+eddies. For high Reynolds number flows, such as air flowing over a
+commercial aircraft, DNS requires computational power that exceeds the
+capabilities of modern supercomputers.</p>
+<p>To bypass this limitation, engineers use Large Eddy Simulation (LES)
+or Reynolds-Averaged Navier-Stokes (RANS) methods. LES resolves the
+large, energy-containing eddies on a coarser grid while filtering out
+the smaller, sub-grid scale (SGS) eddies. However, because the small
+eddies still influence the larger flow structures, their effects must be
+approximated. This introduces unknown terms into the filtered
+Navier-Stokes equations, specifically the sub-grid scale stress tensor.
+Defining these unknown terms using known resolved variables is known as
+the turbulence closure problem.</p>
+<h2
+id="traditional-sub-grid-scale-models-vs-artificial-intelligence">Traditional
+Sub-Grid Scale Models vs. Artificial Intelligence</h2>
+<p>Historically, CFD has relied on empirical or mathematical
+approximations to close the Navier-Stokes equations. Models like the
+Smagorinsky-Lilly model assume a simplified relationship between the
+resolved strain rate and the sub-grid stresses, using a concept called
+eddy viscosity. While computationally cheap, these traditional models
+often fail in complex scenarios involving flow separation, transitional
+flows, or strong pressure gradients because they cannot capture
+non-local and non-linear energy transfers, such as backscatter (where
+energy flows backward from small scales to large scales).</p>
+<p>Artificial intelligence offers a data-driven alternative. By training
+deep neural networks on high-resolution DNS data that has been
+artificially filtered to mimic a coarse LES grid, AI can learn the exact
+mathematical mapping between the resolved large-scale flow features
+(like velocity gradients) and the unclosed sub-grid scale stresses.
+Unlike simple algebraic models, deep learning architectures can process
+complex spatial and temporal patterns, capturing the intricate physics
+of the energy cascade.</p>
+<h2 id="the-role-of-physics-informed-neural-networks-pinns">The Role of
+Physics-Informed Neural Networks (PINNs)</h2>
+<p>Purely data-driven AI models have a major flaw in CFD: they do not
+inherently understand physics. A standard neural network might produce
+predictions that fit the training data well but violate conservation of
+mass, momentum, or energy when deployed in an actual simulation, leading
+to numerical instability and simulation failure.</p>
+<p>Physics-Informed Neural Networks (PINNs) solve this problem by
+embedding the governing physical equations directly into the AI training
+process. A PINN modifies the neural network's loss function—the
+mathematical measure of error the network tries to minimize. Instead of
+only penalizing the network for deviating from the DNS training data,
+the PINN loss function includes residual terms derived directly from the
+Navier-Stokes equations.</p>
+<p>To successfully learn sub-grid turbulence closure models, PINNs
+enforce specific physical constraints:</p>
+<ul>
+<li><strong>Conservation Laws:</strong> The network is penalized if its
+predicted sub-grid stresses result in a violation of mass conservation
+(continuity) or momentum conservation.</li>
+<li><strong>Galilean Invariance:</strong> The physics of turbulence do
+not change if the coordinate system is moving at a constant velocity or
+rotated. PINNs are structured—often using tensor basis neural
+networks—so that the inputs and outputs automatically respect rotational
+and translational symmetries.</li>
+<li><strong>Realizability and Dissipation:</strong> The neural network
+is constrained to ensure that the turbulent kinetic energy remains
+positive and that the net transfer of energy accurately reflects
+physical dissipation, preventing the simulation from blowing up due to
+artificial energy generation.</li>
+</ul>
+<h2 id="how-the-training-and-deployment-workflow-operates">How the
+Training and Deployment Workflow Operates</h2>
+<p>The integration of PINNs into CFD for sub-grid modeling generally
+follows a two-stage process:</p>
+<ol type="1">
+<li><strong>A Priori Training (Offline):</strong> Researchers run
+high-fidelity DNS on smaller, canonical fluid problems (such as decaying
+isotropic turbulence or channel flow). This data is filtered to create
+pairs of coarse-grid resolved variables (inputs) and exact sub-grid
+stress tensors (outputs). The PINN is trained on this dataset while
+simultaneously evaluating the partial differential operators of the
+Navier-Stokes equations via automatic differentiation to ensure physical
+compliance.</li>
+<li><strong>A Posteriori Deployment (Online):</strong> Once trained, the
+PINN replaces the traditional closure model inside a standard CFD
+solver. At each time step of a coarse-grid LES, the solver passes the
+resolved velocity gradients to the PINN. The PINN rapidly infers the
+sub-grid scale stresses and feeds them back into the Navier-Stokes
+solver, which then advances the fluid flow to the next time step.</li>
+</ol>
+<p>By uniting the universal approximation capabilities of deep learning
+with the strict mathematical boundaries of fluid mechanics, PINNs allow
+CFD solvers to run on coarse, computationally inexpensive grids while
+retaining the high accuracy of fine-grid simulations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-and-pin-ns-in-cfd-turbulence-closure-modeling';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

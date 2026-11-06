@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Reversible Residual Networks Eliminate Activation Storage - ai</title>
+    <meta name="description" content="Reversible Residual Networks (RevNets) solve one of the biggest bottlenecks in artificial intelligence training: memory consumption. During standard neural network training, intermediate activations from every layer must be stored in memory during the for">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-reversible-residual-networks-eliminate-activation-storage">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Reversible Residual Networks Eliminate Activation Storage - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-reversible-residual-networks-eliminate-activation-storage" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Reversible Residual Networks (RevNets) solve one of the biggest bottlenecks in artificial intelligence training: memory consumption. During standard neural network training, intermediate activations from every layer must be stored in memory during the for" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="how-reversible-residual-networks-eliminate-activation-storage">How
+Reversible Residual Networks Eliminate Activation Storage</h1>
+<p>Reversible Residual Networks (RevNets) solve one of the biggest
+bottlenecks in artificial intelligence training: memory consumption.
+During standard neural network training, intermediate activations from
+every layer must be stored in memory during the forward pass so they can
+be used to calculate gradients during the backward pass. RevNets
+eliminate this storage requirement by using a clever mathematical
+architecture that allows the network to recompute any layer's input
+activations on the fly during backpropagation, using only the outputs
+from the subsequent layer. This article breaks down the exact
+mathematical and architectural mechanics of how RevNets achieve this
+backward recomputation.</p>
+<h2 id="the-memory-bottleneck-in-standard-backpropagation">The Memory
+Bottleneck in Standard Backpropagation</h2>
+<p>To train a deep neural network, the backpropagation algorithm applies
+the chain rule of calculus to compute gradients. For any given layer,
+calculating the gradient of the weights requires two things: the
+gradient coming from the next layer, and the original input activation
+to the current layer.</p>
+<p>In traditional architectures like standard ResNets, the forward pass
+transforms an input <span class="math inline">\(x\)</span> into an
+output <span class="math inline">\(y\)</span> via a residual function
+<span class="math inline">\(F\)</span>:</p>
+<p><span class="math display">\[y = x + F(x)\]</span></p>
+<p>Because <span class="math inline">\(F(x)\)</span> is a non-invertible
+operation (often involving ReLU activations, batch normalization, and
+convolutions), it is mathematically impossible to determine <span
+class="math inline">\(x\)</span> if you only know <span
+class="math inline">\(y\)</span>. Therefore, the system must save <span
+class="math inline">\(x\)</span> in the GPU's RAM during the forward
+pass. As networks grow deeper, storing these activations consumes
+gigabytes of memory, severely limiting model size and batch
+capacity.</p>
+<h2 id="the-reversible-block-architecture">The Reversible Block
+Architecture</h2>
+<p>RevNets bypass this limitation by redesigning the residual block to
+be bijective (one-to-one and invertible). Instead of passing a single
+tensor through a layer, a RevNet splits the input activation tensor into
+two equal parts along the channel dimension, denoted as <span
+class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span>.</p>
+<p>The reversible block uses two residual functions, <span
+class="math inline">\(F\)</span> and <span
+class="math inline">\(G\)</span> (which are standard neural network
+layers like convolutions), to produce two outputs, <span
+class="math inline">\(y_1\)</span> and <span
+class="math inline">\(y_2\)</span>. The forward pass is computed in an
+interleaved manner:</p>
+<ol type="1">
+<li><span class="math display">\[y_1 = x_1 + F(x_2)\]</span></li>
+<li><span class="math display">\[y_2 = x_2 + G(y_1)\]</span></li>
+</ol>
+<p>Because of this coupling structure—inspired by additive coupling
+layers in normalizing flows—the forward operation becomes completely
+invertible, regardless of whether the underlying functions <span
+class="math inline">\(F\)</span> and <span
+class="math inline">\(G\)</span> are invertible themselves.</p>
+<h2 id="recomputing-activations-backward">Recomputing Activations
+Backward</h2>
+<p>During the forward pass, a RevNet discards <span
+class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span> immediately after computing <span
+class="math inline">\(y_1\)</span> and <span
+class="math inline">\(y_2\)</span>. Only the final output activations of
+the last reversible sequence are kept in memory.</p>
+<p>When backpropagation begins, the network moves backward layer by
+layer. To compute the gradients for a specific layer, it first
+reconstructs that layer's inputs (<span
+class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span>) using the already known outputs
+(<span class="math inline">\(y_1\)</span> and <span
+class="math inline">\(y_2\)</span>). This is done by reversing the
+forward equations through simple subtraction:</p>
+<ol type="1">
+<li><p><strong>Recover <span
+class="math inline">\(x_2\)</span>:</strong> Because <span
+class="math inline">\(y_1\)</span> is already known from the next layer,
+the network runs <span class="math inline">\(y_1\)</span> forward
+through the function <span class="math inline">\(G\)</span>. It then
+subtracts the result from <span class="math inline">\(y_2\)</span>:
+<span class="math display">\[x_2 = y_2 - G(y_1)\]</span></p></li>
+<li><p><strong>Recover <span
+class="math inline">\(x_1\)</span>:</strong> Now that <span
+class="math inline">\(x_2\)</span> has been successfully reconstructed,
+the network runs <span class="math inline">\(x_2\)</span> forward
+through the function <span class="math inline">\(F\)</span>. It then
+subtracts this result from <span class="math inline">\(y_1\)</span>:
+<span class="math display">\[x_1 = y_1 - F(x_2)\]</span></p></li>
+</ol>
+<p>Note that the functions <span class="math inline">\(F\)</span> and
+<span class="math inline">\(G\)</span> themselves are never inverted.
+During the backward pass, <span class="math inline">\(F\)</span> and
+<span class="math inline">\(G\)</span> are actually executed as standard
+<em>forward</em> operations, and their outputs are simply subtracted
+instead of added.</p>
+<h2 id="simultaneous-gradient-calculation">Simultaneous Gradient
+Calculation</h2>
+<p>Once <span class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span> are recomputed for the current block,
+the network temporarily holds them in memory just long enough to compute
+the local gradients for the weights inside functions <span
+class="math inline">\(F\)</span> and <span
+class="math inline">\(G\)</span>, as well as the activation gradients
+needed to continue backpropagation.</p>
+<p>After the gradients for the current block are calculated, <span
+class="math inline">\(y_1\)</span> and <span
+class="math inline">\(y_2\)</span> are deleted from memory, and the
+newly reconstructed <span class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span> take their place as the "outputs" of
+the preceding layer. The process then repeats for the previous
+block.</p>
+<h2 id="the-trade-off-compute-for-memory">The Trade-off: Compute for
+Memory</h2>
+<p>By recomputing activations backward from the next layer's outputs,
+RevNets reduce the memory complexity of storing activations from <span
+class="math inline">\(O(L)\)</span>—where <span
+class="math inline">\(L\)</span> is the number of layers—down to <span
+class="math inline">\(O(1)\)</span>. The memory required for activations
+becomes completely independent of the depth of the network.</p>
+<p>The cost of this memory elimination is one additional forward
+computation per layer during the backward pass (evaluating <span
+class="math inline">\(F\)</span> and <span
+class="math inline">\(G\)</span> to reconstruct the inputs). However,
+because modern AI hardware is significantly more constrained by memory
+bandwidth and capacity than by raw floating-point compute power, this
+small computational overhead (roughly 33% more training time per step)
+is a massive net positive, enabling the training of vastly deeper and
+wider architectures on limited hardware.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-reversible-residual-networks-eliminate-activation-storage';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

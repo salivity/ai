@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Kernel Ridge Regression in AI - ai</title>
+    <meta name="description" content="Kernel Ridge Regression (KRR) is a powerful machine learning algorithm that merges Ridge Regression (linear least squares with L2 regularization) with the kernel trick. This article explores how KRR combines these two concepts to construct a non-parametri">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-kernel-ridge-regression-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Kernel Ridge Regression in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-kernel-ridge-regression-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Kernel Ridge Regression (KRR) is a powerful machine learning algorithm that merges Ridge Regression (linear least squares with L2 regularization) with the kernel trick. This article explores how KRR combines these two concepts to construct a non-parametri" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-kernel-ridge-regression-in-ai">Understanding
+Kernel Ridge Regression in AI</h1>
+<p>Kernel Ridge Regression (KRR) is a powerful machine learning
+algorithm that merges Ridge Regression (linear least squares with L2
+regularization) with the kernel trick. This article explores how KRR
+combines these two concepts to construct a non-parametric regression
+model capable of capturing complex, non-linear relationships in
+artificial intelligence applications without suffering from severe
+overfitting.</p>
+<p>To understand Kernel Ridge Regression, it is first necessary to look
+at standard Ridge Regression. In traditional linear regression, the goal
+is to find a linear function that minimizes the sum of squared errors
+between predicted and actual values. However, when dealing with
+high-dimensional data, standard linear models easily overfit. Ridge
+Regression solves this by introducing L2 regularization, which adds a
+penalty term proportional to the square of the magnitude of the
+coefficients. This shrinks the weights toward zero, reducing model
+variance and stabilizing the mathematical inversion required to find the
+solution. Despite this improvement, Ridge Regression remains
+fundamentally limited to learning linear relationships.</p>
+<p>To capture non-linear patterns, data must be mapped into a
+higher-dimensional feature space where a linear separation or fit
+becomes possible. Explicitly calculating the coordinates of data points
+in this high-dimensional space is computationally expensive and
+sometimes impossible if the space is infinite-dimensional. KRR bypasses
+this limitation by reformulating Ridge Regression into its dual
+representation. Instead of solving for a weight vector based on the
+features, the optimization problem is rewritten so that the data points
+only appear inside dot products with one another.</p>
+<p>This dual formulation allows the integration of the kernel trick. A
+kernel function computes the inner product of two vectors in a
+high-dimensional feature space directly from the original input vectors,
+without ever computing the coordinates in that vast space. Common
+kernels include the Radial Basis Function (RBF), polynomial, and sigmoid
+kernels. By replacing the standard dot products in the dual Ridge
+Regression formula with a kernel function, the algorithm fits a linear
+model in the high-dimensional space, which translates to a smooth,
+non-linear regression curve in the original input space.</p>
+<p>The combination of the kernel trick and L2 regularization makes KRR a
+non-parametric technique. In parametric models like standard linear
+regression, the number of parameters is fixed based on the number of
+input features. Once trained, the original data can be discarded because
+the learned weights hold all the information. In contrast, KRR is
+non-parametric because the complexity of the model grows with the size
+of the training dataset. The solution is expressed as a weighted sum of
+kernel evaluations between the new test point and every single training
+point.</p>
+<p>Mathematically, KRR constructs a Gram matrix (or kernel matrix) of
+size <span class="math inline">\(N \times N\)</span>, where <span
+class="math inline">\(N\)</span> is the number of training samples. Each
+entry in this matrix represents the similarity between two data points
+as defined by the kernel. To find the dual weights, KRR adds the L2
+regularization parameter to the diagonal of this Gram matrix and inverts
+it. The L2 regularization is critical here; without it, the Gram matrix
+might not be invertible, and the flexible kernel space would allow the
+model to memorize the training noise entirely. The regularization
+parameter forces the resulting high-dimensional function to remain
+smooth.</p>
+<p>In practical AI applications, KRR offers an exact, closed-form
+solution, meaning it does not rely on iterative optimization methods
+like gradient descent to find the global minimum. This makes it
+exceptionally fast and accurate for small to medium-sized datasets.
+However, because it is non-parametric and requires inverting an <span
+class="math inline">\(N \times N\)</span> matrix, its computational and
+memory costs scale cubically with the number of data points, making it
+less suitable for massive datasets compared to parametric deep learning
+models.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-kernel-ridge-regression-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

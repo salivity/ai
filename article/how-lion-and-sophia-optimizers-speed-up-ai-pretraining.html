@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Lion and Sophia Optimizers Speed Up AI Pretraining - ai</title>
+    <meta name="description" content="Training massive artificial intelligence models requires immense computational power and memory, often creating bottlenecks that slow down development and skyrocket hardware costs. Advanced optimizers like Lion and Sophia resolve these issues by rethinkin">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-lion-and-sophia-optimizers-speed-up-ai-pretraining">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Lion and Sophia Optimizers Speed Up AI Pretraining - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-lion-and-sophia-optimizers-speed-up-ai-pretraining" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Training massive artificial intelligence models requires immense computational power and memory, often creating bottlenecks that slow down development and skyrocket hardware costs. Advanced optimizers like Lion and Sophia resolve these issues by rethinkin" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-lion-and-sophia-optimizers-speed-up-ai-pretraining">How Lion
+and Sophia Optimizers Speed Up AI Pretraining</h1>
+<p>Training massive artificial intelligence models requires immense
+computational power and memory, often creating bottlenecks that slow
+down development and skyrocket hardware costs. Advanced optimizers like
+Lion and Sophia resolve these issues by rethinking how neural networks
+update their weights during the pretraining phase. While the Lion
+optimizer drastically cuts memory usage by simplifying momentum tracking
+and only using the sign of gradients, Sophia leverages second-order
+curvature information to reach optimal performance in half the steps of
+traditional methods. Together, these memory-efficient optimizers
+accelerate the pretraining of massive AI architectures by freeing up
+hardware memory for larger batch sizes and navigating the training
+landscape much faster than the standard Adam optimizer.</p>
+<h2 id="the-bottleneck-of-traditional-optimizers">The Bottleneck of
+Traditional Optimizers</h2>
+<p>For years, Adam and its variant, AdamW, have been the default
+optimizers for training large language models and vision transformers.
+However, Adam is memory-intensive. To update a model's parameters
+effectively, Adam must store two additional values for every single
+parameter in the network: the first moment (momentum) and the second
+moment (variance of the gradients).</p>
+<p>For a model with 100 billion parameters, Adam requires enough memory
+to store an extra 200 billion values. This massive memory footprint
+limits the size of the model that can fit onto a GPU and restricts the
+batch size researchers can use, directly slowing down the pretraining
+process.</p>
+<h2 id="lion-memory-reduction-through-sign-operations">Lion: Memory
+Reduction Through Sign Operations</h2>
+<p>Discovered by Google researchers through an evolutionary search
+algorithm, the Lion (EvoLved Sign Momentum) optimizer strips away the
+excess memory requirements of Adam.</p>
+<p>Lion accelerates pretraining through two main mechanisms:</p>
+<ul>
+<li><strong>Single Momentum Tracking:</strong> Unlike Adam, which tracks
+both first and second moments, Lion only tracks the momentum. This
+immediately cuts the optimizer’s memory overhead in half. The freed-up
+GPU memory can then be used to process larger batch sizes, which
+directly translates to faster training throughput.</li>
+<li><strong>Sign-Based Updates:</strong> Instead of calculating complex
+divisions and square roots to determine the exact magnitude of a weight
+update, Lion simply takes the <em>sign</em> (positive or negative) of
+the momentum. It applies a uniform update magnitude to every parameter.
+This reduces computational complexity and acts as a natural form of
+regularization, helping the model generalize better.</li>
+</ul>
+<h2 id="sophia-second-order-speed-at-first-order-cost">Sophia:
+Second-Order Speed at First-Order Cost</h2>
+<p>Developed by researchers at Stanford, Sophia (Second-order Clipped
+Stochastic Optimization) takes a different approach to acceleration.
+While Lion focuses on reducing memory per step, Sophia focuses on
+drastically reducing the <em>number of steps</em> required to train a
+model.</p>
+<p>AI training can be visualized as trying to find the bottom of a
+complex valley. First-order optimizers like Adam only look at the
+steepness of the slope (the gradient) to take a step. This causes
+problems in uneven terrain, where the optimizer might take steps that
+are too small in flat areas and too large in steep areas.</p>
+<p>Sophia introduces second-order information, known as the Hessian,
+which measures the <em>curvature</em> of the landscape. Historically,
+second-order optimizers were never used for massive AI models because
+calculating the curvature required an impossible amount of memory and
+compute. Sophia bypasses this limitation:</p>
+<ul>
+<li><strong>Lightweight Curvature Estimates:</strong> Sophia uses a
+cheap, randomized method to estimate the diagonal of the Hessian, rather
+than calculating the whole thing.</li>
+<li><strong>Infrequent Updates:</strong> Instead of calculating the
+curvature at every single training step, Sophia only updates its
+curvature estimate every 10 to 20 steps. This keeps the computational
+overhead down to around 5%, making it nearly as fast per-step as
+Adam.</li>
+<li><strong>Adaptive Step Sizes:</strong> By knowing the curvature,
+Sophia divides the gradient by the Hessian estimate. It takes massive,
+confident leaps in flat directions and careful, clipped steps in sharp,
+steep directions.</li>
+</ul>
+<h2 id="the-impact-on-massive-ai-architectures">The Impact on Massive AI
+Architectures</h2>
+<p>When applied to massive architectures like Large Language Models
+(LLMs), the benefits of Lion and Sophia compound.</p>
+<p>By using Lion, engineers can fit larger models onto fewer GPUs,
+reducing the need for slow cross-GPU communication. By using Sophia,
+models reach the same level of accuracy and low loss in roughly 50%
+fewer steps—cutting both the time and the financial cost of pretraining
+in half. Moving away from Adam toward these specialized optimizers
+allows organizations to train frontier AI models faster, cheaper, and
+with significantly less hardware strain.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-lion-and-sophia-optimizers-speed-up-ai-pretraining';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

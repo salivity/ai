@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subsumption Architecture vs. Traditional AI in Robotics - ai</title>
+    <meta name="description" content="In the mid-1980s, Rodney Brooks introduced the subsumption architecture, a revolutionary approach to mobile robotics that challenged the dominant &quot;sense-plan-act&quot; (SPA) paradigm. While traditional artificial intelligence relied on building complex interna">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/subsumption-architecture-vs-traditional-ai-in-robotics">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Subsumption Architecture vs. Traditional AI in Robotics - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/subsumption-architecture-vs-traditional-ai-in-robotics" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In the mid-1980s, Rodney Brooks introduced the subsumption architecture, a revolutionary approach to mobile robotics that challenged the dominant &quot;sense-plan-act&quot; (SPA) paradigm. While traditional artificial intelligence relied on building complex interna" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="subsumption-architecture-vs-traditional-ai-in-robotics">Subsumption
+Architecture vs. Traditional AI in Robotics</h1>
+<p>In the mid-1980s, Rodney Brooks introduced the subsumption
+architecture, a revolutionary approach to mobile robotics that
+challenged the dominant "sense-plan-act" (SPA) paradigm. While
+traditional artificial intelligence relied on building complex internal
+world models and executing computationally heavy planning before taking
+action, Brooks argued for a behavior-based system that reacted directly
+to external stimuli. This article explores the fundamental flaws of the
+traditional SPA approach, how the subsumption architecture bypassed
+these bottlenecks using layered behaviors, and the lasting impact of
+this shift on modern autonomous robotics.</p>
+<p>For decades, mobile robotics was dominated by the sense-plan-act
+framework, also known as Good Old-Fashioned Artificial Intelligence
+(GOFAI). In this sequential paradigm, a robot used its sensors to gather
+data, processed that data to construct or update a detailed internal map
+of its environment, calculated a plan to achieve a goal based on that
+map, and finally executed the physical movement.</p>
+<p>The primary flaw of the sense-plan-act paradigm was its inability to
+handle dynamic, real-world environments in real time. Constructing an
+accurate 3D model of the world and reasoning through symbol manipulation
+required massive computational power. Consequently, robots operating on
+this framework were notoriously slow, often pausing for minutes or even
+hours to calculate their next move. If a person walked past the robot or
+an obstacle shifted while it was "thinking," the internal model became
+obsolete, causing the robot's plan to fail.</p>
+<p>Rodney Brooks challenged this orthodoxy in 1986 by proposing the
+subsumption architecture, which completely eliminated the "plan" phase
+and the need for an internal world model. Brooks famously summarized his
+philosophy with the phrase, "The world is its own best model." Instead
+of slicing the problem vertically into distinct steps of sensing,
+modeling, planning, and acting, Brooks sliced the system horizontally
+into parallel, task-achieving behaviors.</p>
+<p>In a subsumption architecture, a robot's control system is built from
+the bottom up using simple layers of competence. Each layer is an
+independent system that connects perception directly to action:</p>
+<ul>
+<li><strong>Lowest Layer:</strong> Handles basic survival behaviors,
+such as avoiding obstacles. Sensors detect an object, and the layer
+immediately commands the motors to turn away.</li>
+<li><strong>Middle Layer:</strong> Manages wandering or exploration
+behaviors. If the lowest layer is not actively avoiding an obstacle,
+this layer guides the robot forward.</li>
+<li><strong>Highest Layer:</strong> Focuses on specific goals, such as
+seeking out a light source or mapping a room.</li>
+</ul>
+<p>These layers operate asynchronously and in parallel. The architecture
+gets its name from the way higher layers "subsume" lower ones.
+Higher-level behaviors can inhibit the outputs of lower-level behaviors
+or suppress their inputs to steer the robot toward a complex goal.
+However, the lower layers always remain active as a fail-safe. If a
+robot is pursuing a high-level goal and suddenly encounters a dynamic
+obstacle, the lowest obstacle-avoidance layer instantly overrides the
+higher layer to prevent a collision, without waiting for a central
+processor to recalculate a master plan.</p>
+<p>By removing the centralized world model and symbolic reasoning,
+Brooks's robots—often referred to as "animats" or insect-like
+robots—achieved unprecedented speed, robustness, and adaptability. A
+robot like "Allen" or the six-legged "Genghis" could navigate cluttered,
+unpredictable human environments in real time using minimal computing
+power.</p>
+<p>Ultimately, the subsumption architecture proved that complex,
+intelligent-looking behavior did not require complex central cognition;
+instead, it could emerge from the interaction of simple, reactive
+systems with a complex environment. This realization broke the
+computational bottleneck of 1980s robotics, paved the way for commercial
+products like the iRobot Roomba, and established Embodied AI as a vital
+counter-paradigm in the history of artificial intelligence.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/subsumption-architecture-vs-traditional-ai-in-robotics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

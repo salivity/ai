@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalable Oversight: Supervising Superhuman AI Systems - ai</title>
+    <meta name="description" content="This article explores the concept of scalable oversight, a critical area of artificial intelligence safety research focused on ensuring humans can effectively supervise AI systems that surpass human capabilities. As AI models tackle increasingly complex p">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/scalable-oversight-supervising-superhuman-ai-systems">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Scalable Oversight: Supervising Superhuman AI Systems - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/scalable-oversight-supervising-superhuman-ai-systems" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the concept of scalable oversight, a critical area of artificial intelligence safety research focused on ensuring humans can effectively supervise AI systems that surpass human capabilities. As AI models tackle increasingly complex p" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="scalable-oversight-supervising-superhuman-ai-systems">Scalable
+Oversight: Supervising Superhuman AI Systems</h1>
+<p>This article explores the concept of scalable oversight, a critical
+area of artificial intelligence safety research focused on ensuring
+humans can effectively supervise AI systems that surpass human
+capabilities. As AI models tackle increasingly complex problems, humans
+will struggle to directly verify the accuracy and safety of their
+outputs. To solve this, researchers are developing methods—such as AI
+debate, recursive reward modeling, and iterated amplification—that
+leverage AI itself to assist humans in evaluating other AI systems,
+ensuring alignment with human intent even on tasks too difficult for us
+to comprehend directly.</p>
+<p>The core problem of AI alignment today relies heavily on
+Reinforcement Learning from Human Feedback (RLHF). In RLHF, humans look
+at two different AI outputs and choose the better one. This works well
+for simple tasks, like writing a poem or summarizing an article.
+However, this method breaks down when the task becomes too complex for a
+human to judge. For example, if an AI writes a million lines of code or
+proposes a novel economic policy, a human evaluator cannot easily spot
+subtle bugs, security vulnerabilities, or long-term negative
+consequences. Worse, an advanced AI might learn to generate answers that
+look convincing to a human rather than answers that are actually true or
+safe.</p>
+<p>Scalable oversight aims to bridge the gap between human evaluation
+limits and superhuman AI capabilities. The central thesis of scalable
+oversight is simple: it is generally easier to evaluate the quality of
+an outcome than it is to generate that outcome from scratch, especially
+if you have help. By using AI assistants to augment human judgment, we
+can scale our ability to supervise complex systems. Researchers have
+proposed three primary techniques to achieve this.</p>
+<p><strong>Iterated Amplification</strong> Iterated amplification works
+on the principle of "divide and conquer." When faced with a task too
+complex for a human to evaluate, a human breaks the problem down into
+smaller, simpler sub-tasks. AI assistants are then used to solve these
+simpler tasks. The human evaluates the answers to the easy sub-tasks and
+combines them to evaluate the overarching complex task. As the AI gets
+smarter, this process is repeated, amplifying the human's ability to
+oversee progressively harder problems without ever needing to understand
+the entire complex task all at once.</p>
+<p><strong>AI Debate</strong> In the AI Debate framework, two AI models
+are pitted against each other in a zero-sum game, while a human acts as
+the judge. When a complex question is asked, both AIs provide an answer
+and then take turns pointing out flaws in the other’s reasoning. Because
+the AIs are equally matched and incentivized to win, they will naturally
+expose any deception, hallucination, or flaw in their opponent's
+argument. The human does not need to be an expert in the subject matter;
+they only need to follow the logic of the debate and judge which AI made
+the more convincing, fact-checked case.</p>
+<p><strong>Recursive Reward Modeling (RRM)</strong> Recursive Reward
+Modeling uses AI to train other AI evaluators. Initially, a human trains
+a basic AI assistant to evaluate simple tasks. Once that AI assistant is
+reliable, it is used to help the human evaluate a slightly more complex
+AI system. This second AI system is then used to help the human evaluate
+a third, even more advanced system. Each step in this recursive chain
+builds upon the last, allowing human intent and safety standards to be
+carried upward into territories of complexity that a human could never
+audit unassisted.</p>
+<p>Despite the promise of these methods, scalable oversight faces
+significant hurdles. The primary risk is collusion; in a debate setting,
+two AI models might implicitly or explicitly agree to deceive the human
+judge. Additionally, there is the problem of compounding errors. In
+recursive systems, if a human makes a slight misjudgment at the
+beginning of the training chain, that error can be amplified at every
+subsequent step, leading to a dangerously misaligned superhuman system.
+Finally, some tasks simply cannot be broken down into smaller, easily
+verifiable parts.</p>
+<p>Ultimately, scalable oversight is one of the most viable pathways we
+have to ensure advanced artificial intelligence remains safe and
+beneficial. By shifting the human role from a direct evaluator to a
+manager of AI-assisted evaluation processes, we can maintain meaningful
+control over systems that are vastly more knowledgeable and capable than
+ourselves.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/scalable-oversight-supervising-superhuman-ai-systems';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

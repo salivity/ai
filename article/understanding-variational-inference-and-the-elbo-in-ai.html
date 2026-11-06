@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Variational Inference and the ELBO in AI - ai</title>
+    <meta name="description" content="This article explores how variational inference transforms complex probabilistic inference problems into solvable optimization tasks in artificial intelligence. It covers the fundamental challenge of intractable posteriors, the role of Kullback-Leibler di">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-variational-inference-and-the-elbo-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Variational Inference and the ELBO in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-variational-inference-and-the-elbo-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how variational inference transforms complex probabilistic inference problems into solvable optimization tasks in artificial intelligence. It covers the fundamental challenge of intractable posteriors, the role of Kullback-Leibler di" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-variational-inference-and-the-elbo-in-ai">Understanding
+Variational Inference and the ELBO in AI</h1>
+<p>This article explores how variational inference transforms complex
+probabilistic inference problems into solvable optimization tasks in
+artificial intelligence. It covers the fundamental challenge of
+intractable posteriors, the role of Kullback-Leibler divergence, and the
+mathematical decomposition of the Evidence Lower Bound. Finally, it
+explains why maximizing this bound successfully approximates the true
+underlying data distributions in modern machine learning models.</p>
+<p>In Bayesian machine learning, the primary goal is often to infer the
+posterior distribution of latent variables <span
+class="math inline">\(z\)</span> given observed data <span
+class="math inline">\(x\)</span>, denoted as <span
+class="math inline">\(p(z|x)\)</span>. According to Bayes' theorem, this
+is calculated as:</p>
+<p><span class="math display">\[p(z|x) = \frac{p(x,
+z)}{p(x)}\]</span></p>
+<p>The denominator, <span class="math inline">\(p(x) = \int p(x, z)
+dz\)</span>, is known as the marginal likelihood or "evidence." In
+complex artificial intelligence models, such as deep neural networks,
+this integral is computationally intractable because it requires summing
+or integrating over an exponentially large space of latent
+configurations. Without <span class="math inline">\(p(x)\)</span>, the
+true posterior <span class="math inline">\(p(z|x)\)</span> cannot be
+calculated directly.</p>
+<p>Variational inference bypasses this intractable integration by
+turning it into an optimization problem. Instead of computing <span
+class="math inline">\(p(z|x)\)</span> directly, the method introduces a
+simpler, tractable family of distributions, <span
+class="math inline">\(q(z)\)</span>, parameterized by variational
+parameters. The objective is to adjust these parameters so that the
+surrogate distribution <span class="math inline">\(q(z)\)</span> becomes
+as close as possible to the true posterior <span
+class="math inline">\(p(z|x)\)</span>.</p>
+<p>To measure the closeness between the approximated distribution and
+the true posterior, variational inference uses the Kullback-Leibler (KL)
+divergence. The goal is to minimize the KL divergence from <span
+class="math inline">\(q(z)\)</span> to <span
+class="math inline">\(p(z|x)\)</span>, which is defined as:</p>
+<p><span class="math display">\[KL(q(z) \parallel p(z|x)) =
+\mathbb{E}_{q(z)} \left[ \log \frac{q(z)}{p(z|x)} \right]\]</span></p>
+<p>However, this equation still cannot be minimized directly because it
+contains the intractable <span class="math inline">\(p(z|x)\)</span>
+term. By substituting Bayes' rule into the KL divergence formula and
+applying logarithmic identities, the equation can be rewritten as:</p>
+<p><span class="math display">\[KL(q(z) \parallel p(z|x)) =
+\mathbb{E}_{q(z)} [\log q(z)] - \mathbb{E}_{q(z)} [\log p(x, z)] + \log
+p(x)\]</span></p>
+<p>Notice that <span class="math inline">\(\log p(x)\)</span> does not
+depend on <span class="math inline">\(z\)</span>, allowing it to be
+moved outside the expectation. Rearranging this equation isolates the
+intractable log-evidence on one side:</p>
+<p><span class="math display">\[\log p(x) = \mathbb{E}_{q(z)} [\log p(x,
+z)] - \mathbb{E}_{q(z)} [\log q(z)] + KL(q(z) \parallel
+p(z|x))\]</span></p>
+<p>Because the KL divergence is always non-negative (<span
+class="math inline">\(KL \geq 0\)</span>), the first two terms on the
+right-hand side form a strict lower bound on the log-evidence <span
+class="math inline">\(\log p(x)\)</span>. This combination of terms is
+defined as the Evidence Lower Bound (ELBO):</p>
+<p><span class="math display">\[ELBO(q) = \mathbb{E}_{q(z)} [\log p(x,
+z)] - \mathbb{E}_{q(z)} [\log q(z)]\]</span></p>
+<p>Substituting the ELBO back into the rearranged equation yields a
+fundamental identity in variational inference:</p>
+<p><span class="math display">\[\log p(x) = ELBO(q) + KL(q(z) \parallel
+p(z|x))\]</span></p>
+<p>The marginal log-likelihood <span class="math inline">\(\log
+p(x)\)</span> is a fixed quantity with respect to the variational
+distribution <span class="math inline">\(q(z)\)</span> because it
+depends only on the observed data and the model priors. Therefore, the
+sum of the ELBO and the KL divergence is constant. Consequently,
+maximizing the ELBO directly forces the KL divergence to decrease.
+Because the ELBO only depends on the tractable joint distribution <span
+class="math inline">\(p(x, z)\)</span> and the chosen surrogate
+distribution <span class="math inline">\(q(z)\)</span>, it can be
+computed and optimized using standard gradient ascent techniques.</p>
+<p>To understand what maximizing the ELBO actually does to the model,
+the equation can be algebraically factored into a different form using
+<span class="math inline">\(p(x, z) = p(x|z)p(z)\)</span>:</p>
+<p><span class="math display">\[ELBO(q) = \mathbb{E}_{q(z)} [\log
+p(x|z)] - KL(q(z) \parallel p(z))\]</span></p>
+<p>Maximizing this form of the ELBO balances two competing objectives
+that guide the artificial intelligence model toward an accurate
+approximation:</p>
+<ol type="1">
+<li><strong>Reconstruction Accuracy:</strong> The first term, <span
+class="math inline">\(\mathbb{E}_{q(z)} [\log p(x|z)]\)</span>, is the
+expected log-likelihood of the data. Maximizing this term encourages the
+variational distribution <span class="math inline">\(q(z)\)</span> to
+place probability mass on latent variable states <span
+class="math inline">\(z\)</span> that accurately explain and reconstruct
+the observed data <span class="math inline">\(x\)</span>.</li>
+<li><strong>Prior Regularization:</strong> The second term, <span
+class="math inline">\(-KL(q(z) \parallel p(z))\)</span>, acts as a
+regularizer. Maximizing the negative KL divergence is equivalent to
+minimizing the divergence between the variational distribution <span
+class="math inline">\(q(z)\)</span> and the prior distribution <span
+class="math inline">\(p(z)\)</span>. This prevents the model from
+overfitting by ensuring the approximated posterior does not stray too
+far from initial prior beliefs.</li>
+</ol>
+<p>By iteratively adjusting the parameters of <span
+class="math inline">\(q(z)\)</span> to maximize these two terms,
+variational inference squeezes the gap between the lower bound and the
+true log-evidence, effectively molding the tractable <span
+class="math inline">\(q(z)\)</span> into a reliable proxy for the
+intractable <span class="math inline">\(p(z|x)\)</span>.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-variational-inference-and-the-elbo-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

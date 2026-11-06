@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Regularization Paths via Least Angle Regression - ai</title>
+    <meta name="description" content="Least Angle Regression (LARS) is an efficient algorithm used in artificial intelligence to fit sparse linear models. This article explains how LARS computes the entire regularization path of model coefficients for the same computational cost as a single o">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/fast-regularization-paths-via-least-angle-regression">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fast Regularization Paths via Least Angle Regression - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/fast-regularization-paths-via-least-angle-regression" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Least Angle Regression (LARS) is an efficient algorithm used in artificial intelligence to fit sparse linear models. This article explains how LARS computes the entire regularization path of model coefficients for the same computational cost as a single o" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="fast-regularization-paths-via-least-angle-regression">Fast
+Regularization Paths via Least Angle Regression</h1>
+<p>Least Angle Regression (LARS) is an efficient algorithm used in
+artificial intelligence to fit sparse linear models. This article
+explains how LARS computes the entire regularization path of model
+coefficients for the same computational cost as a single ordinary
+least-squares fit. We will cover the geometric mechanics of the
+algorithm, the piecewise-linear nature of the solution path, and the
+exact mathematical complexity that makes this speed possible.</p>
+<h2 id="the-challenge-of-regularization-paths">The Challenge of
+Regularization Paths</h2>
+<p>In sparse linear models, such as the Lasso, a regularization
+parameter controls the penalty applied to the model's coefficients.
+Finding the optimal parameter usually requires training the model
+multiple times across a grid of values. This brute-force approach is
+computationally expensive because it solves an optimization problem from
+scratch for every single parameter value. LARS bypasses this bottleneck
+by tracking how coefficients evolve continuously from zero to their full
+least-squares values.</p>
+<h2 id="the-geometric-mechanics-of-lars">The Geometric Mechanics of
+LARS</h2>
+<p>LARS builds a linear model sequentially, adding one variable at a
+time based on its correlation with the current residual (the error
+between the target and the current prediction).</p>
+<ol type="1">
+<li><strong>Initialization:</strong> Start with all coefficients set to
+zero. The residual is equal to the target vector.</li>
+<li><strong>First Selection:</strong> Find the predictor variable most
+correlated with the residual.</li>
+<li><strong>Progression:</strong> Move the coefficient of this variable
+in the direction of its correlation. As the coefficient increases, the
+residual decreases, and the correlation between this active variable and
+the residual drops.</li>
+<li><strong>Equiangular Shift:</strong> Stop moving solely in this
+direction the exact moment a second variable achieves the exact same
+absolute correlation with the residual as the first variable.</li>
+<li><strong>Joint Movement:</strong> Move both coefficients together in
+a direction that keeps their correlations with the residual equal and
+decreasing. In geometry, this direction bisects the angle between the
+two predictors, which gives "Least Angle" Regression its name.</li>
+</ol>
+<p>This process repeats. Whenever a new variable catches up in
+correlation, it joins the active set, and the direction of movement is
+updated to remain equiangular to all active variables.</p>
+<h2 id="exploiting-piecewise-linearity">Exploiting Piecewise
+Linearity</h2>
+<p>The secret to the speed of LARS is that the regularization path is
+piecewise linear. Because the equiangular direction remains constant
+until a new variable enters the active set, the coefficients change in
+straight lines between these transition points (called knots).</p>
+<p>Instead of taking thousands of tiny gradient descent steps, LARS
+calculates the exact step size needed to reach the next knot using
+simple trigonometry and linear algebra. It jumps directly from one knot
+to the next. If a model has <span class="math inline">\(p\)</span>
+predictors, the standard LARS algorithm requires exactly <span
+class="math inline">\(p\)</span> steps to compute the entire path from a
+completely sparse model (all zeros) to the full ordinary least-squares
+solution.</p>
+<h2 id="computational-cost-breakdown">Computational Cost Breakdown</h2>
+<p>An ordinary least-squares (OLS) fit with <span
+class="math inline">\(n\)</span> samples and <span
+class="math inline">\(p\)</span> predictors (where <span
+class="math inline">\(n &gt; p\)</span>) requires computing the Gram
+matrix and solving a linear system. The total computational complexity
+for a single OLS fit is <span class="math inline">\(O(np^2 +
+p^3)\)</span>.</p>
+<p>LARS achieves the exact same asymptotic complexity for the entire
+path through two main optimizations:</p>
+<ul>
+<li><strong>Exact Step Calculation:</strong> At each step <span
+class="math inline">\(k\)</span>, finding the equiangular direction
+requires inverting a covariance matrix of the currently active
+variables.</li>
+<li><strong>Matrix Updating:</strong> Instead of inverting this matrix
+from scratch at every step, LARS uses Cholesky decomposition updates.
+Because only one variable is added at each step, updating the Cholesky
+factorization of size <span class="math inline">\(k\)</span> takes only
+<span class="math inline">\(O(k^2)\)</span> operations.</li>
+</ul>
+<p>Summing <span class="math inline">\(O(k^2)\)</span> over <span
+class="math inline">\(p\)</span> steps yields <span
+class="math inline">\(O(p^3)\)</span> total operations for the matrix
+inversions. Combining this with the <span
+class="math inline">\(O(np^2)\)</span> operations required to calculate
+correlations between the <span class="math inline">\(p\)</span>
+predictors and the <span class="math inline">\(n\)</span>-dimensional
+residuals across the steps, the total cost of LARS is <span
+class="math inline">\(O(np^2 + p^3)\)</span>.</p>
+<h2 id="the-lasso-modification">The Lasso Modification</h2>
+<p>To compute the exact Lasso path, LARS requires one minor rule change:
+if an active coefficient crosses zero while moving along the equiangular
+direction, stop at the zero-crossing, remove that variable from the
+active set, and recalculate the equiangular direction. Even with
+variables occasionally dropping out and re-entering, the number of steps
+remains heavily bounded, preserving the computational efficiency of a
+single least-squares fit.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/fast-regularization-paths-via-least-angle-regression';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

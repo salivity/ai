@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adapting Shapley Values to Quantify AI Training Data - ai</title>
+    <meta name="description" content="This article explores how Shapley values, a foundational concept from cooperative game theory, are adapted into &quot;Data Shapley&quot; to measure the exact value of individual training data points in artificial intelligence. By treating training instances as play">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/adapting-shapley-values-to-quantify-ai-training-data">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Adapting Shapley Values to Quantify AI Training Data - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/adapting-shapley-values-to-quantify-ai-training-data" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Shapley values, a foundational concept from cooperative game theory, are adapted into &quot;Data Shapley&quot; to measure the exact value of individual training data points in artificial intelligence. By treating training instances as play" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="adapting-shapley-values-to-quantify-ai-training-data">Adapting
+Shapley Values to Quantify AI Training Data</h1>
+<p>This article explores how Shapley values, a foundational concept from
+cooperative game theory, are adapted into "Data Shapley" to measure the
+exact value of individual training data points in artificial
+intelligence. By treating training instances as players in a game and
+model performance as the ultimate payout, AI researchers can
+mathematically determine each data point's marginal contribution. We
+will cover the theoretical translation from game theory to machine
+learning, the step-by-step calculation process, the computational
+challenges of scaling this method, and its practical applications in
+curating better datasets.</p>
+<h3 id="translating-game-theory-to-machine-learning">Translating Game
+Theory to Machine Learning</h3>
+<p>Originated by Lloyd Shapley in 1953, the Shapley value is a method
+for fairly distributing a total payout among players who have
+collaborated to achieve an outcome. To adapt this to artificial
+intelligence, researchers reframe the machine learning training process
+as a cooperative game:</p>
+<ul>
+<li><strong>The Players:</strong> Each individual data point in the
+training dataset acts as a player.</li>
+<li><strong>The Coalition:</strong> Any subset of the training data
+represents a team of players working together.</li>
+<li><strong>The Payout:</strong> The validation performance of the AI
+model (such as accuracy, F1 score, or negative loss) trained on that
+specific subset of data is the payout.</li>
+</ul>
+<p>The goal of Data Shapley is to distribute the final model's
+performance score fairly among all the training data points, thereby
+quantifying how much each specific piece of data helped or hurt the
+AI.</p>
+<h3 id="calculating-the-marginal-contribution">Calculating the Marginal
+Contribution</h3>
+<p>A single data point's value often depends on what other data is
+present. For example, an image of a rare dog breed is much more valuable
+if the dataset lacks that breed, and less valuable if there are already
+a thousand identical images.</p>
+<p>To account for this, Data Shapley calculates a data point's
+<em>marginal contribution</em> across all possible subsets of the
+training data. The theoretical process for a single data point (let's
+call it Data Point X) works as follows:</p>
+<ol type="1">
+<li><strong>Form a Subset:</strong> Select a subset of the training data
+that does not include Data Point X.</li>
+<li><strong>Train and Evaluate:</strong> Train the AI model on this
+subset and record its performance score on a test set.</li>
+<li><strong>Add the Target Data:</strong> Add Data Point X to that exact
+same subset and retrain the model from scratch.</li>
+<li><strong>Measure the Difference:</strong> Subtract the first
+performance score from the second. This difference is Data Point X's
+marginal contribution to that specific subset.</li>
+<li><strong>Average Across All Permutations:</strong> Repeat this
+process for every possible combination of subsets in the dataset, and
+average the results.</li>
+</ol>
+<p>Because this method satisfies game-theoretic axioms like fairness,
+symmetry, and additivity, the resulting Data Shapley value is considered
+the uniquely fair measurement of a data point's worth.</p>
+<h3 id="overcoming-computational-bottlenecks">Overcoming Computational
+Bottlenecks</h3>
+<p>In practice, calculating the exact Shapley value for AI data is
+computationally impossible for modern datasets. A dataset of just 1,000
+images has <span class="math inline">\(2^{1000}\)</span> possible
+subsets. Evaluating this exactly would require training the AI model
+from scratch more times than there are atoms in the universe.</p>
+<p>To adapt Shapley values for real-world AI, researchers use
+approximation algorithms:</p>
+<ul>
+<li><strong>Monte Carlo Sampling:</strong> Instead of testing every
+possible subset, this method shuffles the dataset into random orders.
+Data points are added one by one, and the change in model performance is
+tracked. By repeating this random shuffling hundreds of times, the
+average marginal contribution converges on the true Shapley value.</li>
+<li><strong>Truncation:</strong> When a subset of data becomes large
+enough, adding one more data point barely changes the model's accuracy.
+Truncation stops the evaluation process once the subset reaches a
+certain size, assuming the marginal contribution of remaining points is
+near zero.</li>
+<li><strong>K-Nearest Neighbors (KNN) Proxies:</strong> Instead of
+retraining a massive deep learning model millions of times, researchers
+extract features using the deep model once, and then calculate exact
+Shapley values using a lightweight KNN model, which can be computed in
+fractions of a second.</li>
+</ul>
+<h3 id="practical-applications-of-data-shapley">Practical Applications
+of Data Shapley</h3>
+<p>Quantifying the marginal contribution of training data unlocks
+several critical capabilities for AI development:</p>
+<ul>
+<li><strong>Data Cleaning:</strong> Data points that yield a negative
+Shapley value actively harm the model's performance. These are typically
+mislabeled instances, corrupted files, or extreme outliers. Removing
+them instantly improves the AI.</li>
+<li><strong>Data Marketplaces:</strong> As organizations buy and sell
+data to train large models, Data Shapley provides an objective metric to
+price datasets based on how much they actually improve a buyer's
+specific model.</li>
+<li><strong>Active Learning:</strong> By identifying which types of data
+points have the highest Shapley values, engineers know exactly what kind
+of new data to collect next to maximize model improvement while
+minimizing labeling costs.</li>
+<li><strong>Mitigating Bias:</strong> If a model is underperforming on a
+specific demographic, Data Shapley can pinpoint the exact training
+examples that are contributing to that bias, allowing for targeted
+dataset balancing.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/adapting-shapley-values-to-quantify-ai-training-data';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

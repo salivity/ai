@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External Memory in Neural Turing Machines and DNCs - ai</title>
+    <meta name="description" content="This article explores the mechanisms behind attaching external addressable memory matrices to artificial intelligence controllers, specifically focusing on Neural Turing Machines (NTMs) and Differentiable Neural Computers (DNCs). It provides a clear break">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/external-memory-in-neural-turing-machines-and-dn-cs">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="External Memory in Neural Turing Machines and DNCs - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/external-memory-in-neural-turing-machines-and-dn-cs" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the mechanisms behind attaching external addressable memory matrices to artificial intelligence controllers, specifically focusing on Neural Turing Machines (NTMs) and Differentiable Neural Computers (DNCs). It provides a clear break" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="external-memory-in-neural-turing-machines-and-dncs">External
+Memory in Neural Turing Machines and DNCs</h1>
+<p>This article explores the mechanisms behind attaching external
+addressable memory matrices to artificial intelligence controllers,
+specifically focusing on Neural Turing Machines (NTMs) and
+Differentiable Neural Computers (DNCs). It provides a clear breakdown of
+the architecture connecting neural controllers to memory banks, the
+mathematical attention mechanisms used to read and write data, and the
+evolutionary leaps that allow DNCs to manage complex, dynamic memory
+allocation without overwriting critical historical data.</p>
+<p>Traditional recurrent neural networks struggle to store and
+manipulate variables over long durations. NTMs and DNCs solve this by
+separating computation from memory storage. At the core of both
+architectures is a neural network controller—often a Long Short-Term
+Memory (LSTM) network or a feedforward network—acting as the central
+processing unit. This controller interacts with an external memory
+matrix, which serves as the system's RAM.</p>
+<p>The memory matrix consists of <span class="math inline">\(N\)</span>
+rows (memory locations) and <span class="math inline">\(M\)</span>
+columns (vector size at each location). The controller does not access
+single, discrete memory locations like a traditional computer, because
+discrete selection is not differentiable and breaks backpropagation.
+Instead, the controller interacts with the memory using "blurry" read
+and write operations. It interacts with every memory location
+simultaneously, to varying degrees, using weightings defined by an
+attention mechanism.</p>
+<p>To connect the controller to the memory matrix, the system uses "read
+heads" and "write heads." During each time step, the controller receives
+an external input and emits a set of interface parameters to these
+heads. These parameters generate normalized weighting vectors—vectors of
+values between 0 and 1 that sum to 1—which dictate where the heads
+should focus on the memory matrix.</p>
+<p>To read from the memory matrix, a read head takes its generated
+weighting vector and computes a convex combination (a weighted sum) of
+all the row vectors in the memory matrix. If a specific location has a
+weight close to 1 and all others are near 0, the controller effectively
+reads just that single row.</p>
+<p>Writing to the memory matrix is borrowing from the gating mechanisms
+of LSTMs and is split into two steps: an erase operation followed by an
+add operation. The controller emits a write weighting vector, an "erase
+vector," and an "add vector." First, the memory rows are multiplied by
+the inverse of the erase vector, scaled by the write weights. If both
+the weight and the erase vector at a specific location are 1, the
+existing data is completely zeroed out. Next, the add vector is
+multiplied by the write weights and added to the newly erased memory
+matrix, updating the stored information.</p>
+<p>The true innovation in attaching this memory lies in how the
+attention weights are calculated—a process known as addressing. NTMs use
+a combination of two addressing mechanisms:</p>
+<ol type="1">
+<li><strong>Content-Based Addressing:</strong> The controller emits a
+"key" vector, which is compared to every row in the memory matrix using
+a similarity measure, typically cosine similarity. This allows the
+controller to find data based on what the data looks like, effectively
+acting as an associative memory recall.</li>
+<li><strong>Location-Based Addressing:</strong> This allows the
+controller to iterate through memory sequentially, regardless of what
+the data looks like. Using interpolation gates, the controller can
+choose to keep its previous weighting, shift the weights up or down by
+rows using a convolutional shift mechanism, and sharpen the weighting
+distribution to prevent the focus from becoming too dispersed over
+time.</li>
+</ol>
+<p>While NTMs successfully attach external memory, they suffer from a
+major limitation: contiguous memory blocks. Because NTMs use simple
+rotational shifts for location-based addressing, they often accidentally
+overwrite previously stored information when allocating new memory.
+Differentiable Neural Computers (DNCs) were created to fix this by
+upgrading the addressing mechanisms.</p>
+<p>DNCs attach their memory matrix using three distinct addressing
+methodologies. Like the NTM, they use content-based lookup, but they
+replace the NTM's rudimentary location-based shifts with two advanced
+systems:</p>
+<ol type="1">
+<li><strong>Dynamic Memory Allocation:</strong> A DNC tracks the "usage"
+of each memory row using a retention vector. When the controller writes
+data, it can ask for a completely unused location. The DNC calculates
+which rows have the lowest usage weights and directs the write head
+there. Furthermore, the read heads can dynamically free up memory
+locations once the data has been read and is no longer needed.</li>
+<li><strong>Temporal Memory Linkage:</strong> Because dynamic allocation
+scatters data randomly across the memory matrix to avoid collisions, a
+DNC cannot simply shift one row down to find the next piece of
+sequential data. To solve this, the DNC maintains a <span
+class="math inline">\(N \times N\)</span> "temporal link matrix." Every
+time the controller writes to the memory, this link matrix updates to
+record the order in which rows were modified. This allows the read heads
+to traverse memory forward or backward in the exact chronological order
+the data was written, regardless of physical location in the
+matrix.</li>
+</ol>
+<p>Because every operation—cosine similarity, weighted sums, vector
+multiplication, and link matrix updates—is entirely composed of
+continuous, linear, and differentiable math, the entire system remains
+end-to-end differentiable. As a result, standard gradient descent and
+backpropagation through time can train the AI controller not just on how
+to process data, but on how to physically organize, retrieve, and manage
+its own external memory.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/external-memory-in-neural-turing-machines-and-dn-cs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

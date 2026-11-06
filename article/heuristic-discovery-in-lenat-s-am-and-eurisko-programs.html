@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heuristic Discovery in Lenat&#39;s AM and EURISKO Programs - ai</title>
+    <meta name="description" content="Douglas Lenat&#39;s Automated Mathematician (AM) and EURISKO programs represent foundational milestones in symbolic artificial intelligence, demonstrating how machines can discover new concepts and strategies through heuristics. Developed in the late 1970s an">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/heuristic-discovery-in-lenat-s-am-and-eurisko-programs">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Heuristic Discovery in Lenat&#39;s AM and EURISKO Programs - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/heuristic-discovery-in-lenat-s-am-and-eurisko-programs" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Douglas Lenat&#39;s Automated Mathematician (AM) and EURISKO programs represent foundational milestones in symbolic artificial intelligence, demonstrating how machines can discover new concepts and strategies through heuristics. Developed in the late 1970s an" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="heuristic-discovery-in-lenats-am-and-eurisko-programs">Heuristic
+Discovery in Lenat's AM and EURISKO Programs</h1>
+<p>Douglas Lenat's Automated Mathematician (AM) and EURISKO programs
+represent foundational milestones in symbolic artificial intelligence,
+demonstrating how machines can discover new concepts and strategies
+through heuristics. Developed in the late 1970s and early 1980s, AM used
+a set of predefined rules to explore mathematical set theory,
+successfully rediscovering fundamental concepts like prime numbers and
+Goldbach's conjecture. Recognizing AM's inability to generate new rules
+of discovery, Lenat created EURISKO, an advanced system capable of
+modifying its own heuristics to adapt to entirely new domains, ranging
+from circuit design to strategic naval warfare. Together, these programs
+illuminated both the immense potential and the structural limitations of
+automated heuristic discovery.</p>
+<h2 id="the-automated-mathematician-am">The Automated Mathematician
+(AM)</h2>
+<p>Created by Lenat for his 1976 Stanford PhD dissertation, the
+Automated Mathematician was designed to model mathematical discovery not
+by proving known theorems, but by proposing interesting new concepts. AM
+began with 115 basic concepts of set theory—such as sets, bags,
+equality, and operations like union and intersection—and 243 heuristic
+rules.</p>
+<p>Heuristics in AM functioned as rules of thumb that guided the program
+toward "interesting" mathematical territory. For example, a heuristic
+might suggest that if a function is interesting, looking at its inverse
+might also be interesting. Another heuristic might evaluate a concept as
+more interesting if it accidentally coincides with another established
+concept.</p>
+<p>AM operated using an agenda-driven control structure. It generated a
+queue of tasks, ranked them by an "interestingness" score calculated by
+its heuristics, and executed the top task. Through this method, AM
+autonomously progressed from basic set theory to arithmetic. It defined
+the concept of cardinality (numbers), discovered addition,
+multiplication, and eventually isolated prime numbers. It even
+formulated Goldbach’s conjecture (every even integer greater than 2 is
+the sum of two primes) and the fundamental theorem of arithmetic.</p>
+<h2 id="the-limitations-of-am">The Limitations of AM</h2>
+<p>Despite its early success, AM eventually hit a wall. As the program
+moved further away from its initial set-theory concepts into complex
+number theory, its progress slowed and eventually halted.</p>
+<p>The core issue was that AM's 243 heuristics were static. While the
+program could discover new mathematical concepts, it could not discover
+new heuristics to help it navigate those new concepts. The rules that
+worked well for basic set theory were inadequate for advanced number
+theory. Furthermore, subsequent analysis by Lenat and other researchers
+revealed that much of AM's success was inadvertently aided by the
+properties of the LISP programming language. Small syntactic changes in
+LISP expressions often resulted in meaningful mathematical mutations, a
+quirk that could not be relied upon for broader scientific
+discovery.</p>
+<h2 id="eurisko-evolving-the-heuristics">EURISKO: Evolving the
+Heuristics</h2>
+<p>To overcome AM’s stagnation, Lenat developed EURISKO in the late
+1970s. The primary objective of EURISKO was to apply heuristic discovery
+to the heuristics themselves. If AM discovered concepts, EURISKO was
+built to discover the rules of discovery.</p>
+<p>To achieve this, Lenat changed how heuristics were represented. In
+AM, heuristics were rigid blocks of LISP code that the program could
+execute but could not easily read or alter. In EURISKO, heuristics were
+represented as "units" or frames—the exact same data structures used for
+standard concepts. A heuristic had slots for its conditions, its
+actions, and its overall worth.</p>
+<p>Because heuristics were treated just like any other concept, EURISKO
+could apply its meta-heuristics to modify, combine, or delete existing
+heuristics based on their performance. If a heuristic consistently led
+to dead ends, its "interestingness" value dropped, and it was used less
+frequently. If a heuristic proved useful, EURISKO would attempt to
+specialize or generalize it to create new, potentially better rules.</p>
+<h2 id="real-world-applications-of-eurisko">Real-World Applications of
+EURISKO</h2>
+<p>Unlike AM, which was confined to mathematics, EURISKO was tested
+across various domains to prove the generality of self-modifying
+heuristics.</p>
+<p>One of its most famous triumphs occurred in the <em>Traveller
+Trillion Credit Squadron</em> competition, a complex war game where
+players design fleets of futuristic warships within strict budget and
+engineering constraints. EURISKO was fed the rules of the game and
+tasked with evolving a winning fleet. By mutating fleet configurations
+and testing them against simulated opponents, EURISKO discovered a
+loophole in the game's rules: a massive fleet of tiny, unmoving, heavily
+armed ships paired with a single fast ship to force draws when losing.
+EURISKO won the national championship in 1981. After the game organizers
+changed the rules to ban its strategy, EURISKO found a new, entirely
+different loophole and won again in 1982.</p>
+<p>EURISKO also made a significant contribution to Very Large-Scale
+Integration (VLSI) circuit design. Tasked with exploring
+three-dimensional microchips, EURISKO applied a heuristic favoring
+symmetry and discovered a high-density, three-dimensional NAND/OR gate
+structure that human engineers had not previously considered.</p>
+<h2 id="the-legacy-of-heuristic-discovery">The Legacy of Heuristic
+Discovery</h2>
+<p>While EURISKO successfully demonstrated that a symbolic AI could
+modify its own rules and adapt to new environments, it eventually
+encountered its own bottleneck. Lenat realized that for EURISKO to make
+leaps in complex domains, it needed a massive amount of foundational
+knowledge. Without a broad understanding of how the world works, the
+program spent too much time rediscovering basic truths or exploring
+nonsensical paths.</p>
+<p>This realization directly led Lenat to abandon pure heuristic
+discovery in 1984 to start the Cyc project. Cyc shifted the focus from
+discovering rules in a vacuum to manually encoding millions of pieces of
+human "common sense" knowledge, laying the groundwork for modern
+knowledge graphs and ontologies. Ultimately, AM and EURISKO proved that
+symbolic manipulation guided by heuristics could mimic human creativity,
+while simultaneously exposing the necessity of vast domain knowledge in
+artificial intelligence.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/heuristic-discovery-in-lenat-s-am-and-eurisko-programs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

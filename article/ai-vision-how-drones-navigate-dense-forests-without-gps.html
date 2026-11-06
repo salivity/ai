@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vision: How Drones Navigate Dense Forests Without GPS - ai</title>
+    <meta name="description" content="Autonomous drones are overcoming the challenge of flying through dense forests without GPS signals by relying on onboard computer vision and artificial intelligence. This article explores how these unmanned aerial vehicles (UAVs) perceive their surroundin">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-vision-how-drones-navigate-dense-forests-without-gps">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Vision: How Drones Navigate Dense Forests Without GPS - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-vision-how-drones-navigate-dense-forests-without-gps" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Autonomous drones are overcoming the challenge of flying through dense forests without GPS signals by relying on onboard computer vision and artificial intelligence. This article explores how these unmanned aerial vehicles (UAVs) perceive their surroundin" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-vision-how-drones-navigate-dense-forests-without-gps">AI
+Vision: How Drones Navigate Dense Forests Without GPS</h1>
+<p>Autonomous drones are overcoming the challenge of flying through
+dense forests without GPS signals by relying on onboard computer vision
+and artificial intelligence. This article explores how these unmanned
+aerial vehicles (UAVs) perceive their surroundings using stereoscopic
+cameras, build real-time 3D maps through Simultaneous Localization and
+Mapping (SLAM), and utilize deep learning algorithms on edge computing
+hardware to make split-second navigation decisions to avoid obstacles
+like branches and foliage.</p>
+<p>Standard drones rely heavily on Global Positioning System (GPS)
+satellites to know their location and maintain stable flight. However,
+dense forest canopies block these satellite signals, making traditional
+navigation impossible. Furthermore, GPS cannot detect localized
+obstacles like thin tree branches, shifting leaves, or uneven terrain.
+To survive in this environment, a drone must function entirely on its
+own internal sensors and processing power.</p>
+<p>Instead of looking to satellites, forest-navigating drones use
+onboard cameras to see the world. Many utilize stereoscopic vision,
+which involves two cameras spaced slightly apart, mimicking human eyes.
+By comparing the two slightly different images, the drone's computer
+calculates the depth and distance of every object in its field of view.
+Some drones also pair these cameras with miniature LiDAR (Light
+Detection and Ranging) sensors or depth cameras that project infrared
+light to measure distances in low-light conditions under the canopy.</p>
+<p>To fly through an unknown environment without GPS, the drone must map
+its surroundings while keeping track of its own movement. It achieves
+this through a technology called Visual Simultaneous Localization and
+Mapping (V-SLAM). V-SLAM algorithms track distinct visual features—such
+as the edge of a rock or the texture of tree bark—across consecutive
+video frames. By combining this visual data with readings from an
+Inertial Measurement Unit (IMU), which measures acceleration and
+rotation, the drone constructs a local 3D map and pinpoints its exact
+location within that map in real time.</p>
+<p>Seeing the trees is only half the battle; the drone must also
+understand what they are and how to fly around them. This is where
+artificial intelligence, specifically deep learning and convolutional
+neural networks (CNNs), takes over. The onboard AI processes the
+incoming video feed to classify objects, distinguishing between solid
+tree trunks, flexible leaves, and open air.</p>
+<p>Historically, a drone had to map an area, stop to calculate a safe
+path, and then move. Modern AI collapses this process. Using neural
+networks trained on millions of simulated flights, the AI translates raw
+camera images directly into flight commands. This allows the drone to
+identify a gap in the branches and instantly adjust its motor speeds to
+fly through it at high speeds.</p>
+<p>Wait times of even a few milliseconds can result in a crash when
+flying fast through a forest. Therefore, the drone cannot send video
+data to a cloud server for processing; everything must happen onboard.
+Drones achieve this using specialized "edge" computing hardware—tiny,
+lightweight microchips designed specifically to run AI algorithms with
+minimal battery consumption. This onboard brain processes dozens of
+frames per second, continuously updating the flight path to dodge
+unexpected obstacles, such as a bird or a swaying branch.</p>
+<p>By combining stereo vision, V-SLAM, and rapid edge-AI processing,
+autonomous drones have unlocked the ability to fly safely in the most
+cluttered environments on Earth. This technology is already transforming
+search and rescue operations, enabling drones to locate missing hikers
+under thick tree cover, and allowing environmental scientists to monitor
+forest health and wildlife autonomously from below the canopy.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-vision-how-drones-navigate-dense-forests-without-gps';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

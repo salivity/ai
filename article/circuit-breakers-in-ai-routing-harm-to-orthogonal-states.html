@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit Breakers in AI: Routing Harm to Orthogonal States - ai</title>
+    <meta name="description" content="This article explores how the Circuit Breakers alignment technique prevents artificial intelligence from generating harmful content. Instead of relying on fragile output filters or traditional refusal training, this method directly intervenes in the model">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/circuit-breakers-in-ai-routing-harm-to-orthogonal-states">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Circuit Breakers in AI: Routing Harm to Orthogonal States - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/circuit-breakers-in-ai-routing-harm-to-orthogonal-states" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the Circuit Breakers alignment technique prevents artificial intelligence from generating harmful content. Instead of relying on fragile output filters or traditional refusal training, this method directly intervenes in the model" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="circuit-breakers-in-ai-routing-harm-to-orthogonal-states">Circuit
+Breakers in AI: Routing Harm to Orthogonal States</h1>
+<p>This article explores how the Circuit Breakers alignment technique
+prevents artificial intelligence from generating harmful content.
+Instead of relying on fragile output filters or traditional refusal
+training, this method directly intervenes in the model's internal neural
+pathways. By detecting malicious representations during processing and
+routing them toward orthogonal refusal states, Circuit Breakers
+effectively neutralize threats mid-generation while preserving the AI's
+general capabilities.</p>
+<p>Traditional AI safety methods, such as Reinforcement Learning from
+Human Feedback (RLHF), focus on training models to recognize harmful
+prompts and output a standard refusal. However, these defenses are
+vulnerable to adversarial attacks and complex jailbreaks. Attackers can
+bypass input filters by disguising their intent, forcing the model into
+a state where it feels compelled to complete the harmful request.</p>
+<p>Circuit Breakers shift the focus from the model's inputs and outputs
+to its internal representations. As a large language model processes
+information, concepts are represented as multi-dimensional vectors
+within its hidden layers, known as the activation space. When a model
+prepares to generate dangerous content, specific patterns of neural
+activations—or harmful states—emerge inside this space, regardless of
+how clever or obfuscated the user's prompt was.</p>
+<p>To stop this, researchers use a technique called Representation
+Engineering (RepE) to map out the exact regions of the activation space
+associated with harmful generation. Once these harmful internal states
+are identified, the Circuit Breaker mechanism is trained into the model,
+often using lightweight adapters like Low-Rank Adaptation (LoRA). This
+mechanism constantly monitors the AI's internal state as it generates
+text token by token.</p>
+<p>When the model's internal trajectory begins to align with a known
+harmful representation, the Circuit Breaker trips. It interrupts the
+generation process by actively rerouting the model's internal vectors
+toward an "orthogonal refusal state."</p>
+<p>In geometry and linear algebra, orthogonal vectors are perpendicular
+to one another, meaning they share a dot product of zero and have no
+overlapping components. In the context of an AI's activation space, an
+orthogonal state is a neural representation that is completely
+independent of the harmful state. By forcing the malicious internal
+representation to shift ninety degrees into an orthogonal direction, the
+model completely loses the semantic thread of the harmful concept it was
+about to generate.</p>
+<p>Instead of landing in a random, incoherent space, the vector is
+specifically guided to a designated refusal state—or a total halt
+state—that is orthogonal to the harmful trajectory. Because the new
+state shares no informational overlap with the malicious state, the
+model cannot continue generating the dangerous material. It immediately
+defaults to a safe refusal or stops generating tokens altogether.</p>
+<p>This geometric rerouting provides two major advantages. First, it
+makes the AI highly resilient against unseen jailbreaks. Even if a novel
+prompt tricks the outer layers of the model, the inevitable internal
+activation of the harmful concept will trip the breaker before the
+output is fully realized. Second, because the intervention targets only
+the specific vectors associated with harm and moves them to an isolated
+orthogonal space, it avoids degrading the model's helpfulness on benign
+topics, solving the common trade-off between AI safety and utility.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/circuit-breakers-in-ai-routing-harm-to-orthogonal-states';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

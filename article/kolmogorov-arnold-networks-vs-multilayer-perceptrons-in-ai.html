@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolmogorov-Arnold Networks vs. Multilayer Perceptrons in AI - ai</title>
+    <meta name="description" content="This article explores the fundamental differences between Kolmogorov-Arnold Networks (KANs) and traditional Multilayer Perceptrons (MLPs) in artificial intelligence. It examines their distinct mathematical foundations, structural architectures, and how th">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/kolmogorov-arnold-networks-vs-multilayer-perceptrons-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kolmogorov-Arnold Networks vs. Multilayer Perceptrons in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/kolmogorov-arnold-networks-vs-multilayer-perceptrons-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the fundamental differences between Kolmogorov-Arnold Networks (KANs) and traditional Multilayer Perceptrons (MLPs) in artificial intelligence. It examines their distinct mathematical foundations, structural architectures, and how th" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="kolmogorov-arnold-networks-vs-multilayer-perceptrons-in-ai">Kolmogorov-Arnold
+Networks vs. Multilayer Perceptrons in AI</h1>
+<p>This article explores the fundamental differences between
+Kolmogorov-Arnold Networks (KANs) and traditional Multilayer Perceptrons
+(MLPs) in artificial intelligence. It examines their distinct
+mathematical foundations, structural architectures, and how they process
+data. Furthermore, the text highlights the practical implications of
+these differences, focusing on parameter efficiency, model
+interpretability, and computational performance.</p>
+<h2 id="mathematical-foundations">Mathematical Foundations</h2>
+<p>The primary difference between MLPs and KANs lies in the mathematical
+theorems that inspire them.</p>
+<p>Traditional MLPs are based on the Universal Approximation Theorem.
+This theorem states that a neural network with a single hidden layer
+containing a finite number of neurons can approximate any continuous
+function, provided the activation function is non-linear.</p>
+<p>KANs are based on the Kolmogorov-Arnold Representation Theorem. This
+theorem states that any multivariate continuous function can be
+represented as a superposition of continuous functions of a single
+variable and addition. Instead of learning linear combinations of fixed
+non-linearities, KANs learn the non-linear functions themselves.</p>
+<h2 id="architectural-differences-nodes-vs-edges">Architectural
+Differences: Nodes vs. Edges</h2>
+<p>The structural layout of nodes (neurons) and edges (connections) is
+inverted between the two architectures.</p>
+<p>In a traditional MLP:</p>
+<ul>
+<li><strong>Edges</strong> hold learnable weights (linear
+parameters).</li>
+<li><strong>Nodes</strong> apply fixed non-linear activation functions
+(such as ReLU, Sigmoid, or GELU) to the summed inputs.</li>
+</ul>
+<p>In a Kolmogorov-Arnold Network:</p>
+<ul>
+<li><strong>Edges</strong> contain learnable activation functions. These
+functions are typically parameterized as B-splines, which are piecewise
+polynomial functions that can adapt their shape during training.</li>
+<li><strong>Nodes</strong> simply sum the incoming signals without
+applying any non-linear activation or learnable weights.</li>
+</ul>
+<h2 id="parameter-efficiency-and-scaling">Parameter Efficiency and
+Scaling</h2>
+<p>Because KANs learn the activation functions directly on the edges,
+they can capture complex data patterns using significantly fewer
+parameters than MLPs. An MLP often requires thousands of wide and deep
+layers to approximate a function that a KAN can represent with just a
+few nodes.</p>
+<p>In tasks involving mathematical laws, physics simulations, and
+symbolic regression, KANs achieve higher accuracy with a fraction of the
+network size required by MLPs. This makes KANs highly
+parameter-efficient for specific scientific domains.</p>
+<h2 id="interpretability">Interpretability</h2>
+<p>MLPs are widely considered "black boxes." Because knowledge is
+distributed across millions of linear weights and fixed activations, it
+is extremely difficult for humans to understand the exact mathematical
+formula an MLP has learned.</p>
+<p>KANs offer much higher interpretability. Since the network is
+generally smaller and uses spline-based activation functions on the
+edges, researchers can visualize the learned functions directly. After
+training, a KAN can often be pruned and translated into a human-readable
+symbolic mathematical formula, making it easier to see exactly how the
+AI arrived at its conclusion.</p>
+<h2 id="training-and-computational-trade-offs">Training and
+Computational Trade-offs</h2>
+<p>While KANs excel in parameter efficiency and interpretability, MLPs
+currently hold an advantage in raw training speed and hardware
+optimization.</p>
+<p>MLPs rely heavily on simple matrix multiplications. Modern hardware,
+particularly GPUs and TPUs, is specifically engineered to execute matrix
+multiplications at massive scale and high speed.</p>
+<p>KANs must evaluate and update B-spline functions on every edge during
+training. This process is computationally heavier per parameter than the
+simple weight multiplication in MLPs. Consequently, a KAN may take
+longer to train than an MLP of comparable parameter size, though ongoing
+research is focused on optimizing KAN operations for modern
+hardware.</p>
+<h2 id="continual-learning-and-catastrophic-forgetting">Continual
+Learning and Catastrophic Forgetting</h2>
+<p>MLPs suffer from "catastrophic forgetting." When an MLP is trained on
+a new task, the global updates to its weights often overwrite the data
+it learned from previous tasks.</p>
+<p>KANs handle continual learning more effectively due to the local
+nature of splines. Because a B-spline only affects a specific local
+region of the input space, a KAN can learn new data patterns by
+adjusting splines in one region without disrupting the already-learned
+functions in other regions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/kolmogorov-arnold-networks-vs-multilayer-perceptrons-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

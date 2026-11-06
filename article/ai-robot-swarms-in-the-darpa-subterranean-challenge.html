@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Robot Swarms in the DARPA Subterranean Challenge - ai</title>
+    <meta name="description" content="The DARPA Subterranean Challenge pushed the boundaries of robotics by tasking heterogeneous teams of autonomous robots with exploring and mapping pitch-black caves, human-made tunnels, and ruined mines. Operating entirely without GPS and in environments t">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-robot-swarms-in-the-darpa-subterranean-challenge">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Robot Swarms in the DARPA Subterranean Challenge - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-robot-swarms-in-the-darpa-subterranean-challenge" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="The DARPA Subterranean Challenge pushed the boundaries of robotics by tasking heterogeneous teams of autonomous robots with exploring and mapping pitch-black caves, human-made tunnels, and ruined mines. Operating entirely without GPS and in environments t" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-robot-swarms-in-the-darpa-subterranean-challenge">AI Robot
+Swarms in the DARPA Subterranean Challenge</h1>
+<p>The DARPA Subterranean Challenge pushed the boundaries of robotics by
+tasking heterogeneous teams of autonomous robots with exploring and
+mapping pitch-black caves, human-made tunnels, and ruined mines.
+Operating entirely without GPS and in environments that quickly severed
+communications with human operators, these robotic swarms relied on
+decentralized multi-agent artificial intelligence to survive and
+succeed. This article breaks down the core technologies behind their
+success, specifically focusing on Simultaneous Localization and Mapping
+(SLAM), peer-to-peer mesh networks, autonomous task allocation, and
+multi-modal sensor fusion.</p>
+<h3 id="navigating-without-gps-multi-modal-slam">Navigating Without GPS:
+Multi-Modal SLAM</h3>
+<p>Because satellite signals cannot penetrate deep underground, robots
+could not use GPS to know their locations. Instead, teams utilized
+advanced Simultaneous Localization and Mapping (SLAM). Each robot built
+a 3D map of its immediate surroundings in real-time while tracking its
+own movement within that map.</p>
+<p>To do this in pitch-black, dust-filled, and smoke-obscured
+environments, robots relied on multi-modal sensor fusion. They combined
+data from LiDAR (laser scanners), thermal cameras, Inertial Measurement
+Units (IMUs), and proprioceptive sensors (which measure internal states
+like wheel slip or joint angles in legged robots). By fusing these
+inputs, the AI could accurately map a collapsing tunnel even if a sensor
+failed or became blinded by thick dust.</p>
+<h3 id="decentralized-multi-agent-coordination">Decentralized
+Multi-Agent Coordination</h3>
+<p>Relying on a central computer or a human operator to direct the
+robots was impossible because rock walls rapidly blocked radio signals.
+If a robot waited for human instructions after losing connection, it
+would become useless. The solution was decentralized multi-agent AI.</p>
+<p>Every robot in the swarm operated with its own onboard brain, making
+independent decisions based on its immediate environment. Instead of a
+central hive mind, the robots acted like a team of independent
+explorers. They used frontier-based exploration algorithms to identify
+the boundaries between mapped and unmapped areas. When two or more
+robots were within communication range of each other, they automatically
+negotiated to divide the workload. They shared their current
+trajectories and assigned themselves to different unexplored frontiers
+to prevent duplicating efforts.</p>
+<h3 id="overcoming-the-communication-blackout">Overcoming the
+Communication Blackout</h3>
+<p>To get data back to the human operators stationed outside the cave
+entrance, the robots had to build their own communication infrastructure
+on the fly. The teams used wheeled and legged robots—such as Boston
+Dynamics' Spot or custom-built rovers—to carry and physically drop
+wireless communication nodes onto the ground as they ventured
+deeper.</p>
+<p>These breadcrumbs formed a dynamic, peer-to-peer mesh network.
+However, nodes were limited, and robots eventually had to push beyond
+the network's reach into total isolation. In these "comms-denied" zones,
+a robot would continue exploring, mapping, and searching for targets
+(like survivors, backpacks, or gas leaks) completely on its own. Once
+its local memory was full or its battery ran low, the AI directed the
+robot to backtrack until it re-established a link with the mesh network
+or encountered another robot.</p>
+<h3 id="collaborative-map-merging">Collaborative Map Merging</h3>
+<p>When isolated robots finally reconnected with each other or the mesh
+network, they needed to combine their individual maps into one unified
+picture. Sharing massive, raw 3D point clouds over weak underground
+radio links was impossible due to severe bandwidth limits.</p>
+<p>To solve this, the onboard AI compressed the maps into lightweight
+"pose graphs"—simplified mathematical representations of the robot's
+path and key environmental features. When robots met in the dark, they
+exchanged these compact graphs. The AI used "loop closure" algorithms to
+recognize common physical landmarks that multiple robots had seen
+independently. By locking onto these shared landmarks, the system
+stitched the individual maps together, creating a single, highly
+accurate 3D map of the entire subterranean network for the human team
+waiting at the surface.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-robot-swarms-in-the-darpa-subterranean-challenge';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

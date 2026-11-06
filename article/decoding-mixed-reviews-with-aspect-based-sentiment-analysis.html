@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoding Mixed Reviews with Aspect-Based Sentiment Analysis - ai</title>
+    <meta name="description" content="Aspect-Based Sentiment Analysis (ABSA) is an advanced artificial intelligence technique that breaks down complex customer reviews to identify specific topics and their corresponding emotions. Unlike traditional sentiment analysis, which assigns a single p">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/decoding-mixed-reviews-with-aspect-based-sentiment-analysis">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Decoding Mixed Reviews with Aspect-Based Sentiment Analysis - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/decoding-mixed-reviews-with-aspect-based-sentiment-analysis" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Aspect-Based Sentiment Analysis (ABSA) is an advanced artificial intelligence technique that breaks down complex customer reviews to identify specific topics and their corresponding emotions. Unlike traditional sentiment analysis, which assigns a single p" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="decoding-mixed-reviews-with-aspect-based-sentiment-analysis">Decoding
+Mixed Reviews with Aspect-Based Sentiment Analysis</h1>
+<p>Aspect-Based Sentiment Analysis (ABSA) is an advanced artificial
+intelligence technique that breaks down complex customer reviews to
+identify specific topics and their corresponding emotions. Unlike
+traditional sentiment analysis, which assigns a single positive,
+negative, or neutral score to an entire block of text, ABSA untangles
+conflicting opinions within the same sentence. This article explains how
+AI models separate and evaluate contrasting feedback—such as praising a
+restaurant's delicious food while criticizing its slow service—through a
+step-by-step linguistic process.</p>
+<p>Traditional sentiment analysis struggles with mixed reviews. Consider
+the sentence: "The ribeye steak was cooked to perfection, but we waited
+over an hour for our table." A standard AI model might average the
+positive and negative words, incorrectly labeling the entire review as
+neutral. This hides critical business insights. ABSA solves this by
+moving from a document-level view to an entity-level view, treating the
+review as a collection of distinct opinions rather than one unified
+thought.</p>
+<p>The first step in disentangling these opinions is Aspect Term
+Extraction. Using Natural Language Processing (NLP) and Named Entity
+Recognition (NER), the AI scans the text to identify the specific nouns
+or noun phrases being discussed. In the example above, the model
+extracts "ribeye steak" and "table" (or "waited") as the core
+aspects.</p>
+<p>Once the specific terms are found, the AI performs Aspect
+Categorization. It groups the extracted terms into broader, predefined
+business categories. "Ribeye steak" is mapped to the <em>Food
+Quality</em> category, while "waited over an hour" is mapped to
+<em>Service Speed</em>. This ensures that varied phrasing from different
+customers still gets routed to the correct operational bucket.</p>
+<p>The next phase is Opinion Term Extraction, where the AI identifies
+the adjectives, adverbs, and verbs that express emotion. However, simply
+finding words like "perfection" and "waited" is not enough; the AI must
+know which opinion belongs to which aspect.</p>
+<p>To connect the right emotion to the right aspect, AI uses Dependency
+Parsing and Transformer-based attention mechanisms (such as BERT or GPT
+models).</p>
+<ul>
+<li><strong>Dependency Parsing:</strong> This maps the grammatical
+structure of the sentence. It creates a tree showing that "perfection"
+is grammatically linked to the "steak," and the conjunction "but"
+separates that clause from the negative experience of waiting.</li>
+<li><strong>Attention Mechanisms:</strong> Modern deep learning models
+calculate "attention weights," which determine how much context words in
+a sentence share with one another. The AI mathematically links
+"perfection" strongly to "steak" and weakly to "table," preventing the
+positive sentiment of the food from bleeding into the evaluation of the
+service.</li>
+</ul>
+<p>Finally, the model executes Sentiment Classification for each
+isolated pair. It evaluates the context of the linked words and assigns
+a polarity score. The pair (<em>Food Quality: "steak" +
+"perfection"</em>) is assigned a strong positive score. The pair
+(<em>Service Speed: "table" + "waited over an hour"</em>) is assigned a
+strong negative score.</p>
+<p>By breaking the text into grammatical pairs and analyzing contextual
+relationships, ABSA successfully outputs structured data from
+unstructured text. Instead of a useless "neutral" rating, restaurant
+management receives actionable intelligence: the kitchen is succeeding,
+and the front-of-house needs immediate improvement.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/decoding-mixed-reviews-with-aspect-based-sentiment-analysis';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

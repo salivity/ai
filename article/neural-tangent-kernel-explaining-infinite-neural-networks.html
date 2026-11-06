@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Tangent Kernel: Explaining Infinite Neural Networks - ai</title>
+    <meta name="description" content="This article explores the Neural Tangent Kernel (NTK) and its role in demystifying the training dynamics of infinitely wide artificial intelligence neural networks. By bridging the gap between complex deep learning models and classical kernel methods, the">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/neural-tangent-kernel-explaining-infinite-neural-networks">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Neural Tangent Kernel: Explaining Infinite Neural Networks - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/neural-tangent-kernel-explaining-infinite-neural-networks" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the Neural Tangent Kernel (NTK) and its role in demystifying the training dynamics of infinitely wide artificial intelligence neural networks. By bridging the gap between complex deep learning models and classical kernel methods, the" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="neural-tangent-kernel-explaining-infinite-neural-networks">Neural
+Tangent Kernel: Explaining Infinite Neural Networks</h1>
+<p>This article explores the Neural Tangent Kernel (NTK) and its role in
+demystifying the training dynamics of infinitely wide artificial
+intelligence neural networks. By bridging the gap between complex deep
+learning models and classical kernel methods, the NTK provides a
+rigorous mathematical framework for understanding how neural networks
+learn. The following sections break down the mechanics of the NTK, the
+behavior of networks as their width approaches infinity, the resulting
+linearization of training dynamics, and why this guarantees convergence
+to a global minimum.</p>
+<h2 id="the-challenge-of-deep-learning-dynamics">The Challenge of Deep
+Learning Dynamics</h2>
+<p>Standard artificial neural networks are notoriously difficult to
+analyze mathematically. During training, a network adjusts its internal
+parameters—weights and biases—using an algorithm called gradient
+descent. Because the relationship between the parameters and the
+network's output is highly non-linear, the optimization landscape is
+non-convex. This means it is filled with countless hills and valleys,
+making it theoretically difficult to guarantee that the network will
+find the best possible solution rather than getting stuck in a
+suboptimal state.</p>
+<h2 id="what-is-the-neural-tangent-kernel">What is the Neural Tangent
+Kernel?</h2>
+<p>Introduced by Arthur Jacot and his colleagues in 2018, the Neural
+Tangent Kernel is a mathematical tool that describes how a neural
+network's output changes during gradient descent.</p>
+<p>When a slight adjustment is made to a network's weights to correct an
+error on a specific data point, that adjustment also changes the
+network's predictions for all other data points. The NTK measures this
+exact relationship. It acts as a similarity matrix, quantifying how
+learning from one input influences the output of another input based on
+the gradients of the network's parameters.</p>
+<h2 id="the-infinite-width-limit">The Infinite Width Limit</h2>
+<p>In standard, finite-width neural networks, the NTK is not static. As
+the weights change during training, the gradients change, causing the
+NTK itself to evolve over time. This dynamic nature makes the math just
+as complex as the original network.</p>
+<p>However, a transformative simplification occurs in the "infinite
+width limit"—a theoretical state where the number of neurons in the
+network's hidden layers approaches infinity. Under a specific scaling of
+the weights (known as the NTK parameterization), two critical phenomena
+occur as the width grows to infinity:</p>
+<ol type="1">
+<li><strong>Deterministic Initialization:</strong> At the very beginning
+of training, the random initialization of the vast number of weights
+averages out, causing the NTK to converge to a fixed, predictable
+mathematical form.</li>
+<li><strong>Kernel Stability:</strong> Because there are infinitely many
+weights, each individual weight only needs to change by a microscopic,
+infinitesimal amount to collectively produce a significant change in the
+network's final output.</li>
+</ol>
+<h2 id="linearizing-the-training-dynamics">Linearizing the Training
+Dynamics</h2>
+<p>Because individual weights barely move from their initial values in
+an infinitely wide network, the gradients of the network remain constant
+throughout the entire training process. Consequently, the Neural Tangent
+Kernel freezes at its initial state and does not change during
+training.</p>
+<p>This constancy completely alters the nature of the optimization
+problem. Instead of a complex, non-linear system, the training dynamics
+of the infinitely wide neural network become strictly linear. The
+network behaves identically to a first-order Taylor expansion around its
+initial weights.</p>
+<h2 id="guaranteed-convergence-and-generalization">Guaranteed
+Convergence and Generalization</h2>
+<p>With a constant kernel and linear dynamics, training an infinitely
+wide neural network with gradient descent becomes mathematically
+equivalent to performing kernel regression—a well-understood, classical
+machine learning technique.</p>
+<p>This equivalence provides powerful theoretical guarantees:</p>
+<ul>
+<li><strong>Global Convergence:</strong> The complex, non-convex
+optimization landscape transforms into a simple convex one. Gradient
+descent is mathematically guaranteed to find the global minimum,
+reaching zero training loss as long as the NTK is positive
+definite.</li>
+<li><strong>Predictable Trajectory:</strong> Because the training is
+governed by a simple linear differential equation, researchers can
+calculate the exact state of the network at any point in time during
+training, including its final state, without actually running the
+step-by-step gradient descent algorithm.</li>
+<li><strong>Understanding Generalization:</strong> The NTK allows
+researchers to analyze what functions a neural network prefers to learn.
+It reveals an "implicit bias" toward simpler, smoother functions,
+helping explain why immense neural networks can memorize training data
+yet still generalize effectively to new, unseen data.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/neural-tangent-kernel-explaining-infinite-neural-networks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
