@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How CubeSats Use Edge AI to Filter Cloud-Covered Images - ai</title>
+    <meta name="description" content="Earth-observation CubeSats generate vast amounts of image data, much of which is rendered useless by clouds blocking the view of the ground. Historically, these small satellites transmitted every captured photograph to Earth, wasting limited bandwidth, ti">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-cube-sats-use-edge-ai-to-filter-cloud-covered-images">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How CubeSats Use Edge AI to Filter Cloud-Covered Images - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-cube-sats-use-edge-ai-to-filter-cloud-covered-images" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Earth-observation CubeSats generate vast amounts of image data, much of which is rendered useless by clouds blocking the view of the ground. Historically, these small satellites transmitted every captured photograph to Earth, wasting limited bandwidth, ti" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-cubesats-use-edge-ai-to-filter-cloud-covered-images">How
+CubeSats Use Edge AI to Filter Cloud-Covered Images</h1>
+<p>Earth-observation CubeSats generate vast amounts of image data, much
+of which is rendered useless by clouds blocking the view of the ground.
+Historically, these small satellites transmitted every captured
+photograph to Earth, wasting limited bandwidth, time, and onboard power.
+Today, CubeSats utilize onboard edge computer vision artificial
+intelligence to analyze photographs immediately after capture. By
+identifying and discarding cloud-obscured images directly in orbit,
+satellites only transmit clear, valuable data down to ground stations,
+drastically improving mission efficiency.</p>
+<h2 id="the-downlink-bottleneck">The Downlink Bottleneck</h2>
+<p>CubeSats are miniature satellites built in standard, compact units.
+Because of their small size, they have strict limits on battery power
+and antenna strength. Furthermore, a CubeSat can only transmit data when
+it passes directly over a ground station, giving it a communication
+window of just a few minutes per orbit.</p>
+<p>Earth is covered by clouds roughly 67% of the time. Without onboard
+filtering, up to two-thirds of the data transmitted during these brief
+communication windows consists of useless photos of clouds. Downlinking
+this unusable data wastes electricity and clogs transmission
+pipelines.</p>
+<h2 id="how-onboard-edge-ai-works">How Onboard Edge AI Works</h2>
+<p>Edge computing solves the downlink bottleneck by processing data
+right where it is gathered—on the satellite itself—rather than sending
+it to Earth for analysis. The process follows four main steps:</p>
+<ol type="1">
+<li><strong>Image Capture:</strong> The CubeSat's optical sensors
+capture a raw photograph of the Earth's surface.</li>
+<li><strong>Preprocessing:</strong> The onboard computer quickly formats
+the raw sensor data, often shrinking the image or separating it into
+specific light bands (such as visible and infrared light) to make it
+easier for the AI to read.</li>
+<li><strong>AI Inference:</strong> The image is fed into a pre-trained
+computer vision model, typically a lightweight Convolutional Neural
+Network (CNN). This AI model has been trained on thousands of previous
+satellite images to recognize the distinct textures, brightness, and
+thermal signatures of clouds compared to land, water, and snow.</li>
+<li><strong>Scoring:</strong> The AI assigns a "cloud cover score" to
+the image, calculating the exact percentage of the photograph obscured
+by clouds.</li>
+</ol>
+<h2 id="hardware-behind-the-ai">Hardware Behind the AI</h2>
+<p>Running artificial intelligence in space requires specialized
+hardware. Standard computer processors consume too much power and can be
+damaged by space radiation. CubeSats rely on low-power,
+radiation-tolerant Vision Processing Units (VPUs) and Field Programmable
+Gate Arrays (FPGAs).</p>
+<p>These microchips are designed specifically to run neural networks
+while consuming only a few watts of electricity—less power than a
+standard household lightbulb. They allow the satellite to process
+high-resolution images in milliseconds without draining the satellite's
+solar batteries.</p>
+<h2 id="the-discard-decision">The Discard Decision</h2>
+<p>Once the AI assigns a cloud cover score, the satellite's flight
+software makes an automated decision based on rules set by mission
+control.</p>
+<p>If an image has a cloud cover score above a certain threshold—for
+example, 80% cloud cover—the onboard computer immediately deletes the
+file from its memory. If the image falls below the threshold, it is
+compressed, stored, and placed in a priority queue for the next
+available downlink window.</p>
+<h2 id="benefits-for-earth-observation">Benefits for Earth
+Observation</h2>
+<p>By discarding cloudy images in space, CubeSats maximize their
+operational value. Ground stations receive only actionable data, which
+speeds up the response time for critical applications like tracking
+wildfires, monitoring agricultural health, and mapping flood zones.
+Additionally, the freed-up bandwidth allows satellites to capture and
+send more images of clear targets, effectively multiplying the
+scientific return of a single CubeSat mission.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-cube-sats-use-edge-ai-to-filter-cloud-covered-images';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

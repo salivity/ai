@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situation Calculus and Fluent Predicates in Logical AI - ai</title>
+    <meta name="description" content="This article explores the foundational concepts of Situation Calculus, a logical formalism used in artificial intelligence to represent and reason about dynamic worlds. It provides a straightforward explanation of the three core components—situations, act">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/situation-calculus-and-fluent-predicates-in-logical-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Situation Calculus and Fluent Predicates in Logical AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/situation-calculus-and-fluent-predicates-in-logical-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the foundational concepts of Situation Calculus, a logical formalism used in artificial intelligence to represent and reason about dynamic worlds. It provides a straightforward explanation of the three core components—situations, act" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="situation-calculus-and-fluent-predicates-in-logical-ai">Situation
+Calculus and Fluent Predicates in Logical AI</h1>
+<p>This article explores the foundational concepts of Situation
+Calculus, a logical formalism used in artificial intelligence to
+represent and reason about dynamic worlds. It provides a straightforward
+explanation of the three core components—situations, actions, and
+fluents—and details how fluent predicates effectively track changes
+across sequences of actions. Furthermore, the text examines how this
+framework utilizes successor state axioms to resolve the classic frame
+problem, enabling autonomous agents to accurately predict the outcomes
+of their actions over time.</p>
+<h2 id="what-is-situation-calculus">What is Situation Calculus?</h2>
+<p>Situation Calculus is a dialect of first-order logic initially
+introduced by John McCarthy in 1963 and later refined by Raymond Reiter.
+It is designed specifically to model dynamically changing environments.
+In traditional static logic, statements are timelessly true or false.
+However, in the real world, facts change as events occur. Situation
+Calculus provides a mathematical framework for artificial intelligence
+to plan, reason, and predict the future based on a sequence of
+actions.</p>
+<p>The framework relies on three fundamental elements:</p>
+<ul>
+<li><strong>Actions:</strong> Transitions that change the state of the
+world, such as <code>pickup(Box)</code> or
+<code>move(LocationA, LocationB)</code>.</li>
+<li><strong>Situations:</strong> A history of all actions that have
+occurred from a starting point. It is not a snapshot of the world, but
+rather a finite sequence of actions. The initial situation, before any
+actions occur, is typically denoted as <span
+class="math inline">\(S_0\)</span>.</li>
+<li><strong>Fluents:</strong> Conditions, properties, or relationships
+that can change their truth values from one situation to the next.</li>
+</ul>
+<p>To transition from one situation to another, Situation Calculus uses
+a binary function called <code>do</code>. The expression
+<code>do(a, s)</code> represents the new situation that results from
+performing action <code>a</code> in situation <code>s</code>. For
+example, if a robot picks up a box in the initial situation, the
+resulting situation is written as <code>do(pickup(Box), S0)</code>. If
+the robot then walks to a door, the next situation becomes
+<code>do(walk(Door), do(pickup(Box), S0))</code>.</p>
+<h2 id="how-fluent-predicates-track-world-changes">How Fluent Predicates
+Track World Changes</h2>
+<p>Fluent predicates are the specific mechanism Situation Calculus uses
+to track the state of the world across action sequences. Because the
+truth of a statement depends on the actions that have taken place, a
+fluent predicate always takes a situation as its final argument.</p>
+<p>There are two main types of fluents:</p>
+<ol type="1">
+<li><strong>Relational Fluents:</strong> Predicates that return a truth
+value (true or false) in a given situation. For example,
+<code>Holding(Robot, Box, s)</code> asserts that the robot is holding
+the box in situation <code>s</code>.</li>
+<li><strong>Functional Fluents:</strong> Functions that return a
+specific object or value in a given situation, such as
+<code>Location(Robot, s)</code>, which returns the robot's current
+coordinates.</li>
+</ol>
+<p>To track changes across a sequence of actions, an AI system evaluates
+the fluent predicate at different layers of the <code>do</code>
+function.</p>
+<p>Consider a scenario in the initial situation <span
+class="math inline">\(S_0\)</span>:</p>
+<ul>
+<li>The box is on the floor: <code>OnFloor(Box, S0)</code> is
+<strong>True</strong>.</li>
+<li>The robot is holding the box: <code>Holding(Robot, Box, S0)</code>
+is <strong>False</strong>.</li>
+</ul>
+<p>Now, the robot executes the action <code>pickup(Box)</code>. The
+system moves to a new situation, <span
+class="math inline">\(S_1\)</span>, which is defined as
+<code>do(pickup(Box), S0)</code>. The fluent predicates now update to
+reflect the change:</p>
+<ul>
+<li><code>OnFloor(Box, do(pickup(Box), S0))</code> becomes
+<strong>False</strong>.</li>
+<li><code>Holding(Robot, Box, do(pickup(Box), S0))</code> becomes
+<strong>True</strong>.</li>
+</ul>
+<p>By embedding the situation trace directly into the predicate, the AI
+maintains a complete historical record of how the world reached its
+current state.</p>
+<h2 id="preconditions-and-effects">Preconditions and Effects</h2>
+<p>For fluent predicates to track changes accurately, the logic must
+define the rules of the environment. This is done through two types of
+axioms:</p>
+<h3 id="action-precondition-axioms">Action Precondition Axioms</h3>
+<p>An action cannot always be performed. A robot cannot pick up a box if
+it is already holding something else, or if the box is in another room.
+Situation Calculus uses a special predicate, <code>Poss(a, s)</code>, to
+state that it is possible to execute action <code>a</code> in situation
+<code>s</code>.</p>
+<ul>
+<li><em>Example:</em>
+<code>Poss(pickup(x), s) ⇔ OnFloor(x, s) ∧ HandEmpty(s)</code></li>
+<li><em>Translation:</em> It is possible to pick up <code>x</code> in
+situation <code>s</code> if and only if <code>x</code> is on the floor
+in situation <code>s</code> and the robot's hand is empty in situation
+<code>s</code>.</li>
+</ul>
+<h3 id="effect-axioms">Effect Axioms</h3>
+<p>Effect axioms specify how an action changes the truth value of a
+fluent.</p>
+<ul>
+<li><em>Positive Effect Axiom:</em>
+<code>Poss(pickup(x), s) → Holding(x, do(pickup(x), s))</code> (If
+picking up <code>x</code> is possible, doing so results in holding
+<code>x</code>).</li>
+<li><em>Negative Effect Axiom:</em>
+<code>Poss(drop(x), s) → ¬Holding(x, do(drop(x), s))</code> (If dropping
+<code>x</code> is possible, doing so results in not holding
+<code>x</code>).</li>
+</ul>
+<h2 id="solving-the-frame-problem-with-successor-state-axioms">Solving
+the Frame Problem with Successor State Axioms</h2>
+<p>Tracking changes using only Effect Axioms leads to a famous AI
+challenge known as the <strong>Frame Problem</strong>. Effect axioms
+state what changes, but they do not state what stays the same. If a
+robot picks up a box, does the color of the walls change? Does the
+location of a table in the next room change? In pure logic, unless
+explicitly stated, the AI cannot assume unaffected fluents remain
+unchanged. Writing axioms for every non-effect (Frame Axioms) is
+computationally impossible in complex worlds.</p>
+<p>Raymond Reiter solved this in Situation Calculus by combining Effect
+Axioms and Frame Axioms into <strong>Successor State
+Axioms</strong>.</p>
+<p>A Successor State Axiom exists for each fluent predicate. It states
+that a fluent is true in the next situation if and only if:</p>
+<ol type="1">
+<li>An action occurred that made it true, <strong>OR</strong></li>
+<li>It was already true in the previous situation, <strong>AND</strong>
+no action occurred that made it false.</li>
+</ol>
+<p>Written logically for the <code>Holding</code> fluent, the Successor
+State Axiom looks like this:</p>
+<p><code>Poss(a, s) → [Holding(x, do(a, s)) ⇔ (a = pickup(x)) ∨ (Holding(x, s) ∧ a ≠ drop(x))]</code></p>
+<p><strong>Translation:</strong> Assuming action <code>a</code> is
+possible in situation <code>s</code>, the robot is holding
+<code>x</code> in the new situation <code>do(a, s)</code> if and only if
+the action <code>a</code> was to pick up <code>x</code>, OR the robot
+was already holding <code>x</code> in situation <code>s</code> and the
+action <code>a</code> was not to drop <code>x</code>.</p>
+<p>By applying Successor State Axioms, fluent predicates effortlessly
+track the state of the world across massive sequences of actions. The AI
+simply evaluates the current fluent by looking backward through the
+chain of <code>do</code> functions until it reaches the known facts of
+the initial situation <span class="math inline">\(S_0\)</span>, allowing
+for precise logical planning and reasoning.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/situation-calculus-and-fluent-predicates-in-logical-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

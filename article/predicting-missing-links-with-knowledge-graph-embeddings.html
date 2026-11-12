@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicting Missing Links with Knowledge Graph Embeddings - ai</title>
+    <meta name="description" content="Artificial intelligence relies heavily on knowledge graphs to structure human knowledge, yet these massive databases are notoriously incomplete. This article provides a clear overview of how Knowledge Graph Embedding (KGE) models address this issue throug">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/predicting-missing-links-with-knowledge-graph-embeddings">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Predicting Missing Links with Knowledge Graph Embeddings - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/predicting-missing-links-with-knowledge-graph-embeddings" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence relies heavily on knowledge graphs to structure human knowledge, yet these massive databases are notoriously incomplete. This article provides a clear overview of how Knowledge Graph Embedding (KGE) models address this issue throug" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="predicting-missing-links-with-knowledge-graph-embeddings">Predicting
+Missing Links with Knowledge Graph Embeddings</h1>
+<p>Artificial intelligence relies heavily on knowledge graphs to
+structure human knowledge, yet these massive databases are notoriously
+incomplete. This article provides a clear overview of how Knowledge
+Graph Embedding (KGE) models address this issue through automated link
+prediction. By translating complex entities and relationships into
+low-dimensional mathematical vectors, algorithms like TransE, RotatE,
+and ComplEx can geometrically and algebraically infer missing
+connections. Below, we examine the specific mathematical mechanics of
+these three foundational models and how they successfully predict unseen
+relational links across incomplete datasets.</p>
+<h2
+id="understanding-knowledge-graphs-and-the-missing-link-problem">Understanding
+Knowledge Graphs and the Missing Link Problem</h2>
+<p>A knowledge graph stores information in the form of triples:
+<strong>(head, relation, tail)</strong>, often abbreviated as
+<strong>(h, r, t)</strong>. For example, <em>(Paris, is_capital_of,
+France)</em> is a single triple.</p>
+<p>Real-world knowledge graphs contain millions of entities and billions
+of relations, making manual completion impossible. KGE models solve this
+by mapping every entity and relation into a continuous vector space.
+Once mapped, the model uses a scoring function to measure the
+plausibility of a potential triple. If a missing link is queried—such as
+<em>(Paris, is_capital_of, ?)</em>—the model tests candidate tail
+entities and ranks them by their mathematical scores to predict the most
+likely match.</p>
+<h2 id="transe-relations-as-simple-translations">TransE: Relations as
+Simple Translations</h2>
+<p>TransE (Translating Embeddings) is one of the earliest and most
+intuitive KGE models. It treats relationships as simple geometric
+translations in a vector space.</p>
+<ul>
+<li><strong>The Core Mechanism:</strong> TransE assumes that if a triple
+<em>(h, r, t)</em> holds true, the embedding of the tail entity
+<strong>t</strong> should be close to the embedding of the head entity
+<strong>h</strong> plus the relation vector <strong>r</strong>.</li>
+<li><strong>The Formula:</strong> <strong>h + r ≈ t</strong></li>
+<li><strong>Scoring:</strong> The model calculates the distance between
+<strong>(h + r)</strong> and <strong>t</strong>. A smaller distance
+indicates a higher probability that the link exists.</li>
+<li><strong>Strengths and Limits:</strong> TransE is computationally
+efficient and excels at modeling 1-to-1 relationships. However, it
+struggles with complex patterns. For example, it cannot properly model
+symmetric relations (e.g., <em>is_married_to</em>, where <strong>h + r =
+t</strong> and <strong>t + r = h</strong> would force <strong>r</strong>
+to be zero) or 1-to-many relationships.</li>
+</ul>
+<h2 id="rotate-relations-as-complex-rotations">RotatE: Relations as
+Complex Rotations</h2>
+<p>To overcome the geometric limitations of TransE, RotatE maps entities
+and relations into a complex vector space (using both real and imaginary
+numbers) and defines relations as rotations rather than
+translations.</p>
+<ul>
+<li><strong>The Core Mechanism:</strong> Motivated by Euler's identity,
+RotatE treats the relation <strong>r</strong> as a rotation from the
+head entity <strong>h</strong> to the tail entity <strong>t</strong> in
+a complex plane.</li>
+<li><strong>The Formula:</strong> <strong>t ≈ h ∘ r</strong> (where
+<strong>∘</strong> denotes the Hadamard, or element-wise, product, and
+the modulus of each element in <strong>r</strong> is constrained to
+1).</li>
+<li><strong>Strengths and Limits:</strong> By using rotation, RotatE can
+simultaneously model symmetry, antisymmetry, inversion, and composition.
+For instance, a symmetric relation is easily modeled as a 180-degree
+rotation; rotating twice brings you back to the starting entity. This
+allows RotatE to predict missing links in highly complex relational
+structures where TransE fails.</li>
+</ul>
+<h2 id="complex-capturing-asymmetry-with-tensor-factorization">ComplEx:
+Capturing Asymmetry with Tensor Factorization</h2>
+<p>While TransE and RotatE are distance-based models, ComplEx is a
+semantic matching model. It uses tensor factorization in the complex
+space to measure the plausibility of a link based on latent semantics
+rather than geometric distance.</p>
+<ul>
+<li><strong>The Core Mechanism:</strong> Standard dot-product models
+fail at asymmetric relations (e.g., <em>is_parent_of</em>) because the
+dot product is commutative (<strong>h · t = t · h</strong>). ComplEx
+solves this by using complex vectors and incorporating the complex
+conjugate of the tail entity.</li>
+<li><strong>The Scoring Function:</strong> ComplEx calculates the score
+by taking the real part of the Hermitian dot product of
+<strong>h</strong>, <strong>r</strong>, and the conjugate of
+<strong>t</strong>.</li>
+<li><strong>Strengths and Limits:</strong> Because the product involves
+a complex conjugate, the operation is no longer commutative. The score
+for <em>(h, r, t)</em> becomes fundamentally different from <em>(t, r,
+h)</em>. This enables ComplEx to accurately predict missing links in
+both symmetric and asymmetric relations while maintaining low
+computational complexity.</li>
+</ul>
+<h2 id="how-the-prediction-pipeline-works">How the Prediction Pipeline
+Works</h2>
+<p>Regardless of the specific architecture, TransE, RotatE, and ComplEx
+follow the same fundamental pipeline to predict missing links in an
+incomplete database:</p>
+<ol type="1">
+<li><strong>Initialization:</strong> Entities and relations are assigned
+random vector values.</li>
+<li><strong>Negative Sampling:</strong> Because databases only store
+true facts, the system generates false triples (negative samples) by
+corrupting true triples—such as replacing <em>France</em> with
+<em>Germany</em> in <em>(Paris, is_capital_of, France)</em>.</li>
+<li><strong>Training:</strong> The model is trained via gradient descent
+to maximize the plausibility scores of true triples and minimize the
+scores of negative samples.</li>
+<li><strong>Inference:</strong> To find a missing link, the trained
+model substitutes every possible entity into the unknown position of an
+incomplete triple, calculates the score using its specific formula
+(TransE, RotatE, or ComplEx), and outputs the highest-scoring entity as
+the predicted link.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/predicting-missing-links-with-knowledge-graph-embeddings';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

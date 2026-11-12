@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bitter Lesson: Computation vs. Human Knowledge in AI - ai</title>
+    <meta name="description" content="In 2019, pioneer artificial intelligence researcher Rich Sutton published an influential essay titled &quot;The Bitter Lesson,&quot; which argues that leveraging massive computational power consistently outperforms relying on human-engineered knowledge in AI develo">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/the-bitter-lesson-computation-vs-human-knowledge-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Bitter Lesson: Computation vs. Human Knowledge in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/the-bitter-lesson-computation-vs-human-knowledge-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In 2019, pioneer artificial intelligence researcher Rich Sutton published an influential essay titled &quot;The Bitter Lesson,&quot; which argues that leveraging massive computational power consistently outperforms relying on human-engineered knowledge in AI develo" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-bitter-lesson-computation-vs-human-knowledge-in-ai">The
+Bitter Lesson: Computation vs. Human Knowledge in AI</h1>
+<p>In 2019, pioneer artificial intelligence researcher Rich Sutton
+published an influential essay titled "The Bitter Lesson," which argues
+that leveraging massive computational power consistently outperforms
+relying on human-engineered knowledge in AI development. This article
+provides a clear breakdown of Sutton’s thesis, explaining why
+general-purpose methods that scale with computation—specifically search
+and learning—always defeat human-centric approaches in the long run. By
+examining historical milestones in AI, from board games to computer
+vision and natural language processing, we will explore why researchers
+repeatedly struggle to accept this lesson and what it means for the
+future of artificial intelligence.</p>
+<p>At its core, the Bitter Lesson is based on a recurring historical
+pattern in AI research. When trying to solve a complex problem,
+researchers usually attempt to build their own domain knowledge and
+understanding of the world directly into the AI system. This
+human-centric approach yields satisfying, immediate gains in the short
+term. However, these hand-crafted systems eventually hit a performance
+plateau. Ultimately, they are completely surpassed by a much simpler,
+general-purpose approach that relies on brute-force computation rather
+than human intuition.</p>
+<p>The primary driver behind this phenomenon is Moore's Law, or more
+broadly, the continued exponential drop in the cost of computation.
+While human knowledge and engineering effort do not scale exponentially,
+computing power does. Therefore, AI methods designed to automatically
+absorb and utilize vast amounts of computation will inevitably overtake
+methods limited by human design.</p>
+<p>Sutton identifies two specific methods that scale arbitrarily well
+with increased computation: <strong>search</strong> and
+<strong>learning</strong>.</p>
+<p>Historical examples clearly illustrate this dynamic:</p>
+<ul>
+<li><strong>Chess:</strong> For decades, AI researchers tried to program
+computers to play chess by mimicking how human grandmasters think. They
+coded specific strategies and rules into the software. This failed to
+beat the best humans. Victory only came in 1997 when IBM's Deep Blue
+used massive, brute-force <em>search</em> to evaluate millions of moves
+per second, bypassing human-like intuition entirely.</li>
+<li><strong>Go:</strong> The game of Go is vastly more complex than
+chess, making brute-force search alone ineffective. Researchers again
+tried to leverage human knowledge to build Go-playing bots. However, the
+breakthrough came with DeepMind's AlphaGo, and more specifically its
+successor, AlphaZero. AlphaZero abandoned human game records entirely,
+utilizing deep reinforcement <em>learning</em> and self-play to master
+the game purely through massive computation.</li>
+<li><strong>Speech Recognition:</strong> Early speech systems relied
+heavily on linguists hard-coding the rules of phonology and grammar.
+Over time, statistical methods and deep learning models—which knew
+nothing of linguistics but processed massive datasets using immense
+compute—completely replaced the human-engineered systems.</li>
+<li><strong>Computer Vision:</strong> Early attempts to help computers
+"see" involved researchers manually programming the system to look for
+specific edges, shapes, and textures. Today, deep neural networks learn
+to identify objects on their own by processing millions of data points,
+rendering the hand-crafted features obsolete.</li>
+</ul>
+<p>The lesson is described as "bitter" because it strikes at the human
+ego. Researchers naturally want to believe that the secrets of
+intelligence lie in the cleverness of the human mind and our ability to
+deconstruct how we think. It is deeply unsatisfying to realize that
+trying to teach a machine <em>how</em> to think is actually a
+bottleneck. Instead, the most effective strategy is to build blank-slate
+meta-methods (like neural networks) that can discover how to solve
+problems on their own, given enough data and processing power.</p>
+<p>The takeaway from Rich Sutton's observation is direct: AI researchers
+must stop trying to build their own knowledge into agents. Instead, the
+focus of AI development should remain strictly on discovering and
+refining general-purpose algorithms for search and learning that can
+seamlessly scale alongside the inevitable growth of computational
+power.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/the-bitter-lesson-computation-vs-human-knowledge-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

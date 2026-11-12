@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Named Entity Recognition Extracts Structured Data - ai</title>
+    <meta name="description" content="Named Entity Recognition (NER) is a core component of natural language processing in artificial intelligence that transforms unstructured text into structured data. This article explores the exact process NER systems use to read raw documents, identify ke">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-named-entity-recognition-extracts-structured-data">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Named Entity Recognition Extracts Structured Data - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-named-entity-recognition-extracts-structured-data" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Named Entity Recognition (NER) is a core component of natural language processing in artificial intelligence that transforms unstructured text into structured data. This article explores the exact process NER systems use to read raw documents, identify ke" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-named-entity-recognition-extracts-structured-data">How Named
+Entity Recognition Extracts Structured Data</h1>
+<p>Named Entity Recognition (NER) is a core component of natural
+language processing in artificial intelligence that transforms
+unstructured text into structured data. This article explores the exact
+process NER systems use to read raw documents, identify key concepts,
+and categorize them into predefined groups like names, organizations,
+locations, and dates. By moving from basic text preparation to advanced
+deep learning contextual analysis, NER bridges the gap between human
+language and machine-readable databases.</p>
+<h2 id="text-preprocessing">Text Preprocessing</h2>
+<p>Before an AI can identify entities, it must break down the
+unstructured document into manageable pieces through preprocessing:</p>
+<ul>
+<li><strong>Sentence Segmentation:</strong> The system divides the raw
+text into individual sentences based on punctuation and formatting.</li>
+<li><strong>Tokenization:</strong> Each sentence is split into smaller
+units called tokens, which are usually individual words, numbers, or
+punctuation marks.</li>
+<li><strong>Part-of-Speech (POS) Tagging:</strong> The AI assigns
+grammatical labels to each token, identifying whether a word is a noun,
+verb, adjective, or proper noun. Since entities are almost always nouns
+or proper nouns, this step significantly narrows down the search.</li>
+</ul>
+<h2 id="entity-identification-and-chunking">Entity Identification and
+Chunking</h2>
+<p>Once the text is tokenized, the NER system must determine the
+boundaries of an entity. Many entities consist of multiple words, such
+as "New York City" or "Bank of America."</p>
+<p>To handle this, AI models often use a tagging scheme called IOB
+(Inside, Outside, Beginning). The system scans the tokens
+sequentially:</p>
+<ul>
+<li><strong>B (Beginning):</strong> Marks the first token of a detected
+entity.</li>
+<li><strong>I (Inside):</strong> Marks subsequent tokens that are part
+of the same entity.</li>
+<li><strong>O (Outside):</strong> Marks tokens that do not belong to any
+entity.</li>
+</ul>
+<p>This chunking process ensures that multi-word phrases are extracted
+as a single unit rather than separate, disconnected pieces of data.</p>
+<h2 id="contextual-classification">Contextual Classification</h2>
+<p>After identifying the boundaries of an entity, the system classifies
+it into a specific category (e.g., Person, Organization, Location,
+Time). Modern AI relies on statistical models and deep learning to solve
+the problem of ambiguity, as the same word can have different meanings
+depending on how it is used.</p>
+<p>For example, the word "Apple" could refer to a fruit or a technology
+company. The word "Washington" could refer to a person, a state, or a
+city. Modern NER systems use Transformer-based architectures (like BERT
+or GPT) to analyze the surrounding words—the context. If the sentence
+reads, "Apple released a new phone," the AI uses the words "released"
+and "phone" to calculate a high probability that "Apple" is an
+Organization.</p>
+<h2 id="structuring-the-output">Structuring the Output</h2>
+<p>In the final stage, the NER system extracts the tagged and classified
+tokens from the original text and formats them into a structured layout,
+such as JSON, XML, or a relational database table.</p>
+<p>For instance, the unstructured sentence, "John Smith signed the
+contract in London on Tuesday," is automatically converted into
+structured key-value pairs:</p>
+<ul>
+<li><strong>Person:</strong> John Smith</li>
+<li><strong>Location:</strong> London</li>
+<li><strong>Date:</strong> Tuesday</li>
+</ul>
+<p>This structured output can now be easily searched, analyzed, and
+integrated into other software systems without human intervention.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-named-entity-recognition-extracts-structured-data';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

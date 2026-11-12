@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Affinity Propagation Passes Messages for AI Clustering - ai</title>
+    <meta name="description" content="This article explains the mechanics of Affinity Propagation, an unsupervised machine learning clustering algorithm that identifies representative data points called exemplars. Unlike traditional clustering methods that require specifying the number of clu">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-affinity-propagation-passes-messages-for-ai-clustering">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Affinity Propagation Passes Messages for AI Clustering - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-affinity-propagation-passes-messages-for-ai-clustering" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the mechanics of Affinity Propagation, an unsupervised machine learning clustering algorithm that identifies representative data points called exemplars. Unlike traditional clustering methods that require specifying the number of clu" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-affinity-propagation-passes-messages-for-ai-clustering">How
+Affinity Propagation Passes Messages for AI Clustering</h1>
+<p>This article explains the mechanics of Affinity Propagation, an
+unsupervised machine learning clustering algorithm that identifies
+representative data points called exemplars. Unlike traditional
+clustering methods that require specifying the number of clusters in
+advance, Affinity Propagation simultaneously considers all data points
+as potential exemplars. It achieves clustering by iteratively passing
+two types of real-valued messages—responsibility and
+availability—between pairs of data points until a high-quality set of
+exemplars and corresponding clusters emerges.</p>
+<h2 id="the-foundation-similarity-matrix">The Foundation: Similarity
+Matrix</h2>
+<p>Before any messages are passed, Affinity Propagation establishes a
+baseline using a similarity matrix. For every pair of data points, <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span>, the algorithm calculates a similarity
+score, <span class="math inline">\(s(i, k)\)</span>, which reflects how
+well data point <span class="math inline">\(k\)</span> is suited to be
+the exemplar for data point <span class="math inline">\(i\)</span>.
+Typically, this is calculated using the negative squared Euclidean
+distance between the two points.</p>
+<p>The diagonal of this matrix contains the "self-similarities," <span
+class="math inline">\(s(k, k)\)</span>, also known as preferences. The
+preference value dictates the likelihood of a specific data point <span
+class="math inline">\(k\)</span> becoming an exemplar. Higher preference
+values result in a larger number of final clusters, while lower values
+yield fewer clusters.</p>
+<h2 id="message-1-responsibility">Message 1: Responsibility</h2>
+<p>Responsibility, denoted as <span class="math inline">\(r(i,
+k)\)</span>, is a message sent from data point <span
+class="math inline">\(i\)</span> to candidate exemplar <span
+class="math inline">\(k\)</span>. It reflects the accumulated evidence
+of how well-suited point <span class="math inline">\(k\)</span> is to
+serve as the exemplar for point <span class="math inline">\(i\)</span>,
+taking into account other potential exemplars for point <span
+class="math inline">\(i\)</span>.</p>
+<p>In each iteration, the responsibility is updated using the following
+logic:</p>
+<ol type="1">
+<li>Point <span class="math inline">\(i\)</span> looks at its similarity
+to candidate <span class="math inline">\(k\)</span>, which is <span
+class="math inline">\(s(i, k)\)</span>.</li>
+<li>It subtracts the maximum value of the sum of availabilities and
+similarities of all <em>other</em> candidate exemplars <span
+class="math inline">\(k&#39;\)</span>.</li>
+<li>The mathematical formula is: <span class="math inline">\(r(i, k) =
+s(i, k) - \max_{k&#39; \neq k} \{a(i, k&#39;) + s(i,
+k&#39;)\}\)</span>.</li>
+</ol>
+<p>In plain terms, a data point <span class="math inline">\(i\)</span>
+tells candidate <span class="math inline">\(k\)</span>: "You are my best
+option for an exemplar by this specific margin, compared to my next best
+option." If another point <span class="math inline">\(k&#39;\)</span>
+becomes more available or is more similar to <span
+class="math inline">\(i\)</span>, the responsibility <span
+class="math inline">\(r(i, k)\)</span> decreases.</p>
+<h2 id="message-2-availability">Message 2: Availability</h2>
+<p>Availability, denoted as <span class="math inline">\(a(i,
+k)\)</span>, is a message sent from candidate exemplar <span
+class="math inline">\(k\)</span> back to data point <span
+class="math inline">\(i\)</span>. It reflects the accumulated evidence
+of how appropriate it would be for point <span
+class="math inline">\(i\)</span> to choose point <span
+class="math inline">\(k\)</span> as its exemplar, taking into account
+the support provided by other data points that also want <span
+class="math inline">\(k\)</span> as their exemplar.</p>
+<p>Availability is updated in two distinct ways depending on whether
+<span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span> are the same point:</p>
+<ul>
+<li><strong>Standard Availability (<span class="math inline">\(i \neq
+k\)</span>):</strong> Candidate <span class="math inline">\(k\)</span>
+sums its self-responsibility <span class="math inline">\(r(k,
+k)\)</span> and all the positive responsibilities it receives from other
+points <span class="math inline">\(i&#39;\)</span> (excluding <span
+class="math inline">\(i\)</span>). The sum is capped at zero so that
+availability cannot be positive, preventing runaway feedback loops. The
+formula is: <span class="math inline">\(a(i, k) = \min(0, r(k, k) +
+\sum_{i&#39; \notin \{i, k\}} \max(0, r(i&#39;, k)))\)</span>.</li>
+<li><strong>Self-Availability (<span class="math inline">\(i =
+k\)</span>):</strong> The availability of a point to itself is simply
+the sum of all positive responsibilities it receives from other points:
+<span class="math inline">\(a(k, k) = \sum_{i&#39; \neq k} \max(0,
+r(i&#39;, k))\)</span>.</li>
+</ul>
+<p>In plain terms, candidate <span class="math inline">\(k\)</span>
+tells data point <span class="math inline">\(i\)</span>: "Based on how
+much I want to be an exemplar and how many other points are voting for
+me, here is how available I am to lead your cluster." By only summing
+<em>positive</em> responsibilities, candidate <span
+class="math inline">\(k\)</span> only cares about points that actively
+prefer it over other candidates.</p>
+<h2 id="selecting-the-exemplars">Selecting the Exemplars</h2>
+<p>The message-passing process is iterative. Initially, all
+availabilities are set to zero, and responsibilities are calculated.
+Then, availabilities are updated using the new responsibilities.</p>
+<p>To prevent numerical oscillations—where points endlessly flip-flop
+between choosing different exemplars—a damping factor (<span
+class="math inline">\(\lambda\)</span>, typically between 0.5 and 0.9)
+is applied at each step. Each new message is set to <span
+class="math inline">\(\lambda\)</span> times the message from the
+previous iteration plus <span class="math inline">\((1 -
+\lambda)\)</span> times the newly calculated message.</p>
+<p>At any point during or at the end of the iterations, responsibilities
+and availabilities are combined to identify the exemplars. For a
+specific data point <span class="math inline">\(i\)</span>, the value of
+<span class="math inline">\(k\)</span> that maximizes the sum <span
+class="math inline">\(a(i, k) + r(i, k)\)</span> identifies point <span
+class="math inline">\(i\)</span>'s exemplar.</p>
+<ul>
+<li>If <span class="math inline">\(k = i\)</span>, then data point <span
+class="math inline">\(i\)</span> is selected as an exemplar itself.</li>
+<li>If <span class="math inline">\(k \neq i\)</span>, then data point
+<span class="math inline">\(i\)</span> belongs to the cluster
+represented by exemplar <span class="math inline">\(k\)</span>.</li>
+</ul>
+<p>The algorithm terminates when the chosen exemplars remain constant
+for a specified number of iterations, or when the changes in the
+messages fall below a predefined threshold, locking in the final
+clusters.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-affinity-propagation-passes-messages-for-ai-clustering';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

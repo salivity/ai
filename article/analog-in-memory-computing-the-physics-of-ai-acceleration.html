@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog In-Memory Computing: The Physics of AI Acceleration - ai</title>
+    <meta name="description" content="This article provides an overview of how analog in-memory computing chips overcome the bottlenecks of traditional processors by executing artificial intelligence workloads directly within memory arrays. It explores the architecture of crossbar arrays, the">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/analog-in-memory-computing-the-physics-of-ai-acceleration">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Analog In-Memory Computing: The Physics of AI Acceleration - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/analog-in-memory-computing-the-physics-of-ai-acceleration" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides an overview of how analog in-memory computing chips overcome the bottlenecks of traditional processors by executing artificial intelligence workloads directly within memory arrays. It explores the architecture of crossbar arrays, the" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="analog-in-memory-computing-the-physics-of-ai-acceleration">Analog
+In-Memory Computing: The Physics of AI Acceleration</h1>
+<p>This article provides an overview of how analog in-memory computing
+chips overcome the bottlenecks of traditional processors by executing
+artificial intelligence workloads directly within memory arrays. It
+explores the architecture of crossbar arrays, the utilization of
+phase-change memory and memristors to store neural network weights, and
+how these components rely on fundamental physics—specifically Ohm's law
+and Kirchhoff's current law—to perform massive matrix-vector
+multiplications instantaneously.</p>
+<h2 id="the-von-neumann-bottleneck-and-in-memory-computing">The Von
+Neumann Bottleneck and In-Memory Computing</h2>
+<p>Traditional computing relies on the von Neumann architecture, which
+physically separates the central processing unit (CPU) from the memory
+unit. Modern artificial intelligence (AI) models, particularly deep
+neural networks, require millions or billions of parameters to be
+constantly shuttled back and forth between memory and the processor.
+This data movement consumes massive amounts of energy and limits
+processing speed, a limitation known as the von Neumann bottleneck.</p>
+<p>Analog in-memory computing (AIMC) eliminates this bottleneck by
+performing calculations directly inside the memory where the data is
+stored. The primary mathematical operation in AI is matrix-vector
+multiplication (MVM). AIMC chips are specifically designed to execute
+MVM operations in a single computational step using the physical
+properties of memory devices arranged in a grid.</p>
+<h2 id="crossbar-arrays-memristors-and-phase-change-memory">Crossbar
+Arrays: Memristors and Phase-Change Memory</h2>
+<p>The foundation of an analog in-memory computing chip is the crossbar
+array. A crossbar array consists of a grid of horizontal metal wires
+(wordlines) intersecting with vertical metal wires (bitlines). At every
+intersection, or crosspoint, a non-volatile resistive memory device
+connects the horizontal wire to the vertical wire.</p>
+<p>Two primary technologies are used at these intersections:</p>
+<ul>
+<li><strong>Memristors (Resistive Random-Access Memory):</strong> These
+are two-terminal electrical components that limit or regulate the flow
+of electrical current in a circuit and remember the amount of charge
+that has previously flowed through them. By applying specific voltage
+pulses, the internal atomic structure of the memristor changes, allowing
+it to be programmed to various states of electrical resistance.</li>
+<li><strong>Phase-Change Memory (PCM):</strong> PCM devices use
+chalcogenide glass that can be switched between two physical states by
+applying heat via electrical pulses. The amorphous state has a
+disordered atomic structure and exhibits high electrical resistance. The
+crystalline state has an ordered atomic structure and exhibits low
+electrical resistance. By controlling the size of the crystalline and
+amorphous regions, the device can achieve a continuous spectrum of
+resistance levels.</li>
+</ul>
+<p>In the context of AI, it is easier to work with conductance (the ease
+with which electric current flows), which is simply the inverse of
+resistance (<span class="math inline">\(G = 1/R\)</span>). Before
+executing an AI task, the synaptic weights of a neural network's matrix
+are mapped and programmed into the crossbar array as specific
+conductance values within the memristors or PCM cells.</p>
+<h2 id="multiplication-via-ohms-law">Multiplication via Ohm's Law</h2>
+<p>Once the AI model's matrix weights are stored as conductance values
+at the crosspoints of the array, the chip is ready to process input data
+(the vector). The input vector is converted from digital numbers into
+continuous analog voltages using Digital-to-Analog Converters
+(DACs).</p>
+<p>These analog voltages are applied simultaneously to the horizontal
+rows of the crossbar array. As the voltage travels along a horizontal
+wire and passes through a memristor or PCM cell at an intersection, a
+fundamental physical law takes over: Ohm's law.</p>
+<p>Ohm's law states that the electrical current (<span
+class="math inline">\(I\)</span>) passing through a conductor is equal
+to the voltage (<span class="math inline">\(V\)</span>) applied across
+it multiplied by its conductance (<span
+class="math inline">\(G\)</span>), expressed mathematically as <span
+class="math inline">\(I = V \times G\)</span>.</p>
+<p>In the crossbar array, the input data is the voltage (<span
+class="math inline">\(V\)</span>), and the stored AI weight is the
+conductance (<span class="math inline">\(G\)</span>). Simply by letting
+the electricity pass through the memory cell, the physical hardware
+naturally multiplies the two values together. The resulting electrical
+current (<span class="math inline">\(I\)</span>) exiting that specific
+memory cell is the exact product of the input and the weight.</p>
+<h2 id="accumulation-via-kirchhoffs-current-law">Accumulation via
+Kirchhoff's Current Law</h2>
+<p>Matrix-vector multiplication requires not just multiplying inputs by
+weights, but also summing those products together for each column. In a
+digital processor, this requires multiple clock cycles of fetching and
+adding numbers. In an analog crossbar array, this happens instantly via
+Kirchhoff’s current law.</p>
+<p>Kirchhoff’s current law states that the total current entering a
+junction or a wire must equal the total current leaving it.</p>
+<p>As each memory cell in a vertical column produces its own electrical
+current (via Ohm's law), those individual currents flow out of the cells
+and merge into the shared vertical bitline wire. Because currents
+naturally add together when they share a path, the total current
+reaching the bottom of a vertical column is the exact sum of all the
+currents generated by the memory cells in that column.</p>
+<p>Mathematically, the total current at the bottom of the column
+represents <span class="math inline">\(\sum (V_i \times G_i)\)</span>,
+which is the complete dot product of the input vector and the column of
+matrix weights. Since a crossbar array has many columns, the chip
+calculates the dot products for the entire matrix simultaneously.</p>
+<h2 id="completing-the-loop">Completing the Loop</h2>
+<p>The final step of the process occurs at the bottom of the vertical
+columns. The accumulated analog currents are read by Analog-to-Digital
+Converters (ADCs). The ADCs translate the physical electrical currents
+back into digital binary numbers, which can then be passed to standard
+digital logic for activation functions or routed to the next crossbar
+array for the subsequent layer of the neural network. By relying on
+Ohm's law and Kirchhoff's law to do the heavy lifting, analog in-memory
+chips execute complex matrix math at the speed of electricity,
+drastically reducing the time and energy required for AI
+computation.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/analog-in-memory-computing-the-physics-of-ai-acceleration';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

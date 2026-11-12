@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mathematical Impossibility of Absolute AI Fairness - ai</title>
+    <meta name="description" content="Artificial intelligence models cannot simultaneously satisfy all statistical definitions of fairness due to inherent mathematical contradictions known as the impossibility theorems of fairness. When an algorithm makes predictions about different demograph">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/the-mathematical-impossibility-of-absolute-ai-fairness">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Mathematical Impossibility of Absolute AI Fairness - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/the-mathematical-impossibility-of-absolute-ai-fairness" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence models cannot simultaneously satisfy all statistical definitions of fairness due to inherent mathematical contradictions known as the impossibility theorems of fairness. When an algorithm makes predictions about different demograph" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-mathematical-impossibility-of-absolute-ai-fairness">The
+Mathematical Impossibility of Absolute AI Fairness</h1>
+<p>Artificial intelligence models cannot simultaneously satisfy all
+statistical definitions of fairness due to inherent mathematical
+contradictions known as the impossibility theorems of fairness. When an
+algorithm makes predictions about different demographic groups that have
+unequal real-world baseline rates for a specific outcome, it is
+mathematically impossible to achieve equal predictive accuracy, equal
+false positive rates, and equal selection rates at the same time. This
+article explores the core statistical definitions of algorithmic
+fairness, the mathematical trade-offs that force these definitions into
+conflict, and why developers must choose which type of fairness to
+prioritize based on the specific context of the AI application.</p>
+<h2 id="the-three-core-definitions-of-statistical-fairness">The Three
+Core Definitions of Statistical Fairness</h2>
+<p>To understand why absolute fairness is impossible, it is first
+necessary to define the three most common statistical metrics used to
+evaluate bias in machine learning models:</p>
+<ol type="1">
+<li><strong>Demographic Parity (Independence):</strong> This requires
+that the proportion of positive predictions (such as being approved for
+a loan) is the same across all demographic groups, regardless of whether
+the individuals actually qualify.</li>
+<li><strong>Equalized Odds (Separation):</strong> This demands that the
+model's error rates are equal across groups. Specifically, two different
+demographic groups must experience the exact same False Positive Rate
+(incorrectly predicting a positive outcome) and False Negative Rate
+(incorrectly predicting a negative outcome).</li>
+<li><strong>Predictive Parity (Sufficiency):</strong> Also known as
+calibration within groups, this states that among all individuals who
+receive a specific prediction, the probability of that prediction coming
+true must be the same for every demographic group. A risk score of 80%
+must mean an 80% chance of the outcome occurring, regardless of the
+person's group membership.</li>
+</ol>
+<h2 id="the-impossibility-theorem-explained">The Impossibility Theorem
+Explained</h2>
+<p>In 2016, independent research groups led by Jon Kleinberg, Sendhil
+Mullainathan, Manish Raghavan, and Alexandra Chouldechova proved
+mathematically that these fairness criteria are mutually exclusive in
+almost all real-world scenarios.</p>
+<p>The conflict arises from a basic principle of probability involving
+base rates—the actual, underlying prevalence of an outcome within a
+specific group. Because of historical, socioeconomic, or biological
+factors, different demographic groups rarely have the exact same base
+rates for outcomes like loan defaults, hospital readmissions, or
+criminal recidivism.</p>
+<p>The impossibility theorem proves that if two groups have different
+base rates, an AI model cannot simultaneously satisfy <strong>Equalized
+Odds</strong> and <strong>Predictive Parity</strong>, with only two
+exceptions:</p>
+<ul>
+<li>The model is a perfect predictor that makes zero errors.</li>
+<li>The base rates between the two groups are entirely identical.</li>
+</ul>
+<p>Since no predictive AI is 100% accurate and real-world base rates are
+virtually never identical across groups, satisfying one fairness metric
+automatically forces the violation of another.</p>
+<h2 id="the-mathematical-trade-offs-in-practice">The Mathematical
+Trade-offs in Practice</h2>
+<p>The equations governing binary classification strictly link base
+rates, predictive values, and error rates. This linkage creates
+unavoidable trade-offs when adjusting a model's behavior.</p>
+<h3 id="predictive-parity-vs-equalized-odds">Predictive Parity vs.
+Equalized Odds</h3>
+<p>This conflict is governed by Bayes' Theorem, which connects the
+probability of an outcome given a prediction to the base rate and the
+error rates.</p>
+<p>Suppose Group A has a higher base rate for an outcome than Group B.
+If you calibrate the AI to ensure <strong>Predictive Parity</strong>
+(meaning a positive prediction is equally reliable for both groups), the
+math dictates that the model must generate more false positives for
+Group A and more false negatives for Group B.</p>
+<p>If you then adjust the model's thresholds to fix this and achieve
+<strong>Equalized Odds</strong> (forcing false positive and false
+negative rates to be equal across both groups), the reliability of the
+predictions will warp. A positive prediction for Group A will now carry
+a different actual probability than a positive prediction for Group B,
+instantly destroying Predictive Parity.</p>
+<h3 id="demographic-parity-vs-predictive-accuracy">Demographic Parity
+vs. Predictive Accuracy</h3>
+<p><strong>Demographic Parity</strong> conflicts with both
+<strong>Predictive Parity</strong> and <strong>Equalized Odds</strong>
+whenever base rates differ. If Group A actually qualifies for a positive
+outcome 60% of the time, and Group B qualifies 40% of the time, forcing
+an AI to select both groups at an equal 50% rate requires the model to
+make intentional errors. The algorithm must either artificially inflate
+the scores of unqualified individuals in Group B (increasing false
+positives) or artificially suppress the scores of qualified individuals
+in Group A (increasing false negatives). This trade-off directly
+sacrifices both overall accuracy and Equalized Odds to achieve equal
+representation.</p>
+<h2 id="navigating-the-trade-offs">Navigating the Trade-offs</h2>
+<p>Because mathematics forbids a universal solution to algorithmic bias,
+fairness in AI cannot be treated as a purely technical checklist. It is
+an ethical and policy decision.</p>
+<p>Engineers and stakeholders must decide which mathematical error is
+least harmful in a given context:</p>
+<ul>
+<li><strong>In criminal justice</strong>, society often prioritizes
+<strong>Equalized Odds</strong> (specifically equalizing false positive
+rates) to ensure one demographic group is not disproportionately
+detained by mistake, even if it means the risk scores are no longer
+calibrated equally across groups.</li>
+<li><strong>In medical diagnostics</strong>, <strong>Predictive
+Parity</strong> is often favored so doctors can trust that a high-risk
+score means the exact same likelihood of disease for every patient,
+allowing for consistent treatment thresholds.</li>
+<li><strong>In hiring and admissions</strong>, organizations may
+prioritize <strong>Demographic Parity</strong> to actively correct
+historical underrepresentation, accepting the mathematical trade-off
+that the model's error rates will differ between groups during the
+selection process.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/the-mathematical-impossibility-of-absolute-ai-fairness';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

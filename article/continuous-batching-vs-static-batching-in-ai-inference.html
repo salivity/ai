@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuous Batching vs. Static Batching in AI Inference - ai</title>
+    <meta name="description" content="This article explains why continuous iteration-level batching dramatically increases throughput compared to static request batching in artificial intelligence inference servers. Large Language Models (LLMs) generate text sequentially, creating significant">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/continuous-batching-vs-static-batching-in-ai-inference">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Continuous Batching vs. Static Batching in AI Inference - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/continuous-batching-vs-static-batching-in-ai-inference" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains why continuous iteration-level batching dramatically increases throughput compared to static request batching in artificial intelligence inference servers. Large Language Models (LLMs) generate text sequentially, creating significant" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="continuous-batching-vs-static-batching-in-ai-inference">Continuous
+Batching vs. Static Batching in AI Inference</h1>
+<p>This article explains why continuous iteration-level batching
+dramatically increases throughput compared to static request batching in
+artificial intelligence inference servers. Large Language Models (LLMs)
+generate text sequentially, creating significant computational
+bottlenecks when traditional static batching is used. By shifting from
+request-level scheduling to iteration-level scheduling, continuous
+batching eliminates idle GPU time, optimizes memory allocation, and
+processes incoming requests without waiting for entire batches to
+finish. This transition is the primary driver behind the high throughput
+and low latency of modern AI production environments.</p>
+<h2 id="the-bottleneck-of-static-request-batching">The Bottleneck of
+Static Request Batching</h2>
+<p>To understand the efficiency of continuous batching, it is necessary
+to look at how LLMs generate responses. LLM inference happens in two
+distinct phases: the prefill phase, where the input prompt is processed
+in parallel, and the decode phase, where output tokens are generated one
+by one in an autoregressive loop.</p>
+<p>In static request batching, the inference server groups a set number
+of user requests together and processes them simultaneously. The
+fundamental flaw with this approach is that different requests require
+different output lengths. For example, in a batch of four requests, one
+request might finish generating its response at 20 tokens, while another
+might require 500 tokens.</p>
+<p>Under static batching, the batch is locked until every single request
+within it is complete. The requests that finish early cannot exit the
+batch, and the GPU must pad their completed sequences with empty
+operations while waiting for the longest request to finish. During this
+time, the GPU's compute cores allocated to the finished requests sit
+completely idle, and new incoming requests are stuck in a queue.</p>
+<h2 id="how-continuous-iteration-level-batching-works">How Continuous
+Iteration-Level Batching Works</h2>
+<p>Continuous batching—also known as dynamic or iteration-level
+batching—solves the idle GPU problem by changing how the server
+schedules work. Instead of making scheduling decisions at the request
+level, the server makes decisions at the iteration level (after every
+single token is generated).</p>
+<p>When a batch is running under continuous batching, the server
+monitors the completion status of each sequence after every forward pass
+of the model. The exact moment a sequence generates its end-of-sequence
+(EOS) token, it is immediately evicted from the batch and returned to
+the user. In the very next iteration, the scheduler pulls a waiting
+request from the queue and injects it into the newly vacated slot in the
+active batch.</p>
+<h2 id="why-throughput-dramatically-increases">Why Throughput
+Dramatically Increases</h2>
+<p>The shift from static to continuous batching yields massive
+throughput improvements—often up to 10x or 20x in real-world
+scenarios—for three primary reasons:</p>
+<h3 id="1-elimination-of-padding-and-idle-compute">1. Elimination of
+Padding and Idle Compute</h3>
+<p>Because finished sequences are removed immediately, the GPU no longer
+wastes compute cycles processing padded tokens for completed requests.
+Every slot in the batch is perpetually doing useful work, keeping GPU
+utilization near 100% as long as there is a queue of incoming
+traffic.</p>
+<h3 id="2-interleaving-prefill-and-decode-phases">2. Interleaving
+Prefill and Decode Phases</h3>
+<p>The prefill phase of an LLM is compute-bound, while the
+token-by-token decode phase is memory-bandwidth-bound. Static batching
+forces all requests to go through the prefill phase together and the
+decode phase together. Continuous batching allows the server to
+interleave these phases. While existing requests in the batch are in
+their memory-bound decode phase, a newly injected request can execute
+its compute-bound prefill phase, maximizing the use of different
+hardware components on the GPU simultaneously.</p>
+<h3 id="3-immediate-release-of-kv-cache-memory">3. Immediate Release of
+KV Cache Memory</h3>
+<p>During generation, LLMs store attention data in the GPU's
+high-bandwidth memory, known as the Key-Value (KV) cache. The KV cache
+grows with every token generated and is often the biggest bottleneck in
+scaling inference. In static batching, the memory held by a finished
+request is trapped until the longest request in the batch finishes.
+Continuous batching frees a request's KV cache the instant its final
+token is generated. This freed memory can immediately be allocated to
+new requests, allowing the server to run much larger overall batch sizes
+without running out of memory.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/continuous-batching-vs-static-batching-in-ai-inference';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

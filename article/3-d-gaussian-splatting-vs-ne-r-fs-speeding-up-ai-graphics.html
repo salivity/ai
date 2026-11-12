@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Gaussian Splatting vs. NeRFs: Speeding Up AI Graphics - ai</title>
+    <meta name="description" content="3D Gaussian Splatting (3DGS) has revolutionized artificial intelligence graphics by enabling high-fidelity, real-time rendering that significantly outpaces traditional Neural Radiance Fields (NeRFs). This article explores the core architectural difference">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/3-d-gaussian-splatting-vs-ne-r-fs-speeding-up-ai-graphics">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="3D Gaussian Splatting vs. NeRFs: Speeding Up AI Graphics - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/3-d-gaussian-splatting-vs-ne-r-fs-speeding-up-ai-graphics" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="3D Gaussian Splatting (3DGS) has revolutionized artificial intelligence graphics by enabling high-fidelity, real-time rendering that significantly outpaces traditional Neural Radiance Fields (NeRFs). This article explores the core architectural difference" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="3d-gaussian-splatting-vs-nerfs-speeding-up-ai-graphics">3D
+Gaussian Splatting vs. NeRFs: Speeding Up AI Graphics</h1>
+<p>3D Gaussian Splatting (3DGS) has revolutionized artificial
+intelligence graphics by enabling high-fidelity, real-time rendering
+that significantly outpaces traditional Neural Radiance Fields (NeRFs).
+This article explores the core architectural differences between these
+two technologies, detailing how 3DGS bypasses the heavy computational
+bottlenecks of neural networks by using explicit 3D representations and
+a tile-based rasterization pipeline to achieve smooth frame rates.</p>
+<p>To understand why 3D Gaussian Splatting is so much faster, it is
+necessary to look at the limitations of Neural Radiance Fields. NeRFs
+represent a 3D scene implicitly inside a neural network, specifically a
+Multi-Layer Perceptron (MLP). To render a single pixel, a NeRF must
+shoot a virtual ray into the scene, sample hundreds of points along that
+ray, and query the neural network at every single point to predict color
+and density. This process, known as volumetric ray marching, requires
+millions of neural network evaluations per frame, making real-time
+rendering nearly impossible without massive hardware compromises.</p>
+<p>3D Gaussian Splatting eliminates the neural network from the
+rendering phase entirely. Instead of an implicit mathematical function,
+3DGS uses an explicit representation. It begins by taking a sparse point
+cloud generated from camera images and converts these points into
+millions of 3D Gaussians. You can think of a 3D Gaussian as a soft,
+semi-transparent ellipsoid floating in space. Each Gaussian stores
+specific attributes: its 3D position, a covariance matrix (which
+dictates its size, shape, and rotation), opacity, and color data via
+spherical harmonics (which allows lighting and reflections to change
+based on the viewing angle).</p>
+<p>The primary reason 3DGS achieves real-time speeds is that it swaps
+slow ray marching for fast rasterization. Rasterization is the exact
+same technique modern video game engines use to project 3D polygons onto
+a 2D screen, and graphics processing units (GPUs) have been specifically
+optimized to do this at lightning speeds for decades. When rendering a
+frame, 3DGS projects the 3D Gaussians onto a 2D image plane, effectively
+"splatting" them onto the screen like paintballs.</p>
+<p>To further maximize rendering speeds, 3DGS utilizes a custom,
+tile-based rasterizer. The system divides the 2D screen into small 16x16
+pixel tiles. It then quickly determines which Gaussians overlap with
+which tiles and sorts them by depth, from front to back, only once per
+frame. Each tile is then processed in parallel by the GPU. Because the
+Gaussians are sorted from front to back, the renderer blends their
+colors and opacities until a pixel becomes completely opaque. Once full
+opacity is reached, the system immediately stops processing any
+remaining Gaussians behind it. This early termination saves immense
+amounts of computational power by ignoring data that the viewer cannot
+see.</p>
+<p>By removing the need to query a neural network millions of times per
+second and avoiding the evaluation of empty space—a major flaw in NeRF's
+ray marching—3D Gaussian Splatting drastically reduces the workload on
+the GPU. While NeRFs often struggle to generate a few frames per second
+at high resolutions, 3DGS easily achieves over 100 frames per second at
+1080p resolution, making it an ideal solution for virtual reality,
+gaming, and real-time visual effects.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/3-d-gaussian-splatting-vs-ne-r-fs-speeding-up-ai-graphics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

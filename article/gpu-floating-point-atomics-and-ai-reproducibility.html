@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Floating-Point Atomics and AI Reproducibility - ai</title>
+    <meta name="description" content="This article explores the root causes of bit-level non-determinism in artificial intelligence workloads run on Graphics Processing Units (GPUs). Specifically, it examines how the combination of IEEE 754 floating-point math limitations and the unpredictabl">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/gpu-floating-point-atomics-and-ai-reproducibility">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GPU Floating-Point Atomics and AI Reproducibility - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/gpu-floating-point-atomics-and-ai-reproducibility" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the root causes of bit-level non-determinism in artificial intelligence workloads run on Graphics Processing Units (GPUs). Specifically, it examines how the combination of IEEE 754 floating-point math limitations and the unpredictabl" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="gpu-floating-point-atomics-and-ai-reproducibility">GPU
+Floating-Point Atomics and AI Reproducibility</h1>
+<p>This article explores the root causes of bit-level non-determinism in
+artificial intelligence workloads run on Graphics Processing Units
+(GPUs). Specifically, it examines how the combination of IEEE 754
+floating-point math limitations and the unpredictable scheduling of
+parallel atomic additions leads to slight numerical variations between
+runs. By reading this overview, you will understand the hardware-level
+mechanics behind why training the exact same neural network twice on the
+same GPU can yield slightly different results, complicating exact
+reproducibility in AI research and production.</p>
+<h3 id="the-myth-of-associative-floating-point-math">The Myth of
+Associative Floating-Point Math</h3>
+<p>In standard mathematics, addition is associative, meaning that <span
+class="math inline">\((A + B) + C\)</span> always equals <span
+class="math inline">\(A + (B + C)\)</span>. However, computers do not
+use infinite-precision real numbers; they use the IEEE 754
+floating-point standard to represent numbers in a finite amount of
+memory (such as 32-bit or 16-bit floats).</p>
+<p>Because memory is finite, every floating-point addition requires
+rounding the result to the nearest representable bit pattern. When you
+add numbers of vastly different magnitudes, the smaller number's
+precision can be lost entirely in a phenomenon known as "swamping."
+Consequently, changing the order in which you add a sequence of
+floating-point numbers changes where the rounding errors occur,
+resulting in a slightly different final binary value. Therefore,
+floating-point addition is not associative.</p>
+<h3 id="how-gpu-atomic-additions-work">How GPU Atomic Additions
+Work</h3>
+<p>Modern AI relies on GPUs to execute thousands of threads in parallel.
+During tasks like calculating gradients in backpropagation, many threads
+often need to add their calculated values to a single, shared memory
+address (such as updating a specific weight).</p>
+<p>To prevent threads from overwriting each other's work, programmers
+use "atomic additions" (e.g., <code>atomicAdd</code> in CUDA). An atomic
+operation ensures that a memory location is read, modified, and written
+back as a single, uninterruptible step. If ten threads try to atomically
+add a value to the same address simultaneously, the GPU hardware forces
+them into a queue, processing them one by one.</p>
+<h3 id="the-intersection-of-parallelism-and-non-associativity">The
+Intersection of Parallelism and Non-Associativity</h3>
+<p>The core issue of non-determinism arises from how the GPU manages
+this queue. GPUs are designed for maximum throughput, not predictable
+execution order. Thread blocks and warps (groups of threads) are
+scheduled dynamically by the hardware based on micro-architectural
+states, memory controller availability, and even minor fluctuations in
+clock speeds or thermal throttling.</p>
+<p>Because the hardware scheduler is dynamic, the exact order in which
+parallel threads reach the <code>atomicAdd</code> instruction changes
+from one microsecond to the next.</p>
+<ul>
+<li><strong>Run 1:</strong> Thread A arrives first, followed by Thread
+B, then Thread C. The GPU computes <span class="math inline">\((A + B) +
+C\)</span>.</li>
+<li><strong>Run 2:</strong> Thread B arrives first, followed by Thread
+C, then Thread A. The GPU computes <span class="math inline">\((B + C) +
+A\)</span>.</li>
+</ul>
+<p>Because floating-point math is non-associative, Run 1 and Run 2 will
+likely produce results that differ in their least significant bits (the
+"mantissa").</p>
+<h3 id="the-impact-on-artificial-intelligence">The Impact on Artificial
+Intelligence</h3>
+<p>In deep learning, a difference in the last bit of a single
+floating-point number seems negligible. However, neural networks perform
+trillions of calculations across millions of parameters over thousands
+of training steps.</p>
+<p>When a gradient update differs by a single bit in the first training
+step, that tiny difference alters the weights used in the second step.
+Because neural networks are non-linear systems, these microscopic
+differences compound exponentially over time—a computational butterfly
+effect. By the end of training, two models initialized with the exact
+same random seed and trained on the exact same data can end up with
+entirely different weights, slightly different loss curves, and varied
+predictions.</p>
+<h3 id="achieving-determinism-and-its-cost">Achieving Determinism and
+Its Cost</h3>
+<p>To achieve exact bit-level reproducibility in AI frameworks like
+PyTorch or TensorFlow, developers must explicitly disable
+non-deterministic atomic operations. Frameworks accomplish this by
+replacing fast <code>atomicAdd</code> reductions with deterministic
+algorithms, such as fixed-order tree reductions, where threads write
+their results to temporary memory buffers that are subsequently summed
+in a strict, predetermined sequence.</p>
+<p>While this guarantees that <span class="math inline">\((A + B) +
+C\)</span> is always calculated in the exact same order, it removes the
+speed advantage of hardware atomics, requires more memory, and forces
+threads to wait on one another. Ultimately, AI practitioners must choose
+between the maximum speed of non-deterministic GPU execution and the
+slower, strict guarantee of bit-level reproducibility.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/gpu-floating-point-atomics-and-ai-reproducibility';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

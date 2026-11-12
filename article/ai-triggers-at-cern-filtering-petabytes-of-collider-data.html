@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Triggers at CERN: Filtering Petabytes of Collider Data - ai</title>
+    <meta name="description" content="At the European Organization for Nuclear Research (CERN), the Large Hadron Collider (LHC) smashes protons together 40 million times every second, generating tens of petabytes of raw data per second. Because it is physically impossible to record this immen">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-triggers-at-cern-filtering-petabytes-of-collider-data">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Triggers at CERN: Filtering Petabytes of Collider Data - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-triggers-at-cern-filtering-petabytes-of-collider-data" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="At the European Organization for Nuclear Research (CERN), the Large Hadron Collider (LHC) smashes protons together 40 million times every second, generating tens of petabytes of raw data per second. Because it is physically impossible to record this immen" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-triggers-at-cern-filtering-petabytes-of-collider-data">AI
+Triggers at CERN: Filtering Petabytes of Collider Data</h1>
+<p>At the European Organization for Nuclear Research (CERN), the Large
+Hadron Collider (LHC) smashes protons together 40 million times every
+second, generating tens of petabytes of raw data per second. Because it
+is physically impossible to record this immense volume of information,
+particle physicists rely on advanced multi-tiered filtering systems
+known as "triggers." This article explores how CERN integrates machine
+learning and artificial intelligence directly into these hardware and
+software triggers to make real-time, microsecond decisions, discarding
+99.999% of uninteresting background noise while preserving the rare
+particle collisions that could unlock new laws of physics.</p>
+<p>The core challenge at the LHC is a massive data bottleneck. Each time
+two proton beams cross, multiple collisions occur, sending thousands of
+subatomic particles flying through giant detectors like ATLAS and CMS.
+Recording every single collision would require writing over 40 terabytes
+to a petabyte of data to storage every single second—far exceeding the
+capabilities of global computing infrastructure. Most of these
+collisions are "glancing blows" that produce well-understood physics.
+Physicists only want to save the head-on, high-energy collisions that
+might contain exotic particles, such as the Higgs boson or dark matter
+candidates.</p>
+<p>To solve this, CERN uses a two-stage trigger system: the Level-1 (L1)
+hardware trigger and the High-Level Trigger (HLT), a massive software
+farm.</p>
+<p>The Level-1 trigger is the first line of defense and operates under
+extreme time constraints. It must decide whether to keep or trash a
+collision event in just a few microseconds. Because standard computer
+processors are too slow for this task, the L1 trigger uses
+Field-Programmable Gate Arrays (FPGAs)—specialized microchips whose
+physical circuitry can be reconfigured to execute specific algorithms at
+the speed of light.</p>
+<p>Historically, FPGAs relied on rigid, rule-based algorithms, such as
+looking for a single particle with an energy level above a strict
+threshold. Today, physicists use specialized open-source compilers, like
+<em>hls4ml</em>, to translate complex machine learning models into
+physical chip logic. By embedding ultra-compact deep neural networks and
+boosted decision trees directly onto the FPGAs, the L1 trigger can
+analyze the holistic geometry of a collision in nanoseconds. These AI
+models identify complex patterns, such as overlapping sprays of
+particles called "jets," reconstruct particle tracks, and accurately
+estimate their momentum long before the data ever reaches a traditional
+computer. This reduces the data stream from 40 million events per second
+down to just 100,000.</p>
+<p>Once an event passes the hardware test, it moves to the High-Level
+Trigger (HLT). The HLT is a large-scale server farm equipped with
+thousands of CPUs and GPUs. Here, the system has a few hundred
+milliseconds to analyze the 100,000 surviving events per second and
+reduce them to roughly 1,000 events per second for permanent
+storage.</p>
+<p>With more time and computing power available, the HLT deploys
+sophisticated AI architectures, most notably Graph Neural Networks
+(GNNs) and Convolutional Neural Networks (CNNs). Detector data is
+naturally sparse and irregular, making it difficult for traditional
+algorithms to process quickly. GNNs excel here by treating particle hits
+in the detector as "nodes" on a 3D graph. The AI connects the dots to
+reconstruct the exact paths of thousands of particles simultaneously,
+efficiently separating the target collision from "pileup"—the background
+noise caused by dozens of other protons colliding at the exact same
+instant.</p>
+<p>Beyond recognizing known particles, CERN researchers are increasingly
+turning to unsupervised machine learning for anomaly detection within
+the triggers. Traditional triggers suffer from an inherent bias: they
+are programmed to look for specific signatures predicted by current
+theories. If a new particle behaves in an entirely unexpected way, a
+rule-based trigger might throw the data away.</p>
+<p>To prevent this, physicists train autoencoders—a type of neural
+network—purely on standard, everyday physics collisions. The AI learns
+to compress and reconstruct this "normal" data with high accuracy. When
+the autoencoder is placed inside the trigger system and encounters a
+collision it cannot accurately reconstruct, it flags the event as an
+anomaly. By triggering on the "weirdness" of an event rather than a
+pre-defined checklist, AI allows scientists to cast a wider net for
+entirely unknown physics without increasing the data storage burden.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-triggers-at-cern-filtering-petabytes-of-collider-data';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

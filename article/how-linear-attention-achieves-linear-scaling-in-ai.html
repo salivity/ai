@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Linear Attention Achieves Linear Scaling in AI - ai</title>
+    <meta name="description" content="Linear attention mechanisms revolutionize artificial intelligence by eliminating the computational bottleneck of standard Transformer models. In traditional attention, calculating the relationships between tokens requires a softmax matrix multiplication t">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-linear-attention-achieves-linear-scaling-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Linear Attention Achieves Linear Scaling in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-linear-attention-achieves-linear-scaling-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Linear attention mechanisms revolutionize artificial intelligence by eliminating the computational bottleneck of standard Transformer models. In traditional attention, calculating the relationships between tokens requires a softmax matrix multiplication t" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-linear-attention-achieves-linear-scaling-in-ai">How Linear
+Attention Achieves Linear Scaling in AI</h1>
+<p>Linear attention mechanisms revolutionize artificial intelligence by
+eliminating the computational bottleneck of standard Transformer models.
+In traditional attention, calculating the relationships between tokens
+requires a softmax matrix multiplication that scales quadratically with
+the sequence length. This article explores how linear attention
+approximates this costly operation using kernel methods and the
+associative property of matrix multiplication. By reordering the
+computation of queries, keys, and values, linear attention reduces both
+memory and time complexity to scale linearly, enabling AI models to
+process massive sequences with high efficiency.</p>
+<h2 id="the-quadratic-bottleneck-of-standard-attention">The Quadratic
+Bottleneck of Standard Attention</h2>
+<p>To understand linear attention, we must first look at standard scaled
+dot-product attention. Given a sequence of length <span
+class="math inline">\(N\)</span> and a feature dimension <span
+class="math inline">\(d\)</span>, the model generates three matrices:
+Queries (<span class="math inline">\(Q\)</span>), Keys (<span
+class="math inline">\(K\)</span>), and Values (<span
+class="math inline">\(V\)</span>), each of size <span
+class="math inline">\(N \times d\)</span>.</p>
+<p>The standard attention mechanism is defined as:</p>
+<p><span class="math display">\[\text{Attention}(Q, K, V) =
+\text{softmax}\left(\frac{QK^T}{\sqrt{d}}\right)V\]</span></p>
+<p>The bottleneck lies in the order of operations. Because of the
+non-linear <span class="math inline">\(\text{softmax}\)</span> function,
+the model is forced to multiply <span class="math inline">\(Q\)</span>
+and <span class="math inline">\(K^T\)</span> first. This produces an
+<span class="math inline">\(N \times N\)</span> attention matrix
+representing the similarity between every pair of tokens. Multiplying
+this <span class="math inline">\(N \times N\)</span> matrix by <span
+class="math inline">\(V\)</span> results in a computational complexity
+of <span class="math inline">\(O(N^2d)\)</span>. As the sequence length
+<span class="math inline">\(N\)</span> grows, the memory and compute
+requirements explode quadratically, making it difficult to process long
+documents, high-resolution images, or extended audio.</p>
+<h2 id="approximating-softmax-with-kernel-feature-maps">Approximating
+Softmax with Kernel Feature Maps</h2>
+<p>The core innovation of linear attention is removing the <span
+class="math inline">\(\text{softmax}\)</span> function so that the <span
+class="math inline">\(N \times N\)</span> matrix never has to be
+explicitly calculated.</p>
+<p>Mathematically, the <span
+class="math inline">\(\text{softmax}\)</span> operation acts as a
+similarity measure—specifically, an exponentiated dot product—between a
+query vector <span class="math inline">\(q_i\)</span> and a key vector
+<span class="math inline">\(k_j\)</span>. Linear attention replaces this
+specific similarity function with a generalized kernel function, <span
+class="math inline">\(k(q_i, k_j)\)</span>.</p>
+<p>According to Mercer's theorem, any positive-definite kernel can be
+expressed as the dot product of two vectors projected into a new feature
+space using a feature map, denoted as <span
+class="math inline">\(\phi\)</span> (phi). Therefore, the exponential
+similarity of the softmax function is approximated as:</p>
+<p><span class="math display">\[\exp\left(\frac{q_i
+k_j^T}{\sqrt{d}}\right) \approx \phi(q_i)\phi(k_j)^T\]</span></p>
+<p>Instead of applying a non-linear function <em>after</em> multiplying
+<span class="math inline">\(Q\)</span> and <span
+class="math inline">\(K^T\)</span>, the non-linear feature map <span
+class="math inline">\(\phi\)</span> is applied to <span
+class="math inline">\(Q\)</span> and <span
+class="math inline">\(K\)</span> <em>individually</em> before any matrix
+multiplication occurs.</p>
+<h2 id="exploiting-matrix-associativity-for-linear-scaling">Exploiting
+Matrix Associativity for Linear Scaling</h2>
+<p>Once the <span class="math inline">\(\text{softmax}\)</span> is
+replaced by the feature map <span class="math inline">\(\phi\)</span>,
+the attention equation transforms into a purely linear algebraic
+expression:</p>
+<p><span class="math display">\[\text{LinearAttention}(Q, K, V) \approx
+\left(\phi(Q)\phi(K)^T\right)V\]</span></p>
+<p>Because standard matrix multiplication is associative, we can change
+the placement of the parentheses without changing the final result:</p>
+<p><span class="math display">\[\left(\phi(Q)\phi(K)^T\right)V =
+\phi(Q)\left(\phi(K)^TV\right)\]</span></p>
+<p>This simple reordering changes the computational complexity
+entirely:</p>
+<ol type="1">
+<li><strong>First Step:</strong> Multiply <span
+class="math inline">\(\phi(K)^T\)</span> (size <span
+class="math inline">\(d \times N\)</span>) by <span
+class="math inline">\(V\)</span> (size <span class="math inline">\(N
+\times d\)</span>). This yields a global context matrix of size <span
+class="math inline">\(d \times d\)</span>. The cost of this operation is
+<span class="math inline">\(O(Nd^2)\)</span>.</li>
+<li><strong>Second Step:</strong> Multiply <span
+class="math inline">\(\phi(Q)\)</span> (size <span
+class="math inline">\(N \times d\)</span>) by the resulting <span
+class="math inline">\(d \times d\)</span> matrix. The cost of this
+operation is also <span class="math inline">\(O(Nd^2)\)</span>.</li>
+</ol>
+<p>By computing <span class="math inline">\(\phi(K)^TV\)</span> first,
+the model compresses the entire sequence's key-value information into a
+fixed-size <span class="math inline">\(d \times d\)</span> matrix that
+is completely independent of the sequence length <span
+class="math inline">\(N\)</span>. When <span
+class="math inline">\(N\)</span> is much larger than the feature
+dimension <span class="math inline">\(d\)</span> (which is standard in
+long-context AI tasks), the complexity drops from <span
+class="math inline">\(O(N^2d)\)</span> to <span
+class="math inline">\(O(Nd^2)\)</span>. The computation now scales
+linearly with the sequence length <span
+class="math inline">\(N\)</span>.</p>
+<h2 id="designing-the-feature-map-phi">Designing the Feature Map <span
+class="math inline">\(\phi\)</span></h2>
+<p>For linear attention to accurately mimic standard attention, the
+feature map <span class="math inline">\(\phi(x)\)</span> must ensure
+that the dot product of the mapped vectors remains positive, just like
+the output of an exponential function in a softmax operation. Different
+variants of linear attention propose different functions for <span
+class="math inline">\(\phi\)</span>:</p>
+<ul>
+<li><strong>ELU (Exponential Linear Unit):</strong> One of the simplest
+approaches defines <span class="math inline">\(\phi(x) = \text{elu}(x) +
+1\)</span>. This guarantees positive values and incurs almost no
+additional computational overhead.</li>
+<li><strong>Random Fourier Features (Performer):</strong> Models like
+the Performer use randomized trigonometric functions (sines and cosines)
+to project <span class="math inline">\(Q\)</span> and <span
+class="math inline">\(K\)</span> into a higher-dimensional space,
+providing a mathematically rigorous, unbiased approximation of the
+actual softmax exponential.</li>
+<li><strong>CosFormer:</strong> This approach uses a ReLU function
+combined with a cosine-based distance weight to enforce the locality
+bias often found in natural language.</li>
+</ul>
+<p>Through the combination of kernel approximations and matrix
+associativity, linear attention successfully bypasses the quadratic
+bottleneck, allowing modern AI architectures to process sequences of
+hundreds of thousands of tokens at a fraction of the traditional
+cost.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-linear-attention-achieves-linear-scaling-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

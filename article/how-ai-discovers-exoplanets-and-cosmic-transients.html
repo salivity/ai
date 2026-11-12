@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Discovers Exoplanets and Cosmic Transients - ai</title>
+    <meta name="description" content="Modern astronomy generates massive amounts of data every night, far exceeding what human researchers can analyze manually. To process this overwhelming influx of information, astronomers rely on artificial intelligence (AI) and machine learning algorithms">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-discovers-exoplanets-and-cosmic-transients">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Discovers Exoplanets and Cosmic Transients - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-discovers-exoplanets-and-cosmic-transients" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern astronomy generates massive amounts of data every night, far exceeding what human researchers can analyze manually. To process this overwhelming influx of information, astronomers rely on artificial intelligence (AI) and machine learning algorithms" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-discovers-exoplanets-and-cosmic-transients">How AI
+Discovers Exoplanets and Cosmic Transients</h1>
+<p>Modern astronomy generates massive amounts of data every night, far
+exceeding what human researchers can analyze manually. To process this
+overwhelming influx of information, astronomers rely on artificial
+intelligence (AI) and machine learning algorithms. This article explores
+the direct applications of AI in modern astrophysics, specifically
+focusing on how automated systems filter transient cosmic events in real
+time and analyze telescope light curves to accurately identify distant
+exoplanets.</p>
+<h2 id="filtering-transient-cosmic-events">Filtering Transient Cosmic
+Events</h2>
+<p>Transient cosmic events are astronomical phenomena that appear and
+disappear over relatively short timescales, ranging from milliseconds to
+weeks. Examples include supernovae, gamma-ray bursts, kilonovae, and
+fast radio bursts. Wide-field survey telescopes capture millions of
+alerts every night indicating that something in the sky has changed in
+brightness or position. However, the vast majority of these alerts are
+false positives caused by satellite streaks, cosmic rays hitting the
+camera sensor, atmospheric distortions, or instrumental noise.</p>
+<p>To separate real astrophysical events from noise, astronomers use a
+technique called real-time "bogus-real" classification. This process
+relies heavily on Convolutional Neural Networks (CNNs), a type of deep
+learning algorithm designed to process image data.</p>
+<p>The filtering process works in three main steps:</p>
+<ol type="1">
+<li><strong>Image Subtraction:</strong> The telescope takes a new image
+of a patch of sky and subtracts a older, reference image of the same
+area. Anything left over in the resulting "difference image" is a
+potential transient.</li>
+<li><strong>Feature Extraction:</strong> The CNN analyzes the difference
+image at the pixel level. It looks for specific shapes and light
+distributions that characterize real celestial objects versus the jagged
+or elongated artifacts created by telescope glitches or passing
+satellites.</li>
+<li><strong>Classification and Broker Routing:</strong> The AI assigns a
+probability score to the alert. If the score indicates a high likelihood
+of a real event, automated software systems called "alert brokers"
+further categorize the transient based on its brightness changes and
+location. The broker then immediately notifies specialized telescopes
+around the world to point at the coordinates and capture follow-up data
+before the event fades away.</li>
+</ol>
+<h2 id="identifying-exoplanets-from-light-curves">Identifying Exoplanets
+from Light Curves</h2>
+<p>A light curve is a graph that shows the brightness of a star over a
+period of time. Space telescopes like Kepler and TESS (Transiting
+Exoplanet Survey Satellite) monitor hundreds of thousands of stars
+simultaneously to generate these graphs. When an exoplanet passes, or
+"transits," in front of its host star from the perspective of the
+telescope, it blocks a tiny fraction of the starlight. This creates a
+periodic, U-shaped dip in the star's light curve.</p>
+<p>Finding these dips is exceptionally difficult because a planet the
+size of Earth blocks less than one-hundredth of a percent of a sun-like
+star's light. Furthermore, stars naturally fluctuate in brightness due
+to starspots, flares, and pulsations. Eclipsing binary stars—two stars
+orbiting each other—also create dips in light curves that closely mimic
+exoplanet transits.</p>
+<p>Astronomers deploy AI to sift through millions of light curves to
+find true planetary signals. The process involves the following
+methods:</p>
+<ul>
+<li><strong>Data Preprocessing and Detrending:</strong> Before searching
+for planets, AI algorithms clean the light curve data. They remove
+long-term brightness trends caused by the star's natural rotation or the
+telescope's slight movements in space, leaving behind a flattened
+baseline of light data.</li>
+<li><strong>Phase Folding:</strong> Algorithms scan the cleaned data for
+repeating dips. Once a periodic signal is suspected, the data is
+"folded" so that all the individual transits are stacked on top of one
+another. This amplifies the signal of the dip against the background
+noise.</li>
+<li><strong>Deep Learning Analysis:</strong> The folded light curve is
+fed into neural networks—often CNNs or Recurrent Neural Networks (RNNs),
+which excel at sequential time-series data. The AI is trained on
+thousands of confirmed exoplanet transits and known false
+positives.</li>
+<li><strong>Shape Recognition:</strong> The neural network examines the
+exact geometry of the dip. An eclipsing binary star typically produces a
+sharp, V-shaped dip, whereas a transiting exoplanet produces a
+flat-bottomed, U-shaped dip. The AI also checks for secondary eclipses
+(when the companion object goes behind the host star), which usually
+indicates a glowing binary star rather than a dark planet.</li>
+</ul>
+<p>By evaluating these subtle features simultaneously, the AI outputs a
+probability score indicating whether the signal is a genuine exoplanet.
+This allows human astronomers to bypass millions of noisy signals and
+focus their verification efforts—such as measuring the planet's mass
+using ground-based telescopes—only on the highest-probability
+candidates.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-discovers-exoplanets-and-cosmic-transients';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

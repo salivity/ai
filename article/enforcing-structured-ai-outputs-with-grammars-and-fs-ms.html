@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enforcing Structured AI Outputs with Grammars and FSMs - ai</title>
+    <meta name="description" content="This article explains how finite-state machines (FSMs) and context-free grammars (CFGs) constrain token logits during runtime to guarantee that large language models (LLMs) generate valid structured outputs like JSON or regular expressions. By interceptin">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/enforcing-structured-ai-outputs-with-grammars-and-fs-ms">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Enforcing Structured AI Outputs with Grammars and FSMs - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/enforcing-structured-ai-outputs-with-grammars-and-fs-ms" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how finite-state machines (FSMs) and context-free grammars (CFGs) constrain token logits during runtime to guarantee that large language models (LLMs) generate valid structured outputs like JSON or regular expressions. By interceptin" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="enforcing-structured-ai-outputs-with-grammars-and-fsms">Enforcing
+Structured AI Outputs with Grammars and FSMs</h1>
+<p>This article explains how finite-state machines (FSMs) and
+context-free grammars (CFGs) constrain token logits during runtime to
+guarantee that large language models (LLMs) generate valid structured
+outputs like JSON or regular expressions. By intercepting the model's
+prediction probabilities at each decoding step, these formal language
+systems mask out invalid tokens before sampling occurs. This process
+eliminates syntax errors and hallucinations in structured data
+generation while maintaining the model's underlying semantic
+capabilities.</p>
+<h3 id="the-mechanics-of-logit-generation-and-masking">The Mechanics of
+Logit Generation and Masking</h3>
+<p>During inference, an LLM processes input text and outputs a vector of
+raw, unnormalized predictions called logits. This vector contains a
+score for every token in the model's vocabulary. Normally, a softmax
+function converts these logits into probabilities, and a sampling method
+selects the next token.</p>
+<p>To guarantee a specific output structure, an external parser
+intercepts the logits before the softmax calculation. The parser
+evaluates the current state of the generated text and determines which
+tokens in the vocabulary can legally follow. It then applies a logit
+mask:</p>
+<ul>
+<li>Valid tokens retain their original logit scores.</li>
+<li>Invalid tokens have their logits set to negative infinity (<span
+class="math inline">\(-\infty\)</span>).</li>
+</ul>
+<p>When the softmax function runs on the modified logits, the tokens set
+to <span class="math inline">\(-\infty\)</span> receive a probability of
+exactly zero. The model is mathematically forced to select a token that
+adheres to the defined rules.</p>
+<h3 id="finite-state-machines-for-regular-expressions">Finite-State
+Machines for Regular Expressions</h3>
+<p>A regular expression defines a regular language, which can be
+directly represented by a finite-state machine. An FSM consists of a
+finite number of states, transitions between those states based on
+character inputs, an initial state, and one or more accepting (final)
+states.</p>
+<p>To constrain an LLM using an FSM, the system must bridge the gap
+between character-level state transitions and multi-character subword
+tokens.</p>
+<ol type="1">
+<li><strong>Compilation:</strong> The target regular expression is
+compiled into a deterministic finite automaton (DFA).</li>
+<li><strong>Vocabulary Mapping:</strong> Because LLM tokens often
+contain multiple characters, the system pre-computes how every token in
+the model's vocabulary interacts with the DFA. If a token starts at
+State A, the system traces its characters through the DFA to see if it
+lands on a valid State B. If any character in the token triggers an
+invalid transition, that token is marked as invalid for State A.</li>
+<li><strong>Runtime Tracking:</strong> Generation begins at the DFA's
+initial state. At each step, the system looks up the pre-computed valid
+tokens for the current state, masks all other token logits to <span
+class="math inline">\(-\infty\)</span>, and samples a token.</li>
+<li><strong>State Transition:</strong> Once a token is selected, the FSM
+advances to the new state dictated by that token, and the process
+repeats until the model selects an end-of-sequence token from an
+accepting state.</li>
+</ol>
+<h3 id="context-free-grammars-for-json">Context-Free Grammars for
+JSON</h3>
+<p>While FSMs handle flat patterns like regular expressions, they cannot
+track arbitrary nesting, such as matching opening and closing brackets
+in JSON. JSON requires a context-free grammar (CFG), which uses
+production rules to define recursive structures.</p>
+<p>A CFG is processed using a Pushdown Automaton (PDA)—essentially an
+FSM equipped with a stack memory to keep track of nested contexts.</p>
+<ol type="1">
+<li><strong>Grammar Definition:</strong> The target format (e.g., a
+specific JSON schema) is translated into a formal CFG, often written in
+Backus-Naur Form (BNF).</li>
+<li><strong>Incremental Parsing:</strong> At runtime, a parser (such as
+an Earley parser or a generalized LR parser) maintains a stack
+representing the current depth and context of the JSON structure (e.g.,
+inside an object, expecting a key, or inside an array).</li>
+<li><strong>Token Validation:</strong> Before the LLM samples the next
+token, the parser checks the vocabulary against the current stack state.
+For example, if the generated text is <code>{"age":</code>, the grammar
+rules dictate that the next token must start a valid JSON value (a
+number, string, boolean, array, or object). Tokens like <code>}</code>
+or <code>]</code> are rejected.</li>
+<li><strong>Stack Manipulation:</strong> When a token containing
+<code>{</code> or <code>[</code> is selected, a new state is pushed onto
+the stack. When the corresponding <code>}</code> or <code>]</code> is
+selected, the state is popped from the stack.</li>
+</ol>
+<h3 id="overcoming-subword-tokenization-challenges">Overcoming Subword
+Tokenization Challenges</h3>
+<p>A major hurdle in grammar-constrained decoding is tokenization
+boundary misalignment. A single LLM token might span across multiple
+grammar rules. For example, the token <code>": "</code> in JSON contains
+the closing quote of a key, the colon separator, and the whitespace
+before the value.</p>
+<p>To resolve this, constrained decoding engines treat tokens as
+sequences of bytes or characters. During the validation phase, the
+parser feeds the characters of a candidate token through the FSM or PDA
+one by one. A token is considered valid only if every character in the
+token successfully transitions the state machine without hitting an
+error state.</p>
+<p>To avoid the massive computational overhead of testing tens of
+thousands of tokens character-by-character at every step, modern
+frameworks organize the model's vocabulary into a prefix tree (trie).
+The parser traverses this trie alongside the grammar states, allowing it
+to eliminates entire branches of invalid tokens simultaneously, reducing
+latency to just a few milliseconds per token.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/enforcing-structured-ai-outputs-with-grammars-and-fs-ms';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

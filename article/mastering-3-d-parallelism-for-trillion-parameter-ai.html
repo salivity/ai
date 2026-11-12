@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering 3D Parallelism for Trillion-Parameter AI - ai</title>
+    <meta name="description" content="This article explores the mechanics of 3D parallelism, an advanced distributed computing technique required to train massive, trillion-parameter artificial intelligence models. By simultaneously orchestrating data, tensor, and pipeline sharding across tho">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/mastering-3-d-parallelism-for-trillion-parameter-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mastering 3D Parallelism for Trillion-Parameter AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/mastering-3-d-parallelism-for-trillion-parameter-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the mechanics of 3D parallelism, an advanced distributed computing technique required to train massive, trillion-parameter artificial intelligence models. By simultaneously orchestrating data, tensor, and pipeline sharding across tho" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="mastering-3d-parallelism-for-trillion-parameter-ai">Mastering 3D
+Parallelism for Trillion-Parameter AI</h1>
+<p>This article explores the mechanics of 3D parallelism, an advanced
+distributed computing technique required to train massive,
+trillion-parameter artificial intelligence models. By simultaneously
+orchestrating data, tensor, and pipeline sharding across thousands of
+GPUs, 3D parallelism overcomes the severe memory and bandwidth
+bottlenecks of modern hardware. We will examine how each of the three
+dimensions operates individually and how they are mapped together onto
+hardware topologies to achieve maximum computational efficiency.</p>
+<h2 id="the-trillion-parameter-bottleneck">The Trillion-Parameter
+Bottleneck</h2>
+<p>Training a trillion-parameter model requires terabytes of memory just
+to store the model weights, gradients, and optimizer states. Because a
+single flagship GPU only holds around 80 to 192 gigabytes of
+high-bandwidth memory, the model cannot fit on one chip. While splitting
+the workload across multiple GPUs is necessary, using just one splitting
+method—like simple data duplication or basic layer splitting—results in
+crippling communication delays. 3D parallelism solves this by combining
+three distinct sharding techniques, allowing each to compensate for the
+weaknesses of the others.</p>
+<h2 id="dimension-1-data-parallelism-splitting-the-workload">Dimension
+1: Data Parallelism (Splitting the Workload)</h2>
+<p>Data parallelism is the foundational layer of distributed training.
+In a standard setup, the entire model is copied onto multiple GPUs, and
+each GPU processes a different subset, or mini-batch, of the training
+data.</p>
+<p>For trillion-parameter models, copying the whole model is impossible.
+Instead, 3D parallelism uses Data Parallelism across groups of GPUs that
+already hold a sliced version of the model. Each group processes a
+different batch of data simultaneously. At the end of a training step,
+these groups synchronize their calculated gradients using an
+"All-Reduce" communication operation, ensuring every copy of the model
+updates its weights identically.</p>
+<h2 id="dimension-2-tensor-parallelism-splitting-the-layers">Dimension
+2: Tensor Parallelism (Splitting the Layers)</h2>
+<p>Tensor parallelism, also known as intra-layer parallelism, addresses
+the problem of individual neural network layers being too massive for a
+single GPU. It works by splitting the actual mathematical
+operations—specifically matrix multiplications—across multiple GPUs.</p>
+<p>Instead of one GPU calculating a massive weight matrix, the matrix is
+sliced horizontally or vertically across several GPUs. Each GPU computes
+its portion of the matrix using the input data, and the results are
+instantly combined. Because this requires GPUs to exchange partial
+results multiple times during the processing of a single layer, tensor
+parallelism requires massive communication bandwidth. Therefore, it is
+exclusively applied to GPUs within the same physical server node,
+utilizing ultra-fast interconnects like NVIDIA's NVLink.</p>
+<h2 id="dimension-3-pipeline-parallelism-splitting-the-depth">Dimension
+3: Pipeline Parallelism (Splitting the Depth)</h2>
+<p>Pipeline parallelism, or inter-layer parallelism, slices the model
+vertically by dividing its sequential layers across different GPUs. For
+example, in a 96-layer model, the first GPU cluster handles layers 1
+through 24, the second handles layers 25 through 48, and so on. Data
+flows through these stages like an assembly line.</p>
+<p>Initially, this creates a "pipeline bubble," a period of idle time
+where later GPUs wait for earlier GPUs to finish processing the data. To
+fix this, 3D parallelism slices the input data batch into even smaller
+"micro-batches." As soon as the first stage finishes processing the
+first micro-batch, it passes the data to the second stage and
+immediately begins working on the second micro-batch. This keeps all
+GPUs active simultaneously, drastically reducing idle time.</p>
+<h2 id="orchestrating-the-3d-mesh">Orchestrating the 3D Mesh</h2>
+<p>The true power of 3D parallelism lies in how it maps these three
+dimensions onto the physical reality of a supercomputer's network
+topology. A supercomputer consists of multiple server nodes connected by
+relatively slower network cables (like InfiniBand), while each node
+contains multiple GPUs connected by ultra-fast internal bridges.</p>
+<p>3D parallelism orchestrates the workload to match these speeds:</p>
+<ol type="1">
+<li><strong>Inside the Node (Tensor Parallelism):</strong> A single
+layer is split across the 8 GPUs inside one server node. This traps the
+heaviest, most frequent communication inside the fastest local hardware
+connections.</li>
+<li><strong>Across Adjacent Nodes (Pipeline Parallelism):</strong> The
+sequential layers of the model are distributed across multiple server
+nodes. Because pipeline stages only need to pass the final output of a
+layer to the next node, this requires moderate bandwidth, making it
+ideal for node-to-node network cables.</li>
+<li><strong>Across the Cluster (Data Parallelism):</strong> Once a full
+model is constructed using a combination of Tensor and Pipeline nodes
+(forming one "model replica"), that entire multi-node group is
+duplicated across the rest of the data center. These massive groups run
+in parallel, processing different slices of the dataset and only
+communicating once per training step to average their gradients.</li>
+</ol>
+<p>By aligning the communication demands of data, tensor, and pipeline
+sharding with the physical bandwidth hierarchy of the hardware, 3D
+parallelism achieves near-linear scaling, turning thousands of
+individual GPUs into a single, cohesive super-brain capable of training
+trillion-parameter AI.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/mastering-3-d-parallelism-for-trillion-parameter-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

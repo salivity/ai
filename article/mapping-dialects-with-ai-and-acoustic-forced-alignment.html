@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping Dialects with AI and Acoustic Forced Alignment - ai</title>
+    <meta name="description" content="Sociolinguists are revolutionizing the study of regional dialects and vowel shifts by combining artificial intelligence with large-scale acoustic forced alignment to analyze oral history archives. Historically, mapping phonetic variation required manual t">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/mapping-dialects-with-ai-and-acoustic-forced-alignment">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mapping Dialects with AI and Acoustic Forced Alignment - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/mapping-dialects-with-ai-and-acoustic-forced-alignment" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Sociolinguists are revolutionizing the study of regional dialects and vowel shifts by combining artificial intelligence with large-scale acoustic forced alignment to analyze oral history archives. Historically, mapping phonetic variation required manual t" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="mapping-dialects-with-ai-and-acoustic-forced-alignment">Mapping
+Dialects with AI and Acoustic Forced Alignment</h1>
+<p>Sociolinguists are revolutionizing the study of regional dialects and
+vowel shifts by combining artificial intelligence with large-scale
+acoustic forced alignment to analyze oral history archives.
+Historically, mapping phonetic variation required manual transcription
+and acoustic measurement, a process that took hours for just a few
+minutes of audio. Today, automated computational pipelines allow
+researchers to process thousands of hours of archival recordings in a
+fraction of the time. By aligning transcripts with audio waves and
+extracting acoustic data via machine learning, linguists can track how
+regional accents evolve across decades and generations with
+unprecedented speed and accuracy.</p>
+<h2 id="unlocking-oral-history-archives">Unlocking Oral History
+Archives</h2>
+<p>Oral history archives represent a goldmine for studying language
+change over time. Libraries, universities, and historical societies hold
+vast collections of interviews with speakers born as far back as the
+mid-19th century. These recordings capture authentic, unscripted
+vernacular speech. However, the sheer volume of these archives
+previously made large-scale phonetic analysis impossible. By digitizing
+these collections and applying AI-driven tools, sociolinguists can now
+conduct real-time and apparent-time studies of language evolution across
+entire populations rather than relying on small sample sizes.</p>
+<h2 id="the-role-of-acoustic-forced-alignment">The Role of Acoustic
+Forced Alignment</h2>
+<p>The foundational technology enabling this large-scale analysis is
+acoustic forced alignment. Forced alignment is an automated process that
+takes an orthographic transcript (the written words) and an audio file,
+and determines the exact millisecond each word and individual speech
+sound (phoneme) begins and ends.</p>
+<p>To achieve this, tools like the Montreal Forced Aligner (MFA), FAVE
+(Forced Alignment and Vowel Extraction), and DARLA use pronunciation
+dictionaries to translate written words into phonetic transcriptions.
+Acoustic models—trained on vast amounts of speech data—then scan the
+audio waveform to match the expected phonetic sequences with the actual
+acoustic signals. The output is a time-aligned text grid that pinpoints
+the exact location of millions of individual vowels and consonants
+within an archive.</p>
+<h2 id="extracting-vowel-formants">Extracting Vowel Formants</h2>
+<p>Once the forced aligner has isolated the exact boundaries of every
+vowel in a recording, the next step is measuring the acoustic properties
+of those vowels to map regional shifts. Vowels are defined acoustically
+by their formants, which are resonant frequencies of the vocal
+tract.</p>
+<p>Linguists focus primarily on the first two formants:</p>
+<ul>
+<li><strong>Formant 1 (F1):</strong> Correlates inversely with vowel
+height (how high or low the tongue is in the mouth).</li>
+<li><strong>Formant 2 (F2):</strong> Correlates with vowel advancement
+(how far forward or back the tongue is).</li>
+</ul>
+<p>Automated scripts extract the F1 and F2 frequencies at the midpoint
+of each aligned vowel. Because every person has a differently sized
+vocal tract, algorithms then normalize these measurements. Normalization
+allows researchers to accurately compare the vowel spaces of a tall
+adult male recorded in 1950 with a short young female recorded in
+2020.</p>
+<h2 id="how-ai-accelerates-the-pipeline">How AI Accelerates the
+Pipeline</h2>
+<p>Artificial intelligence and deep learning have drastically improved
+every stage of this sociolinguistic workflow. First, Automatic Speech
+Recognition (ASR) models, such as OpenAI's Whisper or Kaldi-based
+systems, are used to generate initial transcripts for untranscribed oral
+histories, bypassing the bottleneck of manual transcription.</p>
+<p>Second, deep neural networks are now integrated into forced aligners.
+Traditional aligners struggled with the degraded audio quality,
+background noise, and overlapping speech common in archival field
+recordings. Modern AI acoustic models can adapt to noisy environments
+and unfamiliar dialects, significantly reducing alignment errors.</p>
+<p>Finally, machine learning algorithms are used to clean the extracted
+formant data. When processing millions of vowels, automated systems
+inevitably make some measurement errors. AI classifiers can
+automatically detect and filter out acoustic outliers, ensuring that the
+final dataset reflects true human speech patterns rather than software
+glitches.</p>
+<h2 id="mapping-regional-vowel-shifts">Mapping Regional Vowel
+Shifts</h2>
+<p>With clean, normalized acoustic data extracted from thousands of
+speakers, sociolinguists use statistical modeling and geographic
+information systems (GIS) to map dialect variation. By plotting F1 and
+F2 values on a two-dimensional grid, researchers can visualize a
+speaker's vowel space and see how it shifts based on region, age,
+gender, and socioeconomic status.</p>
+<p>This methodology has allowed linguists to track massive phonetic
+changes, such as the Northern Cities Vowel Shift in the Great Lakes
+region, the Southern Vowel Shift in the American South, and the
+Low-Back-Merger Shift in Canada and the Western United States. By
+linking acoustic AI pipelines with historical metadata, researchers can
+watch a vowel shift originate in a specific urban center and diffuse
+geographically across an archive's timeline, turning static historical
+recordings into dynamic maps of human language change.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/mapping-dialects-with-ai-and-acoustic-forced-alignment';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

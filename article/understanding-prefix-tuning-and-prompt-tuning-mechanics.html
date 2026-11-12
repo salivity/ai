@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Prefix-Tuning and Prompt-Tuning Mechanics - ai</title>
+    <meta name="description" content="This article explains how prefix-tuning and prompt-tuning adapt large artificial intelligence models to new tasks by prepending learnable continuous vectors to attention layers while keeping the base model weights completely frozen. You will learn the cor">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-prefix-tuning-and-prompt-tuning-mechanics">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Prefix-Tuning and Prompt-Tuning Mechanics - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-prefix-tuning-and-prompt-tuning-mechanics" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains how prefix-tuning and prompt-tuning adapt large artificial intelligence models to new tasks by prepending learnable continuous vectors to attention layers while keeping the base model weights completely frozen. You will learn the cor" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-prefix-tuning-and-prompt-tuning-mechanics">Understanding
+Prefix-Tuning and Prompt-Tuning Mechanics</h1>
+<p>This article explains how prefix-tuning and prompt-tuning adapt large
+artificial intelligence models to new tasks by prepending learnable
+continuous vectors to attention layers while keeping the base model
+weights completely frozen. You will learn the core mechanics of
+transformer attention, the specific architectural differences between
+prompt-tuning and prefix-tuning, and how gradients update only these
+newly added vectors during the training process.</p>
+<h3 id="the-foundation-frozen-weights-and-attention">The Foundation:
+Frozen Weights and Attention</h3>
+<p>To understand how continuous vectors steer a model, it is necessary
+to look at how transformers process information. Transformers rely on
+the self-attention mechanism, which converts input tokens into three
+matrices: Queries (<span class="math inline">\(Q\)</span>), Keys (<span
+class="math inline">\(K\)</span>), and Values (<span
+class="math inline">\(V\)</span>). The model calculates attention scores
+by multiplying Queries with Keys, and then uses those scores to weight
+the Values.</p>
+<p>In traditional fine-tuning, error gradients flow backward through the
+network and update every weight in the model. In both prefix-tuning and
+prompt-tuning, the base artificial intelligence weights are frozen.
+During backpropagation, gradients are still calculated to find the path
+of least error, but the optimizer is prevented from updating the
+original model parameters. Instead, it only updates a small set of newly
+introduced parameters—often called "virtual tokens" or "soft
+prompts"—that exist in continuous vector space rather than corresponding
+to actual words in the model's vocabulary.</p>
+<h3 id="how-prompt-tuning-works">How Prompt-Tuning Works</h3>
+<p>Prompt-tuning is the simpler of the two methods and operates
+exclusively at the very first layer of the model (the input embedding
+layer).</p>
+<ol type="1">
+<li><strong>Initialization:</strong> A sequence of continuous vectors,
+matching the hidden dimension size of the base model, is
+initialized.</li>
+<li><strong>Prepending:</strong> When an input text is fed into the
+model, it is first converted into standard token embeddings. The
+learnable continuous vectors are directly prepended (attached to the
+front) of these input embeddings.</li>
+<li><strong>Forward Pass:</strong> This combined sequence flows through
+the frozen transformer layers. At the first attention layer, the model
+generates <span class="math inline">\(Q\)</span>, <span
+class="math inline">\(K\)</span>, and <span
+class="math inline">\(V\)</span> matrices for both the prepended vectors
+and the actual input tokens.</li>
+<li><strong>Contextual Shifting:</strong> As the data moves up through
+subsequent layers, the original input tokens attend to the prepended
+vectors, altering their representations and steering the final output
+toward the desired task.</li>
+</ol>
+<p>Because prompt-tuning only modifies the initial input sequence, it
+requires the fewest trainable parameters, though it sometimes struggles
+to match the performance of full fine-tuning on smaller models.</p>
+<h3 id="how-prefix-tuning-works">How Prefix-Tuning Works</h3>
+<p>Prefix-tuning is more expressive than prompt-tuning because it
+injects learnable continuous vectors into <em>every</em> attention layer
+of the transformer, rather than just the input layer. Furthermore, it
+specifically alters the Keys and Values without directly adding to the
+Queries.</p>
+<ol type="1">
+<li><strong>Layer-Wise Injection:</strong> At every transformer layer,
+two sets of learnable prefix vectors are initialized: one for the Keys
+(<span class="math inline">\(P_K\)</span>) and one for the Values (<span
+class="math inline">\(P_V\)</span>).</li>
+<li><strong>Prepending to K and V:</strong> During the forward pass at
+any given layer, the model computes the standard <span
+class="math inline">\(Q\)</span>, <span
+class="math inline">\(K\)</span>, and <span
+class="math inline">\(V\)</span> matrices from the hidden states of the
+actual input. The learnable prefix vectors <span
+class="math inline">\(P_K\)</span> and <span
+class="math inline">\(P_V\)</span> are then concatenated to the front of
+the standard <span class="math inline">\(K\)</span> and <span
+class="math inline">\(V\)</span> matrices.</li>
+<li><strong>Attention Calculation:</strong> The Queries (<span
+class="math inline">\(Q\)</span>) of the actual input tokens now attend
+to this newly expanded Key matrix (which consists of both the prefix
+Keys and the original Keys) and pull information from the expanded Value
+matrix.</li>
+<li><strong>Reparameterization for Stability:</strong> Directly
+optimizing these prefix vectors can lead to unstable training. To fix
+this, prefix-tuning passes the trainable vectors through a temporary
+Multilayer Perceptron (MLP) during training to generate the actual <span
+class="math inline">\(P_K\)</span> and <span
+class="math inline">\(P_V\)</span> matrices. Once training is complete,
+the MLP is discarded, and only the resulting static prefix vectors are
+kept for inference.</li>
+</ol>
+<h3 id="summary-of-the-optimization-process">Summary of the Optimization
+Process</h3>
+<p>Both methods achieve task adaptation without modifying base weights
+through targeted gradient updates. When the model makes a prediction, a
+loss is calculated based on how far the prediction is from the target.
+During the backward pass, the calculus chain rule computes gradients all
+the way back to the prepended continuous vectors. The optimizer updates
+the numerical values of these vectors to minimize future errors, while
+the frozen weights of the base AI act merely as a static, complex
+function through which the signals pass.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-prefix-tuning-and-prompt-tuning-mechanics';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

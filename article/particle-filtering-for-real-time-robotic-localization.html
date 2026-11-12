@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle Filtering for Real-Time Robotic Localization - ai</title>
+    <meta name="description" content="This article explores how Sequential Monte Carlo, commonly known as particle filtering, enables real-time robotic localization by tracking non-linear state trajectories. Unlike traditional algorithms that require linear system models and Gaussian noise as">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/particle-filtering-for-real-time-robotic-localization">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Particle Filtering for Real-Time Robotic Localization - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/particle-filtering-for-real-time-robotic-localization" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Sequential Monte Carlo, commonly known as particle filtering, enables real-time robotic localization by tracking non-linear state trajectories. Unlike traditional algorithms that require linear system models and Gaussian noise as" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="particle-filtering-for-real-time-robotic-localization">Particle
+Filtering for Real-Time Robotic Localization</h1>
+<p>This article explores how Sequential Monte Carlo, commonly known as
+particle filtering, enables real-time robotic localization by tracking
+non-linear state trajectories. Unlike traditional algorithms that
+require linear system models and Gaussian noise assumptions, particle
+filters use a probabilistic, sample-based approach to estimate a robot's
+position and orientation in complex environments. By iteratively
+predicting movement, evaluating sensor data, and resampling probable
+states, this method allows autonomous systems to accurately navigate
+unpredictable spaces in real time.</p>
+<h3 id="the-challenge-of-non-linear-state-trajectories">The Challenge of
+Non-Linear State Trajectories</h3>
+<p>In robotic artificial intelligence, localization is the process of
+determining where a robot is within its environment. Real-world robotic
+movement is inherently non-linear, and sensor data is rarely clean or
+predictable. Wheels slip, terrain changes, and sensors like LiDAR or
+sonar experience reflections and dynamic obstacles.</p>
+<p>Traditional state estimation methods, such as the Kalman Filter, fail
+in these scenarios because they assume linear motion and unimodal
+Gaussian (bell-curve) uncertainty. If a robot doesn't know which of two
+identical intersections it is at, a Kalman filter might average the two
+and guess the robot is inside a wall between them. Particle filtering
+solves this by representing the robot's location not as a single
+mathematical formula, but as a cloud of thousands of discrete guesses,
+known as particles.</p>
+<h3 id="how-particle-filtering-works">How Particle Filtering Works</h3>
+<p>Each particle in a Sequential Monte Carlo filter represents a
+concrete hypothesis of the robot's current state—typically its X and Y
+coordinates and its heading direction. By managing a large set of these
+particles, the AI can track complex, non-linear trajectories through a
+continuous four-step loop.</p>
+<h4 id="1-initialization">1. Initialization</h4>
+<p>When a robot powers on without knowing its location, the AI generates
+thousands of particles distributed uniformly across a digital map of the
+environment. If the robot has a rough starting estimate, the particles
+are clustered around that specific area. At this stage, every particle
+has an equal probability of being correct.</p>
+<h4 id="2-prediction-state-transition">2. Prediction (State
+Transition)</h4>
+<p>As the robot moves, the AI measures the physical action using wheel
+encoders or inertial measurement units (IMUs). The filter then moves
+every single particle according to the robot’s non-linear motion model.
+Because real-world movement is imperfect, the algorithm intentionally
+adds random simulated noise to each particle's movement. This causes the
+particle cloud to spread out, accurately reflecting the growing
+uncertainty of the robot's trajectory.</p>
+<h4 id="3-update-importance-weighting">3. Update (Importance
+Weighting)</h4>
+<p>Next, the robot uses its external sensors (cameras, LiDAR, radar) to
+observe the environment. The AI compares this real-world sensor data
+against what each particle "should" see from its hypothetical position
+on the map.</p>
+<p>Each particle is assigned an "importance weight" based on how closely
+its predicted view matches the actual sensor readings. Particles whose
+positions align well with the sensor data receive high weights.
+Particles located in improbable spots—such as those that just passed
+through a wall during the prediction step—receive very low weights.</p>
+<h4 id="4-resampling">4. Resampling</h4>
+<p>This is the survival-of-the-fittest phase that makes real-time
+tracking possible. The algorithm creates a new generation of particles
+by drawing from the current set, with the probability of selection
+directly tied to each particle's importance weight.</p>
+<p>Low-weight particles are discarded, while high-weight particles are
+duplicated. The total number of particles remains constant, but they are
+now densely clustered around the most probable locations on the map. The
+cycle then repeats from the prediction step as the robot continues to
+move.</p>
+<h3 id="achieving-real-time-performance-in-ai">Achieving Real-Time
+Performance in AI</h3>
+<p>Tracking non-linear trajectories requires processing non-Gaussian,
+multi-modal distributions—meaning the robot can simultaneously track
+multiple probable locations until enough sensor data narrows it down to
+one. Because each particle is calculated independently during the
+prediction and update phases, particle filtering is highly
+parallelizable. Modern robotic AI leverages GPUs to update tens of
+thousands of particles simultaneously in milliseconds.</p>
+<p>Furthermore, advanced implementations use "adaptive" particle
+filtering, such as KLD-sampling. When the robot is completely lost, the
+AI uses a high number of particles to cover the map. Once the particles
+converge into a single tight cluster and the robot is confident of its
+trajectory, the AI dynamically reduces the number of particles to save
+computational power, ensuring seamless, real-time localization.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/particle-filtering-for-real-time-robotic-localization';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabu Search: Short-Term Memory in AI Optimization - ai</title>
+    <meta name="description" content="This article explores how Tabu Search, a powerful metaheuristic algorithm in artificial intelligence, solves complex combinatorial optimization problems by escaping local optima. We will examine the core mechanism of the algorithm: the Tabu List, which ac">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/tabu-search-short-term-memory-in-ai-optimization">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tabu Search: Short-Term Memory in AI Optimization - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/tabu-search-short-term-memory-in-ai-optimization" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Tabu Search, a powerful metaheuristic algorithm in artificial intelligence, solves complex combinatorial optimization problems by escaping local optima. We will examine the core mechanism of the algorithm: the Tabu List, which ac" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="tabu-search-short-term-memory-in-ai-optimization">Tabu Search:
+Short-Term Memory in AI Optimization</h1>
+<p>This article explores how Tabu Search, a powerful metaheuristic
+algorithm in artificial intelligence, solves complex combinatorial
+optimization problems by escaping local optima. We will examine the core
+mechanism of the algorithm: the Tabu List, which acts as a short-term
+memory structure that tracks and forbids recent moves to prevent
+infinite cycling. Finally, we will cover how tabu tenure and aspiration
+criteria balance this memory system to ensure the algorithm efficiently
+discovers global optima.</p>
+<p>In combinatorial optimization, basic local search algorithms often
+fail because they get trapped in local optima—solutions that are better
+than their immediate neighbors but worse than the global best solution.
+To escape a local optimum, an algorithm must occasionally accept a worse
+move. However, doing so creates a new problem: cycling. If an algorithm
+moves from a local optimum to a slightly worse neighbor, its very next
+step might simply be to move right back to the local optimum it just
+left, resulting in an infinite loop.</p>
+<p>Tabu Search prevents cycling by implementing a short-term memory
+structure known as the Tabu List. Instead of remembering only the
+current state, the algorithm remembers the recent history of the search.
+Whenever the algorithm makes a move from one solution to another, that
+move (or the specific attribute that changed) is recorded in the Tabu
+List and labeled as "tabu" (forbidden). During subsequent iterations,
+the algorithm is strictly prohibited from executing any move present on
+this list, forcing it to explore new regions of the solution space
+rather than retracing its steps.</p>
+<p>Because storing complete solutions is computationally expensive and
+memory-intensive, the Tabu List typically stores move attributes rather
+than whole states. For example, in the Traveling Salesperson Problem, if
+the algorithm swaps the order of City A and City B, the Tabu List simply
+records the pair (A, B). For a set number of future iterations, the
+algorithm cannot swap City A and City B again, even if doing so would
+immediately improve the current tour's length.</p>
+<p>The Tabu List operates as a First-In, First-Out (FIFO) queue governed
+by a parameter called "tabu tenure." Tabu tenure defines the exact
+number of iterations a move remains forbidden. Once a move has been on
+the list for the duration of the tenure, it expires, is removed from the
+list, and becomes an allowable move again.</p>
+<p>Choosing the right tabu tenure is critical for search
+performance:</p>
+<ul>
+<li><strong>Short Tenure:</strong> If the memory is too short, the
+algorithm may still fall into larger cycles and fail to escape deep
+local optima.</li>
+<li><strong>Long Tenure:</strong> If the memory is too long, too many
+moves become forbidden, overly restricting the search space and
+potentially blocking the algorithm from finding the optimal path.</li>
+</ul>
+<p>Storing move attributes rather than full solutions can sometimes be
+overly restrictive, accidentally forbidding moves that lead to
+unvisited, high-quality solutions. To counter this, Tabu Search uses
+"aspiration criteria." An aspiration criterion is a rule that overrides
+a move's tabu status. The most common criterion is simple: if a
+forbidden move yields a solution that is better than the best-known
+solution found so far in the entire search, the tabu restriction is
+ignored. Because this new solution is superior to anything seen before,
+it is guaranteed not to be a previously visited state, meaning there is
+zero risk of cycling.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/tabu-search-short-term-memory-in-ai-optimization';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

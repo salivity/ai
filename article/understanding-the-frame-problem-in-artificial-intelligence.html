@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the Frame Problem in Artificial Intelligence - ai</title>
+    <meta name="description" content="This article explores the frame problem in artificial intelligence, a fundamental challenge that arises when using formal logic to represent dynamic, changing environments. First identified in 1969, the problem highlights the difficulty of programming an">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-the-frame-problem-in-artificial-intelligence">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding the Frame Problem in Artificial Intelligence - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-the-frame-problem-in-artificial-intelligence" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the frame problem in artificial intelligence, a fundamental challenge that arises when using formal logic to represent dynamic, changing environments. First identified in 1969, the problem highlights the difficulty of programming an" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-the-frame-problem-in-artificial-intelligence">Understanding
+the Frame Problem in Artificial Intelligence</h1>
+<p>This article explores the frame problem in artificial intelligence, a
+fundamental challenge that arises when using formal logic to represent
+dynamic, changing environments. First identified in 1969, the problem
+highlights the difficulty of programming an AI to understand what
+remains unchanged after an action is performed, without having to
+explicitly write out millions of obvious rules. Below, we examine the
+core mechanics of the frame problem, why traditional logic struggles
+with it, its philosophical implications, and the modern approaches used
+to overcome it.</p>
+<h2 id="what-is-the-frame-problem">What is the Frame Problem?</h2>
+<p>The frame problem was introduced by John McCarthy and Patrick J.
+Hayes in their 1969 paper on the situation calculus, a logical formalism
+designed to represent changing worlds. In their framework, the state of
+the world is broken down into "situations," and actions transition the
+world from one situation to the next.</p>
+<p>To function in the real world, an intelligent agent must understand
+the effects of its actions. However, it is equally important for the
+agent to understand the <em>non-effects</em> of its actions. For
+example, if a robot picks up a cup of coffee, the location of the coffee
+changes. However, the color of the cup, the temperature of the room, the
+location of the table, and the current president of the United States
+all remain the same.</p>
+<p>Humans take these non-effects for granted using common-sense inertia:
+things stay as they are unless acted upon. Logic-based AI systems do not
+have this intuition.</p>
+<h2 id="the-challenge-to-logic-based-representation">The Challenge to
+Logic-Based Representation</h2>
+<p>In purely logic-based AI, the system only knows what it is explicitly
+told or what it can mathematically deduce from its axioms. When an
+action occurs, the AI transitions to a new state of the world. Without
+specific instructions, the AI cannot assume that facts from the previous
+state still hold true in the new state.</p>
+<p>To fix this, programmers must write "frame axioms"—logical statements
+that explicitly specify everything that does <em>not</em> change as the
+result of an action. This creates two massive hurdles for logic-based
+representation:</p>
+<h3 id="1-combinatorial-explosion-of-rules">1. Combinatorial Explosion
+of Rules</h3>
+<p>If an environment has <span class="math inline">\(M\)</span> possible
+actions and <span class="math inline">\(N\)</span> different facts
+(fluents) about the world, the number of frame axioms required is
+roughly <span class="math inline">\(M \times N\)</span>. Because the
+vast majority of actions only affect a tiny fraction of the world,
+almost all of the AI's knowledge base would consist of rules stating
+what does not happen. Writing a rule that says "painting a wall does not
+change the location of the car" for every possible combination of
+unrelated actions and objects is practically impossible.</p>
+<h3 id="2-computational-paralysis">2. Computational Paralysis</h3>
+<p>Even if all the necessary frame axioms could be written, the AI would
+face a severe computational bottleneck. Every time an action takes
+place, the system must process thousands or millions of frame axioms to
+verify the current state of the environment. Instead of acting in
+real-time, the AI becomes paralyzed, caught in an endless loop of
+deducing that the ceiling hasn't fallen and the floor hasn't vanished
+simply because it took a step forward.</p>
+<h2 id="the-philosophical-extension">The Philosophical Extension</h2>
+<p>While the frame problem began as a narrow mathematical issue in logic
+programming, philosophers like Daniel Dennett expanded it into a broader
+epistemological challenge. In this broader view, the frame problem is
+the challenge of determining what information is <em>relevant</em> in a
+given situation.</p>
+<p>Even if an AI assumes that things stay the same by default, it still
+has to evaluate whether an action has unforeseen secondary consequences
+(often called the ramification problem). For example, moving a table
+doesn't change the position of the walls, <em>unless</em> the table is
+tied to a load-bearing pillar with a tripwire attached to explosives.
+Deciding where to stop checking for relevance without examining the
+entire universe of facts is the essence of the broader frame
+problem.</p>
+<h2 id="overcoming-the-frame-problem">Overcoming the Frame Problem</h2>
+<p>To make logic-based AI viable in changing environments, researchers
+developed several workarounds that mimic the human assumption of
+inertia:</p>
+<ul>
+<li><strong>Non-Monotonic Logic:</strong> Traditional logic is
+monotonic, meaning that adding new information never invalidates old
+conclusions. Non-monotonic logic allows an AI to make default
+assumptions (e.g., "assume an object stays in place") and retract those
+assumptions only if contradictory evidence appears (e.g., "the object
+was just moved").</li>
+<li><strong>Explanation Closure Axioms:</strong> Proposed by Raymond
+Reiter, this approach flips the problem on its head. Instead of writing
+rules for every action that <em>doesn't</em> change a fact, the
+programmer writes a single rule for each fact, listing the <em>only</em>
+actions that can change it. If an object's location changes, it must
+have been moved; if no move action occurred, the location is guaranteed
+to be the same.</li>
+<li><strong>Fluent Calculus and Event Calculus:</strong> These are
+specialized variations of logic designed specifically to handle state
+changes efficiently by treating the state of the world as a collection
+of resources that are added or removed by actions, bypassing the need to
+re-verify untouched elements.</li>
+<li><strong>Probabilistic and Machine Learning Models:</strong> Modern
+AI largely sidesteps the classical frame problem by moving away from
+strict, rule-based logic. By using probabilistic reasoning (like Markov
+Decision Processes) and deep learning, modern systems learn to focus
+only on features of the environment that statistically correlate with
+their goals, ignoring the rest by default.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-the-frame-problem-in-artificial-intelligence';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

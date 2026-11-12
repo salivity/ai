@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dempster-Shafer Theory in Uncertain AI Reasoning - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of the Dempster-Shafer theory of belief functions and its role in artificial intelligence. It explains the foundational concepts of the framework, including how it differs from traditional probability by acco">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/dempster-shafer-theory-in-uncertain-ai-reasoning">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dempster-Shafer Theory in Uncertain AI Reasoning - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/dempster-shafer-theory-in-uncertain-ai-reasoning" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of the Dempster-Shafer theory of belief functions and its role in artificial intelligence. It explains the foundational concepts of the framework, including how it differs from traditional probability by acco" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="dempster-shafer-theory-in-uncertain-ai-reasoning">Dempster-Shafer
+Theory in Uncertain AI Reasoning</h1>
+<p>This article provides a comprehensive overview of the Dempster-Shafer
+theory of belief functions and its role in artificial intelligence. It
+explains the foundational concepts of the framework, including how it
+differs from traditional probability by accounting for ignorance and
+uncertainty. Furthermore, the article details the mathematical approach
+used to combine evidence from multiple independent sources, illustrating
+why this method is essential for modern AI reasoning, sensor fusion, and
+decision-making systems.</p>
+<h2 id="what-is-the-dempster-shafer-theory">What is the Dempster-Shafer
+Theory?</h2>
+<p>The Dempster-Shafer theory (DST), also known as the theory of belief
+functions, is a mathematical framework for reasoning with uncertainty.
+Introduced by Arthur P. Dempster and later developed by Glenn Shafer, it
+serves as a generalization of the Bayesian theory of subjective
+probability.</p>
+<p>In traditional probability theory, evidence is associated with only
+one possible event. If an AI system assigns a 70% probability that an
+object is a car, it must automatically assign a 30% probability that the
+object is not a car. DST removes this limitation. It allows an AI to
+assign degree of belief to sets of possibilities rather than single
+events, meaning the system can explicitly represent ignorance (i.e., "I
+do not know").</p>
+<h2 id="core-components-of-the-framework">Core Components of the
+Framework</h2>
+<p>To understand how DST operates in artificial intelligence, it is
+necessary to understand its four primary components:</p>
+<ul>
+<li><strong>Frame of Discernment (<span
+class="math inline">\(\Theta\)</span>):</strong> This is the set of all
+possible mutually exclusive outcomes in a given scenario. For example,
+in a medical diagnosis AI, the frame might be
+<code>{Flu, Cold, Allergies}</code>.</li>
+<li><strong>Basic Probability Assignment (BPA or <span
+class="math inline">\(m\)</span>):</strong> Also called the mass
+function, this assigns a value between 0 and 1 to every possible subset
+of the frame of discernment. The sum of all masses must equal 1. If a
+sensor provides vague evidence, the AI can assign mass to the subset
+<code>{Flu, Cold}</code> without committing to either specific
+diagnosis. Mass assigned to the entire frame represents complete
+ignorance.</li>
+<li><strong>Belief (<span class="math inline">\(Bel\)</span>):</strong>
+The belief in a hypothesis is the sum of the masses of all subsets that
+are fully contained within that hypothesis. It represents the minimum
+amount of certainty directly supporting the outcome.</li>
+<li><strong>Plausibility (<span
+class="math inline">\(Pl\)</span>):</strong> Plausibility is the sum of
+the masses of all subsets that intersect with the hypothesis. It
+represents the maximum potential support for the outcome if all
+currently uncertain evidence eventually points in its favor.</li>
+</ul>
+<p>Together, Belief and Plausibility form an uncertainty interval
+<code>[Bel, Pl]</code>. The wider the gap between these two values, the
+greater the AI's ignorance regarding that specific hypothesis.</p>
+<h2 id="combining-evidence-from-independent-sources">Combining Evidence
+from Independent Sources</h2>
+<p>The most powerful feature of the Dempster-Shafer theory in AI is its
+ability to fuse data from different, independent sources—such as merging
+data from a LiDAR sensor, a radar, and a camera in an autonomous
+vehicle. This is achieved using <strong>Dempster’s Rule of
+Combination</strong>.</p>
+<p>Dempster's Rule calculates the orthogonal sum of two or more mass
+functions to produce a single, combined mass function. The process works
+through the following steps:</p>
+<ol type="1">
+<li><strong>Intersection of Evidence:</strong> The AI looks at the
+subsets supported by Source 1 and the subsets supported by Source 2. It
+finds the intersections (common elements) between them and multiplies
+their mass values together. For example, if Sensor A gives a 0.6 mass to
+<code>{Car, Truck}</code> and Sensor B gives a 0.5 mass to
+<code>{Car, Motorcycle}</code>, the combined support for their
+intersection, <code>{Car}</code>, increases by <span
+class="math inline">\(0.6 \times 0.5 = 0.30\)</span>.</li>
+<li><strong>Calculating Conflict (<span
+class="math inline">\(K\)</span>):</strong> Inevitably, some sources
+will contradict each other. If Sensor A says <code>{Car}</code> and
+Sensor B says <code>{Pedestrian}</code>, their intersection is empty.
+The rule sums the products of all these empty intersections to determine
+the total degree of conflict, denoted as <span
+class="math inline">\(K\)</span>.</li>
+<li><strong>Normalization:</strong> To ensure the final combined masses
+still add up to 1, the algorithm divides the intersecting mass values by
+a normalization factor of <span class="math inline">\(1 - K\)</span>.
+This effectively redistributes the conflicting mass proportionally among
+the agreed-upon hypotheses.</li>
+</ol>
+<p><em>(Note: If <span class="math inline">\(K\)</span> equals 1, the
+sources are in total contradiction, and Dempster's rule cannot be
+applied without modification).</em></p>
+<h2 id="applications-in-artificial-intelligence">Applications in
+Artificial Intelligence</h2>
+<p>By utilizing Dempster's Rule of Combination, AI systems can
+progressively narrow down uncertainty as new evidence arrives. Key
+applications include:</p>
+<ul>
+<li><strong>Sensor Fusion:</strong> Autonomous vehicles and robotics use
+DST to combine readings from different types of sensors that have
+varying levels of reliability, especially in poor weather
+conditions.</li>
+<li><strong>Medical Expert Systems:</strong> Diagnostic AIs combine
+patient symptoms, lab results, and doctor observations—treating each as
+an independent source of evidence—to narrow down a list of potential
+diseases.</li>
+<li><strong>Fault Detection:</strong> Industrial AI systems monitor
+machinery using acoustic, thermal, and vibration sensors. DST combines
+these independent data streams to accurately identify mechanical
+failures while minimizing false alarms caused by a single faulty
+sensor.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/dempster-shafer-theory-in-uncertain-ai-reasoning';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

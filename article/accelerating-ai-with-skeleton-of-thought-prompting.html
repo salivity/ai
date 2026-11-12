@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerating AI with Skeleton-of-Thought Prompting - ai</title>
+    <meta name="description" content="Skeleton-of-Thought (SoT) prompting is an innovative technique designed to drastically reduce the end-to-end latency of large language models (LLMs). Traditional AI models generate responses sequentially, writing one word at a time, which creates signific">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/accelerating-ai-with-skeleton-of-thought-prompting">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Accelerating AI with Skeleton-of-Thought Prompting - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/accelerating-ai-with-skeleton-of-thought-prompting" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Skeleton-of-Thought (SoT) prompting is an innovative technique designed to drastically reduce the end-to-end latency of large language models (LLMs). Traditional AI models generate responses sequentially, writing one word at a time, which creates signific" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="accelerating-ai-with-skeleton-of-thought-prompting">Accelerating
+AI with Skeleton-of-Thought Prompting</h1>
+<p>Skeleton-of-Thought (SoT) prompting is an innovative technique
+designed to drastically reduce the end-to-end latency of large language
+models (LLMs). Traditional AI models generate responses sequentially,
+writing one word at a time, which creates significant delays for long
+outputs. This article explores how SoT overcomes this bottleneck by
+mimicking human cognitive processes: it first generates a concise
+outline of the answer and then expands each point simultaneously in
+parallel, delivering faster and often more structured results.</p>
+<h2 id="the-bottleneck-of-sequential-generation">The Bottleneck of
+Sequential Generation</h2>
+<p>To understand why Skeleton-of-Thought is necessary, you must first
+understand why LLMs are slow. Standard models use autoregressive
+decoding. This means the model generates text token by token (roughly
+word by word), and it cannot generate the next word until it has
+finished generating the current one.</p>
+<p>While the processing phase of reading your prompt is fast and highly
+parallelized, the generation phase is strictly sequential. If an answer
+requires 500 words, the system must perform 500 consecutive operations.
+This creates high end-to-end latency, leaving users waiting as text
+slowly streams onto their screens.</p>
+<h2 id="how-skeleton-of-thought-works">How Skeleton-of-Thought
+Works</h2>
+<p>Skeleton-of-Thought resolves the sequential bottleneck by breaking
+the generation process into two distinct stages: the skeleton stage and
+the point-expanding stage.</p>
+<h3 id="1-the-skeleton-stage">1. The Skeleton Stage</h3>
+<p>When a user submits a prompt, SoT intercepts the request and
+instructs the LLM to generate only a brief outline—or "skeleton"—of the
+response. Instead of writing full paragraphs, the model outputs a
+numbered list of short bullet points summarizing the core concepts it
+intends to cover. Because this output is very short, it takes only a
+fraction of a second to generate.</p>
+<h3 id="2-the-point-expanding-stage">2. The Point-Expanding Stage</h3>
+<p>Once the skeleton is created, a controller program parses the
+numbered list. It then sends multiple requests back to the LLM
+simultaneously—one for each bullet point in the skeleton.</p>
+<p>The LLM is instructed to expand on each specific point concisely,
+without worrying about the other points. Because these requests do not
+depend on one another, they are processed in parallel. This happens
+either through batching on a single GPU or by distributing the requests
+across multiple servers via API calls.</p>
+<h2 id="why-parallel-expansion-reduces-latency">Why Parallel Expansion
+Reduces Latency</h2>
+<p>The primary speed advantage of SoT comes from maximizing hardware
+utilization. Modern GPUs are designed for massive parallel processing,
+yet sequential text generation leaves much of a GPU's computing power
+idle while it waits to predict one word after another.</p>
+<p>By expanding five, ten, or twenty bullet points at the exact same
+time, SoT shifts the workload from a long, single-file line into a wide,
+multi-lane highway. The total time it takes to generate the complete
+response is no longer determined by the length of the entire essay.
+Instead, the latency is only the time it takes to generate the initial
+short skeleton plus the time it takes to finish the single longest
+paragraph among the parallel tasks. Once all points are expanded, they
+are stitched back together in the correct order and presented to the
+user.</p>
+<h2 id="limitations-and-ideal-use-cases">Limitations and Ideal Use
+Cases</h2>
+<p>While Skeleton-of-Thought routinely achieves speedups of 2x or more,
+it is not suited for every task.</p>
+<p><strong>Where SoT Excels:</strong></p>
+<ul>
+<li><strong>Structured Answers:</strong> Questions asking for lists,
+pros and cons, historical timelines, or multi-faceted explanations.</li>
+<li><strong>Brainstorming:</strong> Generating multiple ideas, marketing
+angles, or distinct concepts.</li>
+<li><strong>Planning:</strong> Creating itineraries, project roadmaps,
+or study guides.</li>
+</ul>
+<p><strong>Where SoT Struggles:</strong></p>
+<ul>
+<li><strong>Step-by-Step Math and Logic:</strong> In complex math or
+coding, step two strictly depends on the exact calculation of step one.
+Because SoT processes points in isolation, it cannot use the result of
+one point to inform the next.</li>
+<li><strong>Creative Storytelling:</strong> Narratives require smooth
+transitions and consistent tone from paragraph to paragraph, which can
+be lost when sections are written independently.</li>
+</ul>
+<p>By shifting AI generation from a strictly linear process to a
+parallelized workflow, Skeleton-of-Thought prompting effectively removes
+the waiting game for complex, structured queries, making real-time AI
+interactions significantly faster.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/accelerating-ai-with-skeleton-of-thought-prompting';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

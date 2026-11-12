@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accelerating AI Inference with Medusa and EAGLE - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how the Medusa and EAGLE frameworks accelerate Large Language Model (LLM) inference through speculative decoding. Standard AI text generation processes words one at a time, creating a major memory bottlene">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/accelerating-ai-inference-with-medusa-and-eagle">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Accelerating AI Inference with Medusa and EAGLE - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/accelerating-ai-inference-with-medusa-and-eagle" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how the Medusa and EAGLE frameworks accelerate Large Language Model (LLM) inference through speculative decoding. Standard AI text generation processes words one at a time, creating a major memory bottlene" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="accelerating-ai-inference-with-medusa-and-eagle">Accelerating AI
+Inference with Medusa and EAGLE</h1>
+<p>This article provides a comprehensive overview of how the Medusa and
+EAGLE frameworks accelerate Large Language Model (LLM) inference through
+speculative decoding. Standard AI text generation processes words one at
+a time, creating a major memory bottleneck. To solve this, both Medusa
+and EAGLE eliminate the need for a separate draft model by attaching
+lightweight decoding heads directly to the base model. While Medusa uses
+multiple independent heads to guess several future tokens in parallel,
+EAGLE introduces a more advanced single-head autoregression technique
+that leverages hidden feature states for higher accuracy. Both methods
+ultimately verify these predicted tokens simultaneously, drastically
+increasing generation speed without sacrificing output quality.</p>
+<h3 id="the-bottleneck-of-standard-llm-inference">The Bottleneck of
+Standard LLM Inference</h3>
+<p>Traditional autoregressive Large Language Models generate text
+sequentially. To predict the fifth word in a sentence, the model must
+first generate the fourth word, feed it back into the system, and load
+all the model's massive parameters from memory all over again. This
+makes LLM inference heavily memory-bandwidth bound rather than
+compute-bound. Speculative decoding solves this by guessing multiple
+future tokens at once and using a single forward pass of the main model
+to verify them in parallel. Medusa and EAGLE are two prominent
+architectures that achieve this by adding lightweight decoding heads
+directly to the original model.</p>
+<h3 id="how-medusa-works-parallel-decoding-heads">How Medusa Works:
+Parallel Decoding Heads</h3>
+<p>Medusa simplifies speculative decoding by removing the need for a
+separate, smaller "draft" model. Instead, it attaches multiple
+lightweight decoding heads directly onto the final hidden state of the
+frozen base LLM.</p>
+<ul>
+<li><strong>Architecture:</strong> While the original language model
+head predicts the immediate next token (at position <span
+class="math inline">\(t+1\)</span>), Medusa adds <span
+class="math inline">\(K\)</span> additional heads. Head 1 predicts the
+token at <span class="math inline">\(t+2\)</span>, Head 2 predicts <span
+class="math inline">\(t+3\)</span>, and so on. Each head is a simple
+feed-forward neural network with a residual connection.</li>
+<li><strong>Training:</strong> During training, the base LLM remains
+frozen (in the standard Medusa-1 setup), and only the new heads are
+trained using cross-entropy loss to match the base model's predictions
+at their respective future steps.</li>
+<li><strong>Tree Attention Verification:</strong> Because the heads
+predict future tokens independently, they can easily make conflicting
+guesses. To maximize the chance of a correct sequence, each head
+generates its top-k most likely tokens. Medusa combines these
+predictions into a candidate tree. Using a customized "tree attention"
+mask, the base LLM processes all branches of this tree simultaneously in
+a single forward pass, accepting the longest correct sequence of
+tokens.</li>
+</ul>
+<h3 id="how-eagle-works-feature-level-autoregression">How EAGLE Works:
+Feature-Level Autoregression</h3>
+<p>EAGLE (Extrapolation Algorithm for Greater Language-model Efficiency)
+identifies a major flaw in Medusa's approach: predicting the 3rd or 4th
+future token without knowing the 2nd token is inherently inaccurate.
+EAGLE solves this by making the lightweight drafting process
+autoregressive, while keeping it blazingly fast.</p>
+<ul>
+<li><strong>Architecture:</strong> Instead of multiple independent
+heads, EAGLE attaches a single lightweight autoregressive head
+(typically consists of a single Transformer decoder layer) to the base
+model.</li>
+<li><strong>Feature Extrapolation:</strong> Rather than predicting
+discrete tokens directly, EAGLE operates on the continuous "feature"
+level—specifically, the second-to-top hidden states of the LLM. Hidden
+states contain much richer contextual information than a single chosen
+word.</li>
+<li><strong>Addressing Uncertainty:</strong> Predicting future features
+has a catch: the hidden state of the next step depends on the exact
+token sampled in the current step. EAGLE resolves this by concatenating
+the current hidden state with the embedding of the <em>just-sampled</em>
+token, feeding both into its lightweight head to predict the next hidden
+state.</li>
+<li><strong>Sequential Drafting, Parallel Verification:</strong> EAGLE
+runs its lightweight head sequentially a few times to rapidly draft a
+tree of future tokens. Once this fast drafting phase is complete, the
+base LLM verifies the entire tree in a single parallel forward pass,
+just like Medusa.</li>
+</ul>
+<h3 id="key-differences-in-simultaneous-prediction">Key Differences in
+Simultaneous Prediction</h3>
+<p>While both methods aim to verify multiple tokens in one step of the
+base model, their approach to generating the guesses differs
+fundamentally:</p>
+<ol type="1">
+<li><strong>Drafting Mechanism:</strong> Medusa predicts future tokens
+in parallel using separate heads for each future position. EAGLE
+predicts future states sequentially using a single recurrent head, which
+is still exceptionally fast because the head is minuscule compared to
+the base model.</li>
+<li><strong>Context Awareness:</strong> Medusa's heads are blind to what
+the other heads are doing; the head predicting the third word does not
+know what the first head picked for the second word. EAGLE passes the
+sampled token embedding from one step to the next, ensuring that future
+predictions are contextually aligned with earlier guesses.</li>
+<li><strong>Acceptance Rate:</strong> Because EAGLE resolves token
+uncertainty step-by-step at the feature level, its draft trees are
+significantly more accurate than Medusa's. This leads to more tokens
+being accepted per forward pass, resulting in a higher overall speedup
+(often 3x faster than standard decoding, compared to Medusa’s roughly 2x
+speedup).</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/accelerating-ai-inference-with-medusa-and-eagle';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

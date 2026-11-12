@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Byte Pair Encoding Builds AI Subword Vocabularies - ai</title>
+    <meta name="description" content="Byte Pair Encoding (BPE) is a foundational tokenization algorithm used in modern artificial intelligence language models to bridge the gap between character-level and word-level text processing. Originally developed as a data compression technique, BPE bu">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-byte-pair-encoding-builds-ai-subword-vocabularies">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Byte Pair Encoding Builds AI Subword Vocabularies - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-byte-pair-encoding-builds-ai-subword-vocabularies" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Byte Pair Encoding (BPE) is a foundational tokenization algorithm used in modern artificial intelligence language models to bridge the gap between character-level and word-level text processing. Originally developed as a data compression technique, BPE bu" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-byte-pair-encoding-builds-ai-subword-vocabularies">How Byte
+Pair Encoding Builds AI Subword Vocabularies</h1>
+<p>Byte Pair Encoding (BPE) is a foundational tokenization algorithm
+used in modern artificial intelligence language models to bridge the gap
+between character-level and word-level text processing. Originally
+developed as a data compression technique, BPE builds a highly efficient
+subword vocabulary by starting with individual characters and
+iteratively merging the most frequently occurring adjacent pairs. This
+article explores the step-by-step mechanics of the BPE algorithm,
+demonstrating how it initializes vocabularies, calculates pair
+frequencies, executes iterative merges, and ultimately enables language
+models to process rare and unknown words without exhausting
+computational memory.</p>
+<h2 id="the-tokenization-challenge-in-language-models">The Tokenization
+Challenge in Language Models</h2>
+<p>Language models cannot understand raw text; they require text to be
+broken down into numerical representations called tokens. Historically,
+models relied on word-level or character-level tokenization. Word-level
+tokenization assigns a unique ID to every word, which leads to massive
+vocabulary sizes and fails when the model encounters out-of-vocabulary
+(OOV) words. Character-level tokenization uses a tiny vocabulary of
+individual letters, solving the unknown word problem, but creates
+excessively long sequences that are computationally expensive to process
+and strip away the semantic meaning of words.</p>
+<p>Byte Pair Encoding solves both problems by creating a subword
+vocabulary. Common words remain intact as single tokens, while rare
+words are broken down into meaningful subword units, such as prefixes,
+roots, and suffixes.</p>
+<h2 id="step-1-corpus-preparation-and-base-initialization">Step 1:
+Corpus Preparation and Base Initialization</h2>
+<p>The BPE algorithm begins with a large training corpus of text. Before
+counting any characters, the text is pre-tokenized into words, typically
+by splitting on whitespace and punctuation.</p>
+<p>Next, the algorithm counts the frequency of every unique word in the
+corpus. To ensure the model knows where words end, a special end-of-word
+symbol (often represented as <code>&lt;/w&gt;</code>) is appended to
+each word. This symbol is crucial because it distinguishes between a
+subword that appears at the beginning of a word (like "st" in "star")
+and one that appears at the end (like "st&lt;/w&gt;" in "fast").</p>
+<p>Finally, every word is split into its individual characters. The
+initial vocabulary—called the base vocabulary—consists solely of all the
+unique individual characters present in the text, plus the special
+end-of-word symbol.</p>
+<h2 id="step-2-counting-adjacent-character-pairs">Step 2: Counting
+Adjacent Character Pairs</h2>
+<p>Once the words are broken down into sequences of individual
+characters, the iterative process begins. The algorithm scans the entire
+pre-tokenized corpus and counts the frequency of every adjacent pair of
+symbols.</p>
+<p>For example, if the word "low" appears 5 times in the corpus, it is
+represented as <code>l o w &lt;/w&gt;</code>. The adjacent pairs within
+this word are <code>(l, o)</code>, <code>(o, w)</code>, and
+<code>(w, &lt;/w&gt;)</code>, and each of these pairs gets a count of 5
+added to its total frequency across the entire dataset.</p>
+<h2 id="step-3-iteratively-merging-the-most-frequent-pairs">Step 3:
+Iteratively Merging the Most Frequent Pairs</h2>
+<p>After tallying all adjacent pairs across the corpus, BPE identifies
+the single pair with the highest frequency. The algorithm then takes two
+actions:</p>
+<ol type="1">
+<li>It merges these two symbols together into a single, new subword
+symbol across all occurrences in the corpus.</li>
+<li>It adds this newly created subword symbol to the vocabulary.</li>
+</ol>
+<p>This completes one iteration. In the next step, the algorithm
+recalculates the frequencies of all adjacent pairs, treating the newly
+merged subword as a single unit. If <code>(e, s)</code> was merged into
+<code>es</code> in the first round, the next round might find that
+<code>(es, &lt;/w&gt;)</code> is now the most frequent pair, merging
+them into <code>es&lt;/w&gt;</code>.</p>
+<h2 id="step-4-concrete-example-of-the-bpe-loop">Step 4: Concrete
+Example of the BPE Loop</h2>
+<p>To visualize the iterative merging process, consider a simplified
+corpus containing only four words and their frequencies:</p>
+<ul>
+<li><code>low &lt;/w&gt;</code> (5 times)</li>
+<li><code>lower &lt;/w&gt;</code> (2 times)</li>
+<li><code>newest &lt;/w&gt;</code> (6 times)</li>
+<li><code>widest &lt;/w&gt;</code> (3 times)</li>
+</ul>
+<p><strong>Base Vocabulary:</strong>
+<code>l, o, w, e, r, n, s, t, i, d, &lt;/w&gt;</code></p>
+<p><strong>Iteration 1:</strong> The algorithm counts all adjacent
+pairs. The pair <code>(e, s)</code> appears 6 times in "newest" and 3
+times in "widest", for a total of 9 occurrences. The pair
+<code>(s, t)</code> also appears 9 times. Assuming the algorithm picks
+<code>(e, s)</code> first, they are merged into <code>es</code>.</p>
+<ul>
+<li><strong>New Vocabulary Addition:</strong> <code>es</code></li>
+<li><strong>Updated Corpus:</strong> <code>n e w es t &lt;/w&gt;</code>
+(6), <code>w i d es t &lt;/w&gt;</code> (3)</li>
+</ul>
+<p><strong>Iteration 2:</strong> The algorithm recounts the pairs. Now,
+the pair <code>(es, t)</code> appears 9 times (6 in "newest", 3 in
+"widest"). They are merged into <code>est</code>.</p>
+<ul>
+<li><strong>New Vocabulary Addition:</strong> <code>est</code></li>
+<li><strong>Updated Corpus:</strong> <code>n e w est &lt;/w&gt;</code>
+(6), <code>w i d est &lt;/w&gt;</code> (3)</li>
+</ul>
+<p><strong>Iteration 3:</strong> The pair <code>(est, &lt;/w&gt;)</code>
+now appears 9 times. They are merged into
+<code>est&lt;/w&gt;</code>.</p>
+<ul>
+<li><strong>New Vocabulary Addition:</strong>
+<code>est&lt;/w&gt;</code></li>
+<li><strong>Updated Corpus:</strong> <code>n e w est&lt;/w&gt;</code>
+(6), <code>w i d est&lt;/w&gt;</code> (3)</li>
+</ul>
+<p><strong>Iteration 4:</strong> Looking at the remaining pairs,
+<code>(l, o)</code> and <code>(o, w)</code> both appear 7 times (5 in
+"low", 2 in "lower"). The algorithm merges <code>(l, o)</code> into
+<code>lo</code>.</p>
+<ul>
+<li><strong>New Vocabulary Addition:</strong> <code>lo</code></li>
+<li><strong>Updated Corpus:</strong> <code>lo w &lt;/w&gt;</code> (5),
+<code>lo w e r &lt;/w&gt;</code> (2)</li>
+</ul>
+<p>If the process stopped here, the model would know the base characters
+plus the subwords <code>es</code>, <code>est</code>,
+<code>est&lt;/w&gt;</code>, and <code>lo</code>.</p>
+<h2 id="stopping-conditions-and-vocabulary-size">Stopping Conditions and
+Vocabulary Size</h2>
+<p>The iterative loop does not run forever. Before training begins,
+developers define a hyperparameter: either the maximum number of merge
+operations to perform or a target vocabulary size (e.g., 32,000 or
+50,000 tokens).</p>
+<p>The target vocabulary size is equal to the size of the base character
+vocabulary plus the number of merge operations. Once the algorithm
+reaches this predetermined limit, it stops merging. The final output is
+a fixed vocabulary list and an ordered list of merge rules.</p>
+<h2 id="applying-bpe-to-new-text">Applying BPE to New Text</h2>
+<p>When a trained AI language model encounters new text during
+inference, it does not recount frequencies. Instead, it splits the new
+input words into individual characters and applies the learned merge
+rules in the exact order they were learned during training.</p>
+<p>If the model encounters an unfamiliar word like "lowest", it breaks
+it into <code>l o w e s t &lt;/w&gt;</code>. Using the rules from the
+example above, it merges <code>e</code> and <code>s</code> into
+<code>es</code>, then <code>est</code>, then <code>est&lt;/w&gt;</code>,
+and finally <code>l</code> and <code>o</code> into <code>lo</code> (and
+eventually <code>low</code> if training had continued). The unknown word
+"lowest" is successfully tokenized into known subword components:
+<code>low</code> and <code>est&lt;/w&gt;</code>. Because both tokens
+carry semantic weight—representing a root concept and a superlative
+suffix—the AI can deduce the meaning of the word despite never having
+seen it whole.</p>
+<h2 id="byte-level-bpe-in-modern-ai">Byte-Level BPE in Modern AI</h2>
+<p>While standard BPE operates on Unicode characters, a modern variation
+used by models like GPT-2, GPT-3, and GPT-4 is Byte-Level BPE. Because
+there are over 140,000 Unicode characters across global languages and
+emojis, a character-level base vocabulary can still be too large or miss
+rare symbols.</p>
+<p>Byte-Level BPE converts text into UTF-8 bytes before running the
+algorithm. Because a byte can only have 256 possible values, the base
+vocabulary is guaranteed to be exactly 256 tokens. The iterative merging
+process then runs on adjacent bytes rather than characters, ensuring
+that the language model can process any text string, in any language,
+without ever producing an "unknown token" error.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-byte-pair-encoding-builds-ai-subword-vocabularies';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

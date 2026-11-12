@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Computational Pathology: Grading Tumor Biopsies - ai</title>
+    <meta name="description" content="Computational pathology leverages artificial intelligence to transform how tumor biopsies are analyzed and graded from whole-slide microscopic images. This article provides a comprehensive overview of the digital pathology workflow, beginning with the dig">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-in-computational-pathology-grading-tumor-biopsies">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI in Computational Pathology: Grading Tumor Biopsies - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-in-computational-pathology-grading-tumor-biopsies" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Computational pathology leverages artificial intelligence to transform how tumor biopsies are analyzed and graded from whole-slide microscopic images. This article provides a comprehensive overview of the digital pathology workflow, beginning with the dig" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-in-computational-pathology-grading-tumor-biopsies">AI in
+Computational Pathology: Grading Tumor Biopsies</h1>
+<p>Computational pathology leverages artificial intelligence to
+transform how tumor biopsies are analyzed and graded from whole-slide
+microscopic images. This article provides a comprehensive overview of
+the digital pathology workflow, beginning with the digitization of
+physical tissue samples into massive image files, followed by data
+preprocessing, and concluding with how deep learning models extract
+cellular features to determine tumor severity with high accuracy and
+speed.</p>
+<h3 id="digitizing-the-biopsy-whole-slide-imaging">Digitizing the
+Biopsy: Whole-Slide Imaging</h3>
+<p>Before artificial intelligence can analyze a tumor, a physical biopsy
+must be converted into a digital format. Pathologists place thin slices
+of stained tissue—typically using Hematoxylin and Eosin (H&amp;E) to
+highlight cellular structures—onto glass slides. High-resolution slide
+scanners then capture these samples at microscopic magnifications,
+creating Whole-Slide Images (WSIs). These gigapixel files contain
+billions of pixels, preserving the intricate cellular architecture
+required for accurate cancer grading.</p>
+<h3 id="preprocessing-gigapixel-images">Preprocessing Gigapixel
+Images</h3>
+<p>Because WSIs are too large to be processed all at once by standard
+computer hardware, AI systems must break the data down into manageable
+pieces. The preprocessing stage involves several critical steps:</p>
+<ul>
+<li><strong>Tissue Detection:</strong> Algorithms separate the actual
+tissue sample from the blank background of the glass slide to save
+computational power.</li>
+<li><strong>Tiling:</strong> The tissue region is divided into thousands
+of smaller, uniform square patches (tiles), often 256x256 or 512x512
+pixels in size.</li>
+<li><strong>Color Normalization:</strong> Because different laboratories
+use varying batches of chemical stains and different scanners, AI
+applies color normalization to standardize the visual appearance of the
+tiles.</li>
+</ul>
+<h3 id="feature-extraction-with-deep-learning">Feature Extraction with
+Deep Learning</h3>
+<p>Once the image is tiled, deep learning architectures—primarily
+Convolutional Neural Networks (CNNs) and Vision Transformers
+(ViTs)—analyze the individual patches. The AI scans these tiles to
+identify and quantify specific histopathological features that indicate
+cancer progression:</p>
+<ul>
+<li><strong>Cellular Morphology:</strong> The AI measures the size,
+shape, and irregularity of individual cancer cell nuclei.</li>
+<li><strong>Mitotic Count:</strong> The algorithm detects and counts
+cells that are actively dividing, which indicates how fast the tumor is
+growing.</li>
+<li><strong>Glandular Architecture:</strong> In cancers like prostate or
+breast cancer, the AI evaluates how much the tumor cells have lost their
+normal, organized tissue structure.</li>
+</ul>
+<h3 id="aggregating-data-for-the-final-tumor-grade">Aggregating Data for
+the Final Tumor Grade</h3>
+<p>A single biopsy slide may contain both healthy tissue and varying
+degrees of cancerous tissue. To assign an overall grade to the entire
+slide without requiring pathologists to manually label every single
+tile, computational pathology relies on Weakly Supervised Learning,
+specifically Multiple Instance Learning (MIL).</p>
+<p>The MIL algorithm reviews the predictions from all the individual
+tiles, weighs their importance, and aggregates the data to generate a
+slide-level diagnosis. For example, in prostate cancer, the AI
+identifies the primary and secondary patterns of cell growth across the
+tiles to automatically calculate a Gleason score.</p>
+<h3 id="clinical-impact-and-benefits">Clinical Impact and Benefits</h3>
+<p>Integrating AI into the tumor grading process addresses several
+bottlenecks in traditional pathology. Human grading is inherently
+subjective; two pathologists might assign a slightly different grade to
+the same borderline biopsy. AI provides standardized, reproducible
+measurements every time. Furthermore, AI acts as a rapid triage tool,
+flagging high-grade, aggressive tumors so pathologists can prioritize
+critical cases, ultimately accelerating the time to treatment for
+patients.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-in-computational-pathology-grading-tumor-biopsies';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

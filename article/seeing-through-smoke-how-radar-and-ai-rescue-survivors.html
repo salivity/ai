@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeing Through Smoke: How Radar and AI Rescue Survivors - ai</title>
+    <meta name="description" content="This article explores how modern search and rescue teams locate survivors trapped in smoke-filled buildings using Through-Wall Radar (TWR) imaging. By combining ultra-wideband (UWB) radio reflections with human-pose artificial intelligence, first responde">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/seeing-through-smoke-how-radar-and-ai-rescue-survivors">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Seeing Through Smoke: How Radar and AI Rescue Survivors - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/seeing-through-smoke-how-radar-and-ai-rescue-survivors" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how modern search and rescue teams locate survivors trapped in smoke-filled buildings using Through-Wall Radar (TWR) imaging. By combining ultra-wideband (UWB) radio reflections with human-pose artificial intelligence, first responde" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="seeing-through-smoke-how-radar-and-ai-rescue-survivors">Seeing
+Through Smoke: How Radar and AI Rescue Survivors</h1>
+<p>This article explores how modern search and rescue teams locate
+survivors trapped in smoke-filled buildings using Through-Wall Radar
+(TWR) imaging. By combining ultra-wideband (UWB) radio reflections with
+human-pose artificial intelligence, first responders can bypass visual
+obstructions like dense smoke, darkness, and solid concrete. This
+overview covers the mechanics of UWB signal penetration, the detection
+of micro-movements such as breathing, and how AI translates raw radio
+data into real-time skeletal models of trapped individuals.</p>
+<p>Traditional rescue technologies, such as optical and thermal cameras,
+often fail in burning buildings. Thick smoke blocks visible light, and
+extreme ambient heat masks the infrared signatures of human bodies.
+Through-Wall Radar overcomes these limitations by using radio waves
+instead of light or heat to map an environment.</p>
+<p>At the core of this technology is Ultra-Wideband (UWB) radio. Unlike
+standard narrowband radio, UWB transmits billions of rapid, low-power
+pulses across a wide spectrum of frequencies. These signals easily
+penetrate solid barriers, including drywall, brick, fiberglass, and
+wood, as well as heavy smoke and dust.</p>
+<p>When a rescue worker places a TWR device against a building's
+exterior, the unit emits UWB pulses into the structure. These radio
+waves bounce off objects inside the room and return to the radar's
+receiver. By measuring the exact time it takes for the pulses to
+return—known as Time of Flight—the system calculates the distance and
+density of objects hidden behind the wall.</p>
+<p>To distinguish a human from stationary debris like fallen furniture,
+the radar relies on the Doppler effect. As a radio wave hits a moving
+object, the frequency of the reflected wave changes. UWB radar is
+sensitive enough to detect micro-Doppler shifts. Even if a survivor is
+unconscious and buried under rubble, the slight expansion and
+contraction of their chest while breathing, or even the subtle rhythm of
+their heartbeat, creates a unique frequency shift that the radar
+isolates from the static background.</p>
+<p>While UWB radar is exceptional at detecting presence and distance,
+raw radar reflections look like chaotic blobs of data on a screen. They
+lack the resolution needed to tell a firefighter whether a person is
+standing, crouching, or pinned beneath a beam. This is where human-pose
+artificial intelligence takes over.</p>
+<p>To make the radar data immediately useful, developers train deep
+learning neural networks using simultaneous optical and radar recordings
+of people moving. The AI learns to associate specific patterns of
+scattered radio waves with the exact positioning of human joints and
+limbs.</p>
+<p>Once deployed in the field, the AI processes the incoming UWB
+reflections in real time. It filters out the "noise" of walls and
+furniture, isolates the biological signals, and reconstructs a 3D
+skeletal wireframe—known as a human pose—on the rescuer's screen.</p>
+<p>Instead of interpreting complex radar graphs, firefighters see a
+clear, stick-figure representation of the survivor's exact posture and
+location. The AI can indicate if a person is waving for help, crawling
+on the floor, or lying motionless. This immediate, actionable
+intelligence allows rescue teams to breach the correct walls, avoid
+structural hazards, and extract survivors faster than ever before.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/seeing-through-smoke-how-radar-and-ai-rescue-survivors';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding RAPTOR: Hierarchical Retrieval in AI - ai</title>
+    <meta name="description" content="Recursive Abstractive Processing for Tree-Organized Retrieval (RAPTOR) is an advanced framework in artificial intelligence that improves how Retrieval-Augmented Generation (RAG) systems understand large documents. This article explains how RAPTOR overcome">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-raptor-hierarchical-retrieval-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding RAPTOR: Hierarchical Retrieval in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-raptor-hierarchical-retrieval-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Recursive Abstractive Processing for Tree-Organized Retrieval (RAPTOR) is an advanced framework in artificial intelligence that improves how Retrieval-Augmented Generation (RAG) systems understand large documents. This article explains how RAPTOR overcome" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-raptor-hierarchical-retrieval-in-ai">Understanding
+RAPTOR: Hierarchical Retrieval in AI</h1>
+<p>Recursive Abstractive Processing for Tree-Organized Retrieval
+(RAPTOR) is an advanced framework in artificial intelligence that
+improves how Retrieval-Augmented Generation (RAG) systems understand
+large documents. This article explains how RAPTOR overcomes the
+limitations of traditional retrieval methods by recursively clustering
+and summarizing text chunks into a hierarchical tree. By organizing
+information from granular details at the bottom to broad summaries at
+the top, RAPTOR allows AI models to efficiently answer both specific
+factual queries and complex, high-level thematic questions.</p>
+<h3 id="the-limitation-of-traditional-retrieval">The Limitation of
+Traditional Retrieval</h3>
+<p>Standard RAG systems break documents into small, contiguous chunks of
+text and convert them into vector embeddings. When a user asks a
+question, the system fetches the chunks most semantically similar to the
+query. While this works well for simple fact-finding, it fails at
+answering high-level thematic questions. Thematic questions require
+synthesizing information spread across an entire document, and
+retrieving only a few isolated text chunks deprives the AI of the
+necessary overarching context.</p>
+<h3 id="step-1-chunking-and-embedding-the-base-layer">Step 1: Chunking
+and Embedding the Base Layer</h3>
+<p>RAPTOR begins similarly to traditional systems. It takes a large
+document and splits it into small, manageable segments of text. These
+segments form the "leaf nodes" at the very bottom of the RAPTOR tree.
+Each leaf node is then converted into a vector embedding using an
+embedding model, capturing the semantic meaning of the raw text.</p>
+<h3 id="step-2-clustering-similar-information">Step 2: Clustering
+Similar Information</h3>
+<p>Instead of leaving these chunks isolated, RAPTOR groups related
+chunks together, regardless of where they originally appeared in the
+document. It uses an algorithm called Gaussian Mixture Models (GMM)
+combined with UMAP for dimensionality reduction.</p>
+<p>A critical feature of RAPTOR's clustering is the use of "soft
+clustering." Because a single paragraph might touch on multiple themes,
+soft clustering allows a single text chunk to be assigned to multiple
+clusters simultaneously. This ensures that vital bridging concepts are
+not restricted to just one thematic pathway.</p>
+<h3 id="step-3-summarizing-the-clusters">Step 3: Summarizing the
+Clusters</h3>
+<p>Once the chunks are grouped into clusters, RAPTOR uses a Large
+Language Model (LLM) to generate a concise summary for each cluster.
+This process distills the granular details of the individual chunks into
+a broader, more abstract representation of their shared theme. These
+generated summaries become the new nodes in the next layer up the
+tree.</p>
+<h3 id="step-4-building-the-tree-recursively">Step 4: Building the Tree
+Recursively</h3>
+<p>RAPTOR repeats the embedding, clustering, and summarizing process on
+the newly created summaries.</p>
+<ol type="1">
+<li>The new summaries are converted into vector embeddings.</li>
+<li>They are grouped into new, broader clusters based on semantic
+similarity.</li>
+<li>The LLM summarizes these new clusters to form an even higher
+layer.</li>
+</ol>
+<p>This recursive cycle continues until the remaining nodes can no
+longer be clustered meaningfully, culminating in a single root node or a
+small group of top-level nodes that summarize the entire document. The
+result is a multi-layered hierarchical tree: the bottom leaves hold
+exact details, the middle layers hold sub-themes, and the top layers
+hold overarching themes.</p>
+<h3 id="querying-the-tree-for-thematic-answers">Querying the Tree for
+Thematic Answers</h3>
+<p>When a user asks a question, RAPTOR can retrieve information from the
+tree using two primary methods: tree traversal and collapsed tree
+retrieval.</p>
+<p>In <strong>tree traversal</strong>, the system starts at the top
+layer of the tree, selects the nodes most relevant to the query, and
+drills down into their child nodes to gather the best mix of summaries
+and raw text.</p>
+<p>In <strong>collapsed tree retrieval</strong>, the system flattens the
+entire tree into a single pool of nodes. It then compares the user's
+query against every node—both original chunks and all levels of
+summaries—simultaneously.</p>
+<p>Because high-level summaries exist alongside specific text chunks, a
+thematic question will naturally match with the higher-level summary
+nodes. The AI receives pre-synthesized, overarching context rather than
+fragmented details, allowing it to generate accurate, comprehensive
+answers to complex thematic questions.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-raptor-hierarchical-retrieval-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

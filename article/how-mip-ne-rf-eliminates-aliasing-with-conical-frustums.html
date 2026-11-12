@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Mip-NeRF Eliminates Aliasing With Conical Frustums - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Mip-NeRF, an advancement in 3D neural rendering artificial intelligence, solves the critical issue of aliasing. We will explore the limitations of traditional single-ray casting in original Neural Radi">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-mip-ne-rf-eliminates-aliasing-with-conical-frustums">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Mip-NeRF Eliminates Aliasing With Conical Frustums - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-mip-ne-rf-eliminates-aliasing-with-conical-frustums" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Mip-NeRF, an advancement in 3D neural rendering artificial intelligence, solves the critical issue of aliasing. We will explore the limitations of traditional single-ray casting in original Neural Radi" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-mip-nerf-eliminates-aliasing-with-conical-frustums">How
+Mip-NeRF Eliminates Aliasing With Conical Frustums</h1>
+<p>This article provides a comprehensive overview of how Mip-NeRF, an
+advancement in 3D neural rendering artificial intelligence, solves the
+critical issue of aliasing. We will explore the limitations of
+traditional single-ray casting in original Neural Radiance Fields
+(NeRF), explain the mechanics of casting 3D conical frustums, and detail
+how Integrated Positional Encoding (IPE) enables continuous, multi-scale
+representations that keep 3D renders sharp and artifact-free at any
+viewing distance.</p>
+<h3 id="the-problem-with-traditional-nerf-ray-casting">The Problem with
+Traditional NeRF Ray Casting</h3>
+<p>To understand Mip-NeRF, you must first understand the flaw in the
+original NeRF architecture. Traditional NeRF renders 3D scenes by
+marching a single, infinitely narrow ray per pixel from the camera into
+the 3D space. It samples discrete points along this ray and feeds their
+coordinates into a neural network to predict color and volume
+density.</p>
+<p>This approach fails when the camera moves closer to or further away
+from the subject—a problem known as aliasing. Because a single ray has
+no volume, it only samples an infinitesimally small point in space. When
+rendering a low-resolution image or viewing an object from far away, a
+single pixel on a screen actually covers a large area of the 3D scene.
+Sampling just one point within that large area completely misses the
+surrounding context, resulting in jagged edges, pixelation, and
+shimmering artifacts when the camera moves.</p>
+<h3 id="casting-3d-conical-frustums">Casting 3D Conical Frustums</h3>
+<p>Mip-NeRF resolves this issue by changing the fundamental geometry of
+how the AI looks at a scene. Instead of shooting a one-dimensional ray
+through the center of each pixel, Mip-NeRF casts a three-dimensional
+cone.</p>
+<p>The apex of this cone starts at the camera's center of projection and
+widens as it travels outward through the pixel and into the 3D scene.
+The radius of the cone is directly determined by the physical size of
+the pixel on the image plane. Instead of sampling flat points along a
+line, Mip-NeRF slices this cone into segments along its length. These
+individual 3D volumetric slices are called conical frustums—essentially
+cones with their pointy tips chopped off.</p>
+<p>By utilizing conical frustums, the AI no longer asks, "What is at
+this exact point?" Instead, it asks, "What is the average appearance of
+everything inside this specific 3D volume?"</p>
+<h3
+id="approximating-frustums-with-multivariate-gaussians">Approximating
+Frustums with Multivariate Gaussians</h3>
+<p>Passing a complex geometric shape like a conical frustum directly
+into a neural network is computationally expensive and mathematically
+difficult. Mip-NeRF bypasses this bottleneck by approximating the shape
+of each conical frustum using a multivariate Gaussian distribution.</p>
+<p>A 3D Gaussian represents a soft, probabilistic cloud in space,
+defined by its center point (mean) and its spread in three dimensions
+(covariance). Mip-NeRF calculates the exact mean and covariance that
+closely match the volume of the conical frustum. This mathematical
+shortcut translates a hard geometric volume into a compact set of
+numbers that a neural network can easily process.</p>
+<h3 id="integrated-positional-encoding-ipe">Integrated Positional
+Encoding (IPE)</h3>
+<p>In a standard NeRF, 3D points are translated into higher-dimensional
+frequencies using Positional Encoding (PE), which helps the neural
+network learn fine, high-frequency details like sharp edges and
+textures.</p>
+<p>Because Mip-NeRF deals with volumes (Gaussians) rather than single
+points, it introduces Integrated Positional Encoding (IPE). Instead of
+encoding a single coordinate, IPE calculates the expected value (the
+integral) of the positional encoding across the entire Gaussian
+volume.</p>
+<p>This integration acts as an automatic, continuous anti-aliasing
+filter:</p>
+<ul>
+<li><strong>Close-up Views (Narrow Cones):</strong> When a camera is
+close to an object, the conical frustum is very small. IPE retains the
+high-frequency encodings, allowing the neural network to render sharp,
+intricate details.</li>
+<li><strong>Distant Views (Wide Cones):</strong> When the camera pulls
+back, the conical frustum becomes very wide, encompassing a large part
+of the scene. Over this large volume, high-frequency waves cancel each
+other out during integration, leaving only low-frequency information.
+This naturally blurs the input features, forcing the network to output a
+smooth, pre-filtered representation of that space.</li>
+</ul>
+<h3 id="the-result-multi-scale-representation">The Result: Multi-Scale
+Representation</h3>
+<p>By replacing rays with conical frustums and point encoding with
+volume encoding, Mip-NeRF inherently understands scale. The neural
+network learns to associate narrow frustums with fine details and wide
+frustums with smoothed, averaged appearances. This mimics the classic
+computer graphics technique of "mipmapping," where textures are
+pre-filtered at multiple resolutions, but applies it continuously in 3D
+space. Consequently, Mip-NeRF completely eliminates aliasing artifacts
+while training a single, unified neural network that can render scenes
+accurately at any resolution or camera distance.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-mip-ne-rf-eliminates-aliasing-with-conical-frustums';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

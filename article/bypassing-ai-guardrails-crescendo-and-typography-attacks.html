@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bypassing AI Guardrails: Crescendo and Typography Attacks - ai</title>
+    <meta name="description" content="This article explores the mechanics behind two sophisticated adversarial techniques—multi-turn crescendo jailbreaks and visual typography attacks—and explains how they successfully bypass safety classifiers in multimodal artificial intelligence models. By">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/bypassing-ai-guardrails-crescendo-and-typography-attacks">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bypassing AI Guardrails: Crescendo and Typography Attacks - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/bypassing-ai-guardrails-crescendo-and-typography-attacks" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the mechanics behind two sophisticated adversarial techniques—multi-turn crescendo jailbreaks and visual typography attacks—and explains how they successfully bypass safety classifiers in multimodal artificial intelligence models. By" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="bypassing-ai-guardrails-crescendo-and-typography-attacks">Bypassing
+AI Guardrails: Crescendo and Typography Attacks</h1>
+<p>This article explores the mechanics behind two sophisticated
+adversarial techniques—multi-turn crescendo jailbreaks and visual
+typography attacks—and explains how they successfully bypass safety
+classifiers in multimodal artificial intelligence models. By examining
+the architectural vulnerabilities of large language and vision-language
+models, this overview details how attackers manipulate conversational
+context and visual processing pathways to evade modern AI
+guardrails.</p>
+<h3 id="understanding-multimodal-safety-classifiers">Understanding
+Multimodal Safety Classifiers</h3>
+<p>Before examining the attacks, it is necessary to understand how
+multimodal AI models enforce safety. Most advanced models utilize a
+dual-layered defense mechanism:</p>
+<ol type="1">
+<li><strong>Input/Output Guardrails:</strong> External classifiers that
+scan text and images for prohibited content before the main model
+processes the input, and again before the output is shown to the
+user.</li>
+<li><strong>Intrinsic Alignment:</strong> Training techniques, such as
+Reinforcement Learning from Human Feedback (RLHF), that condition the
+core model to refuse harmful requests naturally.</li>
+</ol>
+<p>Both crescendo and visual typography attacks succeed by exploiting
+the blind spots between these two layers, specifically targeting how
+models process context over time and how they unify different data
+modalities (text and vision) into a single mathematical space.</p>
+<h3 id="multi-turn-crescendo-jailbreaks">Multi-Turn Crescendo
+Jailbreaks</h3>
+<p>A multi-turn crescendo jailbreak is a conversational attack that
+manipulates a model’s context window gradually. Instead of issuing a
+single, explicitly harmful prompt that would immediately trigger an
+input classifier, the attacker uses a sequence of benign prompts to
+slowly guide the model toward a prohibited topic.</p>
+<h4 id="how-crescendo-attacks-bypass-defenses">How Crescendo Attacks
+Bypass Defenses:</h4>
+<ul>
+<li><strong>Evasion of Stateless Classifiers:</strong> Many external
+safety classifiers evaluate prompts in isolation or only look at a
+limited subset of the conversation history to save computational
+resources. Because each individual prompt in a crescendo attack appears
+harmless, the external classifiers fail to flag the interaction.</li>
+<li><strong>Exploiting In-Context Learning:</strong> Large language
+models are designed to be helpful and maintain coherence based on prior
+turns in the conversation. As the attacker nudges the model closer to
+the restricted topic, the model's own previous responses become part of
+the context.</li>
+<li><strong>Attention Dilution:</strong> In transformer-based
+architectures, the self-attention mechanism weighs the importance of
+different tokens in the context window. By filling the context window
+with a lengthy, seemingly educational or hypothetical narrative, the
+model's intrinsic safety alignment is overridden by its stronger
+training objective: to complete patterns and remain consistent with the
+established conversational trajectory.</li>
+<li><strong>Refusal Suppression:</strong> Once the model has generated
+content adjacent to the restricted topic in Turn 3 or 4, asking it to
+take one final step in Turn 5 does not register as a severe violation of
+its alignment, because the semantic leap from the immediate context to
+the harmful output is minimal.</li>
+</ul>
+<h3 id="visual-typography-attacks">Visual Typography Attacks</h3>
+<p>Visual typography attacks (often considered a form of indirect prompt
+injection or cross-modal jailbreaking) target Vision-Language Models
+(VLMs). In this attack, the adversary takes a prohibited text command,
+renders it as an image (simply typing the text onto a blank background),
+and feeds the image to the model alongside a benign text prompt, such as
+"Follow the instructions in this image."</p>
+<h4 id="how-typography-attacks-bypass-defenses">How Typography Attacks
+Bypass Defenses:</h4>
+<ul>
+<li><strong>Circumventing Text-Only Input Filters:</strong> The primary
+vulnerability lies in the separation of modalities during
+pre-processing. Text-based safety classifiers scan the user's text
+prompt. Because the text prompt is merely "Follow the instructions in
+this image," the text filter registers no threat.</li>
+<li><strong>Inadequacy of Image Classifiers:</strong> Concurrently, the
+image is sent to a visual safety classifier. Traditional image
+classifiers are trained to detect explicit visual harm (such as
+violence, gore, or adult content). They are generally not equipped with
+Optical Character Recognition (OCR) paired with semantic intent
+analysis. To the image classifier, an image of black letters on a white
+background looks completely safe.</li>
+<li><strong>Late-Stage Modality Fusion:</strong> Once the inputs pass
+the initial filters, the VLM's vision encoder converts the image into
+visual tokens, and the text encoder converts the text into text tokens.
+Both sets of tokens are projected into a shared embedding space where
+the core model processes them together. The core model possesses
+advanced OCR capabilities and reads the typography within the image
+directly inside this shared space.</li>
+<li><strong>Alignment Discrepancy:</strong> Most safety alignment (RLHF)
+is heavily skewed toward text inputs. When a harmful instruction arrives
+via visual tokens rather than text tokens, the model’s internal refusal
+mechanisms are significantly less likely to activate. The model
+successfully reads the text inside the image and executes the command
+because its safety training was not robustly generalized to the visual
+embedding space.</li>
+</ul>
+<h3 id="the-convergence-of-vulnerabilities">The Convergence of
+Vulnerabilities</h3>
+<p>Both techniques highlight a fundamental flaw in current AI safety
+architectures: the disconnect between <strong>perception</strong> and
+<strong>comprehension</strong>.</p>
+<p>In a crescendo attack, the safety classifiers perceive individual
+trees, while the core model comprehends—and gets lost in—the forest of
+the broader context. In a visual typography attack, the safety
+classifiers perceive pixels and harmless text separately, while the core
+model comprehends the unified semantic meaning of the text rendered
+within those pixels. Addressing these vulnerabilities requires shifting
+from static, modality-specific filters to dynamic, context-aware, and
+natively multimodal safety evaluations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/bypassing-ai-guardrails-crescendo-and-typography-attacks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

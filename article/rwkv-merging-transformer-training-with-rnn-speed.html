@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RWKV: Merging Transformer Training with RNN Speed - ai</title>
+    <meta name="description" content="This article explores the Receptance Weighted Key Value (RWKV) architecture, a novel artificial intelligence design that successfully combines the high-speed parallel training of Transformers with the efficient, linear-scaling inference of Recurrent Neura">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/rwkv-merging-transformer-training-with-rnn-speed">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="RWKV: Merging Transformer Training with RNN Speed - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/rwkv-merging-transformer-training-with-rnn-speed" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the Receptance Weighted Key Value (RWKV) architecture, a novel artificial intelligence design that successfully combines the high-speed parallel training of Transformers with the efficient, linear-scaling inference of Recurrent Neura" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="rwkv-merging-transformer-training-with-rnn-speed">RWKV: Merging
+Transformer Training with RNN Speed</h1>
+<p>This article explores the Receptance Weighted Key Value (RWKV)
+architecture, a novel artificial intelligence design that successfully
+combines the high-speed parallel training of Transformers with the
+efficient, linear-scaling inference of Recurrent Neural Networks (RNNs).
+By reformulating the traditional attention mechanism to remove massive
+computational bottlenecks, RWKV processes data simultaneously during the
+training phase while operating as a lightweight, step-by-step system
+during deployment. The following sections break down the core
+mathematical and structural innovations—specifically linear attention,
+time-mixing, and channel-mixing—that allow RWKV to achieve the best of
+both worlds.</p>
+<p>To understand RWKV, you must first understand the limitations of its
+predecessors. Standard Transformers excel at training because they look
+at an entire sequence of text at once using a matrix operation called
+self-attention. However, during inference (when the AI generates text),
+this attention mechanism requires more memory and compute for every new
+word added, resulting in a quadratic increase in cost. Conversely, RNNs
+generate text very cheaply by passing a single "hidden state" from one
+word to the next, maintaining a fast, linear speed. Unfortunately,
+because each step in an RNN depends on the computation of the previous
+step, they cannot be easily parallelized during training, making them
+slow to scale.</p>
+<p>RWKV bridges this gap by altering the attention mechanism. In a
+standard Transformer, attention calculates the relationship between
+every pair of words simultaneously by multiplying queries and keys
+together. RWKV drops the traditional query-key multiplication entirely.
+Instead, it uses a variant of linear attention where token interactions
+are calculated using an exponentially decaying weight based on how far
+apart the words are.</p>
+<p>Because this decay is purely based on relative position rather than
+complex token-to-token matrix multiplications, the equation can be
+written in two different ways. This dual-formulation is the secret to
+RWKV's success:</p>
+<p><strong>The Time-Parallel Mode (Training):</strong> Because the
+weights between tokens are determined by a simple positional decay
+formula, the entire sequence of inputs can be calculated all at once
+using matrix operations on modern GPUs. The model does not need to wait
+for token one to finish completely before starting to calculate the
+attention for token two. This matches the rapid training speeds of
+standard Transformers.</p>
+<p><strong>The Time-Sequential Mode (Inference):</strong> That exact
+same mathematical formula can be algebraically rearranged into a
+recursive update rule. During text generation, the model accumulates the
+decayed keys and values into a single, fixed-size state vector. When
+generating the next word, the model only needs to look at the newly
+arrived word and that single state vector, updating the state with a
+simple addition and multiplication. It never has to recalculate the
+history of the prompt. This mimics an RNN, resulting in constant memory
+usage and linear inference speed, no matter how long the conversation
+becomes.</p>
+<p>Structurally, the RWKV architecture achieves this through two main
+blocks that replace the standard Transformer layers: Time-Mixing and
+Channel-Mixing.</p>
+<p>The <strong>Time-Mixing block</strong> handles the history of the
+sequence, acting as the replacement for the Transformer's self-attention
+layer. It takes the current token and blends it with the immediately
+preceding token, a process called token-shift. It then passes this
+blended data through three linear projections to create the Receptance
+(R), Key (K), and Value (V). A fourth parameter, Weight (W), acts as the
+learned time-decay factor. The Key and Value are combined over time
+using the decaying Weight, and the Receptance acts as a gating mechanism
+(similar to a forget gate in traditional RNNs) to decide how much of
+this historical information should actually pass through to the next
+layer.</p>
+<p>The <strong>Channel-Mixing block</strong> replaces the Transformer’s
+standard feed-forward network. Once the Time-Mixing block has aggregated
+the historical context, the Channel-Mixing block processes the
+information within the current step. It also uses the token-shift
+mechanism, blending the current token's features with the previous
+token's features before passing them through another Receptance gate and
+Value projection. This reinforces the model's ability to track
+sequential patterns smoothly.</p>
+<p>By eliminating the quadratic bottleneck of standard dot-product
+attention and relying on linear decay, RWKV removes the barrier between
+training efficiency and inference speed. Developers can train massive
+language models using parallelized GPU clusters, and then deploy those
+exact same models as lightweight, state-based RNNs that run rapidly on
+consumer hardware with a fraction of the memory footprint.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/rwkv-merging-transformer-training-with-rnn-speed';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

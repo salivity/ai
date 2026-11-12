@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Circumscription in Commonsense AI Reasoning - ai</title>
+    <meta name="description" content="This article explores circumscription, a foundational concept introduced by computer scientist John McCarthy in 1980 to formalize commonsense reasoning in artificial intelligence. It covers why traditional logic fails at human-like assumptions, how circum">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-circumscription-in-commonsense-ai-reasoning">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Circumscription in Commonsense AI Reasoning - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-circumscription-in-commonsense-ai-reasoning" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores circumscription, a foundational concept introduced by computer scientist John McCarthy in 1980 to formalize commonsense reasoning in artificial intelligence. It covers why traditional logic fails at human-like assumptions, how circum" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-circumscription-in-commonsense-ai-reasoning">Understanding
+Circumscription in Commonsense AI Reasoning</h1>
+<p>This article explores circumscription, a foundational concept
+introduced by computer scientist John McCarthy in 1980 to formalize
+commonsense reasoning in artificial intelligence. It covers why
+traditional logic fails at human-like assumptions, how circumscription
+solves the qualification problem through non-monotonic logic, and the
+practical mechanics of minimizing abnormality to help AI systems jump to
+reasonable conclusions based on incomplete information.</p>
+<p>Traditional mathematical logic is monotonic. This means that once a
+conclusion is proven true, adding new information can never make that
+conclusion false. However, human commonsense reasoning is non-monotonic.
+Humans constantly make assumptions based on incomplete information and
+later revise those conclusions when new facts emerge. To build
+artificial intelligence capable of commonsense reasoning, John McCarthy
+developed circumscription as a formal mathematical rule of
+conjecture.</p>
+<p>McCarthy introduced circumscription primarily to solve the
+qualification problem. The qualification problem states that it is
+impossible to list all the preconditions required for a real-world
+action to have its intended effect. In his famous missionaries and
+cannibals puzzle example, McCarthy noted that to cross a river in a
+rowboat, one assumes the boat has oars, does not have a hole in it, and
+has no sea monsters blocking the way. Programming an AI to check an
+infinite list of potential obstacles is impossible. Circumscription
+allows an AI to assume that no unspecified obstacles exist unless
+explicitly stated otherwise.</p>
+<p>At its core, circumscription is a method of minimizing the extension
+of a specific predicate—essentially assuming that as few things as
+possible possess a certain property. In commonsense reasoning, the
+property being minimized is usually "abnormality." McCarthy formalized
+this by introducing an abnormality predicate, often written as
+<em>Ab(x)</em>.</p>
+<p>When an AI is given a general rule, it is framed with this
+abnormality predicate. Consider the classic AI example regarding birds
+and flight:</p>
+<ol type="1">
+<li><strong>Rule:</strong> If <em>x</em> is a bird, and <em>x</em> is
+not abnormal, then <em>x</em> can fly.</li>
+<li><strong>Fact:</strong> Tweety is a bird.</li>
+</ol>
+<p>Using standard logic, an AI cannot conclude that Tweety flies because
+it does not know if Tweety is abnormal or not. By applying
+circumscription to the abnormality predicate, the AI minimizes the set
+of abnormal things. Since there is no information forcing Tweety to be
+abnormal, the AI assumes the set of abnormal things is empty. Therefore,
+Tweety is not abnormal, and the AI concludes that Tweety can fly.</p>
+<p>The non-monotonic nature of circumscription becomes clear when new
+information is introduced. Suppose a third statement is added to the
+knowledge base:</p>
+<ol start="3" type="1">
+<li><strong>New Fact:</strong> Tweety is a penguin, and penguins are
+abnormal birds regarding flight.</li>
+</ol>
+<p>When the AI applies circumscription now, it must minimize the
+abnormality predicate while still respecting the known facts. The
+smallest possible set of abnormal things now includes Tweety.
+Consequently, the AI retracts its previous conclusion and determines
+that Tweety cannot fly.</p>
+<p>Mechanically, McCarthy achieved circumscription by using second-order
+logic, which allows quantification over predicates rather than just
+individual objects. The circumscription formula creates a mathematical
+boundary around the known facts. It states that the predicate being
+circumscribed is true <em>only</em> for those objects where the known
+facts absolutely require it to be true.</p>
+<p>Circumscription differs from the Closed World Assumption (CWA) used
+in standard databases. While CWA blindly assumes that any statement not
+currently known to be true is false, circumscription is much more
+flexible. It allows the AI system to minimize specific predicates while
+leaving others open, and it properly handles disjunctive information
+(such as knowing that <em>either</em> Tweety or Opus is a penguin,
+without knowing which one).</p>
+<p>By formalizing circumscription, John McCarthy provided artificial
+intelligence with a rigorous mathematical way to apply Occam's Razor. It
+allows AI systems to operate effectively in the real world by assuming
+that the situation they are dealing with is as normal as possible,
+bridging the gap between rigid mathematical logic and fluid human common
+sense.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-circumscription-in-commonsense-ai-reasoning';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

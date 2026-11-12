@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Learning: Privacy in Edge AI Training - ai</title>
+    <meta name="description" content="This article explores how split learning divides deep neural networks between edge client devices and central servers to safeguard user data during artificial intelligence training. By partitioning a single AI model into separate segments, this distribute">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/split-learning-privacy-in-edge-ai-training">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Split Learning: Privacy in Edge AI Training - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/split-learning-privacy-in-edge-ai-training" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how split learning divides deep neural networks between edge client devices and central servers to safeguard user data during artificial intelligence training. By partitioning a single AI model into separate segments, this distribute" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="split-learning-privacy-in-edge-ai-training">Split Learning:
+Privacy in Edge AI Training</h1>
+<p>This article explores how split learning divides deep neural networks
+between edge client devices and central servers to safeguard user data
+during artificial intelligence training. By partitioning a single AI
+model into separate segments, this distributed machine learning
+technique processes sensitive raw data locally on the edge while
+offloading heavy computational tasks to a central server. The following
+sections break down the mechanics of the cut layer, the step-by-step
+forward and backward propagation processes, and the core privacy
+benefits that make split learning a powerful alternative to traditional
+training methods.</p>
+<h2 id="understanding-the-architecture-and-the-cut-layer">Understanding
+the Architecture and the Cut Layer</h2>
+<p>In traditional centralized AI training, raw data—such as medical
+images, financial records, or personal text—is uploaded from user
+devices to a central server. This creates a massive privacy risk. Split
+learning solves this by physically separating the neural network
+architecture into two or more parts.</p>
+<p>The division happens at a specific point in the neural network known
+as the "cut layer." The layers of the network that come before the cut
+layer reside on the edge client device (such as a smartphone or IoT
+sensor). The layers that come after the cut layer reside on the central
+server. Because of this division, neither the client nor the server
+holds the complete neural network, and the server never gains access to
+the client's raw input data.</p>
+<h2 id="the-forward-propagation-process">The Forward Propagation
+Process</h2>
+<p>Training a neural network requires forward propagation, where data
+passes through the network to generate a prediction. In a split learning
+setup, this process occurs in two distinct stages:</p>
+<ol type="1">
+<li><strong>Client-Side Execution:</strong> The edge device takes its
+raw, sensitive data and feeds it into the first layer of its local
+neural network segment. The data passes through these initial layers
+until it reaches the cut layer.</li>
+<li><strong>Smashed Data Transmission:</strong> The output generated at
+the cut layer is called "smashed data" (or intermediate activations).
+These are mathematical representations of the original data that have
+been heavily transformed by the initial layers. The client sends only
+this smashed data over the network to the central server.</li>
+<li><strong>Server-Side Execution:</strong> The central server receives
+the smashed data and feeds it into its portion of the neural network,
+starting immediately after the cut layer. The server processes the data
+through the remaining layers to compute the final prediction and
+calculate the loss (the error rate of the prediction).</li>
+</ol>
+<h2 id="the-backward-propagation-process">The Backward Propagation
+Process</h2>
+<p>To actually learn and improve, the neural network must update its
+internal weights based on the error rate calculated at the end of the
+forward pass. This is called backpropagation, and split learning handles
+it in reverse:</p>
+<ol type="1">
+<li><strong>Server-Side Gradient Calculation:</strong> The central
+server uses the calculated loss to compute the gradients (mathematical
+adjustments) for its own layers, moving backward from the final output
+layer until it reaches the cut layer.</li>
+<li><strong>Gradient Transmission:</strong> Once the server calculates
+the gradients at the cut layer, it sends these specific gradients back
+to the edge client device.</li>
+<li><strong>Client-Side Weight Updates:</strong> The edge client
+receives the gradients from the server and uses them to complete the
+backpropagation process across its local layers. Both the client and the
+server now have updated weights, completing one full training iteration
+without the raw data ever leaving the device.</li>
+</ol>
+<h2 id="how-split-learning-preserves-privacy">How Split Learning
+Preserves Privacy</h2>
+<p>The core privacy mechanism of split learning relies on the
+mathematical complexity of neural networks. When raw data passes through
+the client-side layers, it undergoes non-linear transformations. By the
+time it becomes smashed data at the cut layer, the original features are
+compressed and abstracted.</p>
+<p>If an attacker intercepts the smashed data during transmission, or if
+the central server itself is compromised, reconstructing the original
+raw data from the intermediate activations is computationally difficult.
+Furthermore, because the central server does not know the exact weights
+or architecture of the client-side layers, it lacks the mathematical key
+required to easily invert the smashed data back into its original form,
+such as a recognizable photograph or readable text document.</p>
+<h2 id="efficiency-on-the-edge">Efficiency on the Edge</h2>
+<p>Beyond privacy, dividing the neural network provides significant
+computational advantages. Alternative privacy-preserving methods, like
+Federated Learning, require the edge device to train an entire neural
+network locally. This often drains the battery and overloads the memory
+of small devices.</p>
+<p>Split learning assigns only the first few layers of a neural network
+to the edge device. This drastically reduces the local memory footprint
+and processing power required by the client, shifting the bulk of the
+computational burden to the high-powered central server while keeping
+the foundational data completely private.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/split-learning-privacy-in-edge-ai-training';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

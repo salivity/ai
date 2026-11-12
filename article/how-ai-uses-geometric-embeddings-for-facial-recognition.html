@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Uses Geometric Embeddings for Facial Recognition - ai</title>
+    <meta name="description" content="Facial recognition artificial intelligence verifies identity by translating the physical structure of a human face into a mathematical representation known as a geometric embedding. This article explores how deep learning models extract these unique facia">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-uses-geometric-embeddings-for-facial-recognition">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Uses Geometric Embeddings for Facial Recognition - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-uses-geometric-embeddings-for-facial-recognition" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Facial recognition artificial intelligence verifies identity by translating the physical structure of a human face into a mathematical representation known as a geometric embedding. This article explores how deep learning models extract these unique facia" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-uses-geometric-embeddings-for-facial-recognition">How AI
+Uses Geometric Embeddings for Facial Recognition</h1>
+<p>Facial recognition artificial intelligence verifies identity by
+translating the physical structure of a human face into a mathematical
+representation known as a geometric embedding. This article explores how
+deep learning models extract these unique facial vectors, measure
+mathematical distances to confirm identity, and utilize specialized
+training techniques to remain accurate despite changes in lighting and
+natural aging.</p>
+<h2 id="the-extraction-of-geometric-embeddings">The Extraction of
+Geometric Embeddings</h2>
+<p>Before an AI can measure a face, it must detect and align it. Once a
+face is located within an image, the AI normalizes the image by rotating
+and scaling it so that key landmarks—such as the corners of the eyes and
+the tip of the nose—are in standard positions.</p>
+<p>Next, the aligned image is fed into a Deep Convolutional Neural
+Network (CNN). Instead of simply measuring pixel values, the CNN passes
+the image through multiple hidden layers to extract high-level spatial
+features, such as the distance between the eyes, the contour of the
+jawline, and the depth of the eye sockets. The network compresses this
+structural data into a geometric embedding: a fixed-length array of
+numbers (often 128 to 512 dimensions) that plots the face as a single
+point in a high-dimensional mathematical space.</p>
+<h2 id="measuring-distance-to-verify-identity">Measuring Distance to
+Verify Identity</h2>
+<p>To verify an identity, the AI compares the newly generated embedding
+from a live camera feed against a stored reference embedding. Because
+these embeddings exist as coordinates in a multi-dimensional space, the
+AI uses geometry to measure how close the two points are to one
+another.</p>
+<p>The two primary methods for this are:</p>
+<ul>
+<li><strong>Euclidean Distance:</strong> This measures the straight-line
+distance between two points in the embedding space. If the distance is
+smaller than a predetermined threshold, the faces are considered a
+match.</li>
+<li><strong>Cosine Similarity:</strong> This measures the cosine of the
+angle between two vectors projected from the origin. Instead of looking
+at the magnitude of the vectors, it looks at their orientation. An angle
+close to zero degrees indicates that the two embeddings share the same
+geometric structure, confirming the identity.</li>
+</ul>
+<h2 id="overcoming-lighting-variations">Overcoming Lighting
+Variations</h2>
+<p>Lighting changes drastically alter the pixel values of an image,
+casting shadows that can obscure facial features. AI overcomes this by
+ignoring surface-level pixel intensity and focusing on invariant
+structural topology.</p>
+<p>During the preprocessing phase, algorithms apply illumination
+normalization, such as histogram equalization, to balance contrast. More
+importantly, the CNN is trained using data augmentation. During
+training, the AI is shown millions of images of the same individuals
+under extreme lighting conditions—backlit, dimly lit, and harshly lit
+from the side. Using loss functions like Triplet Loss or ArcFace, the
+network is penalized if it places two differently lit photos of the same
+person far apart in the embedding space. Consequently, the AI learns to
+discard lighting data altogether, anchoring the embedding strictly to
+bone structure and feature ratios.</p>
+<h2 id="adapting-to-the-aging-process">Adapting to the Aging
+Process</h2>
+<p>As humans age, skin loses elasticity, wrinkles form, and facial
+volume shifts. However, the underlying craniofacial skeleton remains
+largely unchanged in adulthood.</p>
+<p>Modern facial recognition AI maintains accuracy across decades by
+utilizing Age-Invariant Face Recognition (AIFR) techniques. Neural
+networks are trained on longitudinal datasets containing photos of the
+same individuals taken across spans of 10 to 30 years. Through attention
+mechanisms, the AI learns to assign higher mathematical weight to
+permanent skeletal landmarks—like the orbital bones, nasal bridge, and
+interpupillary distance—while assigning near-zero weight to transient
+textures like skin smoothness, hairlines, and adipose tissue.</p>
+<p>In advanced systems, Generative Adversarial Networks (GANs) are also
+used to digitally "age" or "de-age" a face before extracting the
+embedding, ensuring that the geometric vector represents the core,
+unchanging identity of the person.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-uses-geometric-embeddings-for-facial-recognition';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

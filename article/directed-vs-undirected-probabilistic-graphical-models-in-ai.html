@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directed vs. Undirected Probabilistic Graphical Models in AI - ai</title>
+    <meta name="description" content="Probabilistic Graphical Models (PGMs) are essential frameworks in artificial intelligence that use graphs to represent complex probability distributions and dependencies among random variables. This article explores how PGMs fundamentally distinguish betw">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/directed-vs-undirected-probabilistic-graphical-models-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Directed vs. Undirected Probabilistic Graphical Models in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/directed-vs-undirected-probabilistic-graphical-models-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Probabilistic Graphical Models (PGMs) are essential frameworks in artificial intelligence that use graphs to represent complex probability distributions and dependencies among random variables. This article explores how PGMs fundamentally distinguish betw" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="directed-vs-undirected-probabilistic-graphical-models-in-ai">Directed
+vs. Undirected Probabilistic Graphical Models in AI</h1>
+<p>Probabilistic Graphical Models (PGMs) are essential frameworks in
+artificial intelligence that use graphs to represent complex probability
+distributions and dependencies among random variables. This article
+explores how PGMs fundamentally distinguish between two primary
+architectures: directed Bayesian networks and undirected Markov random
+fields. It breaks down their structural differences, mathematical
+representations of joint probabilities, and how each model handles
+conditional independence to solve unique AI problems.</p>
+<h3 id="structural-foundations">Structural Foundations</h3>
+<p>The most immediate distinction between the two models lies in the
+geometry of their edges. Both frameworks use nodes to represent random
+variables, and the edges connecting these nodes represent probabilistic
+interactions.</p>
+<p><strong>Bayesian Networks (Directed Acyclic Graphs)</strong> Bayesian
+networks use directed edges (arrows) to connect nodes. These graphs must
+be acyclic, meaning it is impossible to start at one node, follow a
+sequence of directed arrows, and loop back to the starting node. The
+direction of the arrow typically represents a causal relationship or a
+direct asymmetric influence from a "parent" node to a "child" node.</p>
+<p><strong>Markov Random Fields (Undirected Graphs)</strong> Markov
+random fields (MRFs), also known as Markov networks, use simple lines
+without arrowheads to connect nodes. Because the edges are undirected,
+cycles and loops are entirely permissible. MRFs represent symmetric,
+mutual interactions between variables where a clear directional
+cause-and-effect relationship cannot be established or does not
+exist.</p>
+<h3 id="parameterization-and-joint-probability">Parameterization and
+Joint Probability</h3>
+<p>Because their structures differ, Bayesian networks and Markov random
+fields calculate the joint probability distribution of all variables in
+the graph using entirely different mathematical mechanisms.</p>
+<p><strong>Conditional Probability Distributions (CPDs)</strong>
+Bayesian networks are parameterized using local Conditional Probability
+Distributions. The probability of any given node depends solely on the
+state of its immediate parent nodes. To find the joint probability of
+the entire network, you simply multiply the local conditional
+probabilities of every individual node together. Because conditional
+probabilities naturally sum to one, Bayesian networks are automatically
+normalized.</p>
+<p><strong>Potential Functions and the Partition Function</strong> Since
+MRFs lack directionality, you cannot define a parent-child conditional
+probability. Instead, MRFs group fully connected subgraphs of nodes into
+"cliques." Each clique is assigned a non-negative "potential function"
+(or factor) that scores the affinity or compatibility of the variables
+within that group.</p>
+<p>To find the joint probability in an MRF, you multiply all the clique
+potentials together. However, because potential functions are arbitrary
+scores and not true probabilities, their product does not sum to one.
+Therefore, the product must be divided by a normalizing constant known
+as the <strong>partition function</strong>. Calculating this partition
+function requires summing over all possible states of all variables,
+which makes exact inference in large MRFs computationally expensive and
+often intractable.</p>
+<h3 id="conditional-independence-rules">Conditional Independence
+Rules</h3>
+<p>Determining whether two variables are independent of each other,
+given the state of a third variable, is crucial for efficient AI
+reasoning. The two models handle this separation differently.</p>
+<p><strong>D-Separation in Bayesian Networks</strong> Determining
+conditional independence in directed graphs is complex due to a
+phenomenon called "explaining away." Bayesian networks use a set of
+rules called <strong>d-separation</strong> (directed separation). While
+mostly straightforward, a counterintuitive rule occurs at a
+"v-structure" (where two parent nodes point to the same child node). In
+this specific structure, the two parents are independent of each other
+by default. However, if the child node is observed, the parents suddenly
+become dependent on one another.</p>
+<p><strong>Graph Separation in Markov Random Fields</strong> Conditional
+independence in undirected graphs is intuitive and strictly topological.
+Two nodes (or sets of nodes) are conditionally independent if every path
+between them is blocked by at least one observed node. There are no
+v-structures or directional nuances to consider; if you cannot trace a
+line from Node A to Node B without passing through an observed Node C,
+then A and B are conditionally independent given C.</p>
+<h3 id="practical-applications-in-ai">Practical Applications in AI</h3>
+<p>The mathematical and structural differences between these models
+dictate how they are deployed in artificial intelligence.</p>
+<ul>
+<li><strong>When to use Bayesian Networks:</strong> They are ideal for
+domains requiring causal reasoning, sequential data processing, or
+diagnostic troubleshooting. For example, in medical diagnosis AI, a
+disease (parent node) directly causes a symptom (child node). They are
+also used in genetic pedigree analysis and risk assessment.</li>
+<li><strong>When to use Markov Random Fields:</strong> They are suited
+for spatial data, relational data, and constraint satisfaction where
+relationships are mutual. In computer vision tasks like image
+segmentation, the identity of one pixel is closely tied to its
+neighboring pixels. Pixel A influences Pixel B just as much as Pixel B
+influences Pixel A. MRFs are also widely used in natural language
+processing for sequence labeling (via Conditional Random Fields, a
+variant of MRFs) and in modeling physical systems like the Ising model
+in statistical mechanics.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/directed-vs-undirected-probabilistic-graphical-models-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence Parallelism for Long-Context AI Training - ai</title>
+    <meta name="description" content="Sequence parallelism is a distributed training technique designed to overcome memory bottlenecks when training large language models on long-context inputs. By partitioning input sequences along the token dimension across multiple GPUs, this approach dras">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/sequence-parallelism-for-long-context-ai-training">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sequence Parallelism for Long-Context AI Training - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/sequence-parallelism-for-long-context-ai-training" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Sequence parallelism is a distributed training technique designed to overcome memory bottlenecks when training large language models on long-context inputs. By partitioning input sequences along the token dimension across multiple GPUs, this approach dras" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="sequence-parallelism-for-long-context-ai-training">Sequence
+Parallelism for Long-Context AI Training</h1>
+<p>Sequence parallelism is a distributed training technique designed to
+overcome memory bottlenecks when training large language models on
+long-context inputs. By partitioning input sequences along the token
+dimension across multiple GPUs, this approach drastically reduces the
+activation memory required per device. This article explains the
+mechanics of sequence parallelism, how it distributes activation memory
+during forward and backward passes, and the specific architectural
+components it targets to enable massive context lengths in artificial
+intelligence training.</p>
+<h2 id="the-activation-memory-bottleneck">The Activation Memory
+Bottleneck</h2>
+<p>When training transformer models with long sequence lengths, model
+weights are no longer the primary consumer of GPU memory. Instead,
+activations—the intermediate outputs saved during the forward pass to
+compute gradients during the backward pass—dominate memory usage.</p>
+<p>Standard tensor parallelism splits weight matrices and heavy matrix
+multiplications across GPUs. However, certain operations remain
+replicated across all devices. Specifically, Layer Normalization
+(LayerNorm), Dropout, and residual connections must process the entire
+sequence length on every GPU. As context lengths grow into the tens or
+hundreds of thousands of tokens, the memory needed to store the
+activations for these replicated operations exceeds single-GPU memory
+limits.</p>
+<h2 id="splitting-the-token-dimension">Splitting the Token
+Dimension</h2>
+<p>Sequence parallelism solves this bottleneck by dividing the input
+tensor along the sequence (token) dimension rather than the hidden
+dimension. If a training step involves a sequence of <span
+class="math inline">\(S\)</span> tokens and a group of <span
+class="math inline">\(N\)</span> GPUs, sequence parallelism assigns a
+contiguous chunk of <span class="math inline">\(S/N\)</span> tokens to
+each GPU.</p>
+<p>Because operations like LayerNorm and Dropout are independent across
+tokens—meaning the calculation for token 1 does not require data from
+token 2—each GPU can compute these operations locally on its assigned
+token slice. Consequently, the activation memory required for these
+layers is divided by <span class="math inline">\(N\)</span>, freeing up
+massive amounts of memory.</p>
+<h2 id="coordinating-with-tensor-parallelism">Coordinating with Tensor
+Parallelism</h2>
+<p>A transformer block contains both token-independent operations
+(LayerNorm, Dropout) and token-dependent operations (Self-Attention,
+Multi-Layer Perceptrons). Sequence parallelism works in tandem with
+tensor parallelism by alternating how data is partitioned across the
+GPUs throughout the network layers.</p>
+<p>To transition smoothly between sequence-parallel regions and
+tensor-parallel regions, the system relies on two primary collective
+communication operations:</p>
+<ol type="1">
+<li><strong>All-Gather:</strong> When moving from a sequence-parallel
+region (like LayerNorm) into a tensor-parallel region (like
+Self-Attention), each GPU needs access to the full sequence of tokens to
+compute attention scores. An All-Gather operation collects the <span
+class="math inline">\(S/N\)</span> token chunks from all GPUs so that
+each device temporarily holds the full sequence <span
+class="math inline">\(S\)</span> for the matrix multiplication.</li>
+<li><strong>Reduce-Scatter:</strong> After the tensor-parallel operation
+is complete, the output must be returned to the sequence-parallel format
+before hitting the next Dropout or LayerNorm layer. A Reduce-Scatter
+operation sums the partial results across GPUs and immediately splits
+the resulting tensor back along the token dimension into <span
+class="math inline">\(S/N\)</span> chunks.</li>
+</ol>
+<p>During the backward pass, these operations are inverted. The
+All-Gather becomes a Reduce-Scatter for the gradients, and the
+Reduce-Scatter becomes an All-Gather.</p>
+<h2 id="advanced-scaling-ring-attention-and-ulysses">Advanced Scaling:
+Ring Attention and Ulysses</h2>
+<p>Standard sequence parallelism still requires holding the full
+sequence length temporarily during the attention calculation, which
+eventually hits a ceiling at extreme context lengths (e.g., 1 million
+tokens). Newer variations of sequence parallelism distribute the
+attention mechanism itself along the token dimension:</p>
+<ul>
+<li><strong>DeepSpeed-Ulysses:</strong> Partitions the input along the
+token dimension and uses All-to-All communication collectives right
+before the attention layer. This shifts the partitioning from the
+sequence dimension to the attention head dimension, allowing each GPU to
+compute attention for the full sequence, but only for a subset of
+attention heads.</li>
+<li><strong>Ring Attention:</strong> Arranges GPUs in a logical ring.
+Each GPU holds a chunk of queries, keys, and values corresponding to its
+<span class="math inline">\(S/N\)</span> tokens. To compute attention
+across the whole sequence, GPUs compute local attention on their current
+chunk while simultaneously passing their key-value blocks to the next
+GPU in the ring. This hides communication overhead behind computation
+and completely eliminates the need for any single GPU to ever hold the
+full sequence length.</li>
+</ul>
+<h2 id="memory-impact-summary">Memory Impact Summary</h2>
+<p>By distributing the token dimension, sequence parallelism ensures
+that no single GPU is overwhelmed by the linear or quadratic memory
+scaling of long sequences. When combined with activation checkpointing
+and tensor parallelism, it reduces the per-GPU activation memory
+footprint of a transformer layer to a fraction of its original size,
+directly enabling the training of next-generation, long-context AI
+models.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/sequence-parallelism-for-long-context-ai-training';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

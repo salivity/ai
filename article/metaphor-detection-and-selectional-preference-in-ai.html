@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metaphor Detection and Selectional Preference in AI - ai</title>
+    <meta name="description" content="This article explores how computational linguistics leverages selectional preference violations to achieve accurate metaphor detection, enabling artificial intelligence to distinguish between literal and figurative language. By analyzing the semantic expe">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/metaphor-detection-and-selectional-preference-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Metaphor Detection and Selectional Preference in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/metaphor-detection-and-selectional-preference-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how computational linguistics leverages selectional preference violations to achieve accurate metaphor detection, enabling artificial intelligence to distinguish between literal and figurative language. By analyzing the semantic expe" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="metaphor-detection-and-selectional-preference-in-ai">Metaphor
+Detection and Selectional Preference in AI</h1>
+<p>This article explores how computational linguistics leverages
+selectional preference violations to achieve accurate metaphor
+detection, enabling artificial intelligence to distinguish between
+literal and figurative language. By analyzing the semantic expectations
+of words—particularly how verbs and adjectives typically pair with
+specific nouns—AI systems can identify when a linguistic rule is
+intentionally broken to create a metaphorical meaning. Below, we examine
+the mechanics of selectional preferences, how violations signal
+figurative speech, and the computational models used to process these
+linguistic anomalies.</p>
+<h2 id="understanding-selectional-preferences">Understanding Selectional
+Preferences</h2>
+<p>In linguistics, selectional preference refers to the semantic
+restrictions or expectations that a word imposes on the other words it
+combines with in a sentence. Simply put, words have "preferences" for
+the types of words they pair with based on real-world logic.</p>
+<p>For example, the verb "drink" prefers an animate subject (like a
+human or animal) and a liquid object (like water or coffee). When an AI
+encounters the sentence, "The girl drank the water," the selectional
+preferences of the verb are fully satisfied. This harmony signals to the
+system that the statement is literal.</p>
+<h2 id="how-violations-signal-metaphors">How Violations Signal
+Metaphors</h2>
+<p>Selectional preference violation occurs when a word is paired with
+another word that does not fit its expected semantic category. In
+computational linguistics, this violation is the primary trigger for
+detecting a metaphor.</p>
+<p>Consider the sentence, "The car drank the gasoline," or "The silence
+was deafening."</p>
+<ul>
+<li>In the first example, a "car" is an inanimate machine, violating the
+preference of the verb "drink" for an animate subject.</li>
+<li>In the second example, "silence" is the absence of sound, which
+violates the expectation of the adjective "deafening" to describe a loud
+noise.</li>
+</ul>
+<p>Instead of dismissing these sentences as grammatical errors or
+nonsense, metaphor detection algorithms recognize these specific clashes
+in meaning as intentional. The violation bridges two different
+conceptual domains—mapping the behavior of a living creature onto a
+machine, for instance—which is the foundational mechanism of figurative
+language.</p>
+<h2 id="computational-implementation-in-ai">Computational Implementation
+in AI</h2>
+<p>To automate the detection of these violations, artificial
+intelligence relies on several natural language processing (NLP)
+techniques:</p>
+<ul>
+<li><strong>Lexical Databases and Ontologies:</strong> Early and hybrid
+AI systems use structured databases like WordNet, which group words into
+hierarchies of concepts (e.g., classifying a "car" as an "artifact" and
+a "human" as a "living thing"). If a verb requires a "living thing" and
+receives an "artifact," the system flags a violation and classifies the
+phrase as metaphorical.</li>
+<li><strong>Distributional Semantics:</strong> Modern AI analyzes
+massive datasets of text to learn selectional preferences statistically.
+By calculating how frequently words appear together in literal contexts,
+the AI establishes a baseline of "normal" word pairings. Low-probability
+pairings that still maintain correct grammar are flagged as potential
+metaphors.</li>
+<li><strong>Vector Space Models and Word Embeddings:</strong> AI
+converts words into numerical representations called vectors. Words with
+similar meanings exist close together in a digital "vector space." When
+a verb and a noun are too far apart in this semantic space—meaning their
+concepts rarely overlap in the literal world—the model measures this
+distance as a selectional preference violation.</li>
+</ul>
+<h2 id="overcoming-ambiguity-in-detection">Overcoming Ambiguity in
+Detection</h2>
+<p>While selectional preference violation is a powerful tool, AI must
+also differentiate metaphors from other linguistic phenomena that break
+semantic rules, such as typos, nonsense, or other forms of figurative
+speech like metonymy.</p>
+<p>Advanced neural networks, such as Transformers, address this by
+looking at the broader context of the sentence. Once a selectional
+preference violation is detected, the AI checks if the properties of the
+unexpected word can logically map onto the target concept. In "The car
+drank the gasoline," the AI recognizes that both "drinking" and
+"consuming fuel" involve taking a liquid into a system to generate
+energy. Because this conceptual mapping is valid, the AI successfully
+confirms the violation as a metaphor rather than an error.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/metaphor-detection-and-selectional-preference-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

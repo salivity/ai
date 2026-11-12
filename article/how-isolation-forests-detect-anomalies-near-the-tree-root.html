@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Isolation Forests Detect Anomalies Near the Tree Root - ai</title>
+    <meta name="description" content="This article explains the mechanics of Isolation Forests and how they utilize random decision trees for unsupervised outlier detection in artificial intelligence. By exploiting the inherent quantitative and qualitative differences of anomalies, this algor">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-isolation-forests-detect-anomalies-near-the-tree-root">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Isolation Forests Detect Anomalies Near the Tree Root - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-isolation-forests-detect-anomalies-near-the-tree-root" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explains the mechanics of Isolation Forests and how they utilize random decision trees for unsupervised outlier detection in artificial intelligence. By exploiting the inherent quantitative and qualitative differences of anomalies, this algor" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-isolation-forests-detect-anomalies-near-the-tree-root">How
+Isolation Forests Detect Anomalies Near the Tree Root</h1>
+<p>This article explains the mechanics of Isolation Forests and how they
+utilize random decision trees for unsupervised outlier detection in
+artificial intelligence. By exploiting the inherent quantitative and
+qualitative differences of anomalies, this algorithm isolates unusual
+data points quickly, placing them near the root of the tree, while
+normal data points require deeper branching to be separated. We will
+cover the foundational principles of the algorithm, the step-by-step
+process of random partitioning, and how path lengths are mathematically
+converted into anomaly scores.</p>
+<h2 id="the-core-principle-of-isolation">The Core Principle of
+Isolation</h2>
+<p>Most traditional anomaly detection algorithms work by constructing a
+profile of "normal" data and then identifying anything that does not fit
+that profile. Isolation Forests take the opposite approach: they
+explicitly isolate anomalies instead of profiling normal points.</p>
+<p>This approach is based on two fundamental properties of anomalies in
+any given dataset:</p>
+<ol type="1">
+<li><strong>They are few:</strong> Anomalies represent a very small
+fraction of the total data.</li>
+<li><strong>They are different:</strong> Their attribute values are
+significantly different from those of normal instances.</li>
+</ol>
+<p>Because of these two properties, anomalies are located in sparse
+regions of the data space, far away from the dense clusters of normal
+data. Consequently, when dividing the data space randomly, it is much
+easier and faster to separate an anomalous point from the rest of the
+data than it is to separate a normal point nestled deep within a dense
+cluster.</p>
+<h2 id="the-mechanism-of-random-partitioning">The Mechanism of Random
+Partitioning</h2>
+<p>An Isolation Forest is an ensemble of "Isolation Trees" (iTrees),
+which are binary decision trees built using a purely random partitioning
+process. To build an iTree, the algorithm performs the following steps
+recursively on a subsample of the data:</p>
+<ol type="1">
+<li><strong>Random Feature Selection:</strong> The algorithm randomly
+selects one feature (attribute) from the dataset.</li>
+<li><strong>Random Split Value:</strong> It then randomly selects a
+split value between the minimum and maximum values of that chosen
+feature.</li>
+<li><strong>Branching:</strong> Data points with a value less than the
+split threshold go to the left branch, and those with a value greater
+than or equal to the threshold go to the right branch.</li>
+</ol>
+<p>This splitting process repeats recursively on the newly created
+subsets until every single data point is completely isolated in its own
+leaf node, or until the tree reaches a predefined maximum depth
+limit.</p>
+<h2 id="why-anomalies-end-up-near-the-root">Why Anomalies End Up Near
+the Root</h2>
+<p>The structure of the resulting decision tree directly reflects how
+hard it was to isolate each data point. In the context of a tree data
+structure, the "root" is the very first node at the top where the first
+split occurs.</p>
+<p>Imagine a two-dimensional plot where 99 points are tightly packed in
+the bottom-left corner, and 1 anomalous point is sitting alone in the
+top-right corner. If you draw lines across this plot at random angles
+and positions:</p>
+<ul>
+<li>It is highly probable that one of the very first random lines you
+draw will fall somewhere between the dense cluster and the lone
+point.</li>
+<li>Once that single line is drawn, the anomalous point is completely
+separated from all other points. In the decision tree, this means the
+anomaly is isolated after just one or two splits, placing its leaf node
+right next to the root of the tree.</li>
+<li>Conversely, to isolate a specific point inside the dense cluster of
+99 points, the algorithm must draw many random lines to slice through
+the tightly packed group. In the decision tree, this requires many
+levels of branching, pushing the leaf nodes of normal data points deep
+toward the bottom of the tree.</li>
+</ul>
+<h2 id="path-length-and-anomaly-scoring">Path Length and Anomaly
+Scoring</h2>
+<p>Because a single random tree might accidentally isolate a normal
+point early due to sheer luck, the algorithm builds a "forest" of many
+random trees (typically 100 or more) and averages the results.</p>
+<p>The metric used to determine if a point is an outlier is the
+<strong>path length</strong>, denoted as <span
+class="math inline">\(h(x)\)</span>. The path length is simply the
+number of edges (splits) a data point <span
+class="math inline">\(x\)</span> passes through from the root node to
+reach its terminating leaf node.</p>
+<ul>
+<li><strong>Short Average Path Length:</strong> If a data point
+consistently ends up near the root across the majority of the trees in
+the forest, its average path length will be very small. This indicates a
+high probability of being an anomaly.</li>
+<li><strong>Long Average Path Length:</strong> If a data point
+consistently requires many splits to be isolated, its average path
+length will be large, indicating it is a normal data point.</li>
+</ul>
+<p>To make this actionable, the algorithm converts the average path
+length into a standardized <strong>anomaly score</strong> ranging from 0
+to 1. It does this by comparing the point's average path length to the
+expected path length of an unsuccessful search in a standard Binary
+Search Tree.</p>
+<ul>
+<li>A score close to <strong>1</strong> indicates that the point was
+isolated very close to the root across the forest and is almost
+certainly an anomaly.</li>
+<li>A score below <strong>0.5</strong> indicates that the point required
+deep branching to isolate and is considered normal.</li>
+</ul>
+<h2 id="efficiency-in-unsupervised-ai">Efficiency in Unsupervised
+AI</h2>
+<p>Because Isolation Forests do not need to calculate complex distance
+metrics (like Euclidean distance in K-Nearest Neighbors) or density
+estimations for every pair of points, they require very little memory
+and compute time. Furthermore, because the algorithm knows anomalies
+will be isolated near the root, it does not even need to grow the trees
+to their full depth. It can stop building a tree once it reaches an
+average expected depth, completely ignoring the dense clusters of normal
+data and focusing computational power strictly on the shallow branches
+where anomalies reside.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-isolation-forests-detect-anomalies-near-the-tree-root';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Traffic Allocation with Multi-Armed Bandits - ai</title>
+    <meta name="description" content="This article explores how multi-armed bandit (MAB) algorithms dynamically route user traffic during the online evaluation of production artificial intelligence recommender systems. Unlike traditional A/B testing, which locks traffic into fixed groups unti">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/dynamic-traffic-allocation-with-multi-armed-bandits">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dynamic Traffic Allocation with Multi-Armed Bandits - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/dynamic-traffic-allocation-with-multi-armed-bandits" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how multi-armed bandit (MAB) algorithms dynamically route user traffic during the online evaluation of production artificial intelligence recommender systems. Unlike traditional A/B testing, which locks traffic into fixed groups unti" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="dynamic-traffic-allocation-with-multi-armed-bandits">Dynamic
+Traffic Allocation with Multi-Armed Bandits</h1>
+<p>This article explores how multi-armed bandit (MAB) algorithms
+dynamically route user traffic during the online evaluation of
+production artificial intelligence recommender systems. Unlike
+traditional A/B testing, which locks traffic into fixed groups until an
+experiment concludes, MAB algorithms adjust traffic distribution in real
+time based on live user interactions. By continuously balancing the
+exploration of new AI models with the exploitation of proven
+high-performing ones, these algorithms minimize the opportunity cost of
+showing inferior recommendations and maximize overall user
+engagement.</p>
+<h3 id="the-flaw-in-traditional-ab-testing">The Flaw in Traditional A/B
+Testing</h3>
+<p>In standard A/B testing for AI recommenders, traffic is split evenly
+and statically—for example, 50% of users see Model A, and 50% see Model
+B. This fixed allocation remains unchanged for weeks until statistical
+significance is reached. If Model B is terrible at recommending relevant
+products, half of your user base endures a poor experience for the
+entire duration of the test, resulting in lost revenue and engagement.
+Multi-armed bandits solve this by refusing to wait until the end of an
+experiment to act on incoming data.</p>
+<h3 id="exploration-vs-exploitation">Exploration vs. Exploitation</h3>
+<p>Multi-armed bandits operate on a continuous loop of two states:
+exploration and exploitation. In the context of a production recommender
+system, "arms" represent the different AI models being tested.</p>
+<ul>
+<li><strong>Exploration</strong> involves routing traffic to various
+models to gather more data about their performance and reduce
+uncertainty.</li>
+<li><strong>Exploitation</strong> involves routing the majority of
+traffic to the model currently demonstrating the highest reward (such as
+click-through rate, conversion, or watch time).</li>
+</ul>
+<p>At the start of a test, the MAB algorithm allocates traffic evenly to
+explore all models. As one recommender model begins generating more
+clicks or conversions, the algorithm automatically shifts a larger
+percentage of incoming user requests to that winning model, while
+gradually starving the underperforming models of traffic.</p>
+<h3 id="core-algorithms-driving-the-shift">Core Algorithms Driving the
+Shift</h3>
+<p>Production systems rely on specific mathematical strategies to
+dictate exactly how and when traffic shifts occur. The three most common
+approaches are:</p>
+<p><strong>1. Epsilon-Greedy</strong> This is the simplest method. The
+algorithm defines a small parameter, epsilon (e.g., 10%). For 90% of
+incoming users, the system exploits the best-performing recommender
+model. For the remaining 10% of users, the system explores by randomly
+assigning them to any of the available models. While easy to implement,
+it wastes some traffic by continuing to explore clearly inferior models
+at a fixed rate.</p>
+<p><strong>2. Upper Confidence Bound (UCB)</strong> UCB removes
+randomness in favor of optimism in the face of uncertainty. It
+calculates an expected reward for each recommender model alongside a
+confidence interval based on how many times that model has been tested.
+Models that have not received much traffic have a wide confidence
+interval, giving them a high "upper bound" potential. The algorithm
+routes traffic to whichever model has the highest upper bound. As a
+model receives more traffic and fails to perform, its confidence
+interval shrinks, its upper bound drops, and traffic naturally shifts
+away from it.</p>
+<p><strong>3. Thompson Sampling</strong> Thompson Sampling is a Bayesian
+approach and the industry standard for complex production environments.
+Each AI model is assigned a probability distribution (usually a Beta
+distribution) representing its likelihood of success based on past
+rewards and failures. When a user loads a page, the system draws a
+random sample from each model's distribution and routes the user to the
+model that generated the highest number. As a model gathers more
+positive interactions, its distribution shifts higher and narrows,
+ensuring it gets selected for the vast majority of future traffic.</p>
+<h3 id="the-production-feedback-loop">The Production Feedback Loop</h3>
+<p>To shift traffic dynamically in a live environment, the system relies
+on a rapid feedback loop.</p>
+<ol type="1">
+<li><strong>Request:</strong> A user opens an app, triggering a request
+for recommendations.</li>
+<li><strong>Routing:</strong> The MAB layer intercepts the request,
+evaluates the current state of all models, and selects one to serve the
+user.</li>
+<li><strong>Action:</strong> The chosen AI recommender generates a list
+of items, and the user either interacts with them (a reward of 1) or
+ignores them (a reward of 0).</li>
+<li><strong>Update:</strong> The interaction data is streamed back to
+the MAB controller. Rather than updating on every single click—which can
+overwhelm production servers—systems usually aggregate rewards in
+micro-batches (e.g., every few minutes) to recalculate the probabilities
+and adjust traffic routing weights for the next wave of users.</li>
+</ol>
+<h3 id="adapting-to-changing-user-behavior">Adapting to Changing User
+Behavior</h3>
+<p>A major advantage of using MABs for AI recommenders is their ability
+to handle non-stationary environments. User preferences change based on
+the time of day, breaking news, or seasonal trends. If Model A performs
+best in the morning, the bandit will shift traffic to it. If Model B
+suddenly performs better in the evening, the small amount of exploratory
+traffic it still receives will register a spike in rewards. The MAB
+algorithm will detect this shift, widen its confidence interval or
+update its probability distribution, and dynamically pivot the bulk of
+user traffic over to Model B without requiring human intervention.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/dynamic-traffic-allocation-with-multi-armed-bandits';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Greedy Decoding and Beam Search Cause AI Text Loops - ai</title>
+    <meta name="description" content="In open-ended artificial intelligence text generation, relying on deterministic algorithms like greedy decoding and pure beam search frequently leads to repetitive degeneration loops. While these methods are designed to select the most probable words and">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/why-greedy-decoding-and-beam-search-cause-ai-text-loops">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Greedy Decoding and Beam Search Cause AI Text Loops - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/why-greedy-decoding-and-beam-search-cause-ai-text-loops" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In open-ended artificial intelligence text generation, relying on deterministic algorithms like greedy decoding and pure beam search frequently leads to repetitive degeneration loops. While these methods are designed to select the most probable words and" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-greedy-decoding-and-beam-search-cause-ai-text-loops">Why
+Greedy Decoding and Beam Search Cause AI Text Loops</h1>
+<p>In open-ended artificial intelligence text generation, relying on
+deterministic algorithms like greedy decoding and pure beam search
+frequently leads to repetitive degeneration loops. While these methods
+are designed to select the most probable words and sentences, this exact
+prioritization of high probability is what causes the AI to get stuck
+repeating the same phrases indefinitely. This article explores the
+mechanics behind why maximizing likelihood breaks down in creative
+generation, the self-reinforcing nature of transformer attention, and
+how contrasting these methods with natural human language patterns
+explains the phenomenon of text degeneration.</p>
+<h2 id="the-mechanics-of-greedy-decoding-and-beam-search">The Mechanics
+of Greedy Decoding and Beam Search</h2>
+<p>To understand why loops occur, it is first necessary to understand
+how these decoding methods choose words. Language models predict the
+probability of the next token (word or word piece) based on all previous
+tokens.</p>
+<p>Greedy decoding is the simplest approach: at every single step, the
+algorithm selects the one token with the absolute highest probability.
+Pure beam search is slightly more advanced, keeping track of a fixed
+number of the most probable sequences (beams) at each step and
+ultimately choosing the sequence with the highest overall combined
+probability. Both methods share a single goal: maximize the mathematical
+likelihood of the generated text.</p>
+<h2 id="the-likelihood-trap-in-open-ended-generation">The Likelihood
+Trap in Open-Ended Generation</h2>
+<p>Maximizing probability works exceptionally well for directed tasks
+with low uncertainty, such as machine translation or summarization,
+where there is a narrow range of correct answers. However, in open-ended
+text generation, there is no single correct path.</p>
+<p>Research into natural language processing reveals a stark difference
+between how humans speak and how probability-maximizing algorithms
+behave. Human language is inherently unpredictable. People naturally
+weave between high-probability words (like prepositions and articles)
+and low-probability words (like unique adjectives and novel nouns) to
+convey new information.</p>
+<p>When an algorithm strictly forces the selection of the
+highest-probability tokens, it actively avoids the low-probability words
+that introduce variety and drive a narrative forward. The generated text
+quickly becomes generic, flat, and stripped of the natural variance
+required to transition to new topics.</p>
+<h2 id="self-reinforcing-attention-loops">Self-Reinforcing Attention
+Loops</h2>
+<p>The transition from generic text to an infinite loop is largely
+driven by the architecture of modern Transformer models. Transformers
+use a mechanism called "self-attention" to look back at previous tokens
+in the context window to decide what comes next.</p>
+<p>If greedy decoding or beam search selects a slightly repetitive
+phrase because it is statistically safe, that phrase now exists in the
+recent context. When the model calculates probabilities for the next
+tokens, the self-attention mechanism notices the pattern. Because
+language models are trained to recognize and continue patterns, the
+probability of repeating that exact same phrase again increases.</p>
+<p>Once the phrase is generated a second time, the pattern becomes even
+stronger in the context window. The probability of repeating it a third
+time approaches certainty. This creates a positive feedback loop—a
+mathematical sinkhole where the most probable next sequence is always
+the exact sequence that was just generated.</p>
+<h2 id="the-positive-feedback-of-high-probability-tokens">The Positive
+Feedback of High-Probability Tokens</h2>
+<p>Furthermore, certain common words and phrases naturally carry high
+transition probabilities to one another. For example, phrases like "I
+don't know" or "It is important to note that" are heavily represented in
+training data.</p>
+<p>When a deterministic search algorithm wanders into one of these
+common phrasing structures, the safest statistical path is often
+circular. Beam search, in particular, exacerbates this because it
+optimizes for sequence-level probability. A repetitive loop of
+high-probability words will mathematically score much higher than a
+creative, varied sentence that temporarily dips into lower-probability
+tokens. Consequently, beam search will actively prune away the diverse,
+natural-sounding beams in favor of the repetitive, high-scoring
+loop.</p>
+<h2 id="overcoming-degeneration-with-stochastic-sampling">Overcoming
+Degeneration with Stochastic Sampling</h2>
+<p>To prevent these repetitive loops, modern AI systems abandon pure
+likelihood maximization in open-ended tasks. Instead, they rely on
+stochastic (random) sampling methods, such as Top-k and Top-p (nucleus)
+sampling, combined with temperature adjustments. By introducing
+controlled randomness and truncating the long tail of completely
+irrelevant words, these methods allow the AI to occasionally select
+lower-probability tokens, successfully mimicking the surprising cadence
+of human language and breaking the mathematical cycle of repetition.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/why-greedy-decoding-and-beam-search-cause-ai-text-loops';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

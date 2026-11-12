@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding DoLa: Contrasting Layers for Truthful AI - ai</title>
+    <meta name="description" content="This article explores Decoding by Contrasting Layers (DoLa), a novel decoding strategy designed to improve the factual truthfulness of Large Language Models (LLMs) and reduce hallucinations. By contrasting the output predictions (logits) of higher, mature">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-do-la-contrasting-layers-for-truthful-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding DoLa: Contrasting Layers for Truthful AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-do-la-contrasting-layers-for-truthful-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores Decoding by Contrasting Layers (DoLa), a novel decoding strategy designed to improve the factual truthfulness of Large Language Models (LLMs) and reduce hallucinations. By contrasting the output predictions (logits) of higher, mature" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-dola-contrasting-layers-for-truthful-ai">Understanding
+DoLa: Contrasting Layers for Truthful AI</h1>
+<p>This article explores Decoding by Contrasting Layers (DoLa), a novel
+decoding strategy designed to improve the factual truthfulness of Large
+Language Models (LLMs) and reduce hallucinations. By contrasting the
+output predictions (logits) of higher, mature Transformer layers against
+those of earlier, premature layers, DoLa amplifies factual knowledge
+stored in the upper levels of the neural network while suppressing
+purely syntactic and plausible-sounding falsehoods generated in the
+lower levels. Crucially, this method operates entirely at inference
+time, enhancing truthfulness without requiring external knowledge
+retrieval or additional model fine-tuning.</p>
+<p>To understand how DoLa works, one must first understand how a
+Transformer processes information across its layers. An LLM is composed
+of multiple stacked Transformer layers. As text passes through these
+layers from bottom to top, the model processes different aspects of
+language. Research indicates a division of labor within these layers:
+the lower (earlier) layers focus heavily on syntax, grammar, and basic
+linguistic structure. Conversely, the higher (later) layers are
+predominantly responsible for injecting factual, semantic, and world
+knowledge into the final output.</p>
+<p>Hallucinations often occur when the syntactic plausibility from the
+lower layers overpowers the factual knowledge in the higher layers.
+Standard decoding methods only look at the logits—the raw, unnormalized
+predictions for the next word—at the very final layer. If the final
+layer is still heavily influenced by the lower layers' desire to simply
+complete a grammatically common phrase, the model may output a fluent
+lie rather than a hard fact.</p>
+<p>DoLa solves this by utilizing an "early exit" mechanism to peek
+inside the model before it finishes processing. Normally, the hidden
+state of the final layer is passed through a vocabulary head to generate
+the final logits. DoLa applies this same vocabulary head to the
+intermediate, premature layers. This allows the system to see what the
+model <em>would</em> have predicted at Layer 10, Layer 16, or Layer 20,
+alongside what it actually predicts at the final layer, such as Layer
+32.</p>
+<p>Once DoLa has the logits from the final (mature) layer and the logits
+from an earlier (premature) layer, it contrasts them. Mathematically,
+this is achieved by taking the log probabilities of the mature layer and
+subtracting the log probabilities of the premature layer.</p>
+<p>This subtraction acts as a factual filter:</p>
+<ul>
+<li><strong>Suppressing Falsehoods:</strong> If a word has a high
+probability in both the early layer and the final layer, it is likely an
+easy syntactic filler (like "the" or "is") or a common, memorized
+linguistic trope that may not be factually accurate for the specific
+prompt. Subtracting the two probabilities reduces the prominence of
+these generic tokens.</li>
+<li><strong>Amplifying Facts:</strong> If a word has a very low
+probability in the early layer, it means the syntax-focused layers did
+not see it coming. If that same word suddenly spikes to a high
+probability in the final layer, it means the upper layers actively
+injected specific factual knowledge to change the model's trajectory.
+Contrasting the layers highlights this spike, massively boosting the
+probability that this factual token will be chosen as the next
+word.</li>
+</ul>
+<p>A critical aspect of DoLa's efficiency is dynamic premature layer
+selection. Because factual knowledge is injected at different depths
+depending on the complexity of the prompt, contrasting the final layer
+against a single, fixed early layer is ineffective. Instead, DoLa groups
+the earlier layers into candidate buckets. For every single token
+generated, DoLa calculates the Jensen-Shannon Divergence (JSD)—a
+statistical measure of how much two probability distributions
+differ—between the final layer and several candidate early layers.</p>
+<p>DoLa dynamically selects the premature layer that has the highest JSD
+(the greatest difference) compared to the final layer. The logic is
+straightforward: the point of maximum divergence represents the exact
+moment before the model injected its factual knowledge. By contrasting
+the final layer against the specific earlier layer where the predictions
+differ the most, DoLa maximizes the amplification of the newly
+introduced factual data.</p>
+<p>Finally, to prevent the subtraction process from accidentally
+boosting tokens that are completely nonsensical, DoLa applies an
+adaptive plausibility constraint. Before contrasting the layers, it
+filters out any tokens that do not have a reasonably high probability in
+the final layer. This ensures that the contrasted logits only rearrange
+the rankings of plausible words, resulting in outputs that are both
+grammatically sound and factually truthful.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-do-la-contrasting-layers-for-truthful-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

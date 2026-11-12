@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaggregating Prefill and Decode in AI Inference Clusters - ai</title>
+    <meta name="description" content="Large-scale artificial intelligence inference clusters increasingly separate the prefill and decode phases of large language model processing onto distinct hardware pools to maximize efficiency, reduce latency, and lower operational costs. While the prefi">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/disaggregating-prefill-and-decode-in-ai-inference-clusters">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Disaggregating Prefill and Decode in AI Inference Clusters - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/disaggregating-prefill-and-decode-in-ai-inference-clusters" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Large-scale artificial intelligence inference clusters increasingly separate the prefill and decode phases of large language model processing onto distinct hardware pools to maximize efficiency, reduce latency, and lower operational costs. While the prefi" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="disaggregating-prefill-and-decode-in-ai-inference-clusters">Disaggregating
+Prefill and Decode in AI Inference Clusters</h1>
+<p>Large-scale artificial intelligence inference clusters increasingly
+separate the prefill and decode phases of large language model
+processing onto distinct hardware pools to maximize efficiency, reduce
+latency, and lower operational costs. While the prefill phase processes
+the initial user prompt in parallel and requires massive computational
+power, the decode phase generates responses one token at a time and
+relies heavily on memory bandwidth. Running both phases on the same
+servers creates resource bottlenecks and degrades user experience. By
+disaggregating these workloads onto specialized hardware tailored to
+their specific demands, infrastructure operators can eliminate resource
+contention, meet strict latency targets, and optimize hardware
+utilization across the entire cluster.</p>
+<h2 id="the-two-phases-of-llm-inference">The Two Phases of LLM
+Inference</h2>
+<p>Large language model (LLM) inference consists of two distinct
+operational stages: the prefill phase and the decode phase. Each phase
+interacts with GPU hardware in fundamentally different ways.</p>
+<p>The <strong>prefill phase</strong> takes the user's input prompt and
+processes all the tokens simultaneously. Because the system knows the
+entire input in advance, it can perform massive matrix-matrix
+multiplications in parallel. This makes the prefill phase
+<strong>compute-bound</strong>. The primary limitation is the raw
+processing speed (FLOPS) of the GPU, while memory bandwidth remains
+relatively underutilized.</p>
+<p>The <strong>decode phase</strong> generates the output text
+sequentially, one token at a time. Each new token depends on the tokens
+generated before it, as well as the stored context from the prefill
+phase (known as the KV cache). Because the GPU only processes a single
+token per step for a given request, it performs matrix-vector operations
+rather than large matrix-matrix operations. For every single token
+generated, the GPU must load the entire model’s weights and the KV cache
+from High Bandwidth Memory (HBM) into the compute cores. This makes the
+decode phase <strong>memory-bandwidth-bound</strong>. The compute cores
+spend most of their time idle, waiting for data to arrive from
+memory.</p>
+<h2 id="the-problem-with-colocated-inference">The Problem with Colocated
+Inference</h2>
+<p>Traditionally, AI clusters have used a colocated architecture, where
+a single GPU instance handles both the prefill and decode phases for a
+request. This approach introduces severe inefficiencies at scale:</p>
+<ul>
+<li><strong>Resource Contention and the Convoy Effect:</strong> When a
+long prompt arrives for prefill, it monopolizes the GPU's compute cores.
+If that same GPU is currently decoding tokens for other users, those
+decode requests are paused or slowed down. This creates a "stutter" in
+text generation for active users.</li>
+<li><strong>Conflicting Batching Strategies:</strong> Prefill benefits
+from small batch sizes to keep the Time to First Token (TTFT) low.
+Conversely, decode requires large batch sizes to amortize the cost of
+loading model weights from memory, which maximizes throughput and keeps
+the Time Per Output Token (TPOT) low. Colocating them forces a
+compromise that degrades both metrics.</li>
+<li><strong>Over-provisioning Hardware:</strong> To meet strict latency
+Service Level Agreements (SLAs) for both TTFT and TPOT on shared
+hardware, operators must over-provision expensive GPUs, resulting in
+wasted compute capacity during decode and wasted memory bandwidth during
+prefill.</li>
+</ul>
+<h2 id="how-disaggregated-architecture-works">How Disaggregated
+Architecture Works</h2>
+<p>Disaggregated inference solves these problems by splitting the
+cluster into two dedicated pools: a <strong>Prefill Pool</strong> and a
+<strong>Decode Pool</strong>.</p>
+<ol type="1">
+<li><strong>Request Routing:</strong> When a user prompt enters the
+system, the load balancer sends it directly to the Prefill Pool.</li>
+<li><strong>Prefill Execution:</strong> The Prefill Pool processes the
+prompt at maximum compute capacity, generating the very first output
+token and building the initial KV cache.</li>
+<li><strong>KV Cache Transfer:</strong> Once the prefill is complete,
+the generated KV cache is transferred over a high-speed interconnect
+(such as NVLink or RDMA over InfiniBand) to a server in the Decode
+Pool.</li>
+<li><strong>Decode Execution:</strong> The Decode Pool takes over,
+grouping this request with dozens or hundreds of other active requests
+to generate the remaining tokens efficiently.</li>
+</ol>
+<h2 id="key-benefits-of-disaggregation">Key Benefits of
+Disaggregation</h2>
+<p>Separating these workloads onto distinct hardware pools provides
+immediate architectural advantages for large-scale operators:</p>
+<ul>
+<li><strong>Independent Scaling:</strong> Traffic patterns vary wildly
+by application. A document summarization tool has massive prefill
+demands and short decode outputs, while a creative writing assistant has
+short prompts and long decode outputs. Disaggregation allows engineers
+to scale the ratio of prefill nodes to decode nodes independently based
+on real-time traffic demands.</li>
+<li><strong>Hardware Specialization:</strong> Operators no longer need
+to buy one-size-fits-all GPUs. The Prefill Pool can utilize hardware
+optimized for dense compute (high FLOPS, lower memory bandwidth), while
+the Decode Pool can utilize hardware optimized for high HBM capacity and
+massive memory bandwidth.</li>
+<li><strong>Guaranteed Latency SLAs:</strong> Because incoming prefill
+jobs can no longer interrupt ongoing decode streams, token generation
+remains smooth and predictable. Operators can independently tune the
+Prefill Pool to optimize TTFT and the Decode Pool to optimize TPOT.</li>
+<li><strong>Higher Throughput per Dollar:</strong> By eliminating the
+interference between phases, decode nodes can run at much larger batch
+sizes without risking latency spikes. This drastically increases the
+overall token throughput of the cluster, driving down the cost per
+million tokens generated.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/disaggregating-prefill-and-decode-in-ai-inference-clusters';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

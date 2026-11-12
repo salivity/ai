@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Transformer Eliminated Recurrence in AI - ai</title>
+    <meta name="description" content="This article explores how the Transformer architecture revolutionized artificial intelligence by replacing traditional recurrent neural networks with a self-attention mechanism. By eliminating sequential processing, Transformers overcame long-standing bot">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-the-transformer-eliminated-recurrence-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How the Transformer Eliminated Recurrence in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-the-transformer-eliminated-recurrence-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how the Transformer architecture revolutionized artificial intelligence by replacing traditional recurrent neural networks with a self-attention mechanism. By eliminating sequential processing, Transformers overcame long-standing bot" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-the-transformer-eliminated-recurrence-in-ai">How the
+Transformer Eliminated Recurrence in AI</h1>
+<p>This article explores how the Transformer architecture revolutionized
+artificial intelligence by replacing traditional recurrent neural
+networks with a self-attention mechanism. By eliminating sequential
+processing, Transformers overcame long-standing bottlenecks in memory
+retention and computational efficiency. The following sections detail
+the limitations of recurrence, the mechanics of self-attention, the role
+of positional encoding, and how massive parallelization paved the way
+for modern large language models.</p>
+<p>Before the introduction of the Transformer in 2017, sequence
+processing in AI—such as machine translation and text generation—relied
+heavily on Recurrent Neural Networks (RNNs) and Long Short-Term Memory
+(LSTM) networks. These models processed data sequentially, reading
+inputs one word or token at a time from left to right. This sequential
+nature created two major problems. First, the models suffered from the
+vanishing gradient problem, meaning they frequently "forgot" early parts
+of a long sequence by the time they reached the end. Second, because
+each step depended on the calculation of the previous step, training
+could not be parallelized across modern GPUs, making it slow and
+computationally expensive to scale.</p>
+<p>The Transformer eliminated recurrence entirely by introducing a
+mechanism called "self-attention." Instead of processing a sentence word
+by word, a Transformer ingests the entire sequence of tokens
+simultaneously. Self-attention allows the model to weigh the importance
+of every word in a sentence relative to every other word, regardless of
+how far apart they are. For example, in the sentence "The animal didn't
+cross the street because it was too tired," self-attention enables the
+model to instantly link the word "it" to "animal" rather than "street."
+Because there are no sequential steps separating the words, the distance
+between relevant pieces of information drops to zero, completely solving
+the memory degradation issue of RNNs.</p>
+<p>To make non-sequential processing work, the Transformer had to solve
+a new problem: without recurrence, the model had no inherent sense of
+word order. Reading a sentence all at once is efficient, but in
+language, "the dog bit the man" means something entirely different than
+"the man bit the dog." The Transformer solved this through "positional
+encoding." Before the model processes the input, it adds a unique
+mathematical vector to each word embedding that indicates its exact
+position in the sequence. This allows the architecture to ditch
+step-by-step processing while still retaining a precise understanding of
+sequence order and grammar.</p>
+<p>The ultimate breakthrough of eliminating recurrence is massive
+parallelization. Because a Transformer does not need to wait for token
+one to be processed before looking at token two, the entire dataset can
+be broken down into matrix multiplications that execute simultaneously
+on GPUs. This drastic increase in training speed allowed researchers to
+train models on unprecedented amounts of data, scaling parameter counts
+from millions to trillions. This architectural shift directly enabled
+the creation of foundational technologies like BERT, GPT, and the
+broader generative AI ecosystem used today.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-the-transformer-eliminated-recurrence-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Prototype Clustering in SwAV Using Sinkhorn-Knopp - ai</title>
+    <meta name="description" content="This article explores how Swapping Assignments between Views (SwAV) achieves efficient self-supervised learning by combining online clustering with contrastive methods. It details the mechanics of extracting features from augmented image views, mapping th">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/online-prototype-clustering-in-sw-av-using-sinkhorn-knopp">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Online Prototype Clustering in SwAV Using Sinkhorn-Knopp - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/online-prototype-clustering-in-sw-av-using-sinkhorn-knopp" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Swapping Assignments between Views (SwAV) achieves efficient self-supervised learning by combining online clustering with contrastive methods. It details the mechanics of extracting features from augmented image views, mapping th" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="online-prototype-clustering-in-swav-using-sinkhorn-knopp">Online
+Prototype Clustering in SwAV Using Sinkhorn-Knopp</h1>
+<p>This article explores how Swapping Assignments between Views (SwAV)
+achieves efficient self-supervised learning by combining online
+clustering with contrastive methods. It details the mechanics of
+extracting features from augmented image views, mapping these features
+to learnable prototype vectors, and utilizing the Sinkhorn-Knopp
+algorithm to normalize cluster assignments in real-time without
+suffering from mode collapse. Finally, it explains how the swapped
+prediction mechanism forces the neural network to learn consistent,
+high-level semantic representations across different views of the same
+image.</p>
+<h3 id="generating-views-and-feature-representations">Generating Views
+and Feature Representations</h3>
+<p>SwAV begins by taking a single input image and applying different
+random augmentations to generate multiple distinct views. These views
+are passed through a convolutional neural network encoder, such as a
+ResNet, to extract high-dimensional feature vectors. These vectors are
+then projected onto the unit sphere using L2 normalization. Instead of
+directly comparing the features of the different views—which requires
+massive memory banks or large batch sizes—SwAV maps the normalized
+features to a set of <span class="math inline">\(K\)</span> learnable
+prototype vectors. These prototypes act as the centers of clusters in
+the embedding space and are updated via backpropagation alongside the
+encoder weights.</p>
+<h3 id="computing-codes-and-the-collapse-problem">Computing Codes and
+the Collapse Problem</h3>
+<p>When a batch of <span class="math inline">\(B\)</span> images is
+processed, the network computes the dot product between the normalized
+feature vectors of the images and the <span
+class="math inline">\(K\)</span> learnable prototypes. This produces a
+matrix of similarity scores (logits). To convert these similarity scores
+into cluster assignments—referred to as "codes"—the system must decide
+which prototype each image view belongs to.</p>
+<p>In an online setting, simply assigning each image to its nearest
+prototype leads to a trivial solution known as mode collapse. The
+network quickly learns to assign every single image in the batch to the
+exact same prototype, maximizing similarity without learning any
+meaningful visual features.</p>
+<h3
+id="sinkhorn-knopp-normalization-for-online-assignment">Sinkhorn-Knopp
+Normalization for Online Assignment</h3>
+<p>To prevent mode collapse and process batches online, SwAV treats the
+assignment of features to prototypes as an Optimal Transport problem.
+The goal is to maximize the similarity between the features and the
+prototypes while enforcing an equipartition constraint: on average, each
+prototype in the batch must be selected an equal number of times.</p>
+<p>SwAV achieves this using the Sinkhorn-Knopp algorithm. The algorithm
+takes the similarity matrix of the current batch and iteratively
+normalizes the rows and columns.</p>
+<ol type="1">
+<li>First, the similarity scores are exponentiated to make them
+positive, scaled by a temperature parameter.</li>
+<li>The algorithm then alternates between normalizing the rows (ensuring
+each image view's assignment weights sum to 1) and normalizing the
+columns (ensuring the total weight assigned to each prototype across the
+batch equals <span class="math inline">\(B/K\)</span>).</li>
+</ol>
+<p>After just a few iterations (typically three), the Sinkhorn-Knopp
+algorithm converges. It outputs a doubly stochastic matrix of "soft"
+codes, meaning images are assigned fractional memberships to multiple
+prototypes rather than a hard, single-cluster assignment. Because every
+prototype is forced to receive an equal amount of assignment weight
+across the batch, mode collapse is mathematically impossible. If the
+batch size is too small relative to the number of prototypes, SwAV
+caches features from previous batches in a small queue to provide enough
+data for the Sinkhorn-Knopp normalization to remain stable.</p>
+<h3 id="the-swapped-prediction-loss">The Swapped Prediction Loss</h3>
+<p>Once the Sinkhorn-Knopp algorithm generates the soft assignment codes
+for the different views of an image, SwAV executes its core learning
+mechanism: swapped prediction.</p>
+<p>If an image is transformed into View 1 and View 2, they should
+contain the same semantic information and therefore belong to the same
+prototype clusters. SwAV sets up a cross-entropy loss where the network
+uses the feature representation of View 1 to predict the Sinkhorn-Knopp
+code generated from View 2, and simultaneously uses the features of View
+2 to predict the code of View 1.</p>
+<p>During backpropagation, gradients flow through the predicted
+probabilities to update both the encoder network and the learnable
+prototype vectors. Note that gradients do not flow through the
+Sinkhorn-Knopp algorithm itself; the codes are treated as fixed targets
+for the opposite view. By continuously forcing different views of the
+same image to map to the same uniformly distributed prototypes, the
+model learns rich, invariant visual representations entirely online.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/online-prototype-clustering-in-sw-av-using-sinkhorn-knopp';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

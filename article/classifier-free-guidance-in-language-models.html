@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classifier-Free Guidance in Language Models - ai</title>
+    <meta name="description" content="This article explores how Classifier-Free Guidance (CFG), a technique originally developed for image generation, is adapted for Large Language Models (LLMs) to strictly enforce prompt adherence. By simultaneously computing and interpolating conditional an">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/classifier-free-guidance-in-language-models">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Classifier-Free Guidance in Language Models - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/classifier-free-guidance-in-language-models" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how Classifier-Free Guidance (CFG), a technique originally developed for image generation, is adapted for Large Language Models (LLMs) to strictly enforce prompt adherence. By simultaneously computing and interpolating conditional an" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="classifier-free-guidance-in-language-models">Classifier-Free
+Guidance in Language Models</h1>
+<p>This article explores how Classifier-Free Guidance (CFG), a technique
+originally developed for image generation, is adapted for Large Language
+Models (LLMs) to strictly enforce prompt adherence. By simultaneously
+computing and interpolating conditional and unconditional
+probabilities—represented as logits—CFG steers artificial intelligence
+away from generic responses and toward outputs that precisely reflect
+the user's specific instructions.</p>
+<h2 id="understanding-logits-in-language-models">Understanding Logits in
+Language Models</h2>
+<p>To understand Classifier-Free Guidance, one must first understand how
+language models generate text. At each step of generation, an LLM
+predicts the next word (token) by outputting a vector of raw,
+unnormalized scores for every possible token in its vocabulary. These
+raw scores are called logits. Through a mathematical function called
+softmax, logits are converted into probabilities, and the model samples
+the next token based on this distribution.</p>
+<h2 id="conditional-vs-unconditional-generation">Conditional vs.
+Unconditional Generation</h2>
+<p>In standard LLM usage, generation is conditional. The model
+calculates logits based on the specific prompt provided by the user.
+However, LLMs have been trained on massive datasets of general text,
+meaning they have strong built-in biases toward common phrases and
+generic patterns. Even with a detailed prompt, the model might default
+to these baseline patterns, resulting in poor prompt adherence.</p>
+<p>To fix this, CFG introduces a second parallel process: unconditional
+generation. During inference, the model is run twice for every token
+generated:</p>
+<ol type="1">
+<li><strong>Conditional Pass:</strong> The model processes the user's
+specific prompt (e.g., "Write a poem about space in the style of a
+pirate").</li>
+<li><strong>Unconditional Pass:</strong> The model processes an empty
+prompt or a generic system prompt, representing what the model would
+generate on its own without specific user constraints.</li>
+</ol>
+<h2 id="interpolating-logits-to-amplify-adherence">Interpolating Logits
+to Amplify Adherence</h2>
+<p>Classifier-Free Guidance works by contrasting these two passes in the
+logit space before the softmax function is applied. It calculates the
+difference between the conditional logits and the unconditional logits.
+This difference represents the exact vector of influence that the user's
+prompt has on the model's output.</p>
+<p>CFG then amplifies this difference using a hyperparameter known as
+the guidance scale (often denoted as <span
+class="math inline">\(\gamma\)</span> or <span
+class="math inline">\(w\)</span>). The mathematical formula for the
+final guided logits is:</p>
+<p><span class="math display">\[\text{Logits}_{\text{guided}} =
+\text{Logits}_{\text{unconditional}} + \gamma \times
+(\text{Logits}_{\text{conditional}} -
+\text{Logits}_{\text{unconditional}})\]</span></p>
+<p>This process is an extrapolation (often referred to broadly as
+interpolation) between the two distributions.</p>
+<ul>
+<li>If <span class="math inline">\(\gamma = 1\)</span>, the
+unconditional logits cancel out, resulting in standard conditional
+generation.</li>
+<li>If <span class="math inline">\(\gamma &gt; 1\)</span>, the model
+pushes the probability distribution away from the generic unconditional
+baseline and heavily amplifies the traits unique to the conditional
+prompt.</li>
+</ul>
+<h2 id="practical-impact-on-ai-output">Practical Impact on AI
+Output</h2>
+<p>By mathematically subtracting the unconditional logits and scaling up
+the conditional differences, CFG penalizes tokens that are generally
+probable in everyday language unless they are also highly probable given
+the specific prompt.</p>
+<p>For example, in the pirate space poem scenario, words like "the" or
+"stars" might have high logits in both passes. However, a word like
+"avast" will have a very low logit in the unconditional pass and a
+higher logit in the conditional pass. CFG detects this divergence and
+massively boosts the logit for "avast."</p>
+<h2 id="trade-offs-of-classifier-free-guidance">Trade-offs of
+Classifier-Free Guidance</h2>
+<p>While CFG significantly improves how well an LLM follows system
+prompts, personas, and structural constraints, it comes with two main
+trade-offs:</p>
+<ul>
+<li><strong>Doubled Compute Cost:</strong> Because the model must
+evaluate both the conditional and unconditional prompts at every step,
+inference requires twice the computational resources or batch size.</li>
+<li><strong>Over-saturation:</strong> If the guidance scale (<span
+class="math inline">\(\gamma\)</span>) is set too high, the
+amplification becomes extreme. The model may sacrifice grammatical
+coherence and fluency just to force prompt-specific keywords into the
+output, leading to repetitive or unnatural text. Most practical
+implementations use a guidance scale between 1.5 and 3.0 to balance
+adherence and coherence.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/classifier-free-guidance-in-language-models';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

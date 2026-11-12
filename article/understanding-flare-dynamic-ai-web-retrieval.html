@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding FLARE: Dynamic AI Web Retrieval - ai</title>
+    <meta name="description" content="This article provides a clear breakdown of Forward-Looking Active Retrieval Generation (FLARE) and how it improves artificial intelligence responses. We will explore how FLARE monitors token generation probabilities in real-time to detect AI uncertainty.">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-flare-dynamic-ai-web-retrieval">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding FLARE: Dynamic AI Web Retrieval - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-flare-dynamic-ai-web-retrieval" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a clear breakdown of Forward-Looking Active Retrieval Generation (FLARE) and how it improves artificial intelligence responses. We will explore how FLARE monitors token generation probabilities in real-time to detect AI uncertainty." />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="understanding-flare-dynamic-ai-web-retrieval">Understanding
+FLARE: Dynamic AI Web Retrieval</h1>
+<p>This article provides a clear breakdown of Forward-Looking Active
+Retrieval Generation (FLARE) and how it improves artificial intelligence
+responses. We will explore how FLARE monitors token generation
+probabilities in real-time to detect AI uncertainty. You will learn the
+exact step-by-step process of how the system pauses generation
+mid-sentence, formulates search queries using temporary draft tokens,
+and integrates live web data to prevent hallucinations and ensure
+factual accuracy.</p>
+<h3 id="the-problem-with-standard-retrieval">The Problem with Standard
+Retrieval</h3>
+<p>Traditional Retrieval-Augmented Generation (RAG) fetches information
+only once at the beginning of a user's prompt. While effective for short
+answers, this approach fails during long, complex responses. As an AI
+generates multiple paragraphs, its initial information can become
+insufficient, leading to guessing or "hallucinating" false facts. FLARE
+solves this by allowing the AI to search for information continuously as
+it writes.</p>
+<h3 id="monitoring-token-probabilities">Monitoring Token
+Probabilities</h3>
+<p>Large Language Models (LLMs) generate text one word—or "token"—at a
+time. For every token it writes, the model calculates a probability
+score representing how confident it is that the chosen token is
+correct.</p>
+<p>FLARE actively monitors these confidence scores. The system is
+programmed with a specific probability threshold. As long as the AI
+generates tokens with confidence scores above this threshold, it
+continues writing normally without interruption.</p>
+<h3 id="triggering-the-mid-sentence-search">Triggering the Mid-Sentence
+Search</h3>
+<p>When the AI encounters a topic or fact it does not know, the
+probability score of the next generated token drops below the set
+threshold. This drop acts as an immediate trigger. Instead of accepting
+the low-confidence token and risking a hallucination, FLARE intervenes
+mid-sentence.</p>
+<p>The mechanism works through the following exact steps:</p>
+<ol type="1">
+<li><strong>Drafting Ahead:</strong> The AI temporarily finishes
+generating the current sentence, even though the tokens have low
+confidence scores. This temporary text acts as a "look-ahead" draft to
+see what topic the AI is trying to discuss.</li>
+<li><strong>Masking Uncertain Tokens:</strong> The system identifies the
+specific words in that draft sentence that had low probability scores
+and masks (removes) them.</li>
+<li><strong>Query Formulation:</strong> Using the remaining
+high-confidence words in the draft sentence, the AI converts the
+incomplete thought into a targeted search query. For example, if the
+draft sentence was "The treaty was signed in [low-confidence date] by
+the president," the system generates the search query: "When was the
+treaty signed by the president?"</li>
+<li><strong>Dynamic Web Search:</strong> The system pauses the
+user-facing text generation and sends this newly formulated query to a
+search engine or database to retrieve relevant documents.</li>
+<li><strong>Regeneration:</strong> FLARE feeds the newly retrieved web
+data back into the AI's context window. The AI then deletes the
+temporary draft sentence and regenerates the response from the exact
+point where the confidence originally dropped.</li>
+</ol>
+<h3 id="the-result-seamless-accuracy">The Result: Seamless Accuracy</h3>
+<p>Once the new information is integrated, the token generation
+probabilities rise back above the threshold. The AI completes the
+sentence accurately and continues writing. If confidence drops again
+later in the response, the FLARE cycle repeats. This continuous loop of
+predicting, monitoring, retrieving, and regenerating allows AI models to
+verify facts dynamically, resulting in highly accurate and trustworthy
+long-form content.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-flare-dynamic-ai-web-retrieval';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

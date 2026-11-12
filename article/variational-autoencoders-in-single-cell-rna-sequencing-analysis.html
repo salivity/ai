@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variational Autoencoders in Single-Cell RNA Sequencing Analysis - ai</title>
+    <meta name="description" content="Single-cell RNA sequencing (scRNA-seq) enables the examination of gene expression at the resolution of individual cells, providing vast amounts of biological data. However, analyzing this data presents major challenges, including high dimensionality, tech">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/variational-autoencoders-in-single-cell-rna-sequencing-analysis">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Variational Autoencoders in Single-Cell RNA Sequencing Analysis - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/variational-autoencoders-in-single-cell-rna-sequencing-analysis" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Single-cell RNA sequencing (scRNA-seq) enables the examination of gene expression at the resolution of individual cells, providing vast amounts of biological data. However, analyzing this data presents major challenges, including high dimensionality, tech" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="variational-autoencoders-in-single-cell-rna-sequencing-analysis">Variational
+Autoencoders in Single-Cell RNA Sequencing Analysis</h1>
+<p>Single-cell RNA sequencing (scRNA-seq) enables the examination of
+gene expression at the resolution of individual cells, providing vast
+amounts of biological data. However, analyzing this data presents major
+challenges, including high dimensionality, technical noise, batch
+effects, and the difficulty of tracking how cells change over time. This
+article explores how Variational Autoencoders (VAEs), a class of
+artificial intelligence generative models, are used in scRNA-seq
+analysis to remove batch effects and accurately infer cellular
+differentiation trajectories.</p>
+<h3
+id="understanding-variational-autoencoders-in-genomics">Understanding
+Variational Autoencoders in Genomics</h3>
+<p>A Variational Autoencoder is a deep learning model consisting of two
+connected neural networks: an encoder and a decoder. In the context of
+scRNA-seq, the encoder takes high-dimensional gene expression data—often
+encompassing 20,000 or more genes per cell—and compresses it into a
+low-dimensional representation known as the latent space.</p>
+<p>Unlike standard autoencoders that compress data into fixed points,
+VAEs compress data into probability distributions. The decoder then
+samples from this latent space to reconstruct the original gene
+expression data. By learning the underlying probability distributions of
+the data, VAEs filter out random technical noise, such as dropout events
+where expressed genes go undetected, and capture only the core
+biological signals.</p>
+<h3 id="removing-batch-effects-with-conditional-vaes">Removing Batch
+Effects with Conditional VAEs</h3>
+<p>Batch effects occur when non-biological variations are introduced
+into data due to differences in sample preparation, sequencing
+platforms, or processing times. If left uncorrected, batch effects can
+mask true biological signals and cause cells to cluster by experiment
+rather than by cell type.</p>
+<p>VAEs address this problem through a variation called a Conditional
+Variational Autoencoder (cVAE), implemented in widely used
+bioinformatics tools like scVI (single-cell Variational Inference). The
+process of batch correction works in three distinct steps:</p>
+<ol type="1">
+<li><strong>Conditioning the Network:</strong> During the training
+phase, the VAE is fed both the raw gene expression data and a batch
+identifier (a label indicating which experiment or sample the cell came
+from).</li>
+<li><strong>Isolating Biological State:</strong> Because the decoder is
+explicitly given the batch label to help reconstruct the data, the
+encoder is relieved of the need to store batch-specific information in
+the latent space. The latent space is forced to capture only the
+batch-independent biological variations.</li>
+<li><strong>Generating Corrected Data:</strong> Once trained,
+researchers can extract the latent space coordinates to visualize and
+cluster cells without batch interference. Alternatively, they can ask
+the decoder to reconstruct the gene expression of all cells while
+assigning them the same batch label, effectively harmonizing the
+dataset.</li>
+</ol>
+<h3 id="inferring-cellular-differentiation-trajectories">Inferring
+Cellular Differentiation Trajectories</h3>
+<p>Cellular differentiation is a continuous process where stem or
+progenitor cells develop into specialized cell types. Because scRNA-seq
+destroys cells to read their RNA, it only captures static snapshots in
+time. Inferring the continuous path of differentiation—known as
+trajectory inference or pseudotime analysis—requires reconstructing a
+dynamic process from static data.</p>
+<p>VAEs are uniquely suited for trajectory inference because their
+probabilistic nature forces the latent space to be continuous and
+smooth. In a VAE latent space, cells with similar gene expression
+profiles are placed close together, and the spaces between them
+represent valid, intermediate biological states.</p>
+<p>Researchers use VAEs to infer trajectories through the following
+mechanisms:</p>
+<ul>
+<li><strong>Manifold Learning:</strong> The continuous latent space acts
+as a biological manifold. By calculating the shortest paths or applying
+graph-based algorithms within this batch-corrected latent space,
+researchers can order cells along a developmental timeline (pseudotime),
+mapping the progression from immature to mature states.</li>
+<li><strong>Generative Interpolation:</strong> Because the latent space
+is continuous, researchers can pick two points representing a progenitor
+cell and a fully differentiated cell, and sample points along the vector
+connecting them. Passing these intermediate points through the decoder
+generates simulated gene expression profiles, allowing scientists to
+predict the exact genetic transitions required for a cell to
+differentiate.</li>
+<li><strong>RNA Velocity Integration:</strong> Advanced VAE frameworks,
+such as veloVI, integrate both spliced and unspliced mRNA counts into
+the neural network. By modeling the ratio of newly transcribed
+(unspliced) to mature (spliced) RNA within the latent space, the VAE can
+determine the directional flow of cell state transitions, predicting not
+just the path of differentiation, but the exact direction and speed at
+which an individual cell is moving along that path.</li>
+</ul>
+<p>By simultaneously eliminating technical artifacts and mapping
+continuous biological states, VAEs serve as a foundational architecture
+for modern single-cell transcriptomics.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/variational-autoencoders-in-single-cell-rna-sequencing-analysis';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

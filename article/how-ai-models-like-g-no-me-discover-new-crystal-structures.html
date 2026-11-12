@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Models Like GNoME Discover New Crystal Structures - ai</title>
+    <meta name="description" content="Artificial intelligence is revolutionizing materials science by drastically accelerating the discovery of stable inorganic crystals. Recently, deep learning models like Google DeepMind’s GNoME (Graph Networks for Materials Exploration) predicted the exist">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-models-like-g-no-me-discover-new-crystal-structures">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Models Like GNoME Discover New Crystal Structures - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-models-like-g-no-me-discover-new-crystal-structures" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence is revolutionizing materials science by drastically accelerating the discovery of stable inorganic crystals. Recently, deep learning models like Google DeepMind’s GNoME (Graph Networks for Materials Exploration) predicted the exist" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-models-like-gnome-discover-new-crystal-structures">How AI
+Models Like GNoME Discover New Crystal Structures</h1>
+<p>Artificial intelligence is revolutionizing materials science by
+drastically accelerating the discovery of stable inorganic crystals.
+Recently, deep learning models like Google DeepMind’s GNoME (Graph
+Networks for Materials Exploration) predicted the existence of 2.2
+million new materials, roughly 380,000 of which are completely stable
+and ready for laboratory synthesis. This article explores the exact
+mechanisms behind this breakthrough, explaining how AI utilizes existing
+scientific databases, graph neural networks, dual-pipeline generation,
+and active learning with quantum mechanics simulations to compress
+centuries of traditional research into a matter of months.</p>
+<p>The foundation of this AI-driven discovery begins with existing
+experimental data. Models like GNoME are initially trained on
+open-source repositories, most notably the Materials Project. This
+database contains the crystal structures and stability energies of tens
+of thousands of known materials that scientists have already calculated
+or synthesized. By feeding this data into the AI, the system learns the
+fundamental physics and chemistry that dictate how different atoms bond
+and arrange themselves in three-dimensional space.</p>
+<p>To process this atomic data effectively, the AI relies on Graph
+Neural Networks (GNNs). A crystal structure is naturally suited to be
+represented as a mathematical graph. In this setup, the individual atoms
+act as the "nodes" of the graph, while the chemical bonds and distances
+between the atoms act as the "edges" connecting them. The GNN analyzes
+these node-and-edge relationships to predict the total energy of a given
+atomic arrangement. In materials science, calculating this energy is
+crucial because lower energy directly correlates to higher structural
+stability.</p>
+<p>Once the GNN understands how to evaluate stability, the system uses
+two distinct pipelines to generate millions of new, hypothetical crystal
+candidates:</p>
+<ol type="1">
+<li><strong>The Structural Pipeline:</strong> This method takes the
+blueprints of known, stable crystals and substitutes their existing
+atoms with different, chemically similar elements from the periodic
+table. It acts as an intelligent guessing game, swapping elements to see
+if the existing structure holds up with new ingredients.</li>
+<li><strong>The Compositional Pipeline:</strong> This approach is much
+more open-ended. It combines random chemical formulas without using a
+pre-existing structural template. The AI then attempts to fold and
+arrange these raw atomic combinations into entirely novel crystal
+geometries that have never been seen before in nature.</li>
+</ol>
+<p>After generating millions of candidates through these two pipelines,
+the AI filters them by predicting their "decomposition energy." A
+material is only truly stable if it does not spontaneously break down
+into simpler, lower-energy compounds. Scientists refer to this threshold
+of maximum stability as the "convex hull." The GNN rapidly screens the
+generated structures, discarding unstable combinations and keeping only
+the candidates predicted to lie on or near this convex hull.</p>
+<p>The final and most critical step is validating the AI's predictions
+using an "active learning" loop. While the GNN is fast, its initial
+predictions are still estimates. To confirm them, the top candidates are
+tested using Density Functional Theory (DFT), a proven physics
+simulation method that accurately calculates quantum mechanical
+forces.</p>
+<p>However, DFT is computationally expensive and slow. Instead of
+running DFT on random materials, the system only runs it on the AI's
+most promising predictions. The exact results from the DFT
+calculations—whether the material succeeded or failed—are then fed back
+into the GNoME database to retrain the GNN. This active learning loop
+makes the AI progressively smarter with every cycle, drastically raising
+its prediction accuracy and ultimately yielding hundreds of thousands of
+verified, stable new crystal structures ready for real-world
+manufacturing.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-models-like-g-no-me-discover-new-crystal-structures';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

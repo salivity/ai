@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Differences Between MLE and MAP in AI - ai</title>
+    <meta name="description" content="In probabilistic artificial intelligence, Maximum Likelihood Estimation (MLE) and Maximum A Posteriori (MAP) are two fundamental methods used to estimate the parameters of a machine learning model given observed data. While both techniques aim to find the">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/mathematical-differences-between-mle-and-map-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mathematical Differences Between MLE and MAP in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/mathematical-differences-between-mle-and-map-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="In probabilistic artificial intelligence, Maximum Likelihood Estimation (MLE) and Maximum A Posteriori (MAP) are two fundamental methods used to estimate the parameters of a machine learning model given observed data. While both techniques aim to find the" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="mathematical-differences-between-mle-and-map-in-ai">Mathematical
+Differences Between MLE and MAP in AI</h1>
+<p>In probabilistic artificial intelligence, Maximum Likelihood
+Estimation (MLE) and Maximum A Posteriori (MAP) are two fundamental
+methods used to estimate the parameters of a machine learning model
+given observed data. While both techniques aim to find the optimal
+parameters that explain the data, their core mathematical difference
+lies in the incorporation of prior knowledge. MLE determines parameters
+purely by maximizing the probability of the observed data, treating the
+parameters as fixed but unknown quantities. Conversely, MAP approaches
+the problem from a Bayesian perspective by treating the parameters as
+random variables and incorporating a prior probability distribution.
+This article breaks down the exact mathematical formulations of both
+methods and demonstrates how MAP acts as a regularized extension of
+MLE.</p>
+<h2 id="maximum-likelihood-estimation-mle">Maximum Likelihood Estimation
+(MLE)</h2>
+<p>MLE focuses exclusively on the likelihood of the data. Suppose we
+have a dataset <span class="math inline">\(D\)</span> consisting of
+<span class="math inline">\(N\)</span> independent and identically
+distributed (i.i.d.) observations, <span class="math inline">\(D =
+\{x_1, x_2, ..., x_N\}\)</span>, and a model parameterized by <span
+class="math inline">\(\theta\)</span>.</p>
+<p>The goal of MLE is to find the specific parameter <span
+class="math inline">\(\theta\)</span> that maximizes the likelihood
+function <span class="math inline">\(P(D|\theta)\)</span>.
+Mathematically, this is expressed as:</p>
+<p><span class="math display">\[\hat{\theta}_{MLE} = \arg\max_{\theta}
+P(D|\theta)\]</span></p>
+<p>Because the data points are i.i.d., the joint probability of the
+dataset is the product of the individual probabilities:</p>
+<p><span class="math display">\[\hat{\theta}_{MLE} = \arg\max_{\theta}
+\prod_{i=1}^{N} P(x_i|\theta)\]</span></p>
+<p>Multiplying many small probabilities together leads to numerical
+underflow in computational systems. Furthermore, products are
+mathematically more difficult to differentiate than sums. To solve this,
+we apply the natural logarithm to the likelihood function. Since the
+logarithm is a monotonically increasing function, maximizing the
+log-likelihood yields the exact same optimal <span
+class="math inline">\(\theta\)</span> as maximizing the standard
+likelihood:</p>
+<p><span class="math display">\[\hat{\theta}_{MLE} = \arg\max_{\theta}
+\sum_{i=1}^{N} \log P(x_i|\theta)\]</span></p>
+<h2 id="maximum-a-posteriori-map">Maximum A Posteriori (MAP)</h2>
+<p>MAP estimation takes the process a step further by applying Bayes'
+Theorem. Instead of maximizing the likelihood <span
+class="math inline">\(P(D|\theta)\)</span>, MAP maximizes the posterior
+probability <span class="math inline">\(P(\theta|D)\)</span>. This is
+the probability of the parameters given the observed data.</p>
+<p>By Bayes' Theorem, the posterior probability is defined as:</p>
+<p><span class="math display">\[P(\theta|D) =
+\frac{P(D|\theta)P(\theta)}{P(D)}\]</span></p>
+<p>Here, <span class="math inline">\(P(\theta)\)</span> represents the
+<strong>prior distribution</strong>—our initial belief about the
+parameters before seeing any data. <span
+class="math inline">\(P(D)\)</span> is the marginal likelihood (or
+evidence), which acts as a normalizing constant.</p>
+<p>When searching for the parameter <span
+class="math inline">\(\theta\)</span> that maximizes the posterior, the
+denominator <span class="math inline">\(P(D)\)</span> can be ignored
+because it does not depend on <span
+class="math inline">\(\theta\)</span>. Therefore, the MAP objective
+function becomes:</p>
+<p><span class="math display">\[\hat{\theta}_{MAP} = \arg\max_{\theta}
+P(\theta|D) = \arg\max_{\theta} P(D|\theta)P(\theta)\]</span></p>
+<p>Just as with MLE, we apply the natural logarithm to transform the
+products into sums for mathematical and computational convenience. Given
+i.i.d. data, the final MAP formulation is:</p>
+<p><span class="math display">\[\hat{\theta}_{MAP} = \arg\max_{\theta}
+\left( \sum_{i=1}^{N} \log P(x_i|\theta) + \log P(\theta)
+\right)\]</span></p>
+<h2 id="the-core-mathematical-difference">The Core Mathematical
+Difference</h2>
+<p>By placing the final logarithmic equations side by side, the
+mathematical divergence becomes entirely clear:</p>
+<ul>
+<li><strong>MLE:</strong> <span class="math inline">\(\arg\max_{\theta}
+\sum_{i=1}^{N} \log P(x_i|\theta)\)</span></li>
+<li><strong>MAP:</strong> <span class="math inline">\(\arg\max_{\theta}
+\left( \sum_{i=1}^{N} \log P(x_i|\theta) + \log P(\theta)
+\right)\)</span></li>
+</ul>
+<p>The singular mathematical difference between MAP and MLE is the
+addition of the log-prior term, <span class="math inline">\(\log
+P(\theta)\)</span>, in the MAP optimization objective.</p>
+<p>This difference leads to three critical implications in probabilistic
+AI:</p>
+<ol type="1">
+<li><strong>Equivalence under a Uniform Prior:</strong> If we assume a
+uniform prior distribution—meaning all values of <span
+class="math inline">\(\theta\)</span> are equally likely before
+observing the data—then <span class="math inline">\(P(\theta)\)</span>
+is a constant. The logarithm of a constant is also a constant, which has
+a derivative of zero. In this specific case, the <span
+class="math inline">\(\log P(\theta)\)</span> term drops out during
+optimization, and MAP becomes mathematically identical to MLE.</li>
+<li><strong>Regularization:</strong> In machine learning, the <span
+class="math inline">\(\log P(\theta)\)</span> term in MAP acts as a
+regularizer that prevents overfitting. For example, if we assume a
+Gaussian (Normal) prior with a mean of zero for <span
+class="math inline">\(\theta\)</span>, the <span
+class="math inline">\(\log P(\theta)\)</span> term becomes
+mathematically equivalent to <strong>L2 regularization</strong> (Ridge
+regression). If we assume a Laplacian prior, the <span
+class="math inline">\(\log P(\theta)\)</span> term becomes equivalent to
+<strong>L1 regularization</strong> (Lasso regression).</li>
+<li><strong>Asymptotic Convergence:</strong> As the sample size <span
+class="math inline">\(N\)</span> approaches infinity, the sum of the
+log-likelihoods <span class="math inline">\(\sum_{i=1}^{N} \log
+P(x_i|\theta)\)</span> grows infinitely large, while the prior term
+<span class="math inline">\(\log P(\theta)\)</span> remains fixed.
+Consequently, with infinite data, the influence of the prior becomes
+negligible, and the MAP estimate converges to the MLE estimate.</li>
+</ol></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/mathematical-differences-between-mle-and-map-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamingLLM: Infinite Text Generation via Attention Sinks - ai</title>
+    <meta name="description" content="StreamingLLM is an innovative framework that enables Large Language Models (LLMs) to process and generate infinite-length text streams without sacrificing efficiency or requiring costly retraining. This article explores how StreamingLLM overcomes standard">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/streaming-llm-infinite-text-generation-via-attention-sinks">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="StreamingLLM: Infinite Text Generation via Attention Sinks - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/streaming-llm-infinite-text-generation-via-attention-sinks" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="StreamingLLM is an innovative framework that enables Large Language Models (LLMs) to process and generate infinite-length text streams without sacrificing efficiency or requiring costly retraining. This article explores how StreamingLLM overcomes standard" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="streamingllm-infinite-text-generation-via-attention-sinks">StreamingLLM:
+Infinite Text Generation via Attention Sinks</h1>
+<p>StreamingLLM is an innovative framework that enables Large Language
+Models (LLMs) to process and generate infinite-length text streams
+without sacrificing efficiency or requiring costly retraining. This
+article explores how StreamingLLM overcomes standard memory and context
+length limitations by identifying a core model behavior known as
+"attention sinks." By preserving the Key and Value (KV) states of the
+first few initial tokens alongside a rolling window of the most recent
+tokens, StreamingLLM stabilizes the attention mechanism, allowing
+conversational artificial intelligence to maintain coherent, unending
+dialogues.</p>
+<h2 id="the-challenge-of-infinite-streams-in-conversational-ai">The
+Challenge of Infinite Streams in Conversational AI</h2>
+<p>Standard Large Language Models are constrained by a fixed context
+window determined during their pre-training phase. In conversational AI,
+this presents two major hurdles during long interactions:</p>
+<ol type="1">
+<li><strong>Memory Exhaustion:</strong> LLMs store the Keys and Values (
+the KV cache) of all previous tokens to avoid recomputing them. As a
+conversation grows, the KV cache consumes an unsustainable amount of
+memory, eventually leading to hardware bottlenecks and high
+latency.</li>
+<li><strong>Context Window Limits:</strong> Once a conversation exceeds
+the length of the model's pre-training window, its performance degrades
+rapidly, resulting in gibberish or lost coherence.</li>
+</ol>
+<p>A naive solution to this problem is Window Attention (or a sliding
+window), where the model only caches the KV states of the most recent
+tokens and discards everything older. However, in practice, Window
+Attention fails completely the moment the very first tokens of the
+conversation are evicted from the cache.</p>
+<h2 id="the-discovery-of-attention-sinks">The Discovery of Attention
+Sinks</h2>
+<p>Researchers investigating why Window Attention fails discovered an
+intriguing phenomenon within the Softmax operation used in
+self-attention mechanisms. The Softmax function requires the attention
+scores across all available tokens to sum to 1.</p>
+<p>Even when the current token being generated does not have a strong
+semantic match with any previous tokens, the model cannot assign zero
+attention to everything; the excess attention must be dumped somewhere.
+LLMs naturally learn to use the very first tokens in a sequence (usually
+the first one to four tokens) as "attention sinks." Because these
+initial tokens are visible to almost all subsequent tokens during
+autoregressive generation, the model reliably dumps unneeded attention
+weight onto them.</p>
+<p>When a standard sliding window discards these initial tokens, the
+denominator in the Softmax calculation changes drastically. The model
+loses its anchor, attention scores become erratic, and text generation
+collapses.</p>
+<h2 id="combining-attention-sinks-with-a-rolling-window">Combining
+Attention Sinks with a Rolling Window</h2>
+<p>StreamingLLM solves the sliding window failure by explicitly
+accommodating the attention sink phenomenon. Instead of maintaining a
+strictly contiguous window of recent tokens, StreamingLLM divides the KV
+cache into two distinct parts:</p>
+<ul>
+<li><strong>The Attention Sinks:</strong> The KV states of the first few
+tokens (typically four) are locked into the cache permanently. They are
+never evicted, regardless of how long the conversation continues.</li>
+<li><strong>The Rolling KV Cache:</strong> The remaining capacity of the
+cache operates as a standard sliding window. As new tokens are
+generated, the oldest tokens <em>after</em> the attention sinks are
+evicted to make room for the newest ones.</li>
+</ul>
+<p>By keeping the initial tokens, the Softmax function retains its
+required sink to absorb unnecessary attention scores, maintaining normal
+distribution across the network layers. Meanwhile, the rolling window
+ensures the model retains the immediate context necessary for coherent
+responses, while strictly capping memory usage and computation
+speed.</p>
+<h2 id="positional-encoding-adjustments">Positional Encoding
+Adjustments</h2>
+<p>Preserving initial tokens while discarding middle ones creates a gap
+in token positions. For example, a cache might hold tokens 1, 2, 3, and
+4, and then jump straight to tokens 1005, 1006, and 1007.</p>
+<p>Modern LLMs typically use Rotary Position Embeddings (RoPE) to
+understand word order. If StreamingLLM used the original absolute
+positions of the tokens, the model would be confused by the massive gap
+and the fact that token positions exceed its pre-training limit.</p>
+<p>To fix this, StreamingLLM dynamically reassigns positional embeddings
+within the rolling cache. Instead of encoding tokens based on their
+absolute position in the infinite stream, positions are assigned based
+on their current index within the active cache. In the example above,
+tokens 1005, 1006, and 1007 are dynamically treated as tokens 5, 6, and
+7 during the attention calculation. This ensures the relative distances
+between tokens remain within the limits the model was originally trained
+to understand, enabling continuous, stable generation indefinitely.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/streaming-llm-infinite-text-generation-via-attention-sinks';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

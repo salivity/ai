@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How RetNet Combines Parallel Training and Constant Inference - ai</title>
+    <meta name="description" content="Retentive Networks (RetNet) represent a major breakthrough in sequence-modeling artificial intelligence by successfully merging the high-speed parallel training of Transformers with the low-cost, constant-memory inference of Recurrent Neural Networks (RNN">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ret-net-combines-parallel-training-and-constant-inference">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How RetNet Combines Parallel Training and Constant Inference - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ret-net-combines-parallel-training-and-constant-inference" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Retentive Networks (RetNet) represent a major breakthrough in sequence-modeling artificial intelligence by successfully merging the high-speed parallel training of Transformers with the low-cost, constant-memory inference of Recurrent Neural Networks (RNN" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="how-retnet-combines-parallel-training-and-constant-inference">How
+RetNet Combines Parallel Training and Constant Inference</h1>
+<p>Retentive Networks (RetNet) represent a major breakthrough in
+sequence-modeling artificial intelligence by successfully merging the
+high-speed parallel training of Transformers with the low-cost,
+constant-memory inference of Recurrent Neural Networks (RNNs). This
+article explores the core mechanics behind RetNet, explaining how it
+bypasses the "impossible triangle" of sequence modeling—achieving
+training parallelism, strong performance, and low inference cost
+simultaneously. By replacing traditional softmax attention with a
+multiscale retention mechanism, RetNet allows AI models to switch
+dynamically between parallel, recurrent, and chunkwise paradigms
+depending on the phase of deployment.</p>
+<p>For years, AI architectures faced a fundamental trade-off. Recurrent
+Neural Networks offer <span class="math inline">\(O(1)\)</span>
+inference complexity and require constant memory per token, as they
+compress past information into a single hidden state. However, they
+cannot be trained in parallel because each step depends on the previous
+one. Conversely, Transformers allow for massive parallelization during
+training, enabling the creation of large language models. Yet, during
+inference, Transformers suffer from <span
+class="math inline">\(O(N)\)</span> complexity per step and require a
+growing Key-Value (KV) cache that consumes vast amounts of GPU memory as
+sequences lengthen. RetNet resolves this by using a single underlying
+mathematical equation that can be restructured for different operational
+modes.</p>
+<p>The secret to RetNet’s adaptability is the "Retention" mechanism,
+which replaces the standard self-attention found in Transformers.
+Standard attention uses a non-linear softmax function to calculate
+relationships between tokens. Because of the denominator in the softmax
+calculation, the entire sequence must be computed together, which breaks
+the ability to compress the past into a simple recurrent state. RetNet
+eliminates the softmax function entirely. Instead, it uses a linear
+dot-product interaction combined with a fixed, distance-based
+exponential decay matrix (represented by the parameter gamma, <span
+class="math inline">\(\gamma\)</span>) and Complex-valued rotary
+embeddings (similar to RoPE).</p>
+<p>Because the retention mechanism is strictly linear, it can be
+mathematically expressed as a parallel matrix operation during the
+training phase. During training, the entire input sequence is known
+beforehand. RetNet processes all tokens simultaneously using queries
+(<span class="math inline">\(Q\)</span>), keys (<span
+class="math inline">\(K\)</span>), and values (<span
+class="math inline">\(V\)</span>), masked by a causal decay matrix. This
+matrix ensures that tokens can only attend to past tokens and that the
+influence of past tokens decays exponentially the further back they are.
+This formulation fully utilizes modern GPU hardware for rapid,
+parallelized matrix multiplication, matching the training speeds of
+standard Transformers.</p>
+<p>When the model moves from training to deployment (inference), the
+exact same mathematical weights are reformulated into a recurrent state.
+Because the retention mechanism lacks the non-linear softmax barrier,
+the cumulative history of keys and values can be summed into a single,
+fixed-size state matrix (<span class="math inline">\(S\)</span>). When
+generating a new token, the model simply multiplies the previous state
+<span class="math inline">\(S_{n-1}\)</span> by the decay factor <span
+class="math inline">\(\gamma\)</span> and adds the current token's
+key-value product. The new output is generated by querying this updated
+state. Consequently, the model never needs to look back at past tokens
+or maintain a growing KV cache. Memory consumption remains completely
+flat, and generation speed per token stays constant, regardless of
+whether the model is generating the tenth token or the
+ten-thousandth.</p>
+<p>To handle extremely long sequences during training without running
+out of GPU memory, RetNet introduces a third hybrid representation:
+Chunkwise Recurrent Retention. Parallel training scales quadratically
+with sequence length, which can still bottleneck memory on massive
+documents. In the chunkwise paradigm, a long sequence is divided into
+smaller blocks. RetNet uses the fast parallel representation to compute
+information <em>within</em> each block, and then uses the
+memory-efficient recurrent representation to pass summary states
+<em>between</em> the blocks. This enables efficient, high-throughput
+training on massive sequence lengths.</p>
+<p>Finally, to mimic the diverse feature-extraction capabilities of
+Multi-Head Attention, RetNet utilizes Multi-Scale Retention (MSR). Each
+"head" in a RetNet layer is assigned a different decay constant (<span
+class="math inline">\(\gamma\)</span>). Heads with a rapid decay focus
+heavily on local, immediate context, while heads with a slow decay
+retain information across very long distances. A gating mechanism and
+GroupNorm are then applied to the outputs to reintroduce the helpful
+non-linearity that was lost by removing the softmax function. Through
+this mathematical duality, RetNet delivers the scalability of
+Transformers with the operational efficiency of RNNs.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ret-net-combines-parallel-training-and-constant-inference';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

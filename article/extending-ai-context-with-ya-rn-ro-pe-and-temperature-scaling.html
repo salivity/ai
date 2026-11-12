@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extending AI Context With YaRN: RoPE and Temperature Scaling - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how Yet another RoPE extensioN (YaRN) expands the context window of large language models. We will explore the limitations of standard Rotary Position Embeddings (RoPE), how YaRN utilizes selective frequen">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/extending-ai-context-with-ya-rn-ro-pe-and-temperature-scaling">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Extending AI Context With YaRN: RoPE and Temperature Scaling - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/extending-ai-context-with-ya-rn-ro-pe-and-temperature-scaling" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how Yet another RoPE extensioN (YaRN) expands the context window of large language models. We will explore the limitations of standard Rotary Position Embeddings (RoPE), how YaRN utilizes selective frequen" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="extending-ai-context-with-yarn-rope-and-temperature-scaling">Extending
+AI Context With YaRN: RoPE and Temperature Scaling</h1>
+<p>This article provides a comprehensive overview of how Yet another
+RoPE extensioN (YaRN) expands the context window of large language
+models. We will explore the limitations of standard Rotary Position
+Embeddings (RoPE), how YaRN utilizes selective frequency interpolation
+to preserve positional data, and how it combines this technique with
+attention logit temperature scaling to maintain high performance across
+massive token lengths without requiring extensive retraining.</p>
+<h3 id="the-limitations-of-rotary-position-embeddings-rope">The
+Limitations of Rotary Position Embeddings (RoPE)</h3>
+<p>Rotary Position Embeddings (RoPE) encode the position of tokens by
+rotating the query and key representations in a transformer's
+self-attention mechanism. Each dimension of the embedding is rotated at
+a different frequency, much like the hands of a clock. High frequencies
+(like a second hand) capture local, short-range relationships between
+nearby words, while low frequencies (like an hour hand) capture global,
+long-range distances across the text.</p>
+<p>When an AI model is given a text prompt longer than its original
+training context, standard RoPE fails because it encounters rotation
+angles it has never seen before. Early attempts to fix this used
+Position Interpolation (PI), which linearly scales down all frequencies
+so that the longer context fits into the original rotation space.
+However, squeezing all frequencies equally crowds the high-frequency
+dimensions. This degrades the model's ability to understand local word
+order and ruins its attention precision.</p>
+<h3 id="frequency-interpolation-the-ntk-by-parts-method">Frequency
+Interpolation: The "NTK-by-parts" Method</h3>
+<p>YaRN solves the crowding problem by treating different RoPE
+frequencies unequally through a method called "NTK-by-parts"
+interpolation. Instead of blindly compressing every dimension, YaRN
+categorizes the RoPE dimensions based on their wavelengths relative to
+the original context size:</p>
+<ul>
+<li><strong>High Frequencies (Short Wavelengths):</strong> If a
+dimension's wavelength is much shorter than the original context length,
+YaRN does not interpolate it at all. The frequencies are extrapolated
+as-is. This ensures the model retains its sharp understanding of local
+token relationships and grammar.</li>
+<li><strong>Low Frequencies (Long Wavelengths):</strong> If a
+dimension's wavelength is near or larger than the original context
+length, YaRN interpolates (stretches) it. This prevents the model from
+seeing out-of-distribution rotation angles at extreme distances.</li>
+<li><strong>Medium Frequencies:</strong> Dimensions that fall in between
+these two extremes are smoothly blended using a linear ramp function,
+combining both interpolation and extrapolation.</li>
+</ul>
+<p>By selectively interpolating only the lower frequencies, YaRN
+stretches the model's global awareness while keeping its local awareness
+completely intact.</p>
+<h3 id="temperature-scaling-on-attention-logits">Temperature Scaling on
+Attention Logits</h3>
+<p>Modifying the RoPE frequencies solves the positional awareness issue,
+but it creates a secondary problem within the self-attention mechanism.
+As the context window grows to tens of thousands of tokens, the softmax
+function in the attention layer must distribute probabilities across a
+vastly larger number of tokens. This causes the attention distribution
+to flatten, increasing entropy and effectively diluting the model's
+focus. Furthermore, altering the RoPE wavelengths changes the variance
+of the dot product between queries and keys.</p>
+<p>To counteract this attention dilution, YaRN introduces temperature
+scaling directly on the attention logits. Before the softmax function is
+applied to the query-key dot products, YaRN multiplies the logits by a
+temperature scale factor (<span class="math inline">\(1/t\)</span>).</p>
+<p>Rather than forcing developers to manually tune this hyperparameter,
+the creators of YaRN found an exact mathematical formula to compute the
+optimal temperature scale based on the context extension ratio (<span
+class="math inline">\(s\)</span>), which is the new context length
+divided by the original context length:</p>
+<p><span class="math display">\[\sqrt{\frac{1}{t}} \approx 0.1 \ln(s) +
+1\]</span></p>
+<p>Instead of modifying the core attention code, YaRN implements this
+efficiently by scaling the lengths of the RoPE embeddings by <span
+class="math inline">\(\sqrt{1/t}\)</span>. Because both the queries and
+keys are rotated by RoPE, scaling both of them by <span
+class="math inline">\(\sqrt{1/t}\)</span> automatically scales their
+resulting dot product by <span class="math inline">\(1/t\)</span>. This
+sharpens the attention distribution, forcing the model to focus strongly
+on relevant tokens even when scanning through massive documents.</p>
+<h3 id="combining-both-techniques-for-long-context-ai">Combining Both
+Techniques for Long-Context AI</h3>
+<p>The true breakthrough of YaRN lies in the synergy between frequency
+interpolation and temperature scaling.</p>
+<p>Frequency interpolation ensures the model's internal "rulers" for
+measuring word distance do not break at long ranges and do not blur at
+short ranges. Meanwhile, temperature scaling ensures that the attention
+mechanism remains sharp and decisive, preventing the signal from getting
+lost in the noise of a massive context window. Because these two
+adjustments directly address the mathematical root causes of context
+degradation, YaRN allows AI models to extrapolate to context lengths 32
+times larger than their original training limits with minimal
+fine-tuning—often requiring less than 0.1% of the original pre-training
+data.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/extending-ai-context-with-ya-rn-ro-pe-and-temperature-scaling';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

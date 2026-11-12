@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Deep Learning and Equivariance in AI - ai</title>
+    <meta name="description" content="This article explores the fundamentals of Geometric Deep Learning and how incorporating mathematical symmetries directly into neural network architectures drastically reduces the amount of data required to train artificial intelligence models. By understa">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/geometric-deep-learning-and-equivariance-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Geometric Deep Learning and Equivariance in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/geometric-deep-learning-and-equivariance-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the fundamentals of Geometric Deep Learning and how incorporating mathematical symmetries directly into neural network architectures drastically reduces the amount of data required to train artificial intelligence models. By understa" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="geometric-deep-learning-and-equivariance-in-ai">Geometric Deep
+Learning and Equivariance in AI</h1>
+<p>This article explores the fundamentals of Geometric Deep Learning and
+how incorporating mathematical symmetries directly into neural network
+architectures drastically reduces the amount of data required to train
+artificial intelligence models. By understanding the concepts of
+non-Euclidean data, symmetry groups, and equivariance, you will learn
+how modern AI systems generalize better, train faster, and overcome the
+limitations of traditional deep learning approaches.</p>
+<h3 id="what-is-geometric-deep-learning">What is Geometric Deep
+Learning?</h3>
+<p>Traditional deep learning models, such as Convolutional Neural
+Networks (CNNs) and Recurrent Neural Networks (RNNs), are designed to
+process Euclidean data. Euclidean data exists on regular, flat grids,
+such as two-dimensional images (grids of pixels) or one-dimensional
+sequences (text and audio). However, much of the real world cannot be
+represented on a flat grid.</p>
+<p>Geometric Deep Learning (GDL) is an umbrella term for techniques that
+generalize deep neural networks to non-Euclidean domains, such as
+graphs, networks, and three-dimensional manifolds. Examples of
+non-Euclidean data include social networks, molecular structures, brain
+connectomes, and 3D surfaces. GDL provides a unified mathematical
+framework to build neural networks that can understand and respect the
+underlying geometry and structure of these complex datasets.</p>
+<h3 id="understanding-symmetry-groups-and-equivariance">Understanding
+Symmetry Groups and Equivariance</h3>
+<p>At the core of Geometric Deep Learning is the mathematical concept of
+symmetry. A symmetry of an object or system is a transformation that
+leaves a certain property of that object unchanged. In mathematics,
+these transformations are organized into "symmetry groups." Common
+transformations include translations (shifting an object in space),
+rotations (turning an object), and permutations (changing the order of
+nodes in a graph).</p>
+<p>To leverage these symmetries, GDL relies on two critical properties:
+invariance and equivariance.</p>
+<ul>
+<li><strong>Invariance</strong> means that the output of a function does
+not change at all when the input is transformed. For example, a
+molecule's toxicity remains the same regardless of how the molecule is
+rotated in 3D space.</li>
+<li><strong>Equivariance</strong> means that if the input is
+transformed, the output transforms in the exact same, predictable way.
+For example, if you shift an object in an image to the right, the
+feature map generated by a convolutional layer will also shift to the
+right by the same amount.</li>
+</ul>
+<h3 id="how-equivariance-reduces-sample-complexity">How Equivariance
+Reduces Sample Complexity</h3>
+<p>In artificial intelligence, "sample complexity" refers to the number
+of training examples a machine learning model needs to learn a target
+function successfully and generalize well to unseen data. Standard
+neural networks have notoriously high sample complexity, often requiring
+millions of labeled examples to achieve high accuracy.</p>
+<p>Equivariance to symmetry groups directly reduces sample complexity by
+baking physical and geometric rules directly into the neural network's
+architecture—a concept known as an inductive bias.</p>
+<p>Consider a traditional neural network trying to recognize a cat in an
+image. Without translation equivariance, the network would have to see
+images of the cat in the top-left corner, the bottom-right corner, and
+the center to understand it is the same object. CNNs solved this for
+flat images by sharing weights across the grid, making them
+translation-equivariant. However, standard CNNs are not
+rotation-equivariant. To recognize a rotated object, a standard model
+relies on "data augmentation"—artificially rotating training images
+thousands of times so the network memorizes every possible angle.</p>
+<p>Data augmentation is computationally expensive and inefficient,
+especially in 3D space where the number of possible rotations is
+infinite. By building neural networks that are mathematically
+equivariant to the rotation group (such as SE(3)-equivariant networks
+for 3D space), the network automatically understands that a rotated
+input is the exact same object, just oriented differently.</p>
+<p>Because the model does not need to waste parameters and training time
+learning symmetries from scratch, sample complexity plummets. The model
+can learn from a single orientation of a molecule or 3D object and
+instantly generalize that knowledge to all other possible orientations.
+This parameter sharing across symmetry groups leads to smaller models,
+faster training times, and high accuracy even when training data is
+scarce, making it indispensable in fields like drug discovery, physics
+simulations, and robotics.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/geometric-deep-learning-and-equivariance-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

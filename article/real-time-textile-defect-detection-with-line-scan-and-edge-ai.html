@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Textile Defect Detection with Line-Scan and Edge AI - ai</title>
+    <meta name="description" content="Modern textile manufacturing relies heavily on automation to maintain high quality and production speeds. By integrating high-resolution line-scan cameras with edge artificial intelligence, automated looms can inspect fabrics as they are woven to catch br">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/real-time-textile-defect-detection-with-line-scan-and-edge-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Real-Time Textile Defect Detection with Line-Scan and Edge AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/real-time-textile-defect-detection-with-line-scan-and-edge-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Modern textile manufacturing relies heavily on automation to maintain high quality and production speeds. By integrating high-resolution line-scan cameras with edge artificial intelligence, automated looms can inspect fabrics as they are woven to catch br" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="real-time-textile-defect-detection-with-line-scan-and-edge-ai">Real-Time
+Textile Defect Detection with Line-Scan and Edge AI</h1>
+<p>Modern textile manufacturing relies heavily on automation to maintain
+high quality and production speeds. By integrating high-resolution
+line-scan cameras with edge artificial intelligence, automated looms can
+inspect fabrics as they are woven to catch broken warp threads and
+structural defects instantaneously. This article explores the mechanics
+of line-scan imaging, the processing power of edge AI, and how these
+technologies combine to halt defective production in real time, saving
+manufacturers massive amounts of material, time, and money.</p>
+<h3 id="the-role-of-line-scan-cameras-in-weaving">The Role of Line-Scan
+Cameras in Weaving</h3>
+<p>Traditional area-scan cameras capture a full two-dimensional image at
+once, which makes them poorly suited for inspecting continuous,
+fast-moving webs of fabric. Automated looms use line-scan cameras
+instead. These specialized cameras contain a single row of pixel sensors
+that capture the fabric one ultra-thin slice at a time as it moves past
+the lens.</p>
+<p>To ensure accuracy, the camera is synchronized with the loom’s rotary
+encoder. Each time the fabric advances by a fraction of a millimeter,
+the camera takes a snapshot. By stitching thousands of these
+single-pixel lines together per second, the system builds a continuous,
+distortion-free, high-resolution image of the entire textile roll.
+Consistent, high-intensity LED lighting is paired with the camera, using
+both front-lighting to view surface patterns and backlighting to expose
+density issues or missing threads.</p>
+<h3 id="how-edge-ai-processes-the-visual-data">How Edge AI Processes the
+Visual Data</h3>
+<p>Capturing high-resolution images at rapid speeds generates massive
+amounts of data. Sending this data to a cloud server for analysis would
+introduce latency, meaning the loom could weave several meters of ruined
+fabric before receiving a stop command. This is where edge AI becomes
+essential.</p>
+<p>Edge AI processes the visual data locally on hardware—such as
+industrial GPUs or FPGAs—mounted directly on or next to the loom. The
+raw pixel lines from the camera feed directly into the edge device,
+which runs deep learning algorithms, typically Convolutional Neural
+Networks (CNNs).</p>
+<p>These AI models are trained in two ways:</p>
+<ul>
+<li><strong>Anomaly Detection:</strong> The AI learns the exact
+geometric pattern of a flawless weave and flags any mathematical
+deviation from that baseline.</li>
+<li><strong>Defect Classification:</strong> The AI is fed thousands of
+images of known textile defects so it can categorize the exact problem
+(e.g., an oil stain versus a broken thread) the moment it appears.</li>
+</ul>
+<h3 id="detecting-broken-warp-threads-and-weave-defects">Detecting
+Broken Warp Threads and Weave Defects</h3>
+<p>The combination of precise imaging and localized intelligence allows
+the system to spot microscopic errors invisible to the human eye at high
+speeds.</p>
+<ul>
+<li><strong>Broken Warp Threads:</strong> Warp threads run lengthwise
+through the loom. If one snaps, it creates a long, missing line in the
+fabric or tangles with adjacent threads. The line-scan camera detects
+this as a sudden drop in pixel density (via backlighting) or a
+disruption in the vertical grid.</li>
+<li><strong>Weft Defects:</strong> Weft threads are woven horizontally
+across the warp. If a weft thread breaks, doubles up, or sits at the
+wrong tension, the edge AI immediately notices an irregularity in the
+horizontal spacing of the stitched image.</li>
+<li><strong>Structural Anomalies:</strong> Knots, slubs (thick lumps in
+the yarn), and holes alter the uniform texture of the fabric. The AI
+isolates these anomalies within milliseconds by comparing the defective
+slice of the image against the learned standard of the surrounding
+fabric.</li>
+</ul>
+<h3 id="real-time-loom-intervention">Real-Time Loom Intervention</h3>
+<p>Detection is only useful if it prevents further damage. The edge AI
+system is wired directly into the loom's Programmable Logic Controller
+(PLC).</p>
+<p>When the AI identifies a critical defect like a broken warp thread,
+it triggers an immediate digital signal to the PLC within milliseconds.
+The PLC instantly halts the weaving mechanism before the next weft
+thread can be inserted. At the same time, the system logs the exact
+coordinates of the defect on the fabric roll and alerts the machine
+operator via a light tower or digital dashboard. The operator can
+quickly tie off the broken thread and resume production, turning a
+potentially ruined batch of textile into a minor, easily corrected
+pause.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/real-time-textile-defect-detection-with-line-scan-and-edge-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

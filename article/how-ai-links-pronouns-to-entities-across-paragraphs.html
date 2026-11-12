@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How AI Links Pronouns to Entities Across Paragraphs - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how coreference resolution in natural language processing (NLP) enables artificial intelligence to connect pronouns and noun phrases to the same real-world entity across multiple paragraphs. We will explor">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-ai-links-pronouns-to-entities-across-paragraphs">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How AI Links Pronouns to Entities Across Paragraphs - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-ai-links-pronouns-to-entities-across-paragraphs" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how coreference resolution in natural language processing (NLP) enables artificial intelligence to connect pronouns and noun phrases to the same real-world entity across multiple paragraphs. We will explor" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-ai-links-pronouns-to-entities-across-paragraphs">How AI
+Links Pronouns to Entities Across Paragraphs</h1>
+<p>This article provides a comprehensive overview of how coreference
+resolution in natural language processing (NLP) enables artificial
+intelligence to connect pronouns and noun phrases to the same real-world
+entity across multiple paragraphs. We will explore the mechanics of
+mention detection, the role of vector embeddings, how transformer models
+process long-range context, and the clustering algorithms used to group
+these references together accurately.</p>
+<p>Coreference resolution is the task of finding all expressions that
+refer to the same entity in a text. For an AI to understand a long
+document, it must know that "Dr. Jane Smith" in paragraph one, "the lead
+researcher" in paragraph two, and "she" in paragraph three all point to
+the same person. Achieving this across paragraphs requires a multi-step
+pipeline driven by deep learning.</p>
+<h3 id="1-mention-detection">1. Mention Detection</h3>
+<p>The first step is identifying all potential references to entities,
+known as "mentions." The AI scans the text to extract named entities
+(like "Jane Smith"), noun phrases (like "the talented scientist"), and
+pronouns (like "she," "her," "they"). Modern NLP systems use neural
+networks to score every possible span of words in the document based on
+the likelihood that the span represents a valid entity mention.</p>
+<h3 id="2-generating-contextual-embeddings">2. Generating Contextual
+Embeddings</h3>
+<p>Once mentions are identified, the AI converts these words into
+numerical representations called vector embeddings. Modern NLP relies
+heavily on transformer-based language models (such as BERT, RoBERTa, or
+GPT) to create these embeddings.</p>
+<p>Unlike older models that looked at words in isolation, transformers
+use a mechanism called "self-attention." Self-attention allows the AI to
+look at a pronoun in the fourth paragraph and simultaneously weigh its
+relationship to every other word in the preceding paragraphs. The
+resulting vector for the word "she" does not just represent a female
+pronoun; it mathematically encodes the context surrounding it, making it
+geometrically similar to the vector for "Dr. Jane Smith" generated
+earlier in the text.</p>
+<h3 id="3-handling-long-range-context">3. Handling Long-Range
+Context</h3>
+<p>A major challenge in cross-paragraph resolution is that standard
+transformer models have a limit on how much text they can process at
+once. To link entities across many paragraphs, AI systems use two main
+strategies:</p>
+<ul>
+<li><strong>Overlapping Windows:</strong> The AI breaks the document
+into smaller, overlapping chunks of paragraphs. It processes the first
+chunk, keeps the most important entity data in a memory buffer, and
+passes that memory into the next chunk.</li>
+<li><strong>Long-Context Transformers:</strong> Newer models (like
+Longformer or BigBird) use sparse attention mechanisms. Instead of
+comparing every word to every other word—which requires massive
+computing power—they selectively focus on local words and a few globally
+important words (like main subjects), allowing them to process thousands
+of words across dozens of paragraphs in a single pass.</li>
+</ul>
+<h3 id="4-scoring-compatibility">4. Scoring Compatibility</h3>
+<p>With contextual embeddings established across the paragraphs, the AI
+evaluates pairs of mentions to see if they match. It passes the vectors
+of an antecedent (the earlier mention, e.g., "Apple Inc.") and an
+anaphor (the later mention, e.g., "the tech giant" or "it") through a
+neural network to calculate a compatibility score.</p>
+<p>During this phase, the model implicitly checks for several linguistic
+factors learned during its training:</p>
+<ul>
+<li><strong>Number and Gender Agreement:</strong> Matching "she" to a
+female entity, or "they" to a plural noun.</li>
+<li><strong>Semantic Compatibility:</strong> Knowing that "the company"
+can refer to "Microsoft," but not to "Bill Gates."</li>
+<li><strong>Distance and Salience:</strong> Weighing how far apart the
+mentions are, while recognizing that a main topic introduced in the
+first paragraph remains a likely match for pronouns much later in the
+text.</li>
+</ul>
+<h3 id="5-entity-clustering">5. Entity Clustering</h3>
+<p>Finally, the AI uses the compatibility scores to group mentions into
+clusters. If "Dr. Smith" (Paragraph 1) links strongly to "the
+researcher" (Paragraph 2), and "the researcher" links strongly to "she"
+(Paragraph 3), the algorithm merges all three into a single entity
+cluster. Every item in this cluster is then recognized by the AI as
+referring to the exact same real-world entity, allowing the system to
+maintain a coherent understanding of the entire document.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-ai-links-pronouns-to-entities-across-paragraphs';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

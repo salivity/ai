@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Search and Vector Databases in AI - ai</title>
+    <meta name="description" content="Semantic search engines utilize artificial intelligence and vector databases to understand the intent and contextual meaning behind a user&#39;s query, moving beyond traditional keyword matching. This article provides an overview of how raw text is converted">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/semantic-search-and-vector-databases-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Semantic Search and Vector Databases in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/semantic-search-and-vector-databases-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Semantic search engines utilize artificial intelligence and vector databases to understand the intent and contextual meaning behind a user&#39;s query, moving beyond traditional keyword matching. This article provides an overview of how raw text is converted" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="semantic-search-and-vector-databases-in-ai">Semantic Search and
+Vector Databases in AI</h1>
+<p>Semantic search engines utilize artificial intelligence and vector
+databases to understand the intent and contextual meaning behind a
+user's query, moving beyond traditional keyword matching. This article
+provides an overview of how raw text is converted into numerical
+representations called embeddings, stored in specialized vector
+databases, and retrieved using mathematical similarity algorithms to
+deliver accurate, meaning-based search results.</p>
+<h2 id="the-shift-from-keywords-to-meaning">The Shift from Keywords to
+Meaning</h2>
+<p>Traditional search engines rely on lexical search, which looks for
+exact word matches between a query and a document. If a user searches
+for "feline," a lexical system might miss a document that only contains
+the word "cat."</p>
+<p>Semantic search solves this limitation by focusing on the actual
+meaning of the words. Using natural language processing (NLP) models,
+the system understands that "feline" and "cat" share the same concept.
+This allows the search engine to retrieve relevant documents even when
+the exact keywords are absent.</p>
+<h2 id="generating-vector-embeddings">Generating Vector Embeddings</h2>
+<p>To process meaning mathematically, AI models convert text into vector
+embeddings. An embedding is a long list of numbers (a vector) that
+represents a piece of text—such as a word, sentence, or entire
+document—in a high-dimensional space.</p>
+<p>Deep learning models, particularly transformers, are trained on
+massive amounts of text to generate these embeddings. Each number in the
+vector represents a specific feature or nuance of the text's meaning.
+Because the AI understands context, texts with similar meanings are
+assigned similar numerical vectors. In this high-dimensional space, the
+vector for "king" will be located physically close to the vector for
+"queen," and far away from the vector for "toaster."</p>
+<h2 id="the-role-of-vector-databases">The Role of Vector Databases</h2>
+<p>Once documents are converted into vectors, they must be stored in a
+way that allows for fast retrieval. Standard relational databases are
+not equipped to handle high-dimensional vector data efficiently. This is
+where vector databases come in.</p>
+<p>A vector database is specifically designed to store, index, and query
+millions or billions of vector embeddings. Instead of organizing data in
+traditional rows and columns, it organizes data based on its position in
+the high-dimensional mathematical space. It uses specialized indexing
+algorithms, such as Hierarchical Navigable Small World (HNSW) graphs, to
+map out the relationships between vectors, ensuring that searches can be
+executed in milliseconds.</p>
+<h2 id="retrieving-documents-via-similarity-search">Retrieving Documents
+via Similarity Search</h2>
+<p>When a user types a query into a semantic search engine, the
+following step-by-step process occurs to retrieve the right
+documents:</p>
+<ol type="1">
+<li><strong>Query Embedding:</strong> The user's search query is passed
+through the same AI model used on the documents, converting the query
+into its own vector embedding.</li>
+<li><strong>Vector Querying:</strong> This new query vector is sent to
+the vector database.</li>
+<li><strong>Nearest Neighbor Search:</strong> The vector database places
+the query vector into the high-dimensional space and looks for the
+document vectors that are closest to it. This process is called
+Approximate Nearest Neighbor (ANN) search.</li>
+<li><strong>Distance Calculation:</strong> The database calculates the
+closeness of vectors using mathematical metrics like Cosine Similarity
+(measuring the angle between vectors), Euclidean Distance (measuring the
+straight-line distance), or Dot Product.</li>
+<li><strong>Result Retrieval:</strong> The database identifies the
+vectors with the highest similarity scores and returns the corresponding
+original documents to the user.</li>
+</ol>
+<p>By reducing complex human language to mathematical coordinates,
+vector databases enable AI-driven semantic search engines to
+effortlessly bridge the gap between what a user types and what they
+actually mean.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/semantic-search-and-vector-databases-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

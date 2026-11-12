@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Tokenization Splits Text into Subword Units for LLMs - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how tokenization transforms raw human text into subword units for Large Language Models (LLMs). Because artificial intelligence systems cannot process raw characters directly, they rely on tokenization to">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-tokenization-splits-text-into-subword-units-for-ll-ms">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Tokenization Splits Text into Subword Units for LLMs - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-tokenization-splits-text-into-subword-units-for-ll-ms" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how tokenization transforms raw human text into subword units for Large Language Models (LLMs). Because artificial intelligence systems cannot process raw characters directly, they rely on tokenization to" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-tokenization-splits-text-into-subword-units-for-llms">How
+Tokenization Splits Text into Subword Units for LLMs</h1>
+<p>This article provides a comprehensive overview of how tokenization
+transforms raw human text into subword units for Large Language Models
+(LLMs). Because artificial intelligence systems cannot process raw
+characters directly, they rely on tokenization to break sentences down
+into manageable pieces before converting them into numerical data. We
+will explore the limitations of older word-based and character-based
+methods, the mechanics of modern subword tokenization, and the specific
+algorithms—such as Byte-Pair Encoding (BPE), WordPiece, and Unigram—that
+power today's leading AI systems.</p>
+<h3 id="the-need-for-subword-tokenization">The Need for Subword
+Tokenization</h3>
+<p>Large Language Models only understand numbers. To process text, an
+LLM must first use a tokenizer to split raw strings into smaller pieces,
+called tokens, and map those tokens to numerical IDs in a fixed
+vocabulary.</p>
+<p>Historically, AI systems used either word-level or character-level
+tokenization, both of which have major flaws:</p>
+<ul>
+<li><strong>Word-level tokenization</strong> splits text strictly by
+spaces and punctuation. This requires a massive vocabulary to account
+for every word variation (e.g., "run", "runs", "running"). If the model
+encounters a new or misspelled word, it flags it as an "unknown" token,
+losing all meaning.</li>
+<li><strong>Character-level tokenization</strong> splits text into
+individual letters. While this requires a very small vocabulary and
+eliminates unknown words, it destroys the inherent meaning of word
+groupings. Furthermore, a simple sentence becomes a massive sequence of
+tokens, requiring excessive computational power to process.</li>
+</ul>
+<p>Subword tokenization solves both problems. It operates on the
+principle that frequently used words should remain whole, while rare
+words should be split into smaller, meaningful chunks (prefixes, roots,
+and suffixes).</p>
+<h3 id="how-the-splitting-process-works">How the Splitting Process
+Works</h3>
+<p>When you feed raw text into an LLM, the subword tokenizer processes
+it through a straightforward pipeline:</p>
+<ol type="1">
+<li><strong>Normalization:</strong> The raw text is cleaned. Depending
+on the model, this might involve removing unnecessary whitespace,
+stripping accents, or converting letters to lowercase.</li>
+<li><strong>Pre-tokenization:</strong> The text is broadly split into
+basic words using spaces and punctuation as boundaries. For example, the
+phrase "unhappily running" becomes
+<code>["unhappily", "running"]</code>.</li>
+<li><strong>Subword Splitting:</strong> The tokenizer applies a trained
+algorithm to break complex or rare words into smaller units present in
+its vocabulary. "Unhappily" might be split into
+<code>["un", "happi", "ly"]</code>, and "running" into
+<code>["run", "ning"]</code>. Common words like "the" or "and" remain
+intact as single tokens.</li>
+<li><strong>Mapping to IDs:</strong> Each subword token is matched to
+its corresponding unique integer in the model's vocabulary. These
+numbers are then fed into the neural network.</li>
+</ol>
+<p>By splitting "unhappily" into three distinct pieces, the LLM can use
+its understanding of the prefix "un" (not), the root "happi" (happy),
+and the suffix "ly" (adverb) to deduce the meaning of the word, even if
+it has rarely seen the exact combination before.</p>
+<h3 id="core-subword-algorithms">Core Subword Algorithms</h3>
+<p>Different LLMs use different algorithms to decide how to build their
+vocabularies and split raw text. The three most common methods are
+Byte-Pair Encoding, WordPiece, and Unigram.</p>
+<h4 id="byte-pair-encoding-bpe">Byte-Pair Encoding (BPE)</h4>
+<p>Used by models like OpenAI's GPT series and Meta's Llama, BPE is a
+bottom-up algorithm. During training, it starts with a vocabulary of
+individual characters. It scans the training text, finds the two
+characters that appear next to each other most frequently (e.g., "t" and
+"h"), and merges them into a new subword token ("th"). It repeats this
+process thousands of times, merging characters into larger and larger
+subwords until it reaches a pre-set vocabulary size. Modern LLMs use
+Byte-level BPE, which applies this process to raw UTF-8 bytes rather
+than characters, ensuring the model can process any language, symbol, or
+emoji without ever encountering an unknown token.</p>
+<h4 id="wordpiece">WordPiece</h4>
+<p>Developed by Google for models like BERT, WordPiece is very similar
+to BPE. It also starts with individual characters and merges them
+iteratively. However, instead of merging pairs based strictly on raw
+frequency, WordPiece uses a likelihood score. It merges two tokens only
+if the combination appears frequently <em>relative</em> to the frequency
+of the individual tokens appearing separately. This ensures that the
+algorithm prioritizes merges that carry unique linguistic value.
+WordPiece typically marks subwords that do not start a word with a
+double hashtag, such as <code>["run", "##ning"]</code>.</p>
+<h4 id="unigram">Unigram</h4>
+<p>Often used in conjunction with Google's SentencePiece framework
+(found in models like T5 and ALBERT), the Unigram algorithm works in
+reverse. Instead of starting small and merging up, it takes a top-down
+approach. It begins with a massive vocabulary containing all possible
+words and subword combinations from the training data. It then
+iteratively removes tokens that contribute the least to the overall
+probability of representing the training text. It whittles the list down
+until only the most efficient subword units remain, reaching the desired
+vocabulary size. When splitting new text, Unigram calculates the
+mathematically most probable way to divide a word based on the surviving
+tokens.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-tokenization-splits-text-into-subword-units-for-ll-ms';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

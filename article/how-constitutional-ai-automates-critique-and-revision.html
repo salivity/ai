@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Constitutional AI Automates Critique and Revision - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of Constitutional AI, a training framework designed to align artificial intelligence systems using a predefined set of written principles. Instead of relying heavily on human moderators to flag and correct ha">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-constitutional-ai-automates-critique-and-revision">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Constitutional AI Automates Critique and Revision - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-constitutional-ai-automates-critique-and-revision" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of Constitutional AI, a training framework designed to align artificial intelligence systems using a predefined set of written principles. Instead of relying heavily on human moderators to flag and correct ha" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-constitutional-ai-automates-critique-and-revision">How
+Constitutional AI Automates Critique and Revision</h1>
+<p>This article provides a comprehensive overview of Constitutional AI,
+a training framework designed to align artificial intelligence systems
+using a predefined set of written principles. Instead of relying heavily
+on human moderators to flag and correct harmful or unhelpful outputs,
+this method empowers the AI to evaluate and improve its own responses.
+Below, we explore the core mechanics of the framework: the structure of
+the AI constitution, the self-critique and revision phase, and the
+reinforcement learning phase that solidifies safe and helpful AI
+behavior.</p>
+<p>At the core of Constitutional AI is the "constitution" itself. This
+is a documented list of rules, ethical guidelines, and principles
+written in plain language by developers. These rules often draw from
+established human rights declarations, safety guidelines, and
+company-specific ethical standards. Examples of principles might include
+instructions to "choose the response that is least harmful" or "avoid
+generating content that promotes illegal acts." This document serves as
+the ultimate reference point for the AI during its training process.</p>
+<p>The automated training process is divided into two distinct stages:
+the Supervised Learning Phase and the Reinforcement Learning Phase.</p>
+<p>During the Supervised Learning Phase, the AI goes through a
+continuous cycle of generation, critique, and revision. First, the
+unaligned AI model is deliberately given prompts designed to provoke
+harmful, toxic, or biased responses. The AI generates an initial output,
+which is often flawed. Next, the system feeds this initial output back
+to the AI, alongside a specific principle selected from the
+constitution. The AI is asked to critique its own response based on that
+principle. Once the AI identifies the flaws in its original answer, it
+is instructed to rewrite the response to resolve the issues. This
+critique-and-revision loop can be repeated multiple times on the same
+prompt until the output strictly adheres to the constitution. Finally,
+the AI is fine-tuned using these newly revised, high-quality
+responses.</p>
+<p>The second stage is the Reinforcement Learning Phase, widely known as
+Reinforcement Learning from AI Feedback (RLAIF). Traditional AI training
+relies on humans to compare two AI responses and pick the better one.
+Constitutional AI automates this step. The fine-tuned AI from the first
+phase generates a pair of responses to a single prompt. Another AI
+model, acting as an evaluator, is given the two responses and a
+principle from the constitution. The evaluator AI determines which of
+the two responses better aligns with the written rule.</p>
+<p>Millions of these automated comparisons are compiled to train a
+"preference model." This preference model learns to assign a numerical
+score to any given output based on how well it follows the constitution.
+The main AI is then trained using reinforcement learning to maximize
+this score, permanently baking the constitutional principles into its
+final behavior.</p>
+<p>By using written principles to automate critique and revision,
+Constitutional AI solves major bottlenecks in AI development. It scales
+the alignment process rapidly, removes the inconsistency of varied human
+opinions, and spares human workers from the psychological toll of
+reviewing toxic data. Furthermore, it makes AI safety transparent; if an
+AI behaves poorly, developers can simply read, adjust, or add to the
+written constitution to correct the behavior in future training
+runs.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-constitutional-ai-automates-critique-and-revision';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

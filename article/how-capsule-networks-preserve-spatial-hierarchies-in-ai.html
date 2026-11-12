@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Capsule Networks Preserve Spatial Hierarchies in AI - ai</title>
+    <meta name="description" content="Geoffrey Hinton introduced Capsule Networks (CapsNets) to solve a fundamental flaw in traditional Convolutional Neural Networks (CNNs): the inability to understand spatial relationships between different parts of an object. This article explores how CapsN">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-capsule-networks-preserve-spatial-hierarchies-in-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Capsule Networks Preserve Spatial Hierarchies in AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-capsule-networks-preserve-spatial-hierarchies-in-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Geoffrey Hinton introduced Capsule Networks (CapsNets) to solve a fundamental flaw in traditional Convolutional Neural Networks (CNNs): the inability to understand spatial relationships between different parts of an object. This article explores how CapsN" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-capsule-networks-preserve-spatial-hierarchies-in-ai">How
+Capsule Networks Preserve Spatial Hierarchies in AI</h1>
+<p>Geoffrey Hinton introduced Capsule Networks (CapsNets) to solve a
+fundamental flaw in traditional Convolutional Neural Networks (CNNs):
+the inability to understand spatial relationships between different
+parts of an object. This article explores how CapsNets preserve
+hierarchical part-whole relationships in artificial intelligence. It
+covers the limitations of standard pooling techniques, the introduction
+of vector-based capsules, the mechanics of dynamic routing by agreement,
+and how these elements combine to achieve viewpoint invariance.</p>
+<h2 id="the-flaw-in-traditional-cnns">The Flaw in Traditional CNNs</h2>
+<p>To understand Capsule Networks, one must first understand the
+limitation of CNNs. Standard CNNs use a process called "max pooling" to
+reduce the size of data as it moves through the network. While pooling
+helps the network recognize if a feature (like an eye or a mouth) is
+present in an image, it discards the precise spatial data regarding
+where those features are located relative to one another.</p>
+<p>Because of this, a CNN might see two eyes, a nose, and a mouth and
+classify the image as a face, even if the mouth is on the forehead and
+the eyes are on the chin. CNNs achieve "translational invariance"
+(knowing what an object is regardless of where it is), but they fail at
+preserving the spatial hierarchy between the parts and the whole.</p>
+<h2 id="what-is-a-capsule">What is a Capsule?</h2>
+<p>Hinton’s solution was to replace the standard scalar-output neurons
+of a CNN with "capsules." A capsule is a small group of neurons that
+outputs a vector (or a matrix in later versions) rather than a single
+scalar number.</p>
+<p>This vector representation allows a capsule to hold two distinct
+pieces of information simultaneously:</p>
+<ul>
+<li><strong>Length of the vector:</strong> Represents the probability
+that a specific feature or part exists in the image.</li>
+<li><strong>Orientation of the vector:</strong> Represents the
+"instantiation parameters" of that part, which include its precise
+position, size, rotation, thickness, and skew.</li>
+</ul>
+<p>By using vectors, the network no longer throws away spatial data. It
+tracks not just <em>what</em> is in the image, but <em>how</em> it is
+positioned.</p>
+<h2 id="dynamic-routing-by-agreement">Dynamic Routing by Agreement</h2>
+<p>Preserving the hierarchy between small parts (like a nose) and the
+whole object (like a face) requires a mechanism to connect lower-level
+capsules to higher-level capsules. Hinton replaced max pooling with an
+algorithm called "Dynamic Routing by Agreement."</p>
+<p>Here is how the process preserves part-whole relationships:</p>
+<ol type="1">
+<li><strong>Prediction:</strong> Lower-level capsules (which detect
+simple parts like eyes and mouths) use transformation matrices to
+predict the instantiation parameters (pose and position) of a
+higher-level capsule (the whole face).</li>
+<li><strong>Agreement:</strong> If the lower-level capsule for the
+"nose" and the lower-level capsule for the "mouth" both predict a "face"
+in the exact same position and orientation, their predictions
+agree.</li>
+<li><strong>Routing:</strong> When multiple lower-level capsules agree
+on the prediction of a higher-level capsule, the connection between them
+strengthens. The data is dynamically "routed" to that specific
+higher-level capsule, confirming the presence of the whole object in
+that exact pose.</li>
+</ol>
+<p>If the mouth is on the forehead, its prediction for the position of
+the face will violently disagree with the prediction made by the eyes.
+Because there is no agreement, the higher-level "face" capsule will not
+be activated.</p>
+<h2 id="achieving-viewpoint-equivariance">Achieving Viewpoint
+Equivariance</h2>
+<p>Through dynamic routing and vector representations, Capsule Networks
+mirror the human visual system by utilizing inverse graphics. Instead of
+memorizing an object from thousands of different angles like a CNN must
+do, a CapsNet understands the 3D geometry of how parts relate to a
+whole.</p>
+<p>This gives the network "equivariance." As an object moves or rotates
+in the physical world, the orientation of the vectors inside the
+capsules rotates correspondingly. By locking the spatial relationships
+of the parts into a strict mathematical hierarchy, Hinton’s Capsule
+Networks ensured that AI could recognize objects from entirely new
+viewpoints using a fraction of the training data required by traditional
+networks.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-capsule-networks-preserve-spatial-hierarchies-in-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

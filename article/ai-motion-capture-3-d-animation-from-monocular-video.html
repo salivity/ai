@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Motion Capture: 3D Animation from Monocular Video - ai</title>
+    <meta name="description" content="Artificial intelligence is revolutionizing the animation industry by enabling creators to extract complex 3D character animations directly from standard, single-camera (monocular) video recordings. This article provides a comprehensive breakdown of how AI">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-motion-capture-3-d-animation-from-monocular-video">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Motion Capture: 3D Animation from Monocular Video - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-motion-capture-3-d-animation-from-monocular-video" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence is revolutionizing the animation industry by enabling creators to extract complex 3D character animations directly from standard, single-camera (monocular) video recordings. This article provides a comprehensive breakdown of how AI" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-motion-capture-3d-animation-from-monocular-video">AI Motion
+Capture: 3D Animation from Monocular Video</h1>
+<p>Artificial intelligence is revolutionizing the animation industry by
+enabling creators to extract complex 3D character animations directly
+from standard, single-camera (monocular) video recordings. This article
+provides a comprehensive breakdown of how AI motion capture works,
+detailing the pipeline from initial 2D pose detection to 3D lifting,
+volumetric mesh reconstruction, physics-based refinement, and final
+character retargeting. By replacing expensive studio setups and sensor
+suits with deep learning algorithms, AI makes high-fidelity motion
+capture accessible using just everyday video footage.</p>
+<h2 id="1-2d-pose-detection-and-keypoint-extraction">1. 2D Pose
+Detection and Keypoint Extraction</h2>
+<p>The process begins by analyzing the raw 2D video frame by frame.
+Convolutional Neural Networks (CNNs) scan each image to detect the human
+subject and identify specific anatomical landmarks known as
+keypoints.</p>
+<ul>
+<li><strong>Joint Identification:</strong> The AI locates major joints
+such as shoulders, elbows, wrists, hips, knees, and ankles.</li>
+<li><strong>Confidence Heatmaps:</strong> Instead of guessing a single
+pixel, the AI generates probability heatmaps for each joint, determining
+the most likely location of the skeletal landmarks even when partially
+hidden by clothing or objects.</li>
+<li><strong>2D Skeleton Generation:</strong> Connecting these keypoints
+creates a flat, two-dimensional stick figure that tracks the subject's
+movement across the screen.</li>
+</ul>
+<h2 id="2-2d-to-3d-pose-lifting">2. 2D-to-3D Pose Lifting</h2>
+<p>Because standard video is flat, it lacks depth information. A single
+2D pose could represent several different 3D postures in physical space.
+To solve this depth ambiguity, the AI performs a process called "3D
+lifting."</p>
+<ul>
+<li><strong>Prior Knowledge Application:</strong> Deep learning models
+are trained on massive datasets containing millions of pairs of 2D
+videos and corresponding studio-grade 3D motion capture data. The AI
+uses this training to predict the most probable 3D depth based on the 2D
+keypoints.</li>
+<li><strong>Biomechanical Constraints:</strong> The system applies rules
+about human anatomy—such as bone length consistency and joint rotation
+limits (e.g., elbows cannot bend backward)—to eliminate impossible 3D
+poses.</li>
+</ul>
+<h2 id="3-volumetric-body-mesh-reconstruction">3. Volumetric Body Mesh
+Reconstruction</h2>
+<p>A simple 3D stick figure is not enough for professional animation, as
+it lacks information about how limbs twist and rotate. To capture full
+rotational data, the AI fits a standardized 3D human body model over the
+3D skeleton.</p>
+<ul>
+<li><strong>Parametric Body Models:</strong> Algorithms often use
+frameworks like SMPL (Skinned Multi-Person Linear model), which
+represents the human body using thousands of 3D surface points
+(vertices) driven by an underlying skeleton.</li>
+<li><strong>Surface Fitting:</strong> The AI estimates the subject's
+body shape and adjusts the 3D mesh to match the silhouette and posture
+seen in the video. This step calculates precise 3D rotations
+(quaternions or Euler angles) for every joint, including spinal twists
+and wrist rotations.</li>
+</ul>
+<h2 id="4-temporal-consistency-and-physics-refinement">4. Temporal
+Consistency and Physics Refinement</h2>
+<p>Analyzing frames individually often results in jittery animations,
+foot sliding (where feet appear to skate across the floor), and
+unnatural movements. AI resolves this by evaluating the video as a
+continuous sequence rather than isolated images.</p>
+<ul>
+<li><strong>Temporal Networks:</strong> Recurrent Neural Networks (RNNs)
+or Transformers look at frames before and after the current frame to
+ensure smooth, continuous trajectories for every joint.</li>
+<li><strong>Physics-Based Simulation:</strong> Advanced AI pipelines run
+the extracted motion through a virtual physics engine. This step
+calculates gravity, momentum, ground contact, and center of mass. It
+locks the character's feet to the ground when weight is applied and
+ensures jumps and falls follow the laws of physics.</li>
+</ul>
+<h2 id="5-skeletal-retargeting-for-3d-characters">5. Skeletal
+Retargeting for 3D Characters</h2>
+<p>The final stage translates the refined AI motion data onto a custom
+3D character rig used in animation software or game engines.</p>
+<ul>
+<li><strong>Rig Mapping:</strong> The AI maps the standardized bone
+structure from the capture data to the specific skeleton of the target
+3D character.</li>
+<li><strong>Proportional Adjustment:</strong> If the 3D character has
+different proportions than the human actor in the video (such as a
+stylized cartoon character or a giant monster), inverse kinematics (IK)
+solvers automatically adjust stride lengths and limb reaches so the
+animation remains accurate without breaking the character rig.</li>
+<li><strong>Data Export:</strong> The completed animation is exported in
+standard industry formats (such as FBX or BVH), containing keyframes for
+bone positions and rotations ready for immediate use in 3D production
+environments.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-motion-capture-3-d-animation-from-monocular-video';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

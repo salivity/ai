@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automating AI Inference with Probabilistic Programming - ai</title>
+    <meta name="description" content="This article explores how probabilistic programming languages (PPLs) such as Pyro, Stan, and Turing automate the complex process of statistical inference over custom generative models in artificial intelligence. By separating the definition of a model fro">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/automating-ai-inference-with-probabilistic-programming">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Automating AI Inference with Probabilistic Programming - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/automating-ai-inference-with-probabilistic-programming" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how probabilistic programming languages (PPLs) such as Pyro, Stan, and Turing automate the complex process of statistical inference over custom generative models in artificial intelligence. By separating the definition of a model fro" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="automating-ai-inference-with-probabilistic-programming">Automating
+AI Inference with Probabilistic Programming</h1>
+<p>This article explores how probabilistic programming languages (PPLs)
+such as Pyro, Stan, and Turing automate the complex process of
+statistical inference over custom generative models in artificial
+intelligence. By separating the definition of a model from the mechanics
+of its inference, these frameworks allow AI practitioners to focus on
+expressing domain knowledge through probability distributions. We will
+break down the core mechanisms of PPLs, including computational graphs,
+automatic differentiation, and universal inference engines like Markov
+Chain Monte Carlo and Variational Inference, before examining the
+specific approaches of leading frameworks.</p>
+<h2 id="decoupling-models-from-inference">Decoupling Models from
+Inference</h2>
+<p>Traditionally, building a custom probabilistic model required two
+steps: defining the mathematical assumptions of the data-generating
+process (the generative model) and manually deriving the equations
+needed to update beliefs based on observed data (the inference
+algorithm). If a developer changed a single assumption in the model,
+they had to recalculate the complex math for the inference algorithm
+from scratch.</p>
+<p>Probabilistic programming languages solve this bottleneck by
+decoupling the model specification from the inference process. A
+developer writes the generative model as a standard computer program
+that simulates how data is created using random variables. Once the
+program is defined, the PPL’s backend automatically intercepts the
+execution of the program, conditioning it on real-world observed data to
+deduce the hidden parameters that likely generated that data.</p>
+<h2 id="the-core-mechanics-of-automation">The Core Mechanics of
+Automation</h2>
+<p>PPLs rely on three primary technical pillars to turn a standard block
+of code into an automated inference engine:</p>
+<ul>
+<li><strong>Execution Tracing:</strong> When a probabilistic program
+runs, the PPL records a "trace" of the execution. This trace tracks
+every random variable sampled, the probability distributions used, and
+how these variables depend on one another. This effectively builds a
+dynamic computational graph of the model.</li>
+<li><strong>Conditioning and Interception:</strong> PPLs use programming
+constructs (often called effect handlers) to intercept the sampling of
+random variables. If a variable corresponds to real-world data, the PPL
+clamps its value to the observed data rather than generating a random
+number. It then calculates the log-probability of that observation
+occurring.</li>
+<li><strong>Automatic Differentiation (Auto-Diff):</strong> To find the
+most likely hidden parameters in high-dimensional spaces, the inference
+engine needs to know which direction to adjust the parameters. PPLs
+integrate auto-diff systems (similar to those in PyTorch or TensorFlow)
+to automatically compute the exact gradients of the log-probability with
+respect to the latent variables.</li>
+</ul>
+<h2 id="universal-inference-engines">Universal Inference Engines</h2>
+<p>With the execution trace and gradients available, the PPL passes the
+model to a built-in inference engine. Because the engine only needs the
+log-probability of the trace and its gradients, it can run universally
+on almost any custom model. The two most common automated inference
+methods are:</p>
+<ol type="1">
+<li><strong>Markov Chain Monte Carlo (MCMC):</strong> Algorithms like
+Hamiltonian Monte Carlo (HMC) and the No-U-Turn Sampler (NUTS) use the
+automatically calculated gradients to simulate a physical system. They
+glide through the probability space to draw accurate samples from the
+posterior distribution. This is the gold standard for statistical
+accuracy.</li>
+<li><strong>Variational Inference (VI):</strong> Instead of sampling, VI
+turns inference into an optimization problem. The PPL automatically
+constructs (or helps the user construct) a simpler, parameterized
+distribution called a "guide." The engine then uses gradient descent to
+adjust the guide until it closely approximates the true posterior
+distribution of the generative model. This method scales exceptionally
+well to massive datasets.</li>
+</ol>
+<h2 id="how-pyro-stan-and-turing-implement-automation">How Pyro, Stan,
+and Turing Implement Automation</h2>
+<p>While all PPLs share these foundational concepts, Pyro, Stan, and
+Turing take different architectural approaches to serve distinct AI
+needs.</p>
+<h3 id="stan-compiler-driven-precision">Stan: Compiler-Driven
+Precision</h3>
+<p>Stan is a domain-specific language designed primarily for rigorous
+statistical modeling. When you write a model in Stan, the framework
+translates your code into highly optimized C++ code. Stan restricts you
+from using discrete latent variables, which ensures the probability
+space is completely smooth. Because of this restriction, Stan can
+aggressively optimize its automatic differentiation and apply an
+industry-leading implementation of the NUTS (MCMC) engine, making it the
+premier choice for precise, small-to-medium scale Bayesian
+inference.</p>
+<h3 id="pyro-deep-universal-probabilistic-programming">Pyro: Deep
+Universal Probabilistic Programming</h3>
+<p>Built on top of PyTorch, Pyro is designed to merge deep learning with
+Bayesian modeling. Because it is embedded directly in Python, Pyro is a
+"universal" PPL—meaning your generative models can include stochastic
+control flow, such as <code>if</code> statements and <code>while</code>
+loops that depend on random variables. Pyro relies heavily on Stochastic
+Variational Inference (SVI). It leverages PyTorch's GPU acceleration and
+neural networks to scale automated inference to massive datasets and
+complex deep generative models like Variational Autoencoders (VAEs).</p>
+<h3 id="turing-composable-inference-in-julia">Turing: Composable
+Inference in Julia</h3>
+<p>Turing is a universal PPL embedded entirely within the Julia
+programming language. Because Julia is naturally fast and supports
+native automatic differentiation across almost any code, Turing does not
+require a separate compilation step like Stan, nor is it tied to a
+specific deep learning framework like Pyro. Turing uses Julia’s macro
+system to intercept standard code and offers a uniquely modular
+inference engine. Users can easily mix and match inference
+algorithms—for example, using HMC for continuous variables and Particle
+Gibbs for discrete variables within the exact same generative model.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/automating-ai-inference-with-probabilistic-programming';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI and Sonar: Separating Fish from Jellyfish - ai</title>
+    <meta name="description" content="Fisheries stock assessment scientists are revolutionizing marine population surveys by combining multifrequency echosounder sonar with artificial intelligence. This article provides an overview of how researchers use the unique acoustic signatures of mari">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-and-sonar-separating-fish-from-jellyfish">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI and Sonar: Separating Fish from Jellyfish - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-and-sonar-separating-fish-from-jellyfish" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Fisheries stock assessment scientists are revolutionizing marine population surveys by combining multifrequency echosounder sonar with artificial intelligence. This article provides an overview of how researchers use the unique acoustic signatures of mari" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-and-sonar-separating-fish-from-jellyfish">AI and Sonar:
+Separating Fish from Jellyfish</h1>
+<p>Fisheries stock assessment scientists are revolutionizing marine
+population surveys by combining multifrequency echosounder sonar with
+artificial intelligence. This article provides an overview of how
+researchers use the unique acoustic signatures of marine
+life—specifically focusing on the presence or absence of a swim
+bladder—to differentiate between commercially valuable fish like pollock
+and herring, and gelatinous jellyfish. By applying machine learning to
+acoustic target-strength data, scientists can automate species
+identification, eliminate survey bias caused by jellyfish blooms, and
+set more accurate sustainable fishing quotas.</p>
+<h2 id="the-challenge-of-acoustic-clutter">The Challenge of Acoustic
+Clutter</h2>
+<p>Traditional sonar sends sound pulses into the water and measures the
+returning echoes to detect marine life. While effective for finding
+biomass, single-frequency sonar struggles to tell species apart. Dense
+blooms of jellyfish often overlap with schools of pollock and herring.
+Without a way to separate them, the sonar echoes from jellyfish can be
+mistaken for fish, leading to dangerously inflated estimates of
+commercial fish stocks.</p>
+<h2 id="the-physics-of-the-swim-bladder">The Physics of the Swim
+Bladder</h2>
+<p>To solve this, scientists rely on the physical differences between
+fish and jellyfish. Pollock and herring possess a swim bladder, a
+gas-filled organ used to control buoyancy. Because gas has a very
+different density than seawater, a swim bladder acts like a mirror for
+sound waves, producing a very strong echo.</p>
+<p>Jellyfish lack a swim bladder and are composed of about 95% water.
+Because their body density is very similar to the surrounding ocean,
+sound waves mostly pass right through them, resulting in a much weaker
+echo.</p>
+<h2 id="how-multifrequency-sonar-works">How Multifrequency Sonar
+Works</h2>
+<p>Scientists exploit these anatomical differences using multifrequency
+echosounders. Instead of sending out a single pitch of sound, these
+systems transmit multiple frequencies simultaneously, typically ranging
+from 18 kilohertz (kHz) to 200 kHz.</p>
+<p>Different bodies react differently to various frequencies:</p>
+<ul>
+<li><strong>Pollock and Herring:</strong> Their gas-filled swim bladders
+resonate strongly at lower frequencies (like 38 kHz) and maintain a high
+reflection rate across the spectrum.</li>
+<li><strong>Jellyfish:</strong> Despite producing weak echoes overall,
+the umbrella and tentacles of a jellyfish scatter sound more effectively
+at higher frequencies (like 120 kHz or 200 kHz) than at lower ones.</li>
+</ul>
+<p>By comparing the echo strength across multiple frequencies,
+scientists create a "frequency response curve" for the targets in the
+water.</p>
+<h2 id="decoding-target-strength-with-ai">Decoding Target Strength with
+AI</h2>
+<p>In acoustic science, the measure of how much sound an individual
+organism reflects is called Target Strength (TS). While multifrequency
+sonar provides the raw data, sorting through millions of echoes across
+vast ocean surveys is too complex and slow for humans to do manually,
+especially when fish and jellyfish are mixed together.</p>
+<p>This is where artificial intelligence steps in. Scientists train
+machine learning algorithms—particularly Convolutional Neural Networks
+(CNNs) and Random Forest models—using verified acoustic data collected
+from trawl nets and underwater cameras.</p>
+<p>The AI analyzes the echograms (visual representations of sonar data)
+by looking at several factors simultaneously:</p>
+<ol type="1">
+<li><strong>Acoustic Target Strength:</strong> The AI measures the exact
+decibel level of the returning echoes to estimate the size and density
+of the organism.</li>
+<li><strong>Frequency Differences:</strong> The algorithm subtracts the
+echo strength of one frequency from another (known as dB differencing)
+to instantly flag whether a swim bladder is present.</li>
+<li><strong>Schooling Behavior:</strong> The AI recognizes geometric
+patterns in the water column. Herring and pollock often form dense,
+structured schools with sharp edges, whereas jellyfish typically form
+loose, diffuse layers.</li>
+</ol>
+<h2 id="real-time-stock-assessment">Real-Time Stock Assessment</h2>
+<p>Once trained, the AI model processes incoming multifrequency sonar
+data in real time. It automatically filters out the acoustic noise of
+swim-bladderless jellyfish and isolates the returns from pollock and
+herring. It can even distinguish between pollock and herring based on
+slight differences in their swim bladder shapes and the depth at which
+they school.</p>
+<p>By removing jellyfish from the equation, fisheries scientists can
+calculate the exact biomass of pollock and herring with unprecedented
+accuracy. This ensures that fishery managers receive reliable data,
+preventing overfishing and protecting the marine ecosystem.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-and-sonar-separating-fish-from-jellyfish';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

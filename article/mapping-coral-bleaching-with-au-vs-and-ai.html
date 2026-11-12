@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping Coral Bleaching With AUVs and AI - ai</title>
+    <meta name="description" content="Marine biologists are revolutionizing coral reef conservation by combining autonomous underwater vehicles (AUVs), photomosaics, and segmentation artificial intelligence to accurately measure coral bleaching across vast atolls. Traditional diver-based surv">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/mapping-coral-bleaching-with-au-vs-and-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mapping Coral Bleaching With AUVs and AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/mapping-coral-bleaching-with-au-vs-and-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Marine biologists are revolutionizing coral reef conservation by combining autonomous underwater vehicles (AUVs), photomosaics, and segmentation artificial intelligence to accurately measure coral bleaching across vast atolls. Traditional diver-based surv" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="mapping-coral-bleaching-with-auvs-and-ai">Mapping Coral
+Bleaching With AUVs and AI</h1>
+<p>Marine biologists are revolutionizing coral reef conservation by
+combining autonomous underwater vehicles (AUVs), photomosaics, and
+segmentation artificial intelligence to accurately measure coral
+bleaching across vast atolls. Traditional diver-based surveys are
+limited by time, depth, and human endurance, making it nearly impossible
+to monitor entire reef systems effectively. By deploying AUVs to capture
+thousands of overlapping seafloor images, scientists can stitch these
+photos into massive, high-resolution maps known as photomosaics.
+Advanced segmentation AI then analyzes these maps pixel by pixel to
+identify coral species and quantify the exact percentage of bleached
+tissue, providing rapid, large-scale insights into reef health.</p>
+<h2 id="data-collection-with-autonomous-underwater-vehicles">Data
+Collection with Autonomous Underwater Vehicles</h2>
+<p>Surveying a large atoll requires covering hundreds of square
+kilometers, a scale unattainable by human scuba divers. Marine
+biologists program AUVs to navigate predetermined grid patterns just a
+few meters above the reef. Equipped with downward-facing,
+high-definition stereo cameras and strobe lighting, the AUV maintains a
+constant altitude and speed using Doppler velocity logs and acoustic
+sensors. As it glides over the atoll, the vehicle captures thousands of
+crisp, overlapping photographs of the benthic environment, documenting
+deep and remote reef zones without human intervention.</p>
+<h2 id="creating-high-resolution-photomosaics">Creating High-Resolution
+Photomosaics</h2>
+<p>Once the AUV is retrieved, the thousands of individual images must be
+combined into a single, continuous map. Biologists use specialized
+photogrammetry software employing Structure-from-Motion (SfM)
+algorithms. The software identifies matching visual features across
+overlapping photographs and calculates the exact position and
+orientation of the camera for each shot. This process stitches the
+images together into a geographically accurate, three-dimensional
+photomosaic. These massive visual datasets allow researchers to view an
+entire stretch of an atoll as one seamless image, while retaining the
+ability to zoom in and see millimeter-scale details on individual coral
+colonies.</p>
+<h2 id="automated-analysis-via-segmentation-ai">Automated Analysis via
+Segmentation AI</h2>
+<p>Analyzing a photomosaic manually would take researchers months of
+painstaking work. To accelerate this process, biologists utilize
+semantic segmentation, a deep learning technique. Researchers train
+convolutional neural networks (CNNs) by feeding them thousands of
+manually labeled images of healthy corals, bleached corals, algae, and
+sand.</p>
+<p>Unlike basic image recognition, which simply draws a box around an
+object, segmentation AI classifies every single pixel in the
+photomosaic. The AI traces the exact, complex boundaries of each coral
+colony. It differentiates between living, pigmented coral tissue and the
+stark white skeletons of bleached corals, while also filtering out
+non-coral elements like white sand or rubble that could skew the
+data.</p>
+<h2 id="quantifying-atoll-wide-bleaching">Quantifying Atoll-Wide
+Bleaching</h2>
+<p>After the segmentation AI finishes processing the photomosaic, it
+generates quantitative metrics on the reef's composition. Biologists
+receive precise calculations detailing the total surface area of the
+reef, the percentage of living coral cover, and the exact proportion of
+coral that is currently bleached. Because the AUV collects GPS-linked
+data, these metrics are mapped spatially across the atoll.</p>
+<p>By repeating this process over time, scientists can track the
+progression of bleaching events or measure reef recovery at the colony
+level. This integration of robotics, imaging, and artificial
+intelligence allows marine biologists to pinpoint thermal refuges,
+identify resilient coral species, and direct conservation efforts where
+they are needed most across massive marine ecosystems.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/mapping-coral-bleaching-with-au-vs-and-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

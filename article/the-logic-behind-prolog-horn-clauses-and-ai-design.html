@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Logic Behind Prolog: Horn Clauses and AI Design - ai</title>
+    <meta name="description" content="This article explores the foundational decisions made by Alain Colmerauer and Robert Kowalski in the early 1970s when designing the Prolog programming language. By centering the language on Horn clauses and resolution theorem proving, they bridged the gap">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/the-logic-behind-prolog-horn-clauses-and-ai-design">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Logic Behind Prolog: Horn Clauses and AI Design - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/the-logic-behind-prolog-horn-clauses-and-ai-design" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores the foundational decisions made by Alain Colmerauer and Robert Kowalski in the early 1970s when designing the Prolog programming language. By centering the language on Horn clauses and resolution theorem proving, they bridged the gap" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="the-logic-behind-prolog-horn-clauses-and-ai-design">The Logic
+Behind Prolog: Horn Clauses and AI Design</h1>
+<p>This article explores the foundational decisions made by Alain
+Colmerauer and Robert Kowalski in the early 1970s when designing the
+Prolog programming language. By centering the language on Horn clauses
+and resolution theorem proving, they bridged the gap between
+mathematical logic and practical computation. Their goal was to create a
+tool capable of handling the complex demands of artificial intelligence,
+specifically natural language processing and automated reasoning.
+Ultimately, this design choice allowed computers to process knowledge
+declaratively while maintaining the execution speed needed for
+real-world AI applications.</p>
+<p><strong>The Need for a Declarative AI Language</strong> In the early
+days of artificial intelligence, researchers struggled to represent
+human knowledge and language using traditional, procedural programming
+languages. Procedural languages required programmers to specify exact
+step-by-step instructions to solve a problem.</p>
+<p>Alain Colmerauer, working on natural language translation in
+Marseille, and Robert Kowalski, researching automated theorem proving in
+Edinburgh, wanted a different approach. They envisioned a declarative
+paradigm. In a declarative system, the programmer only needs to state
+<em>what</em> is true (facts and rules) and <em>what</em> needs to be
+found (the goal), leaving the computer to figure out <em>how</em> to
+find the answer. Mathematical logic was the ideal framework for this, as
+it naturally represents relationships and truths.</p>
+<p><strong>Why Resolution Theorem Proving?</strong> To make logic
+executable by a machine, Prolog needed an inference engine—a mechanism
+to derive new truths from known facts. Kowalski and Colmerauer utilized
+a concept introduced by Alan Robinson in 1965 called the resolution
+principle.</p>
+<p>Resolution theorem proving works by proof by contradiction. When a
+user asks a Prolog program a question, the system temporarily assumes
+the opposite of the question is true. It then combines this assumption
+with the known facts and rules in its database. If this combination
+leads to a logical contradiction (an empty clause), the system
+successfully proves that the original question must be true. This
+provided a unified, single rule of inference, drastically simplifying
+how the computer searches for answers compared to older logical systems
+that required dozens of different inference rules.</p>
+<p><strong>The Efficiency of Horn Clauses</strong> While resolution
+theorem proving on full first-order logic is powerful, it is
+computationally explosive. Full logic allows for ambiguous statements
+(e.g., "Either A is true, or B is true"), which forces a computer to
+branch out and test massive combinations of possibilities, quickly
+exhausting memory and processing power.</p>
+<p>To solve this, Kowalski and Colmerauer restricted Prolog to a
+specific subset of logic known as Horn clauses. A Horn clause is a
+logical statement with at most one positive conclusion. This restriction
+removes ambiguity and converts logic into a predictable "if-then"
+structure: <em>Conclusion A is true IF conditions B, C, and D are
+true.</em></p>
+<p>Designing Prolog around Horn clauses solved two major problems for AI
+development:</p>
+<ol type="1">
+<li><strong>Procedural Interpretation of Logic:</strong> Kowalski
+realized that a Horn clause could be read in two ways. Logically, it is
+an implication. Procedurally, it acts just like a subroutine in
+traditional programming: the conclusion is the procedure's name, and the
+conditions are the body of the procedure (sub-goals to be executed).
+This directly connected pure logic to practical computer execution.</li>
+<li><strong>Computational Speed (SLD Resolution):</strong> Restricting
+the language to Horn clauses allowed the use of a highly efficient
+variation of resolution called SLD (Selected Literal Definite)
+resolution. Instead of searching blindly in all directions, the computer
+could use backward-chaining—starting from the goal and working backward
+through the rules in a linear, predictable tree search.</li>
+</ol>
+<p><strong>The Impact on Artificial Intelligence</strong> By combining
+Horn clauses with resolution theorem proving, Colmerauer and Kowalski
+gave AI researchers a tool with built-in pattern matching (unification)
+and automatic search (backtracking). If a path of reasoning failed,
+Prolog would automatically backtrack and try another rule. This made
+Prolog uniquely suited for parsing human grammar, building expert
+systems, and solving complex scheduling problems, cementing its legacy
+as a cornerstone of symbolic artificial intelligence.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/the-logic-behind-prolog-horn-clauses-and-ai-design';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

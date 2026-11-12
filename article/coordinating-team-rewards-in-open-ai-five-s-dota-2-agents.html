@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinating Team Rewards in OpenAI Five&#39;s Dota 2 Agents - ai</title>
+    <meta name="description" content="OpenAI Five defeated the world champions of Dota 2 by solving a massive challenge in reinforcement learning: coordinating five autonomous agents over long time horizons without direct communication channels. This article explains the specific mechanisms b">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/coordinating-team-rewards-in-open-ai-five-s-dota-2-agents">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Coordinating Team Rewards in OpenAI Five&#39;s Dota 2 Agents - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/coordinating-team-rewards-in-open-ai-five-s-dota-2-agents" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="OpenAI Five defeated the world champions of Dota 2 by solving a massive challenge in reinforcement learning: coordinating five autonomous agents over long time horizons without direct communication channels. This article explains the specific mechanisms b" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="coordinating-team-rewards-in-openai-fives-dota-2-agents">Coordinating
+Team Rewards in OpenAI Five's Dota 2 Agents</h1>
+<p>OpenAI Five defeated the world champions of Dota 2 by solving a
+massive challenge in reinforcement learning: coordinating five
+autonomous agents over long time horizons without direct communication
+channels. This article explains the specific mechanisms behind this
+achievement, detailing how the system used a shared architecture, a
+specialized hyperparameter called "Team Spirit" to blend individual and
+collective rewards, and generalized advantage estimation to bridge the
+gap between immediate actions and a final victory.</p>
+<p>In Dota 2, games routinely last 45 minutes, requiring thousands of
+sequential decisions where the ultimate reward—destroying the enemy's
+Ancient—occurs only at the very end. Instead of building a explicit
+communication protocol between the five agents, OpenAI trained a single
+neural network policy replicated five times. Each agent acts
+autonomously based on its own observations, which include the global
+state visible to the team. Coordination emerges naturally because all
+five agents optimize the exact same mathematical objective.</p>
+<p>To teach the agents both individual skill and team coordination,
+OpenAI designed a reward function based on two levels of metrics:</p>
+<ul>
+<li><strong>Individual Rewards:</strong> Collecting gold, gaining
+experience, getting last hits on creeps, and avoiding death.</li>
+<li><strong>Team Rewards:</strong> Destroying enemy towers, securing the
+Roshan boss objective, winning team fights, and destroying the enemy
+Ancient.</li>
+</ul>
+<p>If agents only optimize individual rewards, they play selfishly and
+lose the game. If they only optimize team rewards, the credit assignment
+problem makes it difficult for an individual agent to know if its
+specific actions contributed to the outcome.</p>
+<p>To solve this, OpenAI introduced a hyperparameter called <strong>Team
+Spirit</strong> (<span class="math inline">\(\tau\)</span>), ranging
+from 0 to 1. The actual reward each agent receives at any timestep is a
+mathematical blend of its own individual reward and the average reward
+of the entire five-agent team. The formula used is:</p>
+<p><span class="math display">\[\text{Final Reward}_i = (1 - \tau) \cdot
+\text{Individual Reward}_i + \tau \cdot \text{Average Team
+Reward}\]</span></p>
+<p>Early in the training process, Team Spirit was set low (near 0). This
+forced each agent to focus on mechanical micro-skills, such as farming
+gold and surviving in their specific lane, without worrying about
+complex team strategies. As the agents mastered basic mechanics, OpenAI
+annealed (gradually increased) the Team Spirit parameter toward 1.0.</p>
+<p>At a Team Spirit of 1.0, an agent cares equally about its own gold
+and its teammates' gold. This mathematical shift caused the agents to
+spontaneously develop sacrificial and cooperative behaviors. Support
+heroes began sacrificing their own lives to save higher-value "carry"
+heroes, and agents willingly gave up gold and experience in lanes so
+that a teammate could become stronger for late-game fights.</p>
+<p>Coordinating across a 45-minute time horizon required scaling
+Proximal Policy Optimization (PPO) with Generalized Advantage Estimation
+(GAE). Dota 2 runs at 30 frames per second, and OpenAI Five made
+decisions every fourth frame, resulting in roughly 20,000 steps per
+game.</p>
+<p>To handle this long horizon, each agent utilized a single-layer,
+4,096-unit Long Short-Term Memory (LSTM) network. The LSTM allowed
+agents to maintain a memory of the game state over time. Combined with a
+very high discount factor (<span class="math inline">\(\gamma\)</span>),
+the value function could predict the probability of winning the game
+thousands of steps into the future.</p>
+<p>By combining long-horizon value estimation with the Team Spirit
+reward structure, the five autonomous networks did not need to "talk" to
+each other. Every agent could look at the game map, process the state
+through an identical LSTM structure, and independently arrive at the
+same conclusion about what the team needed to do next to maximize their
+shared future reward.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/coordinating-team-rewards-in-open-ai-five-s-dota-2-agents';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Conformal Prediction for AI Uncertainty - ai</title>
+    <meta name="description" content="Conformal prediction is a powerful mathematical framework that constructs statistically rigorous, distribution-free uncertainty intervals around artificial intelligence predictions. Rather than outputting a single, potentially overconfident point estimate">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-conformal-prediction-for-ai-uncertainty">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding Conformal Prediction for AI Uncertainty - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-conformal-prediction-for-ai-uncertainty" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Conformal prediction is a powerful mathematical framework that constructs statistically rigorous, distribution-free uncertainty intervals around artificial intelligence predictions. Rather than outputting a single, potentially overconfident point estimate" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-conformal-prediction-for-ai-uncertainty">Understanding
+Conformal Prediction for AI Uncertainty</h1>
+<p>Conformal prediction is a powerful mathematical framework that
+constructs statistically rigorous, distribution-free uncertainty
+intervals around artificial intelligence predictions. Rather than
+outputting a single, potentially overconfident point estimate, this
+technique wraps any underlying machine learning model to produce a
+prediction set or interval guaranteed to contain the true outcome at a
+user-specified confidence level. This article explores the core
+mechanics of conformal prediction, detailing how it uses nonconformity
+scores, calibration datasets, and the principle of exchangeability to
+deliver reliable uncertainty quantification without making assumptions
+about the underlying data distribution.</p>
+<h3 id="the-core-assumption-exchangeability">The Core Assumption:
+Exchangeability</h3>
+<p>Traditional statistical methods often rely on strong assumptions,
+such as data following a normal distribution. Conformal prediction is
+"distribution-free" because it discards these parametric assumptions.
+Instead, it relies on a much weaker assumption called
+exchangeability.</p>
+<p>Data points are exchangeable if their joint probability distribution
+does not change when their order is altered. In practical terms, this
+means the calibration data and the new test data must come from the same
+source and behave similarly, a condition slightly weaker than the
+standard independent and identically distributed (i.i.d.) assumption
+used in machine learning.</p>
+<h3 id="the-mechanics-of-split-conformal-prediction">The Mechanics of
+Split Conformal Prediction</h3>
+<p>The most common and computationally efficient variant of this
+framework is Split Conformal Prediction. It works alongside any
+pre-trained AI model—whether a simple linear regression or a complex
+deep neural network—through four straightforward steps:</p>
+<ol type="1">
+<li><strong>Data Splitting:</strong> The available labeled dataset is
+divided into two distinct subsets: a training set and a calibration set.
+The AI model is trained exclusively on the training set.</li>
+<li><strong>Calculating Nonconformity Scores:</strong> The trained model
+makes predictions on the untouched calibration set. A "nonconformity
+score" is then calculated for each calibration example. This score
+measures how wrong or "strange" the model's prediction is compared to
+the actual ground truth.
+<ul>
+<li>For <strong>regression</strong>, the score is often the absolute
+residual (the absolute difference between the predicted value and the
+true value).</li>
+<li>For <strong>classification</strong>, the score is typically one
+minus the softmax probability assigned to the correct class.</li>
+</ul></li>
+<li><strong>Finding the Threshold (Quantile):</strong> A user defines an
+acceptable error rate, denoted as <span
+class="math inline">\(\alpha\)</span> (alpha). For example, if the user
+wants 95% confidence, <span class="math inline">\(\alpha\)</span> is set
+to 0.05. The algorithm sorts all the nonconformity scores from the
+calibration set from lowest to highest and finds the <span
+class="math inline">\(1 - \alpha\)</span> quantile (incorporating a
+minor finite-sample correction). This specific value becomes the cutoff
+threshold, denoted as <span class="math inline">\(q\)</span>.</li>
+<li><strong>Constructing the Prediction Interval:</strong> When the AI
+model encounters a new, unseen test input, it makes a standard
+prediction. Conformal prediction then uses the threshold <span
+class="math inline">\(q\)</span> to build an interval or set around this
+prediction.
+<ul>
+<li>In regression, the uncertainty interval is simply the new prediction
+plus or minus <span class="math inline">\(q\)</span>.</li>
+<li>In classification, the prediction set includes all classes whose
+predicted probability is greater than <span class="math inline">\(1 -
+q\)</span>.</li>
+</ul></li>
+</ol>
+<h3 id="why-the-statistical-guarantee-holds">Why the Statistical
+Guarantee Holds</h3>
+<p>The mathematical rigor of conformal prediction comes from basic rank
+statistics. Because the calibration data and the new test data are
+exchangeable, the nonconformity score of the new test point is equally
+likely to fall anywhere among the sorted calibration scores.</p>
+<p>By setting the threshold <span class="math inline">\(q\)</span> at
+the 95th percentile of the calibration scores, there is at least a 95%
+probability that the new test point's error will be smaller than or
+equal to <span class="math inline">\(q\)</span>. Consequently, the
+constructed interval is mathematically guaranteed to cover the true
+value 95% of the time across future predictions. This is known as
+<em>marginal coverage</em>.</p>
+<h3 id="adaptive-intervals">Adaptive Intervals</h3>
+<p>Basic conformal prediction produces constant-width intervals for
+regression, which may not reflect that some inputs are harder to predict
+than others. Advanced variations, such as Conformalized Quantile
+Regression (CQR), solve this by training the base AI model to estimate
+quantiles directly, or by scaling the nonconformity scores using a
+secondary model that predicts error magnitude. This allows the framework
+to generate dynamic intervals—narrower when the AI is certain, and wider
+when the input data is ambiguous—while maintaining the exact same
+statistical guarantees.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-conformal-prediction-for-ai-uncertainty';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

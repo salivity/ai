@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimizing Mineral Recovery with Vision AI and RL - ai</title>
+    <meta name="description" content="This article explores how modern mineral processing plants maximize copper and gold recovery rates by combining froth flotation camera vision with reinforcement learning (RL) artificial intelligence. By continuously analyzing visual froth characteristics—">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/optimizing-mineral-recovery-with-vision-ai-and-rl">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Optimizing Mineral Recovery with Vision AI and RL - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/optimizing-mineral-recovery-with-vision-ai-and-rl" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how modern mineral processing plants maximize copper and gold recovery rates by combining froth flotation camera vision with reinforcement learning (RL) artificial intelligence. By continuously analyzing visual froth characteristics—" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="optimizing-mineral-recovery-with-vision-ai-and-rl">Optimizing
+Mineral Recovery with Vision AI and RL</h1>
+<p>This article explores how modern mineral processing plants maximize
+copper and gold recovery rates by combining froth flotation camera
+vision with reinforcement learning (RL) artificial intelligence. By
+continuously analyzing visual froth characteristics—specifically bubble
+size, velocity, and color—computer vision systems transform physical
+phenomena into real-time digital data. Reinforcement learning algorithms
+then process this data to autonomously adjust plant parameters,
+stabilizing the volatile flotation process and significantly increasing
+the yield of valuable minerals.</p>
+<h2 id="the-mechanics-of-froth-flotation">The Mechanics of Froth
+Flotation</h2>
+<p>Froth flotation is the primary method used to separate valuable
+minerals, like copper and gold, from waste rock (gangue). Crushed ore is
+mixed with water to form a pulp, which is treated with chemical reagents
+that make target minerals water-repellent (hydrophobic). Air is then
+pumped into the flotation tank. As bubbles rise, the hydrophobic copper
+and gold particles attach to them, forming a mineral-rich froth on the
+surface that spills over the tank's lip for collection.</p>
+<p>Traditionally, human operators monitor this froth visually and adjust
+inputs like airflow and chemical dosages based on experience. However,
+human observation is subjective and cannot happen continuously across
+dozens of tanks, leading to suboptimal recovery rates.</p>
+<h2 id="froth-camera-vision-extracting-the-data">Froth Camera Vision:
+Extracting the Data</h2>
+<p>To automate observation, plants install high-resolution industrial
+cameras with specialized LED lighting directly above the flotation
+cells. Computer vision algorithms analyze the video feed in real-time,
+focusing on three critical metrics:</p>
+<ul>
+<li><strong>Bubble Size:</strong> The size distribution of the bubbles
+indicates the stability of the froth. Bubbles that are too large may
+burst prematurely, dropping valuable minerals back into the pulp.
+Bubbles that are too small can carry excess waste rock into the final
+concentrate, lowering its grade. Vision algorithms use edge-detection
+and segmentation techniques to measure bubble diameters
+continuously.</li>
+<li><strong>Velocity:</strong> Using optical flow algorithms, the system
+tracks the speed and direction of the froth moving toward the collection
+lip (launder). If the velocity is too slow, minerals drop back into the
+tank before collection. If it is too fast, unwanted water and waste
+material are swept into the concentrate.</li>
+<li><strong>Color:</strong> The color and sheen of the froth directly
+correlate with the mineral grade. For instance, a specific brassy or
+dark metallic hue indicates a high concentration of chalcopyrite (a
+primary copper mineral) and associated gold. Spectrophotometric analysis
+within the cameras detects subtle shifts in RGB and HSV color spaces
+that the human eye might miss.</li>
+</ul>
+<h2 id="reinforcement-learning-autonomous-optimization">Reinforcement
+Learning: Autonomous Optimization</h2>
+<p>While camera vision diagnoses the state of the froth, Reinforcement
+Learning (RL) acts as the decision-maker. RL is a type of machine
+learning where an AI agent learns to make decisions by performing
+actions and receiving rewards or penalties based on the outcomes.</p>
+<p>In a mineral processing plant, the RL system operates in a continuous
+loop:</p>
+<ol type="1">
+<li><strong>State Observation:</strong> The RL agent receives real-time
+data from the vision system (bubble size, velocity, color) alongside
+sensor data like pulp pH and ore feed rate.</li>
+<li><strong>Action Execution:</strong> Based on the current state, the
+AI adjusts the plant's physical controls. It can tweak the air injection
+rate, raise or lower the pulp level in the tank, and alter the dosage of
+chemical frothers and collectors.</li>
+<li><strong>Reward Calculation:</strong> The system evaluates the result
+of its actions. The "reward" is mathematically defined as maximizing
+mineral recovery while maintaining a specific concentrate grade. If an
+adjustment leads to better froth color and optimal velocity, the AI
+receives a positive reward, reinforcing that behavior.</li>
+</ol>
+<h2 id="maximizing-copper-and-gold-yields">Maximizing Copper and Gold
+Yields</h2>
+<p>Incoming ore changes constantly in hardness, mineralogy, and metal
+content. Static control systems fail to adapt quickly to these shifts,
+resulting in lost minerals.</p>
+<p>By pairing camera vision with RL, the plant responds to ore
+variations in seconds rather than hours. If the vision system detects
+that the froth is losing its metallic color and the bubbles are growing
+unstable, the RL agent immediately increases collector reagents and
+adjusts airflow. This microscopic, second-by-second optimization
+prevents froth collapse and ensures that the maximum amount of copper
+and gold is consistently skimmed from the tanks, typically improving
+overall recovery rates by 1% to 3%—a massive financial gain in
+large-scale mining operations.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/optimizing-mineral-recovery-with-vision-ai-and-rl';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

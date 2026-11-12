@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Feature Recalibration with Squeeze-and-Excitation - ai</title>
+    <meta name="description" content="This article provides a clear and comprehensive overview of how Squeeze-and-Excitation (SE) blocks dynamically recalibrate channel-wise feature responses in Convolutional Neural Networks (CNNs). Standard CNNs treat all feature channels equally when creati">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/dynamic-feature-recalibration-with-squeeze-and-excitation">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dynamic Feature Recalibration with Squeeze-and-Excitation - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/dynamic-feature-recalibration-with-squeeze-and-excitation" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a clear and comprehensive overview of how Squeeze-and-Excitation (SE) blocks dynamically recalibrate channel-wise feature responses in Convolutional Neural Networks (CNNs). Standard CNNs treat all feature channels equally when creati" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="dynamic-feature-recalibration-with-squeeze-and-excitation">Dynamic
+Feature Recalibration with Squeeze-and-Excitation</h1>
+<p>This article provides a clear and comprehensive overview of how
+Squeeze-and-Excitation (SE) blocks dynamically recalibrate channel-wise
+feature responses in Convolutional Neural Networks (CNNs). Standard CNNs
+treat all feature channels equally when creating output feature maps,
+which limits their representational efficiency. SE blocks solve this by
+introducing an architectural mechanism that models the interdependencies
+between channels. By reading further, you will understand the three core
+phases of an SE block—Squeeze, Excitation, and Scale—and how they allow
+artificial intelligence networks to selectively emphasize informative
+features while suppressing less useful ones.</p>
+<h3 id="the-limitation-of-standard-convolutions">The Limitation of
+Standard Convolutions</h3>
+<p>In a standard Convolutional Neural Network, a convolutional layer
+applies filters to an input to create a set of feature maps, also known
+as channels. Each channel acts as a detector for a specific feature,
+such as an edge, texture, or complex shape.</p>
+<p>When the network combines these channels to pass information to the
+next layer, it fuses spatial and channel-wise information together using
+fixed weights learned during training. Because of this, standard
+convolutions have two main drawbacks:</p>
+<ol type="1">
+<li>They treat every channel as equally important across different
+inputs.</li>
+<li>They only operate on a local receptive field, meaning a filter
+cannot see the global context of the entire image to decide if its
+specific feature is actually relevant.</li>
+</ol>
+<p>Squeeze-and-Excitation blocks overcome these limitations by giving
+the network a dynamic channel-attention mechanism.</p>
+<h3 id="step-1-the-squeeze-operation-global-information-embedding">Step
+1: The Squeeze Operation (Global Information Embedding)</h3>
+<p>To determine which channels are the most important for a specific
+input, the network first needs a global understanding of the entire
+feature map. The "Squeeze" operation achieves this by compressing the
+spatial dimensions (height and width) of each channel into a single
+numerical value.</p>
+<p>This is done using <strong>Global Average Pooling (GAP)</strong>. If
+a convolutional layer outputs a feature map of 64 channels, each with a
+resolution of 32x32 pixels, the Squeeze operation calculates the average
+of all 1,024 pixels in each channel. The result is a 1x1x64 vector. Each
+number in this vector represents the global presence and intensity of a
+specific feature across the entire image, effectively giving the network
+a global receptive field.</p>
+<h3 id="step-2-the-excitation-operation-adaptive-recalibration">Step 2:
+The Excitation Operation (Adaptive Recalibration)</h3>
+<p>Once the spatial information is squeezed into a compact vector, the
+network must figure out how the channels relate to one another and
+assign an "importance weight" to each one. This is the "Excitation"
+phase.</p>
+<p>The squeezed vector is passed through a small, two-layer neural
+network (a Multi-Layer Perceptron) that acts as a gating mechanism:</p>
+<ol type="1">
+<li><strong>Dimensionality Reduction:</strong> A fully connected layer
+reduces the number of channels by a set reduction ratio (for example,
+shrinking 64 channels down to 4). This creates a bottleneck that reduces
+computational cost and forces the network to learn only the most
+critical channel correlations.</li>
+<li><strong>Non-Linearity:</strong> A ReLU (Rectified Linear Unit)
+activation function is applied to introduce non-linearity, allowing the
+network to learn complex, multi-channel interactions rather than just
+one-to-one relationships.</li>
+<li><strong>Dimensionality Restoration:</strong> A second fully
+connected layer expands the vector back to the original number of
+channels (from 4 back to 64).</li>
+<li><strong>Sigmoid Activation:</strong> Finally, a Sigmoid activation
+function is applied. This squashes the output values so that each falls
+strictly between 0 and 1.</li>
+</ol>
+<p>The output of the Excitation phase is a set of dynamic weights.
+Because these weights are generated directly from the current input's
+squeezed vector, they change dynamically depending on the image the AI
+is currently processing.</p>
+<h3 id="step-3-the-scale-operation-feature-recalibration">Step 3: The
+Scale Operation (Feature Recalibration)</h3>
+<p>The final step is to apply the newly generated weights back to the
+original feature map.</p>
+<p>The network takes the 1x1xC vector of weights (where C is the number
+of channels) from the Excitation phase and performs channel-wise
+multiplication with the original HxWxC feature map.</p>
+<ul>
+<li>If a channel was assigned a weight close to <strong>1</strong>, its
+feature map values are preserved, signaling to the next layer of the CNN
+that this feature is highly relevant.</li>
+<li>If a channel was assigned a weight close to <strong>0</strong>, its
+feature map values are practically zeroed out, effectively muting that
+feature so it does not confuse the subsequent layers.</li>
+</ul>
+<h3 id="why-this-recalibration-is-dynamic">Why This Recalibration is
+"Dynamic"</h3>
+<p>In traditional CNNs, the weights of a convolutional filter are static
+after training; the network applies the exact same mathematical
+operation regardless of the input image.</p>
+<p>SE blocks are dynamic because the channel weights are calculated on
+the fly. For example, if a CNN is classifying animals, an input image of
+a bird might cause the SE block to assign high weights to channels that
+detect feathers and beaks, while assigning near-zero weights to channels
+that detect fur. If the next input image is a dog, the SE block will
+dynamically shift those weights, boosting the fur-detecting channels and
+suppressing the feather-detecting ones. This self-attention mechanism
+drastically improves the accuracy of the network while adding less than
+a 1% increase in computational overhead.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/dynamic-feature-recalibration-with-squeeze-and-excitation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

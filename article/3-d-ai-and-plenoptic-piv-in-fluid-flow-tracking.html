@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D AI and Plenoptic PIV in Fluid Flow Tracking - ai</title>
+    <meta name="description" content="This article provides a comprehensive overview of how plenoptic particle image velocimetry (PIV) combines with 3D tomographic artificial intelligence to track turbulent vortex rings. By using a single light-field camera to capture volumetric data and leve">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/3-d-ai-and-plenoptic-piv-in-fluid-flow-tracking">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="3D AI and Plenoptic PIV in Fluid Flow Tracking - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/3-d-ai-and-plenoptic-piv-in-fluid-flow-tracking" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article provides a comprehensive overview of how plenoptic particle image velocimetry (PIV) combines with 3D tomographic artificial intelligence to track turbulent vortex rings. By using a single light-field camera to capture volumetric data and leve" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="3d-ai-and-plenoptic-piv-in-fluid-flow-tracking">3D AI and
+Plenoptic PIV in Fluid Flow Tracking</h1>
+<p>This article provides a comprehensive overview of how plenoptic
+particle image velocimetry (PIV) combines with 3D tomographic artificial
+intelligence to track turbulent vortex rings. By using a single
+light-field camera to capture volumetric data and leveraging deep
+learning algorithms for fast, accurate reconstruction, this technology
+solves traditional fluid dynamics challenges. Below, we explore the
+mechanics of plenoptic imaging, the role of AI in processing complex 3D
+particle fields, and how this system is directly applied to improve
+aerodynamics in wind tunnels and cardiovascular diagnostics in
+artificial heart valves.</p>
+<h3
+id="understanding-plenoptic-particle-image-velocimetry">Understanding
+Plenoptic Particle Image Velocimetry</h3>
+<p>Traditional Particle Image Velocimetry (PIV) measures fluid velocity
+by seeding a flow with microscopic reflective particles, illuminating
+them with a laser, and capturing their movement with cameras. To see in
+three dimensions, conventional Tomographic PIV requires four or more
+bulky cameras positioned at different angles.</p>
+<p>Plenoptic PIV replaces this multi-camera array with a single
+plenoptic (or light-field) camera. Inside a plenoptic camera, an array
+of microscopic lenses—called a microlens array—is placed right in front
+of the image sensor. This setup captures not only the intensity of light
+reflecting off the seeded particles, but also the exact direction the
+light rays are traveling in space. By recording this directional light
+data, a single snapshot contains all the information needed to
+reconstruct a 3D volume of the fluid flow.</p>
+<h3 id="the-role-of-3d-tomographic-artificial-intelligence">The Role of
+3D Tomographic Artificial Intelligence</h3>
+<p>While plenoptic cameras simplify the hardware needed for 3D fluid
+tracking, they create a massive computational bottleneck. Converting 2D
+light-field data into a 3D volume of particles—a process called
+tomographic reconstruction—traditionally takes hours of processing per
+frame and suffers from elongation artifacts along the camera's line of
+sight, as well as "ghost particles" (false particles created by
+overlapping light rays).</p>
+<p>3D tomographic artificial intelligence eliminates these problems.
+Researchers train deep learning models, specifically Convolutional
+Neural Networks (CNNs) and Physics-Informed Neural Networks (PINNs), on
+synthetic and experimental fluid data. The AI steps in to perform two
+critical functions:</p>
+<ol type="1">
+<li><strong>Instant Volumetric Reconstruction:</strong> Instead of using
+slow, iterative mathematical algorithms to guess where particles are
+located in 3D space, the trained AI instantly translates the raw
+microlens data into a sharp, accurate 3D particle field. It recognizes
+and deletes ghost particles while correcting depth-perception
+errors.</li>
+<li><strong>Motion Tracking of Vortex Rings:</strong> Once the 3D volume
+is built, the AI tracks how clusters of particles move from one
+millisecond to the next. Turbulent vortex rings—spinning, donut-shaped
+regions of fluid—are notoriously chaotic and fast. The AI applies
+fundamental physics equations (like the Navier-Stokes equations) to
+predict and trace the exact 3D swirl, velocity, and decay of these
+vortex rings without losing track of individual particles.</li>
+</ol>
+<h3 id="tracking-turbulence-in-wind-tunnels">Tracking Turbulence in Wind
+Tunnels</h3>
+<p>In aerospace and automotive wind tunnels, engineers must understand
+how air separates from wings, fuselages, and spoilers. This separation
+creates turbulent vortex rings that cause drag, structural vibration,
+and loss of lift.</p>
+<p>Conventional multi-camera setups are often impossible to mount around
+wind tunnels due to limited viewing windows and tight spaces. Because
+Plenoptic PIV requires only one camera and a single optical port,
+engineers can easily point it at hard-to-reach areas, such as the inside
+of a jet engine intake or the wake behind a landing gear. The 3D
+tomographic AI processes the high-speed turbulent airflow in near
+real-time, mapping the exact birth and breakdown of vortex rings. This
+allows engineers to quickly tweak aerodynamic designs to smooth out
+airflow and boost fuel efficiency.</p>
+<h3 id="analyzing-flow-in-heart-valves">Analyzing Flow in Heart
+Valves</h3>
+<p>The exact same physics that govern air in a wind tunnel apply to
+blood flowing through the human heart. When designing prosthetic heart
+valves or studying cardiovascular disease, researchers place
+transparent, anatomically correct silicone models of the heart in a rig
+that pumps a blood-mimicking fluid seeded with tracer particles.</p>
+<p>As a heart valve snaps open and shut, it generates complex,
+three-dimensional vortex rings inside the aorta and ventricles. In a
+healthy heart, these rings help wash blood smoothly through the
+chambers. However, in a poorly designed artificial valve, turbulent
+vortex rings create high shear stress, which tears apart red blood cells
+(hemolysis) and triggers lethal blood clots.</p>
+<p>Optical access inside a curved, pulsing artificial heart valve is
+severely restricted, making traditional multi-camera setups useless due
+to light refraction and blocked views. A single plenoptic camera, peered
+through a lone viewing window, captures the entire interior volume of
+the valve. The 3D tomographic AI corrects for the optical distortions
+caused by the curved silicone walls and maps the microscopic turbulent
+eddies. Medical engineers use these precise 3D velocity maps to reshape
+valve leaflets, ensuring blood flows smoothly and safely for the
+patient.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/3-d-ai-and-plenoptic-piv-in-fluid-flow-tracking';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

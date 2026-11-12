@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Theorem Proving and Formal Languages Like Lean - ai</title>
+    <meta name="description" content="This article explores how artificial intelligence achieves automated theorem proving by leveraging formal languages such as Lean to construct and strictly verify mathematical proofs. It covers the fundamental role of formal verification, the mechanics of">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/ai-theorem-proving-and-formal-languages-like-lean">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AI Theorem Proving and Formal Languages Like Lean - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/ai-theorem-proving-and-formal-languages-like-lean" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="This article explores how artificial intelligence achieves automated theorem proving by leveraging formal languages such as Lean to construct and strictly verify mathematical proofs. It covers the fundamental role of formal verification, the mechanics of" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="ai-theorem-proving-and-formal-languages-like-lean">AI Theorem
+Proving and Formal Languages Like Lean</h1>
+<p>This article explores how artificial intelligence achieves automated
+theorem proving by leveraging formal languages such as Lean to construct
+and strictly verify mathematical proofs. It covers the fundamental role
+of formal verification, the mechanics of the Lean theorem prover, the
+integration of machine learning to navigate complex proof searches, and
+how this synergy eliminates AI hallucinations to guarantee absolute
+mathematical certainty.</p>
+<h2 id="the-role-of-formal-languages-in-mathematics">The Role of Formal
+Languages in Mathematics</h2>
+<p>Traditional mathematical proofs are written in natural language.
+While understandable to humans, natural language is often ambiguous and
+relies on intuitive leaps, making it difficult for computers to verify.
+Formal languages bridge this gap by translating mathematical statements
+into precise, unambiguous code based on strict logical foundations, such
+as dependent type theory.</p>
+<p>Lean is an interactive theorem prover and programming language
+designed specifically for this purpose. In Lean, every mathematical
+object, theorem, and proof step is represented as a specific data type.
+To prove a theorem in Lean, a user—or an AI—must construct a valid
+program that matches the data type of the theorem.</p>
+<h2 id="how-lean-verifies-proofs">How Lean Verifies Proofs</h2>
+<p>Lean relies on a small, heavily audited core component called the
+kernel. The kernel's only job is to check whether a sequence of logical
+steps abides by the foundational rules of mathematics.</p>
+<p>To interact with the kernel, Lean uses "tactics." Tactics are
+instructions that transform a complex mathematical goal into simpler
+sub-goals. When a proof is being constructed, Lean operates as an
+environment with strict rules:</p>
+<ol type="1">
+<li><strong>State Representation:</strong> Lean displays the current
+"proof state," which includes the target goal to be proven and the known
+hypotheses.</li>
+<li><strong>Tactic Application:</strong> A tactic is applied to
+manipulate the goal (e.g., applying a known theorem, simplifying an
+algebraic expression, or using induction).</li>
+<li><strong>Verification:</strong> Lean's kernel instantly checks the
+validity of the tactic. If the tactic is logically sound, Lean updates
+the proof state. If the tactic violates a mathematical rule, Lean
+rejects it and returns an error.</li>
+</ol>
+<p>The proof is only complete when the tactics successfully reduce all
+sub-goals to basic, indisputable axioms.</p>
+<h2 id="integrating-ai-with-lean">Integrating AI with Lean</h2>
+<p>While Lean can verify if a proof is correct, it cannot inherently
+figure out <em>which</em> tactics to use for complex theorems. The
+number of possible tactic combinations is practically infinite, creating
+a massive search space. This is where artificial intelligence,
+particularly deep learning and large language models (LLMs), enters the
+process.</p>
+<p>AI models treat theorem proving in Lean much like playing a game of
+chess. The current proof state is the board, the tactics are the legal
+moves, and winning the game means reducing the proof state to "no goals
+remaining."</p>
+<p>The AI and the Lean environment interact in a continuous loop:</p>
+<ul>
+<li><strong>Observation:</strong> The AI reads the current proof state
+generated by Lean.</li>
+<li><strong>Prediction:</strong> Using neural networks trained on
+existing mathematical libraries (like Lean’s <em>mathlib</em>), the AI
+predicts the most promising next tactic.</li>
+<li><strong>Execution:</strong> The AI sends the chosen tactic to
+Lean.</li>
+<li><strong>Feedback:</strong> Lean executes the tactic. If the move is
+valid, Lean presents the new proof state to the AI. If the move is
+invalid, Lean rejects it, and the AI must backtrack and try a different
+tactic using algorithms like Monte Carlo Tree Search (MCTS).</li>
+</ul>
+<h2 id="eliminating-ai-hallucinations">Eliminating AI
+Hallucinations</h2>
+<p>A major flaw of modern generative AI is its tendency to
+"hallucinate"—generating text that sounds confident and plausible but is
+factually or logically incorrect. In mathematics, a single flawed step
+invalidates an entire proof.</p>
+<p>By forcing the AI to communicate its mathematical reasoning through
+Lean, hallucinations are rendered harmless. The AI is free to guess and
+generate millions of incorrect or nonsensical tactics, because Lean’s
+kernel acts as an incorruptible gatekeeper. It filters out every
+hallucinated or logically flawed step in real time. Once the AI finds a
+sequence of tactics that the Lean kernel accepts from start to finish,
+the resulting proof is guaranteed to be 100% mathematically correct,
+without requiring human peer review to verify its validity.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/ai-theorem-proving-and-formal-languages-like-lean';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Skip Connections Solved Deep AI Degradation - ai</title>
+    <meta name="description" content="Artificial intelligence models historically struggled to scale beyond a few dozen layers due to the degradation problem, a phenomenon where adding more layers unexpectedly increases training error and ruins performance. This article explores how Residual">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/how-skip-connections-solved-deep-ai-degradation">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How Skip Connections Solved Deep AI Degradation - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/how-skip-connections-solved-deep-ai-degradation" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Artificial intelligence models historically struggled to scale beyond a few dozen layers due to the degradation problem, a phenomenon where adding more layers unexpectedly increases training error and ruins performance. This article explores how Residual" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="how-skip-connections-solved-deep-ai-degradation">How Skip
+Connections Solved Deep AI Degradation</h1>
+<p>Artificial intelligence models historically struggled to scale beyond
+a few dozen layers due to the degradation problem, a phenomenon where
+adding more layers unexpectedly increases training error and ruins
+performance. This article explores how Residual Networks (ResNets)
+overcame this barrier by introducing skip connections. By allowing
+information and gradients to bypass complex intermediate layers, skip
+connections enabled the successful training of neural networks with
+hundreds of layers, revolutionizing modern deep learning.</p>
+<p>Before the introduction of ResNets, researchers assumed that stacking
+more layers onto a neural network would consistently improve its ability
+to learn complex patterns. However, as networks crossed the threshold of
+twenty to thirty layers, they hit a wall known as the degradation
+problem. As the network grew deeper, its accuracy would saturate and
+then rapidly degrade. This was not caused by overfitting, because the
+error rate increased on the training data itself. Instead, the issue
+stemmed from the sheer difficulty of optimizing so many stacked layers
+simultaneously.</p>
+<p>To understand why deep networks failed to optimize, one must consider
+the identity mapping. If a shallow network already performs well, a
+deeper network should theoretically perform at least as well if the
+newly added layers simply copy the output of the shallower network
+without changing it. In practice, standard neural networks struggle to
+learn this simple identity function. The non-linear activation functions
+and weight matrices in standard layers inevitably alter the data, making
+it nearly impossible for the optimization algorithm to configure dozens
+of extra layers to do nothing at all.</p>
+<p>Residual Networks solved this optimization hurdle by introducing a
+structural change called the skip connection, or shortcut connection.
+Instead of forcing data to flow strictly sequentially from one layer to
+the next, a skip connection creates an alternate pathway that bypasses
+one or more layers. The original input is sent through this shortcut and
+added directly to the output of the stacked layers.</p>
+<p>This architectural shift fundamentally changes what the network
+layers are trying to learn. In a traditional network, layers attempt to
+learn a direct mapping from the input to the desired output. With a skip
+connection in place, the network already has the original input waiting
+at the end of the block. Therefore, the intermediate layers only need to
+learn the "residual"—the slight difference or modification needed to
+improve upon the original input.</p>
+<p>Learning this residual is mathematically much easier than learning a
+completely new transformation from scratch. If an added layer is not
+needed in a hundred-layer network, the model can easily drive the
+weights of that specific layer to zero. Because it is vastly simpler for
+a network to push weights to zero than to learn an identity matrix
+through multiple non-linear layers, the skip connection allows the
+unaltered input to pass through seamlessly.</p>
+<p>Furthermore, skip connections create an uninterrupted highway for
+gradients during backpropagation, which is the process the AI uses to
+learn from its mistakes. In standard hundred-layer models, the error
+signal diminishes to nearly zero as it travels backward through each
+layer, a related issue known as the vanishing gradient problem. Skip
+connections allow these error signals to flow directly back to the
+earliest layers without passing through every intermediate weight
+matrix, ensuring the entire hundred-layer network trains evenly and
+effectively.</p>
+<p>By shifting the learning objective to residuals and preserving
+gradient flow, skip connections eliminated the degradation problem. This
+allowed AI researchers to scale networks from a few dozen layers to over
+a hundred layers, and eventually to over a thousand, unlocking
+unprecedented accuracy in computer vision and modern deep learning
+architectures.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/how-skip-connections-solved-deep-ai-degradation';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

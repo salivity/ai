@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding ZeRO Stages 1, 2, and 3 in AI Clusters - ai</title>
+    <meta name="description" content="Training massive deep learning models requires immense computational memory, often exceeding the capacity of a single graphics processing unit (GPU). The Zero Redundancy Optimizer (ZeRO) solves this bottleneck by eliminating memory redundancy across data-">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/understanding-ze-ro-stages-1-2-and-3-in-ai-clusters">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Understanding ZeRO Stages 1, 2, and 3 in AI Clusters - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/understanding-ze-ro-stages-1-2-and-3-in-ai-clusters" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Training massive deep learning models requires immense computational memory, often exceeding the capacity of a single graphics processing unit (GPU). The Zero Redundancy Optimizer (ZeRO) solves this bottleneck by eliminating memory redundancy across data-" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1
+id="understanding-zero-stages-1-2-and-3-in-ai-clusters">Understanding
+ZeRO Stages 1, 2, and 3 in AI Clusters</h1>
+<p>Training massive deep learning models requires immense computational
+memory, often exceeding the capacity of a single graphics processing
+unit (GPU). The Zero Redundancy Optimizer (ZeRO) solves this bottleneck
+by eliminating memory redundancy across data-parallel artificial
+intelligence clusters. Instead of replicating the entire model state on
+every GPU, ZeRO partitions the memory footprint across three progressive
+levels: Stage 1 divides optimizer states, Stage 2 splits gradients, and
+Stage 3 shards the model parameters themselves. This article breaks down
+the mechanics of how each stage partitions these specific components to
+maximize memory efficiency and enable the training of massive AI
+models.</p>
+<h2 id="the-memory-bottleneck-in-standard-data-parallelism">The Memory
+Bottleneck in Standard Data Parallelism</h2>
+<p>In traditional data-parallel training, every GPU in a cluster holds
+an identical copy of the entire model. This includes the model
+parameters (weights), the gradients calculated during the backward pass,
+and the optimizer states (such as momentum and variance in the Adam
+optimizer). While this setup allows GPUs to process different batches of
+data simultaneously, it is highly inefficient regarding memory.
+Optimizer states alone can consume up to four times the memory of the
+actual model parameters when using mixed-precision training. ZeRO
+targets this exact redundancy by distributing these three elements
+across the available GPUs rather than duplicating them.</p>
+<h2 id="zero-stage-1-optimizer-state-partitioning">ZeRO Stage 1:
+Optimizer State Partitioning</h2>
+<p>ZeRO Stage 1 focuses exclusively on the largest memory consumer in
+mixed-precision training: the optimizer states.</p>
+<ul>
+<li><strong>What is partitioned:</strong> The optimizer states (e.g.,
+32-bit master weights, momentum, and variance) are divided equally
+across all GPUs in the cluster. If there are <span
+class="math inline">\(N\)</span> GPUs, each GPU stores and updates only
+<span class="math inline">\(\frac{1}{N}\)</span> of the total optimizer
+states.</li>
+<li><strong>What remains replicated:</strong> Both the model parameters
+and the gradients remain fully duplicated on every GPU.</li>
+<li><strong>How it works:</strong> During the backward pass, each GPU
+computes the gradients for its data batch. An All-Reduce communication
+operation averages these gradients across all GPUs. Next, each GPU
+updates only its specific partition of the optimizer states and the
+corresponding subset of model parameters. Finally, an All-Gather
+operation broadcasts the updated parameter subsets to all GPUs, ensuring
+every device has the complete, updated model for the next forward
+pass.</li>
+<li><strong>Memory Impact:</strong> Stage 1 reduces the memory footprint
+by up to a factor of 4 without incurring any additional communication
+overhead compared to standard data parallelism.</li>
+</ul>
+<h2 id="zero-stage-2-gradient-partitioning">ZeRO Stage 2: Gradient
+Partitioning</h2>
+<p>ZeRO Stage 2 builds directly upon Stage 1 by targeting the gradients,
+which are only needed when updating their corresponding optimizer
+states.</p>
+<ul>
+<li><strong>What is partitioned:</strong> Both the optimizer states and
+the gradients are divided equally across all GPUs. Each GPU holds only
+<span class="math inline">\(\frac{1}{N}\)</span> of the optimizer states
+and <span class="math inline">\(\frac{1}{N}\)</span> of the
+gradients.</li>
+<li><strong>What remains replicated:</strong> Only the model parameters
+remain fully duplicated across the cluster.</li>
+<li><strong>How it works:</strong> As gradients are computed layer by
+layer during the backward pass, they are immediately averaged and sent
+only to the specific GPU responsible for updating those corresponding
+parameters (using a Reduce-Scatter operation). Once a GPU sends away the
+gradients it is not responsible for, it immediately deletes them from
+its local memory. Each GPU then uses its retained <span
+class="math inline">\(\frac{1}{N}\)</span> gradients to update its <span
+class="math inline">\(\frac{1}{N}\)</span> optimizer states and
+parameters. Finally, an All-Gather operation synchronizes the updated
+parameters across all GPUs.</li>
+<li><strong>Memory Impact:</strong> Stage 2 achieves up to an 8x memory
+reduction while still maintaining the same communication volume as
+standard data-parallel training.</li>
+</ul>
+<h2 id="zero-stage-3-parameter-partitioning">ZeRO Stage 3: Parameter
+Partitioning</h2>
+<p>ZeRO Stage 3 represents the complete elimination of redundant model
+states across the AI cluster by partitioning the final component: the
+model weights.</p>
+<ul>
+<li><strong>What is partitioned:</strong> Optimizer states, gradients,
+and the model parameters are all divided equally across the cluster.
+Each GPU stores only <span class="math inline">\(\frac{1}{N}\)</span> of
+the entire model state.</li>
+<li><strong>What remains replicated:</strong> Nothing. Every GPU holds a
+unique shard of the model.</li>
+<li><strong>How it works:</strong> Because no single GPU holds the
+complete model, GPUs must communicate dynamically during both the
+forward and backward passes. Before a specific layer is computed in the
+forward pass, the GPU holding the parameters for that layer broadcasts
+them to all other GPUs. Once the computation for that layer is finished
+on a given GPU, the parameters are immediately discarded from memory to
+free up space for the next layer. This process repeats in reverse during
+the backward pass, followed by the partitioned gradient and optimizer
+updates established in Stages 1 and 2.</li>
+<li><strong>Memory Impact:</strong> Stage 3 reduces memory consumption
+linearly with the number of GPUs. Across a cluster of 64 GPUs, the
+memory required for model states on a single device is reduced by a
+factor of 64, trading a modest increase in communication volume for the
+ability to train models with trillions of parameters.</li>
+</ul></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/understanding-ze-ro-stages-1-2-and-3-in-ai-clusters';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>

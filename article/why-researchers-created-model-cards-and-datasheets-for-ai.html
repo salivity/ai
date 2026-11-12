@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Researchers Created Model Cards and Datasheets for AI - ai</title>
+    <meta name="description" content="Researchers introduced Model Cards and Datasheets for Datasets to solve a critical lack of transparency in the artificial intelligence industry. Before these standardized artifacts existed, machine learning models and datasets were frequently shared witho">
+    <link rel="canonical" href="https://salivity.github.io/ai/article/why-researchers-created-model-cards-and-datasheets-for-ai">
+    <link rel="search" type="application/opensearchdescription+xml" title="ai" href="/ai/opensearch.xml">
+    <link rel="icon" href="/ai/favicon.ico">
+    <link rel="stylesheet" href="/ai/css/style.css">
+    <link media="print" rel="stylesheet" href="/ai/css/print.css">
+    <script src="/ai/js/fuse.min.js"></script>
+    <script src="/ai/js/script.js"></script>
+    <script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-chtml.min.js" defer></script>
+    <script src="/monetize/monetize.js"></script>
+    <script src="/social/social.js"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Why Researchers Created Model Cards and Datasheets for AI - ai" />
+    <meta property="og:url" content="https://salivity.github.io/ai/article/why-researchers-created-model-cards-and-datasheets-for-ai" />
+    <meta property="og:image" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:secure_url" content="https://salivity.github.io/ai/images/open-graph/default.webp" />
+    <meta property="og:image:width" content="1120" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content="Researchers introduced Model Cards and Datasheets for Datasets to solve a critical lack of transparency in the artificial intelligence industry. Before these standardized artifacts existed, machine learning models and datasets were frequently shared witho" />
+    <link rel="manifest" href="/ai/pwa/manifest.json" />
+</head>
+<body>
+    <header>
+        <a href="/ai/" aria-label="Go To Home Page" title="Go To Home Page" id="logo">
+            <span>salivity.github.io/</span><span>ai</span>
+        </a>
+        <nav>
+            <ul class="header-links">
+                <li><a href="/ai/search" title="Search" aria-label="Go To Search Page"><svg class="svg-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"></path></svg></a></li>
+                <li><a id="theme-toggle" title="Theme" href="javascript:void(0);" aria-label="Toggle Website Theme"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+    <div class="article-layout">
+        <aside id="profile-sidebar" class="profile-column" aria-label="Author Profile"></aside>
+        <div class="article-main-column">
+            <article><h1 id="why-researchers-created-model-cards-and-datasheets-for-ai">Why
+Researchers Created Model Cards and Datasheets for AI</h1>
+<p>Researchers introduced Model Cards and Datasheets for Datasets to
+solve a critical lack of transparency in the artificial intelligence
+industry. Before these standardized artifacts existed, machine learning
+models and datasets were frequently shared without adequate
+documentation, leading to algorithmic bias, system failures, and the
+misuse of technology in high-stakes environments. This article explores
+how these documentation frameworks clarify the intended uses,
+limitations, and origins of AI components, ultimately fostering
+accountability and safety in machine learning deployment.</p>
+<h2 id="the-transparency-deficit-in-artificial-intelligence">The
+Transparency Deficit in Artificial Intelligence</h2>
+<p>Historically, AI developers focused heavily on optimizing performance
+metrics, such as accuracy and speed, while treating documentation as an
+afterthought. Datasets were scraped from the internet and compiled with
+little record of their origins, demographics, or potential biases.
+Similarly, trained models were released for public or commercial use
+with minimal instructions on how they should or should not be
+applied.</p>
+<p>This lack of standardized reporting resulted in severe real-world
+consequences. Facial recognition systems failed to accurately identify
+marginalized groups due to skewed training data, and predictive
+algorithms were deployed in criminal justice and healthcare contexts for
+which they were never designed. Researchers realized that without a
+clear, standardized way to communicate the boundaries of an AI system,
+developers were essentially building on blind trust.</p>
+<h2 id="what-are-datasheets-for-datasets">What are Datasheets for
+Datasets?</h2>
+<p>Introduced in 2018 by a team of researchers led by Timnit Gebru,
+Datasheets for Datasets borrow a concept straight from the electronics
+industry. Every electronic component, such as a resistor or transistor,
+comes with a datasheet detailing its operating characteristics, test
+results, and recommended uses. Researchers applied this exact logic to
+the data powering machine learning.</p>
+<p>A Datasheet for a Dataset requires creators to answer a standardized
+set of questions covering the entire lifecycle of the data:</p>
+<ul>
+<li><strong>Motivation:</strong> Why was the dataset created, and who
+funded it?</li>
+<li><strong>Composition:</strong> What does the data represent, and are
+there any missing elements or demographic gaps?</li>
+<li><strong>Collection Process:</strong> How was the data acquired, and
+did the subjects give consent?</li>
+<li><strong>Preprocessing:</strong> How was the raw data cleaned,
+labeled, or altered before release?</li>
+<li><strong>Uses and Maintenance:</strong> What tasks should this
+dataset never be used for, and how will it be updated over time?</li>
+</ul>
+<p>By forcing creators to document these details, Datasheets prevent
+downstream developers from accidentally using flawed or inappropriate
+data to train new AI systems.</p>
+<h2 id="what-are-model-cards">What are Model Cards?</h2>
+<p>Following the introduction of Datasheets, researchers led by Margaret
+Mitchell introduced Model Cards in 2019. While Datasheets focus on the
+raw ingredients of AI, Model Cards focus on the finished product: the
+trained machine learning model.</p>
+<p>Model Cards act as nutritional labels for algorithms. They provide a
+structured, accessible summary of how a model works and where it fails.
+Key sections of a Model Card include:</p>
+<ul>
+<li><strong>Intended Use:</strong> The specific tasks and user groups
+the model was designed to serve.</li>
+<li><strong>Out-of-Scope Use:</strong> Explicit warnings about
+applications where the model is unsafe or ineffective.</li>
+<li><strong>Disaggregated Performance:</strong> Instead of a single
+accuracy score, Model Cards break down performance across different
+cultural, demographic, or phenotypic groups to expose hidden
+biases.</li>
+<li><strong>Limitations and Trade-offs:</strong> Ethical considerations,
+known failure modes, and environmental impacts of training the
+model.</li>
+</ul>
+<h2 id="preventing-misuse-and-algorithmic-harm">Preventing Misuse and
+Algorithmic Harm</h2>
+<p>The primary driver behind both frameworks is the prevention of harm
+through informed decision-making. When developers, policymakers, and
+end-users have access to Model Cards and Datasheets, they can
+immediately assess whether an AI system is safe for their specific
+context.</p>
+<p>First, these artifacts prevent context creep—the dangerous practice
+of taking an AI model built for a low-stakes environment and deploying
+it in a critical one. Second, they enforce proactive accountability. The
+act of writing a Datasheet or Model Card forces engineers to confront
+the flaws and biases in their work before releasing it to the public.
+Finally, they democratize understanding. Because they are written in
+clear language rather than complex code, non-technical stakeholders,
+such as journalists, lawyers, and affected citizens, can audit and
+challenge the systems shaping their lives.</p></article>
+        <div id='disqus_thread'></div>
+        <script>
+
+            var disqus_config = function () {
+                this.page.url =         'https://salivity.github.io/ai/article/why-researchers-created-model-cards-and-datasheets-for-ai';  
+                //this.page.identifier =  PAGE_IDENTIFIER; 
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://salivity-github-io.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+        </div>
+    </div>
+    
+    </main>
+    <footer>
+        <nav>
+            <ul class="social-links">
+            </ul>
+        </nav>
+        <nav>
+            <ul class="footer-links">
+                <li><a href="https://smvc.dev/contact">Contact</a></li>
+                <li><a href="/ai/privacy-policy">Privacy Policy</a></li>
+                <li><a href="/ai/terms-and-conditions">Terms and Conditions</a></li>
+            </ul>
+        </nav>
+        <div class="copyright">
+            Copyright &copy; <span id="current-year"></span>
+        </div>
+    </footer>
+</body>
+</html>
